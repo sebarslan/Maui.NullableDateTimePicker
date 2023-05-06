@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker", "Maui.NullableDateTimePicker\Maui.NullableDateTimePicker.csproj", "{B500469A-CB4A-425E-8322-8AEFADB313A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker.Samples", "Maui.NullableDateTimePicker.Samples\Maui.NullableDateTimePicker.Samples.csproj", "{92E070F8-D50E-4946-A79F-5C0450A63E82}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker.Tests", "Maui.NullableDateTimePicker.Tests\Maui.NullableDateTimePicker.Tests.csproj", "{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B500469A-CB4A-425E-8322-8AEFADB313A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B500469A-CB4A-425E-8322-8AEFADB313A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B500469A-CB4A-425E-8322-8AEFADB313A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B500469A-CB4A-425E-8322-8AEFADB313A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9C3C9D3-1544-4E01-90A1-D09241F7F1C1}
+	EndGlobalSection
+EndGlobal
