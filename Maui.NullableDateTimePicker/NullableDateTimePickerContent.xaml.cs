@@ -625,16 +625,19 @@ public partial class NullableDateTimePickerContent : ContentView
 
         #endregion // Styles end
 
-        _dayButtons = new List<Button>();
-        for (int day = 1; day <= 31; day++)
+        if (_dayButtons == null)
         {
-            Button button = new Button
+            _dayButtons = new List<Button>();
+            for (int day = 1; day <= 31; day++)
             {
-                Text = day.ToString(),
-                Style = _dayStyle
-            };
-            button.Clicked += OnDayButtonTapped;
-            _dayButtons.Add(button);
+                Button button = new Button
+                {
+                    Text = day.ToString(),
+                    Style = _dayStyle
+                };
+                button.Clicked += OnDayButtonTapped;
+                _dayButtons.Add(button);
+            }
         }
 
         _calendarGrid = new Grid

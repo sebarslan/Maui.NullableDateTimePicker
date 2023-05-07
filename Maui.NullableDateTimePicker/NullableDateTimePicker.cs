@@ -76,21 +76,21 @@ public class NullableDateTimePicker : ContentView
             self._dateTimePickerEntry.Text = newNullableDateTime?.ToString(self.Format);
 
             //Date changed event
-            bool isDateChanged = false;
+            bool isDateTimeChanged = false;
             if (self.Mode == PickerMode.Date && oldNullableDateTime?.Date != newNullableDateTime?.Date)
             {
-                isDateChanged = true;
+                isDateTimeChanged = true;
             }
             else if (self.Mode == PickerMode.DateTime && (oldNullableDateTime?.Date != newNullableDateTime?.Date || oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay))
             {
-                isDateChanged = true;
+                isDateTimeChanged = true;
             }
             else if (self.Mode == PickerMode.Time && oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay)
             {
-                isDateChanged = true;
+                isDateTimeChanged = true;
             }
 
-            if (isDateChanged)
+            if (isDateTimeChanged)
                 self.NullableDateTimeChanged?.Invoke(self, new DateTimeChangedEventArgs(oldNullableDateTime, newNullableDateTime));
         });
 
@@ -389,8 +389,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     validateValue: null,
     propertyChanged: (bindable, oldValue, newValue) =>
     {
-        if (newValue != null)
-            ((NullableDateTimePicker)bindable)._dateTimePickerIcon.Source = (ImageSource)newValue;
+        ((NullableDateTimePicker)bindable).SetCalendarIcon();
     });
 
     public ImageSource Icon
@@ -634,7 +633,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
 
     private void SetCalendarIcon()
     {
-        if (Icon == null && _dateTimePickerIcon.Source == null)
+        if (Icon != null)
+        {
+            _dateTimePickerIcon.Source = Icon;
+        }
+        else
         {
             string imageName = "date_icon.png";
 
@@ -643,7 +646,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
             else if (Mode == PickerMode.Time)
                 imageName = "time_icon.png";
 
-            _dateTimePickerIcon.Source = ImageSource.FromResource("Maui.NullableDateTimePicker.Images." + imageName, typeof(NullableDateTimePicker).Assembly); 
+            _dateTimePickerIcon.Source = ImageSource.FromResource("Maui.NullableDateTimePicker.Images." + imageName, typeof(NullableDateTimePicker).Assembly);
         }
     }
 }
