@@ -6,7 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Title>Maui.NullableDateTimePicker</Title>
 		<Authors>Sebarslan</Authors>
-		<Description>Nullable datetime picker component for Maui</Description>
+		<Description>Nullable and clerable datetime picker component for Maui</Description>
 		<RepositoryUrl>https://github.com/sebarslan/Maui.NullableDateTimePicker</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/sebarslan/Maui.NullableDateTimePicker</PackageProjectUrl>
 		<PackageTags>nullable datepicker,maui,cross-platform,.net,ios,android,windows</PackageTags>
