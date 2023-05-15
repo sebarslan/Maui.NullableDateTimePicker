@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Maui.NullableDateTimePicker;
 
