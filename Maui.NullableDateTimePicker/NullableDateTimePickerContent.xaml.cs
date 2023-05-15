@@ -786,6 +786,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 HorizontalTextAlignment = TextAlignment.Center,
                 FontAttributes = FontAttributes.Bold,
             };
+            _hoursPicker.SelectedIndexChanged += OnHoursPickerIndexChanged;
 
 
             var HoursMinutesSeparatorLabel = new Label
