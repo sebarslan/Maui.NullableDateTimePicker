@@ -17,6 +17,7 @@ namespace Maui.NullableDateTimePicker
             var popupWidth = Math.Min(displayMetrics.Width, 300);
             var popupHeight = Math.Min(displayMetrics.Height, 450);
             Size = new Size(popupWidth, popupHeight);
+            CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 
             this.Opened += _content.NullableDateTimePickerPopupOpened; ;
 

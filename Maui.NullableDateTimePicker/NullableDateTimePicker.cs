@@ -528,6 +528,19 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         get { return (bool)GetValue(ShowClearButtonProperty); }
         set { SetValue(ShowClearButtonProperty, value); }
     }
+
+    public static readonly BindableProperty CloseOnOutsideClickProperty = BindableProperty.Create(
+    nameof(CloseOnOutsideClick),
+    typeof(bool),
+    typeof(NullableDateTimePicker),
+    defaultValue: true,
+    defaultBindingMode: BindingMode.OneWay);
+
+    public bool CloseOnOutsideClick
+    {
+        get { return (bool)GetValue(CloseOnOutsideClickProperty); }
+        set { SetValue(CloseOnOutsideClickProperty, value); }
+    }
     #endregion //bindable properties
 
     private void OnDatePickerIconClicked(object sender, EventArgs e)
@@ -566,7 +579,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 WeekNumberStyle = this.WeekNumberStyle,
                 ShowOtherMonthDays = this.ShowOtherMonthDays,
                 ActivityIndicatorColor = this.ActivityIndicatorColor,
-                ShowClearButton = this.ShowClearButton
+                ShowClearButton = this.ShowClearButton,
+                CloseOnOutsideClick = this.CloseOnOutsideClick
             };
 
             NullableDateTimePickerPopup popupControl = new NullableDateTimePickerPopup(options);

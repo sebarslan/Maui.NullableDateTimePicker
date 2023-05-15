@@ -27,5 +27,7 @@ namespace Maui.NullableDateTimePicker
         public bool ShowOtherMonthDays { get; set; }
         public Color ActivityIndicatorColor { get; set; }
         public bool ShowClearButton { get; set; }
+
+        public bool CloseOnOutsideClick { get; set; } = true;
     }
 }
