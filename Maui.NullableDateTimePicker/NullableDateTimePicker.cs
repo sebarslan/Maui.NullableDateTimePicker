@@ -223,13 +223,28 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         }
     }
 
+    public new static readonly BindableProperty BackgroundColorProperty =
+    BindableProperty.Create(nameof(BackgroundColor),
+        typeof(Color),
+        typeof(NullableDateTimePicker),
+        null,
+        defaultBindingMode: BindingMode.OneWay);
+
+    public new Color BackgroundColor
+    {
+        get { return (Color)GetValue(BackgroundColorProperty); }
+        set
+        {
+            SetValue(BackgroundColorProperty, value);
+        }
+    }
+
     public static readonly BindableProperty HeaderBackgroundColorProperty =
-    BindableProperty.Create(nameof(HeaderBackgroundColor), typeof(Color), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, (view, value) =>
-    {
-        return (value != null && (DateTime)value >= DateTime.MinValue && (DateTime)value <= DateTime.MaxValue);
-    }, (b, o, n) =>
-    {
-    });
+    BindableProperty.Create(nameof(HeaderBackgroundColor),
+        typeof(Color),
+        typeof(NullableDateTimePicker),
+        null,
+        defaultBindingMode: BindingMode.OneWay);
 
     public Color HeaderBackgroundColor
     {
@@ -457,23 +472,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         set { SetValue(FontSizeProperty, value); }
     }
 
-    public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
-    nameof(TextColor),
+    public static readonly BindableProperty ForeColorProperty = BindableProperty.Create(
+    nameof(ForeColor),
     typeof(Color),
     typeof(NullableDateTimePicker),
     defaultValue: null,
-    defaultBindingMode: BindingMode.OneWay,
-    validateValue: null,
-    propertyChanged: (bindable, oldValue, newValue) =>
-    {
-        if (newValue != null)
-            ((NullableDateTimePicker)bindable)._dateTimePickerEntry.TextColor = (Color)newValue;
-    });
+    defaultBindingMode: BindingMode.OneWay);
 
-    public Color TextColor
+    public Color ForeColor
     {
-        get { return (Color)GetValue(TextColorProperty); }
-        set { SetValue(TextColorProperty, value); }
+        get { return (Color)GetValue(ForeColorProperty); }
+        set { SetValue(ForeColorProperty, value); }
     }
 
     public static readonly BindableProperty ShowWeekNumbersProperty = BindableProperty.Create(
@@ -568,6 +577,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 OkButtonText = this.OkButtonText,
                 CancelButtonText = this.CancelButtonText,
                 ClearButtonText = this.ClearButtonText,
+                ForeColor = this.ForeColor,
+                BackgroundColor = this.BackgroundColor,
                 HeaderForeColor = this.HeaderForeColor,
                 HeaderBackgroundColor = this.HeaderBackgroundColor,
                 ToolButtonsStyle = this.ToolButtonsStyle,
@@ -580,7 +591,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 ShowOtherMonthDays = this.ShowOtherMonthDays,
                 ActivityIndicatorColor = this.ActivityIndicatorColor,
                 ShowClearButton = this.ShowClearButton,
-                CloseOnOutsideClick = this.CloseOnOutsideClick
+                CloseOnOutsideClick = this.CloseOnOutsideClick,
+
             };
 
             NullableDateTimePickerPopup popupControl = new NullableDateTimePickerPopup(options);

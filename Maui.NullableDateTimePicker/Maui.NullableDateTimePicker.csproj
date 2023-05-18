@@ -9,7 +9,7 @@
 		<Description>Nullable and clerable datetime picker component for Maui</Description>
 		<RepositoryUrl>https://github.com/sebarslan/Maui.NullableDateTimePicker</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/sebarslan/Maui.NullableDateTimePicker</PackageProjectUrl>
-		<PackageTags>nullable datepicker,maui,cross-platform,.net,ios,android,windows</PackageTags>
+		<PackageTags>nullable clerable datepicker,maui,cross-platform,.net,ios,android,windows,mac catalyst</PackageTags>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

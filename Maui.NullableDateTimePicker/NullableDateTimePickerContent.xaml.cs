@@ -535,6 +535,7 @@ public partial class NullableDateTimePickerContent : ContentView
         if (int.TryParse((string)selectedItem, out int selectedMinute))
             SetMinute(selectedMinute);
     }
+
     internal void SetMinute(int minute)
     {
         if (minute < 0 || minute > 59 || _currentDate.Minute == minute)
@@ -542,7 +543,6 @@ public partial class NullableDateTimePickerContent : ContentView
 
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, _currentDate.Hour, minute, _currentDate.Second));
     }
-
 
     private async Task InitContent()
     {
@@ -641,6 +641,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _calendarGrid = new Grid
         {
+            BackgroundColor = _options.BackgroundColor ?? Colors.White,
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
             Padding = new Thickness(0),
@@ -714,7 +715,7 @@ public partial class NullableDateTimePickerContent : ContentView
         _previousMonthButton = new Button
         {
             Text = "<",
-            TextColor = Colors.Black,
+            TextColor = _options.ForeColor ?? Colors.Black,
             BackgroundColor = Colors.Transparent,
             BorderColor = Colors.Transparent,
             FontAttributes = FontAttributes.Bold,
@@ -729,7 +730,7 @@ public partial class NullableDateTimePickerContent : ContentView
         _monthYearLabel = new Label
         {
             FontSize = 14,
-            TextColor = Colors.Black,
+            TextColor = _options.ForeColor ?? Colors.Black,
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Fill,
@@ -740,7 +741,7 @@ public partial class NullableDateTimePickerContent : ContentView
         _nextMonthButton = new Button
         {
             Text = ">",
-            TextColor = Colors.Black,
+            TextColor = _options.ForeColor ?? Colors.Black,
             BackgroundColor = Colors.Transparent,
             BorderColor = Colors.Transparent,
             FontAttributes = FontAttributes.Bold,
@@ -756,6 +757,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _daysGrid = new Grid
         {
+            BackgroundColor = _options.BackgroundColor ?? Colors.White,
             ColumnSpacing = 0,
             RowSpacing = 0,
             Padding = new Thickness(0),
@@ -778,6 +780,8 @@ public partial class NullableDateTimePickerContent : ContentView
         {
             _hoursPicker = new Picker
             {
+                BackgroundColor = Colors.Transparent,
+                TextColor = _options.ForeColor ?? Colors.Black,
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
@@ -787,10 +791,11 @@ public partial class NullableDateTimePickerContent : ContentView
             };
             _hoursPicker.SelectedIndexChanged += OnHoursPickerIndexChanged;
 
-
             var HoursMinutesSeparatorLabel = new Label
             {
                 Text = ":",
+                BackgroundColor = Colors.Transparent,
+                TextColor = _options.ForeColor ?? Colors.Black,
                 HeightRequest = 40,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -798,16 +803,16 @@ public partial class NullableDateTimePickerContent : ContentView
 
             _minutesPicker = new Picker
             {
+                BackgroundColor = Colors.Transparent,
+                TextColor = _options.ForeColor ?? Colors.Black,
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
                 FontAttributes = FontAttributes.Bold,
-                TextColor = Colors.Black,
             };
             _minutesPicker.SelectedIndexChanged += OnMinutesPickerIndexChanged;
-
 
             _timeStackLayout = new StackLayout
             {
@@ -851,7 +856,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 Style = _toolButtonsStyle,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                Margin=0
+                Margin = 0
             };
             _clearButton.Clicked += OnClearButtonClicked;
             ToolButtonsGrid.Add(_clearButton, 0);
@@ -863,7 +868,7 @@ public partial class NullableDateTimePickerContent : ContentView
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            Margin=0
+            Margin = 0
         };
         _cancelButton.Clicked += OnCancelButtonClicked;
         ToolButtonsGrid.Add(_cancelButton, 1);
@@ -874,7 +879,7 @@ public partial class NullableDateTimePickerContent : ContentView
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
-            Margin=0
+            Margin = 0
         };
         _okButton.Clicked += OnOkButtonClicked;
         ToolButtonsGrid.Add(_okButton, 2);

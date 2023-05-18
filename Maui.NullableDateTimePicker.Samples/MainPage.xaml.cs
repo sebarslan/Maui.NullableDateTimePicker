@@ -59,7 +59,7 @@
                 VerticalOptions = LayoutOptions.Center
             };
 
-            datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.TextColorProperty, Microsoft.Maui.Graphics.Colors.Black, Microsoft.Maui.Graphics.Colors.White);
+            datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.ForeColorProperty, Microsoft.Maui.Graphics.Colors.Black, Microsoft.Maui.Graphics.Colors.White);
             datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.BackgroundColorProperty, Microsoft.Maui.Graphics.Colors.White, Microsoft.Maui.Graphics.Colors.Black);
 
 
