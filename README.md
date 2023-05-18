@@ -53,6 +53,8 @@ More examples, please see the samples project
 | CancelButtonText | The text for the Cancel button. | Cancel |
 | ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
+| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Black |
+| BackgroundColor | Background color of the calendar.	| White |
 | HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
 | HeaderBackgroundColor | Background color of the control's header.	| #2b0b98 |
 | ToolButtonsStyle | Style of the control's tool buttons. | null |
@@ -63,6 +65,7 @@ More examples, please see the samples project
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
+| CloseOnOutsideClick | This option sets the popup to close when clicked outside the popup component.	| true |
 
 # NullableDateTimeChanged Event
 The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
