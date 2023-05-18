@@ -65,7 +65,7 @@ More examples, please see the samples project
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
-| CloseOnOutsideClick | This option sets the popup to close when clicked outside the popup component.	| true |
+| CloseOnOutsideClick | This option sets the calendar to close when clicked outside the popup component.	| true |
 
 # NullableDateTimeChanged Event
 The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
