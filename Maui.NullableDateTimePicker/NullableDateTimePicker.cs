@@ -227,7 +227,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     BindableProperty.Create(nameof(BackgroundColor),
         typeof(Color),
         typeof(NullableDateTimePicker),
-        null,
+        Colors.White,
         defaultBindingMode: BindingMode.OneWay);
 
     public new Color BackgroundColor
@@ -476,7 +476,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     nameof(ForeColor),
     typeof(Color),
     typeof(NullableDateTimePicker),
-    defaultValue: null,
+    defaultValue: Colors.Black,
     defaultBindingMode: BindingMode.OneWay);
 
     public Color ForeColor
@@ -542,7 +542,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     nameof(CloseOnOutsideClick),
     typeof(bool),
     typeof(NullableDateTimePicker),
-    defaultValue: true,
+    defaultValue: false,
     defaultBindingMode: BindingMode.OneWay);
 
     public bool CloseOnOutsideClick
