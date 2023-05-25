@@ -662,20 +662,31 @@ public partial class NullableDateTimePickerContent : ContentView
             }
         };
 
-        VerticalStackLayout headerStackLayout = new VerticalStackLayout
+        #region header
+
+        Grid headerGrid = new Grid
         {
             BackgroundColor = _options.HeaderBackgroundColor ?? Color.FromArgb("#2b0b98"),
             Padding = new Thickness(10, 0, 10, 0),
             Margin = 0,
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
+            VerticalOptions = LayoutOptions.Fill,
+            RowDefinitions =
+            {
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+            }
         };
 
         _yearsPicker = new Picker
         {
+            HeightRequest = 40,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalTextAlignment = TextAlignment.Center,
             FontSize = 16,
             Margin = new Thickness(0),
             TextColor = _options.HeaderForeColor ?? Colors.White,
+            BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
             VerticalOptions = LayoutOptions.Center,
@@ -694,9 +705,13 @@ public partial class NullableDateTimePickerContent : ContentView
             VerticalTextAlignment = TextAlignment.Center
         };
 
-        headerStackLayout.Add(_yearsPicker);
-        headerStackLayout.Add(_selectedDateLabel);
-        _calendarGrid.Add(headerStackLayout);
+        headerGrid.Add(_yearsPicker);
+        headerGrid.SetRow(_yearsPicker, 0);
+        headerGrid.Add(_selectedDateLabel);
+        headerGrid.SetRow(_selectedDateLabel, 1);
+        _calendarGrid.Add(headerGrid);
+
+        #endregion //header
 
         Grid PreNextButtonsGrid = new Grid
         {
@@ -755,6 +770,8 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _calendarGrid.Add(PreNextButtonsGrid, 0, 1);
 
+
+        #region days
         _daysGrid = new Grid
         {
             BackgroundColor = _options.BackgroundColor ?? Colors.White,
@@ -773,6 +790,8 @@ public partial class NullableDateTimePickerContent : ContentView
         }
 
         _calendarGrid.Add(_daysGrid, 0, 2);
+
+        #endregion // days
 
 
         #region Time row
