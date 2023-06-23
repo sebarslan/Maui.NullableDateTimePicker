@@ -21,7 +21,6 @@ public class NullableDateTimePicker : ContentView
             MinimumWidthRequest = 50,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-            FontSize = 12,
             Margin = 0,
             IsReadOnly = true
         };
