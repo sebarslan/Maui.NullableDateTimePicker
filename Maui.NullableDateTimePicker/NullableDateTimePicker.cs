@@ -14,6 +14,7 @@ public class NullableDateTimePicker : ContentView
 
     public NullableDateTimePicker()
     {
+        Margin = 0;
         BackgroundColor = Colors.Transparent;
         _dateTimePickerEntry = new Entry()
         {
