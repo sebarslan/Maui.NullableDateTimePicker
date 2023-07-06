@@ -648,7 +648,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         {
             isLoaded = true;
             Padding = 0;
-            Margin = 0;
             HorizontalOptions = LayoutOptions.Fill;
             VerticalOptions = LayoutOptions.Fill;
 
