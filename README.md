@@ -3,6 +3,8 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 
 This control uses the <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup.
 
+[![NuGet](https://img.shields.io/badge/nuget-v1.0.1-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+
 
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
