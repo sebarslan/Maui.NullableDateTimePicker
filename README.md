@@ -100,4 +100,4 @@ Contributions are welcome!
 # Screenshot
 on ios, android, windows
 
-![DateTimePicker](screenshot.png)
+![DateTimePicker](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
