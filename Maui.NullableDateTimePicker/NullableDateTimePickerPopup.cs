@@ -3,9 +3,10 @@ namespace Maui.NullableDateTimePicker
 {
     internal class NullableDateTimePickerPopup : Popup
     {
-        EventHandler<EventArgs> okButtonClickedHandler = null;
-        EventHandler<EventArgs> clearButtonClickedHandler = null;
-        EventHandler<EventArgs> cancelButtonClickedHandler = null;
+        static Page Page => Application.Current?.MainPage;
+        readonly EventHandler<EventArgs> okButtonClickedHandler = null;
+        readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
+        readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
         NullableDateTimePickerContent _content = null;
 
         internal NullableDateTimePickerPopup(NullableDateTimePickerOptions options)
@@ -64,7 +65,7 @@ namespace Maui.NullableDateTimePicker
 
         internal async Task<object> OpenPopupAsync()
         {
-            return await Application.Current.MainPage?.ShowPopupAsync(this);
+            return await Page?.ShowPopupAsync(this);
         }
     }
 }

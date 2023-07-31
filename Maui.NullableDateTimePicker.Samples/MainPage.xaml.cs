@@ -24,7 +24,7 @@
             }
         }
 
-        FontImageSource calendarIcon = new FontImageSource
+        readonly FontImageSource calendarIcon = new()
         {
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
@@ -47,9 +47,14 @@
 
         }
 
+        private async void OnOpenPageClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new NewPage());
+        }
+
         private void CreateDateTimePickerProgrammatically()
         {
-            Maui.NullableDateTimePicker.NullableDateTimePicker datePicker = new Maui.NullableDateTimePicker.NullableDateTimePicker
+            Maui.NullableDateTimePicker.NullableDateTimePicker datePicker = new()
             {
                 Mode = Maui.NullableDateTimePicker.PickerMode.Date,
                 Format = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern,

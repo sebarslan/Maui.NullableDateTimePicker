@@ -17,8 +17,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<AssemblyVersion>1.0.1.0</AssemblyVersion>
-		<Version>1.0.1</Version>
+		<AssemblyVersion>1.0.2.0</AssemblyVersion>
+		<Version>1.0.2</Version>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\README.md">
@@ -30,9 +30,12 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Images\*.*" />
+	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -40,9 +43,9 @@
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
+
 	<ItemGroup>
-	  <EmbeddedResource Include="Images\date_icon.png" />
-	  <EmbeddedResource Include="Images\date_time_icon.png" />
-	  <EmbeddedResource Include="Images\time_icon.png" />
+		<EmbeddedResource Include="Images\**" Pack="true" PackagePath="Images" />
 	</ItemGroup>
+
 </Project>

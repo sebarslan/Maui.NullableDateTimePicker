@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker.Tests", "Maui.NullableDateTimePicker.Tests\Maui.NullableDateTimePicker.Tests.csproj", "{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}"
 EndProject
-
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

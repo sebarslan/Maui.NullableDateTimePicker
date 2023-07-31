@@ -8,13 +8,14 @@ namespace Maui.NullableDateTimePicker;
 public class NullableDateTimePicker : ContentView
 {
     public event EventHandler<DateTimeChangedEventArgs> NullableDateTimeChanged;
-    Microsoft.Maui.Controls.Grid _contentLayout;
+    readonly Microsoft.Maui.Controls.Grid _contentLayout;
     internal Entry _dateTimePickerEntry;
     internal ImageButton _dateTimePickerIcon;
 
     public NullableDateTimePicker()
     {
         Margin = 0;
+        Padding = 0;
         BackgroundColor = Colors.Transparent;
         _dateTimePickerEntry = new Entry()
         {
@@ -34,6 +35,7 @@ public class NullableDateTimePicker : ContentView
             Padding = 2,
             Margin = 0
         };
+        SetCalendarIcon();
 
         _dateTimePickerIcon.Clicked += OnDatePickerIconClicked;
 
@@ -595,8 +597,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
 
             };
 
-            NullableDateTimePickerPopup popupControl = new NullableDateTimePickerPopup(options);
-
+            NullableDateTimePickerPopup popupControl = new(options);
+            
             await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
             {
                 try
@@ -640,21 +642,19 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         }
     }
 
-    bool isLoaded = false;
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
+    //bool isLoaded = false;
+    //protected override void OnBindingContextChanged()
+    //{
+    //    base.OnBindingContextChanged();
 
-        if (BindingContext != null && !isLoaded)
-        {
-            isLoaded = true;
-            Padding = 0;
-            HorizontalOptions = LayoutOptions.Fill;
-            VerticalOptions = LayoutOptions.Fill;
-
-            SetCalendarIcon();
-        }
-    }
+    //    if (BindingContext != null && !isLoaded)
+    //    {
+    //        isLoaded = true;
+    //        Padding = 0;
+    //        HorizontalOptions = LayoutOptions.Fill;
+    //        VerticalOptions = LayoutOptions.Fill;
+    //    }
+    //}
 
     private void SetCalendarIcon()
     {
