@@ -101,3 +101,8 @@ Contributions are welcome!
 on ios, android, windows
 
 ![DateTimePicker](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
+
+# Changelog
+
+### 1.0.1
+- The problem of not setting the margin has been fixed.
