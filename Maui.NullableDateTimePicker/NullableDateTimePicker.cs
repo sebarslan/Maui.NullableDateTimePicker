@@ -35,7 +35,7 @@ public class NullableDateTimePicker : ContentView
             Padding = 2,
             Margin = 0
         };
-        SetCalendarIcon();
+
 
         _dateTimePickerIcon.Clicked += OnDatePickerIconClicked;
 
@@ -598,7 +598,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
             };
 
             NullableDateTimePickerPopup popupControl = new(options);
-            
+
             await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
             {
                 try
@@ -642,19 +642,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         }
     }
 
-    //bool isLoaded = false;
-    //protected override void OnBindingContextChanged()
-    //{
-    //    base.OnBindingContextChanged();
-
-    //    if (BindingContext != null && !isLoaded)
-    //    {
-    //        isLoaded = true;
-    //        Padding = 0;
-    //        HorizontalOptions = LayoutOptions.Fill;
-    //        VerticalOptions = LayoutOptions.Fill;
-    //    }
-    //}
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        SetCalendarIcon();
+    }
 
     private void SetCalendarIcon()
     {

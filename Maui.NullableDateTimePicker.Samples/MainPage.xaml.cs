@@ -43,13 +43,6 @@
                 CounterBtn.Text = $"Clicked {count} times";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
-
-
-        }
-
-        private async void OnOpenPageClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new NewPage());
         }
 
         private void CreateDateTimePickerProgrammatically()
