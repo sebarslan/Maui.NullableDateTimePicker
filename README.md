@@ -9,7 +9,20 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-1- Add the NullableDateTimePicker control to your XAML layout file:
+1- Add .UseMauiCommunityToolkit() to the MauiProgram.cs file in your project.
+<pre>
+<code>
+public static MauiApp CreateMauiApp()
+{
+    var builder = MauiApp.CreateBuilder();
+    builder
+    .UseMauiApp<App>()
+    .UseMauiCommunityToolkit()
+    ....
+</code>
+</pre>
+
+2- Add the NullableDateTimePicker control to your XAML layout file:
 
 xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
 <pre>
@@ -21,23 +34,10 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 </code>
 </pre>
 
-2- Bind the DateTime? value property to a property in your view model:
+3- Bind the DateTime? value property to a property in your view model:
 <pre>
 <code>
 &lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
-</code>
-</pre>
-
-3- Add .UseMauiCommunityToolkit() to the MauiProgram.cs file in your project.
-<pre>
-<code>
-public static MauiApp CreateMauiApp()
-{
-    var builder = MauiApp.CreateBuilder();
-    builder
-    .UseMauiApp<App>()
-    .UseMauiCommunityToolkit()
-    ....
 </code>
 </pre>
 
