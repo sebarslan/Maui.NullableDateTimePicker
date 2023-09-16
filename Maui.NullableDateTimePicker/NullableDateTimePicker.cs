@@ -11,7 +11,7 @@ public class NullableDateTimePicker : ContentView
     readonly Microsoft.Maui.Controls.Grid _contentLayout;
     internal Entry _dateTimePickerEntry;
     internal ImageButton _dateTimePickerIcon;
-    internal bool isIconSetCalledFirstTime = false;
+    internal bool isSetIconCalledForFirstTime = false;
 
     public NullableDateTimePicker()
     {
@@ -63,7 +63,7 @@ public class NullableDateTimePicker : ContentView
 
         Loaded += (s, e) =>
         {
-            if (!isIconSetCalledFirstTime)
+            if (!isSetIconCalledForFirstTime)
                 SetCalendarIcon();
         };
 
@@ -657,7 +657,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     ImageSource imgSource;
     private void SetCalendarIcon()
     {
-        isIconSetCalledFirstTime = true;
+        isSetIconCalledForFirstTime = true;
 
         if (Icon != null)
         {
