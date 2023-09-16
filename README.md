@@ -104,5 +104,12 @@ on ios, android, windows
 
 # Changelog
 
+### 1.0.2
+- On some screens, week and day numbers were not displayed on the same line.
+
+- The problem of displaying the default icon in default mode has been fixed.
+
+- Various improvements.
+
 ### 1.0.1
 - The problem of not setting the margin has been fixed.
