@@ -15,8 +15,8 @@ namespace Maui.NullableDateTimePicker
 
             DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
 
-            var popupWidth = Math.Min(displayMetrics.Width, 300);
-            var popupHeight = Math.Min(displayMetrics.Height, 450);
+            var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
+            var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
             Size = new Size(popupWidth, popupHeight);
             CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 

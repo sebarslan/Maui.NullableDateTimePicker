@@ -4,8 +4,6 @@
     {
         public App()
         {
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("tr-TR");
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("tr-TR");
             InitializeComponent();
 
             MainPage = new AppShell();

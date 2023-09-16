@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.NullableDateTimePicker.NullableDateTimePickerContent">
     <ScrollView
+        Margin = "0"
+        Padding = "0"
+        HorizontalOptions = "Fill"
+            VerticalOptions = "Fill">
+        <Grid x:Name="MainGrid" 
+            Margin="0"
+            Padding="0"   
             HorizontalOptions = "Fill"
-            VerticalOptions = "Fill"
-            Margin = "0"
-            Padding = "0">
-        <Grid x:Name="MainGrid">
+            VerticalOptions = "Fill">
             <ActivityIndicator x:Name="CalendarActivityIndicator" 
                                IsVisible="True" 
                                IsRunning="True" 

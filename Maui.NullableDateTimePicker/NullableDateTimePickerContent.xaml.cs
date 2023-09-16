@@ -9,9 +9,9 @@ public partial class NullableDateTimePickerContent : ContentView
     internal event EventHandler<EventArgs> CancelButtonClicked;
     private DateTime? _selectedDate;
     private DateTime _currentDate;
-    DateTime _minDate;
-    DateTime _maxDate;
-    NullableDateTimePickerOptions _options;
+    readonly DateTime _minDate;
+    readonly DateTime _maxDate;
+    readonly NullableDateTimePickerOptions _options;
     private Grid _calendarGrid;
     private Button _okButton;
     private Button _cancelButton;
@@ -35,8 +35,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
     internal NullableDateTimePickerContent(NullableDateTimePickerOptions options)
     {
-        if (options == null)
-            options = new NullableDateTimePickerOptions();
+        options ??= new NullableDateTimePickerOptions();
 
         _options = options;
         _selectedDate = options.InitDateTimeValue;
@@ -131,10 +130,10 @@ public partial class NullableDateTimePickerContent : ContentView
         if (month == 1)
         {
             month = 12;
-            year = year - 1;
+            year--;
         }
         else
-            month = month - 1;
+            month--;
 
         Button dayButton = sender as Button;
         SetCurrentDateAndRebuildCalendar(year, month, Convert.ToInt32(dayButton.Text));
@@ -149,10 +148,10 @@ public partial class NullableDateTimePickerContent : ContentView
         if (month == 12)
         {
             month = 1;
-            year = year + 1;
+            year++;
         }
         else
-            month = month + 1;
+            month++;
 
         Button dayButton = sender as Button;
         SetCurrentDateAndRebuildCalendar(year, month, Convert.ToInt32(dayButton.Text));
@@ -241,10 +240,9 @@ public partial class NullableDateTimePickerContent : ContentView
             {
                 string dayName = rotatedDayNames[i];
 
-                Label label = new Label
+                Label label = new()
                 {
                     Text = dayName,
-                    HorizontalOptions = LayoutOptions.Fill,
                     Style = _options.DayNamesStyle ?? _dayNamesStyle as Style
                 };
                 dayLabels.Add(label);
@@ -314,7 +312,7 @@ public partial class NullableDateTimePickerContent : ContentView
                     int daysNeededFromLastMonth = ((int)firstDayOfMonth - firstDayOfWekkIndex + 7) % 7;
                     for (int i = daysNeededFromLastMonth - 1; i >= 0; i--)
                     {
-                        Button lastMonthDayButton = new Button
+                        Button lastMonthDayButton = new()
                         {
                             Text = (daysInLastMonth - i).ToString(),
                             Style = _otherMonthDayStyle
@@ -331,7 +329,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
                     for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromLastMonth; i++)
                     {
-                        Button nextMonthDayButton = new Button
+                        Button nextMonthDayButton = new()
                         {
                             Text = (i + 1).ToString(),
                             Style = _otherMonthDayStyle
@@ -351,7 +349,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 bool lastRowEmpty = true;
                 for (int i = 1; i <= 7; i++)
                 {
-                    var lastButton = _daysGrid.Children.LastOrDefault(c => _daysGrid.GetRow(c) == 6 && _daysGrid.GetColumn(c) == i) as Button;
+                    Button lastButton = _daysGrid.Children.LastOrDefault(c => _daysGrid.GetRow(c) == 6 && _daysGrid.GetColumn(c) == i) as Button;
                     if (lastButton != null && !string.IsNullOrEmpty(lastButton.Text))
                     {
                         lastRowEmpty = false;
@@ -421,6 +419,7 @@ public partial class NullableDateTimePickerContent : ContentView
                     {
                         button.Style = _selectedDayStyle as Style;
                         lastClickedDayButton = button;
+                        break;
                     }
                 }
             }
@@ -574,7 +573,6 @@ public partial class NullableDateTimePickerContent : ContentView
 
         // SelectedDayStyle
         _selectedDayStyle = new Style(targetType: typeof(Button));
-
         if (_options.SelectedDayStyle != null)
         {
             _options.SelectedDayStyle.BasedOn = DefaultStyles.SelectedDayStyle;
@@ -646,6 +644,8 @@ public partial class NullableDateTimePickerContent : ContentView
             HorizontalOptions = LayoutOptions.Fill,
             Padding = new Thickness(0),
             Margin = new Thickness(0),
+            ColumnSpacing = 0,
+            RowSpacing = 0,
             ColumnDefinitions =
             {
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
@@ -713,7 +713,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         #endregion //header
 
-        Grid PreNextButtonsGrid = new Grid
+        Grid preNextButtonsGrid = new Grid
         {
             Padding = new Thickness(5, 0),
             Margin = 0,
@@ -740,7 +740,7 @@ public partial class NullableDateTimePickerContent : ContentView
             IsEnabled = _options.PickerMode != PickerMode.Time  //Click skipping in time mode 
         };
         _previousMonthButton.Clicked += OnPreviousMonthButtonClicked;
-        PreNextButtonsGrid.Add(_previousMonthButton, 0, 0);
+        preNextButtonsGrid.Add(_previousMonthButton, 0, 0);
 
         _monthYearLabel = new Label
         {
@@ -748,10 +748,10 @@ public partial class NullableDateTimePickerContent : ContentView
             TextColor = _options.ForeColor ?? Colors.Black,
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Center,
             VerticalTextAlignment = TextAlignment.Center
         };
-        PreNextButtonsGrid.Add(_monthYearLabel, 1, 0);
+        preNextButtonsGrid.Add(_monthYearLabel, 1, 0);
 
         _nextMonthButton = new Button
         {
@@ -766,9 +766,9 @@ public partial class NullableDateTimePickerContent : ContentView
             IsEnabled = _options.PickerMode != PickerMode.Time  //Click skipping in time mode 
         };
         _nextMonthButton.Clicked += OnNextMonthButtonClicked;
-        PreNextButtonsGrid.Add(_nextMonthButton, 2, 0);
+        preNextButtonsGrid.Add(_nextMonthButton, 2, 0);
 
-        _calendarGrid.Add(PreNextButtonsGrid, 0, 1);
+        _calendarGrid.Add(preNextButtonsGrid, 0, 1);
 
 
         #region days
@@ -778,7 +778,9 @@ public partial class NullableDateTimePickerContent : ContentView
             ColumnSpacing = 0,
             RowSpacing = 0,
             Padding = new Thickness(0),
-            Margin = new Thickness(2)
+            Margin = new Thickness(0),
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill
         };
         for (int col = 0; col <= 7; col++)
         {
@@ -810,7 +812,7 @@ public partial class NullableDateTimePickerContent : ContentView
             };
             _hoursPicker.SelectedIndexChanged += OnHoursPickerIndexChanged;
 
-            var HoursMinutesSeparatorLabel = new Label
+            var hoursMinutesSeparatorLabel = new Label
             {
                 Text = ":",
                 BackgroundColor = Colors.Transparent,
@@ -844,7 +846,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 IsVisible = _options.PickerMode != PickerMode.Date
             };
             _timeStackLayout.Add(_hoursPicker);
-            _timeStackLayout.Add(HoursMinutesSeparatorLabel);
+            _timeStackLayout.Add(hoursMinutesSeparatorLabel);
             _timeStackLayout.Add(_minutesPicker);
 
             _calendarGrid.Add(_timeStackLayout, 0, 3);
@@ -853,7 +855,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
 
         #region ToolButtons row
-        Grid ToolButtonsGrid = new Grid
+        Grid toolButtonsGrid = new Grid
         {
             Margin = 0,
             Padding = new Thickness(5, 0),
@@ -878,7 +880,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 Margin = 0
             };
             _clearButton.Clicked += OnClearButtonClicked;
-            ToolButtonsGrid.Add(_clearButton, 0);
+            toolButtonsGrid.Add(_clearButton, 0);
         }
 
         _cancelButton = new Button
@@ -890,7 +892,7 @@ public partial class NullableDateTimePickerContent : ContentView
             Margin = 0
         };
         _cancelButton.Clicked += OnCancelButtonClicked;
-        ToolButtonsGrid.Add(_cancelButton, 1);
+        toolButtonsGrid.Add(_cancelButton, 1);
 
         _okButton = new Button
         {
@@ -901,9 +903,9 @@ public partial class NullableDateTimePickerContent : ContentView
             Margin = 0
         };
         _okButton.Clicked += OnOkButtonClicked;
-        ToolButtonsGrid.Add(_okButton, 2);
+        toolButtonsGrid.Add(_okButton, 2);
 
-        _calendarGrid.Add(ToolButtonsGrid, 0, 4);
+        _calendarGrid.Add(toolButtonsGrid, 0, 4);
         #endregion //Tool buttons row
 
         await MainThreadHelper.SafeInvokeOnMainThreadAsync((Action)(() =>

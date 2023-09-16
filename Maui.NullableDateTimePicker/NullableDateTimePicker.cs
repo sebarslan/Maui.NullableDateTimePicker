@@ -11,12 +11,15 @@ public class NullableDateTimePicker : ContentView
     readonly Microsoft.Maui.Controls.Grid _contentLayout;
     internal Entry _dateTimePickerEntry;
     internal ImageButton _dateTimePickerIcon;
+    internal bool isIconSetCalledFirstTime = false;
 
     public NullableDateTimePicker()
     {
         Margin = 0;
         Padding = 0;
         BackgroundColor = Colors.Transparent;
+
+
         _dateTimePickerEntry = new Entry()
         {
             IsVisible = true,
@@ -57,6 +60,12 @@ public class NullableDateTimePicker : ContentView
         _contentLayout.SetColumn(_dateTimePickerIcon, 1);
         _contentLayout.Add(_dateTimePickerEntry);
         _contentLayout.Add(_dateTimePickerIcon);
+
+        Loaded += (s, e) =>
+        {
+            if (!isIconSetCalledFirstTime)
+                SetCalendarIcon();
+        };
 
         Content = _contentLayout;
     }
@@ -161,6 +170,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         PickerMode.Date,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
+            ((NullableDateTimePicker)bindable).SetCalendarIcon();
             if (newValue is string strValue)
             {
                 if (PickerMode.TryParse(strValue, out PickerMode pickerMode))
@@ -642,17 +652,20 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         }
     }
 
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
-        SetCalendarIcon();
-    }
 
+    string imgName;
+    ImageSource imgSource;
     private void SetCalendarIcon()
     {
+        isIconSetCalledFirstTime = true;
+
         if (Icon != null)
         {
-            _dateTimePickerIcon.Source = Icon;
+            if (!object.Equals(imgSource, Icon))
+            {
+                imgSource = Icon;
+                _dateTimePickerIcon.Source = Icon;
+            }
         }
         else
         {
@@ -663,7 +676,12 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
             else if (Mode == PickerMode.Time)
                 imageName = "time_icon.png";
 
-            _dateTimePickerIcon.Source = ImageSource.FromResource("Maui.NullableDateTimePicker.Images." + imageName, typeof(NullableDateTimePicker).Assembly);
+            if (imgName != imageName)
+            {
+                imgName = imageName;
+
+                _dateTimePickerIcon.Source = ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly);
+            }
         }
     }
 }

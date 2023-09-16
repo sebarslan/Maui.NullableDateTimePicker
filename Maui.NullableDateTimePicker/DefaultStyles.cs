@@ -1,13 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Maui.NullableDateTimePicker
+﻿namespace Maui.NullableDateTimePicker
 {
     internal static class DefaultStyles
     {
@@ -27,6 +18,8 @@ namespace Maui.NullableDateTimePicker
                             new Setter { Property = Button.PaddingProperty, Value = new Thickness(0) },
                             new Setter { Property = Button.FontSizeProperty, Value = 12 },
                             new Setter { Property = Button.BorderColorProperty, Value = Colors.Transparent },
+                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
+                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = VisualElement.WidthRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.HeightRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MaximumWidthRequestProperty, Value = 30 },
@@ -49,7 +42,7 @@ namespace Maui.NullableDateTimePicker
                 {
                     _otherMonthDayStyle = new Style(typeof(Button))
                     {
-                        BasedOn = DefaultStyles.DayStyle
+                        BasedOn = DayStyle
                     };
                     _otherMonthDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.Gray });
                 }
@@ -66,11 +59,12 @@ namespace Maui.NullableDateTimePicker
                 {
                     _selectedDayStyle = new Style(typeof(Button))
                     {
-                        BasedOn = DefaultStyles.DayStyle
+                        BasedOn = DayStyle
                     };
-                    _selectedDayStyle.Setters.Add(new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Blue });
+                    
                     _selectedDayStyle.Setters.Add(new Setter { Property = Button.CornerRadiusProperty, Value = DeviceInfo.Platform == DevicePlatform.iOS ? 15 : 50 });
                     _selectedDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White });
+                    _selectedDayStyle.Setters.Add(new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Blue });
                 }
 
                 return _selectedDayStyle;
@@ -87,14 +81,20 @@ namespace Maui.NullableDateTimePicker
                     _weekNumberStyle = new Style(typeof(Label))
                     {
                         Setters = {
-                            new Setter { Property = Label.BackgroundColorProperty, Value = Colors.Transparent },
-                            new Setter { Property = Label.HorizontalOptionsProperty, Value = LayoutOptions.Fill },
-                            new Setter { Property = Label.VerticalOptionsProperty, Value = LayoutOptions.Fill },
+                            new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
+                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
+                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = Label.HorizontalTextAlignmentProperty, Value = TextAlignment.Center },
                             new Setter { Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center },
                             new Setter { Property = Label.FontSizeProperty, Value = 12 },
                             new Setter { Property = Label.TextColorProperty, Value = Color.FromArgb("#512BD4") },
-                            new Setter { Property = Label.FontAttributesProperty, Value = FontAttributes.Bold }
+                            new Setter { Property = Label.FontAttributesProperty, Value = FontAttributes.Bold },
+                            new Setter { Property = VisualElement.WidthRequestProperty, Value = 30 },
+                            new Setter { Property = VisualElement.HeightRequestProperty, Value = 30 },
+                            new Setter { Property = VisualElement.MaximumWidthRequestProperty, Value = 30 },
+                            new Setter { Property = VisualElement.MaximumHeightRequestProperty, Value = 30 },
+                            new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
+                            new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 }
                         }
                     };
                 }
@@ -113,13 +113,13 @@ namespace Maui.NullableDateTimePicker
                     _dayNamesStyle = new Style(typeof(Label))
                     {
                         Setters = {
-                            new Setter { Property = Label.BackgroundColorProperty, Value = Colors.Transparent },
-                            new Setter { Property = Label.HorizontalOptionsProperty, Value = LayoutOptions.Fill },
-                            new Setter { Property = Label.VerticalOptionsProperty, Value = LayoutOptions.Fill },
+                            new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
+                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Fill },
+                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Fill },
                             new Setter { Property = Label.HorizontalTextAlignmentProperty, Value = TextAlignment.Center },
                             new Setter { Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center },
-                            new Setter { Property = Label.MinimumWidthRequestProperty, Value = 20 },
-                            new Setter { Property = Label.MinimumHeightRequestProperty, Value = 20 },
+                            new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
+                            new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 },
                             new Setter { Property = Label.FontSizeProperty, Value = 12 },
                             new Setter { Property = Label.TextColorProperty, Value = Colors.Black },
                         }
@@ -140,11 +140,11 @@ namespace Maui.NullableDateTimePicker
                     _toolButtonsStyle = new Style(typeof(Button))
                     {
                         Setters = {
-                            new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Transparent },
+                            new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
                             new Setter { Property = Button.BorderColorProperty, Value = Colors.Transparent },
-                            new Setter { Property = Button.HorizontalOptionsProperty, Value = LayoutOptions.Center },
-                            new Setter { Property = Button.VerticalOptionsProperty, Value = LayoutOptions.Center },
-                            new Setter { Property = Button.MarginProperty, Value = new Thickness(10, 0, 10, 0) },
+                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
+                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
+                            new Setter { Property = View.MarginProperty, Value = new Thickness(10, 0, 10, 0) },
                             new Setter { Property = Button.TextColorProperty, Value = Color.FromArgb("#7658dd") },
                             new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold }
                         }
