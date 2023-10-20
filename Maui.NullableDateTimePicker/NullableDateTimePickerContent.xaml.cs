@@ -261,8 +261,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 // Fill the day grid with buttons for each day of the month
                 for (int day = 1; day <= daysInMonth; day++)
                 {
-                    var dayButton = _dayButtons[day - 1];
-
+                    var dayButton = _dayButtons[^day];
                     _daysGrid.Add(dayButton, col + 1, row);
 
                     col++;
@@ -674,7 +673,7 @@ public partial class NullableDateTimePickerContent : ContentView
             RowDefinitions =
             {
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
             }
         };
 

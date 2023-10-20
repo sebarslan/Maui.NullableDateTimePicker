@@ -11,13 +11,15 @@ namespace Maui.NullableDateTimePicker
 
         internal NullableDateTimePickerPopup(NullableDateTimePickerOptions options)
         {
-            _content = new NullableDateTimePickerContent(options); ;
+            _content = new NullableDateTimePickerContent(options);
 
             DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
 
             var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
             var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
             Size = new Size(popupWidth, popupHeight);
+            HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
+            VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
             CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 
             this.Opened += _content.NullableDateTimePickerPopupOpened; ;
