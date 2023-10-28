@@ -9,7 +9,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-1- Add .UseMauiCommunityToolkit() to the MauiProgram.cs file in your project.
+Add .ConfigureNullableDateTimePicker() to the MauiProgram.cs file in your project.
 
 <pre>
 <code>
@@ -18,12 +18,34 @@ public static MauiApp CreateMauiApp()
     var builder = MauiApp.CreateBuilder();
     builder
     .UseMauiApp&lt;App&gt;()
-    .UseMauiCommunityToolkit()
+    .ConfigureNullableDateTimePicker()
+    //.UseMauiCommunityToolkit() //For versions 1.0.2 and earlier
     ....
 </code>
 </pre>
 
-2- Add the NullableDateTimePicker control to your XAML layout file:
+### Use direct calendar popup with your own entry and button
+<pre>
+    <code>
+    INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
+{
+    InitDateTimeValue = MyDateTime,
+    PickerMode = PickerMode.DateTime,
+    ShowClearButton = true,
+    ShowWeekNumbers = true
+    // .. other options
+};
+
+var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
+if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtonResult.Cancel)
+{
+    MyDateTime = popupResult.DateTimeResult;
+}
+    </code>
+</pre>    
+
+### or use as ContentView
+1- Add the NullableDateTimePicker control to your XAML layout file:
 
 xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
 <pre>
@@ -35,7 +57,7 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 </code>
 </pre>
 
-3- Bind the DateTime? value property to a property in your view model:
+2- Bind the DateTime? value property to a property in your view model:
 <pre>
 <code>
 &lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
@@ -109,6 +131,10 @@ on ios, android, windows
 ![DateTimePicker](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
 
 # Changelog
+
+### 1.0.3
+- The calendar popup can be opened directly via the NullableDateTimePicker, so you can use your own entry and button.
+- A Builder Extension has been added. In this way, Configure Nullable DateTimePicker can be used without adding CommunityToolKit to your own project.
 
 ### 1.0.2
 - On some screens, week and day numbers were not displayed on the same line.
