@@ -27,7 +27,7 @@ public static MauiApp CreateMauiApp()
 ### Use direct calendar popup with your own entry and button
 <pre>
     <code>
-    INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
+INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
 {
     InitDateTimeValue = MyDateTime,
     PickerMode = PickerMode.DateTime,
@@ -37,9 +37,9 @@ public static MauiApp CreateMauiApp()
 };
 
 var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
-if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtonResult.Cancel)
+if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
 {
-    MyDateTime = popupResult.DateTimeResult;
+    MyDateTime = popupResult.DateTimeValue;
 }
     </code>
 </pre>    
@@ -91,11 +91,6 @@ More examples, please see the samples project
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
 
-# Other properties
-| Property | Description | Default Value |
-|--------|-------------|---------|
-| Icon | ImageSource for Icon.	| null |
-| IconBackgroundColor | Backgroundcolor of the Icon.| #E1E1E1 |
 
 # NullableDateTimeChanged Event
 The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
