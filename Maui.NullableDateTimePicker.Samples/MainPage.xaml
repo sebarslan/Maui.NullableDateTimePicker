@@ -37,12 +37,11 @@
             <Label Text="Datepicker programmatically" />
             <StackLayout x:Name="DateTimePlaceStackLayout"></StackLayout>
 
-            <Label Text="Calling popup directly without contentview" />
+            <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
             <HorizontalStackLayout HorizontalOptions="Fill">
                 <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True">
                     <Entry.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OpenCalendarEntry_Clicked"
-                              NumberOfTapsRequired="2" />
+                        <TapGestureRecognizer Tapped="OpenCalendarEntry_Clicked" />
                     </Entry.GestureRecognizers>
                 </Entry>
                 <ImageButton Source="{Binding CalendarIcon}" Clicked="OpenCalendarButton_Clicked" WidthRequest="30" HeightRequest="30" />
@@ -50,7 +49,6 @@
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:dd.MM.yyyy HH:mm}'}" />
             <!-- Nullable datetime picker -->
-
 
 
             <Image

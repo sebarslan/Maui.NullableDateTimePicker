@@ -637,27 +637,13 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
 
             };
 
-            NullableDateTimePickerPopup popupControl = new(options);
+            var result = await NullableDateTimePicker.OpenPopupAsync(options);
 
-            await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
+            NullableDateTimePickerPopup popupControl = new(options);
+            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
             {
-                try
-                {
-                    var result = await popupControl.OpenPopupAsync();
-                    if (result is PopupResult popupResult)
-                    {
-                        NullableDateTime = popupResult.DateTimeValue;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-                finally
-                {
-                    popupControl = null;
-                }
-            });
+                NullableDateTime = popupResult.DateTimeValue;
+            }
         }
         catch (Exception ex)
         {
