@@ -77,7 +77,7 @@ namespace Maui.NullableDateTimePicker.Samples
             DateTimePlaceStackLayout.Add(datePicker);
         }
 
-        private async void OpenPopupAsync_Clicked(object sender, EventArgs e)
+        private async void DateTimePicker_Clicked(object sender, EventArgs e)
         {
             INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
             {
