@@ -34,6 +34,13 @@ public class NullableDateTimePicker : ContentView
             IsReadOnly = true
         };
 
+        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+        tapGestureRecognizer.Tapped += (s, e) =>
+        {
+            OnDatePickerClicked(s, e);
+        };
+        _dateTimePickerEntry.GestureRecognizers.Add(tapGestureRecognizer);
+
         _dateTimePickerIcon = new ImageButton
         {
             WidthRequest = 30,
@@ -44,7 +51,7 @@ public class NullableDateTimePicker : ContentView
         };
 
 
-        _dateTimePickerIcon.Clicked += OnDatePickerIconClicked;
+        _dateTimePickerIcon.Clicked += OnDatePickerClicked;
 
 
         _contentLayout = new Microsoft.Maui.Controls.Grid
@@ -594,7 +601,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     }
     #endregion //bindable properties
 
-    private void OnDatePickerIconClicked(object sender, EventArgs e)
+    private void OnDatePickerClicked(object sender, EventArgs e)
     {
         OpenCalendarPopup();
     }
