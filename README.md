@@ -27,7 +27,7 @@ public static MauiApp CreateMauiApp()
 ### Use direct calendar popup with your own entry and button
 <pre>
     <code>
-    INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
+INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
 {
     InitDateTimeValue = MyDateTime,
     PickerMode = PickerMode.DateTime,
