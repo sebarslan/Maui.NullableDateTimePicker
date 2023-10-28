@@ -74,6 +74,32 @@ public class NullableDateTimePicker : ContentView
         Content = _contentLayout;
     }
 
+    public static async Task<object> OpenPopupAsync(INullableDateTimePickerOptions options)
+    {
+        NullableDateTimePickerPopup popupControl = new(options);
+        var popupResultTask = new PopupResultTask<PopupResult>();
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
+        {
+            try
+            {
+                var result = await popupControl.OpenPopupAsync();
+                if (result is PopupResult popupResult)
+                {
+                    popupResultTask.SetResult(popupResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                popupControl = null;
+            }
+        });
+        return await popupResultTask.Result;
+    }
+
     #region bindable properties
     public static readonly BindableProperty NullableDateTimeProperty =
     BindableProperty.Create(nameof(NullableDateTime),

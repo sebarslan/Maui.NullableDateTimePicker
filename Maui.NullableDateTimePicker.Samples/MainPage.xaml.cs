@@ -82,13 +82,12 @@ namespace Maui.NullableDateTimePicker.Samples
             INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
             {
                 InitDateTimeValue = MyDateTime,
+                PickerMode = PickerMode.DateTime,
                 ShowClearButton = true,
                 ShowWeekNumbers = true
             };
 
-            INullableDateTimePickerPopup nullableDateTimePickerPopup = new NullableDateTimePickerPopup(nullableDateTimePickerOptions);
-            
-            var result = await nullableDateTimePickerPopup.OpenPopupAsync();
+            var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtonResult.Cancel)
             {
                 MyDateTime = popupResult.DateTimeResult;
