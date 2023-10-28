@@ -32,10 +32,10 @@ public static MauiApp CreateMauiApp()
 &lt;HorizontalStackLayout HorizontalOptions="Fill"&gt;
     &lt;Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True"&gt;
         &lt;Entry.GestureRecognizers&gt;
-            &lt;TapGestureRecognizer Tapped="OpenPopupAsync_Clicked" /&gt;
+            &lt;TapGestureRecognizer Tapped="DateTimePicker_Clicked" /&gt;
         &lt;/Entry.GestureRecognizers&gt;
     &lt;/Entry&gt;
-    &lt;ImageButton Source="{Binding CalendarIcon}" Clicked="OpenPopupAsync_Clicked" WidthRequest="30" HeightRequest="30" /&gt;
+    &lt;ImageButton Source="{Binding CalendarIcon}" Clicked="DateTimePicker_Clicked" WidthRequest="30" HeightRequest="30" /&gt;
 &lt;/HorizontalStackLayout&gt;
  </code>
 </pre>  
