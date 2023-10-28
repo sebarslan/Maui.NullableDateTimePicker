@@ -91,6 +91,7 @@ namespace Maui.NullableDateTimePicker.Samples
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
             {
                 MyDateTime = popupResult.DateTimeValue;
+                //DateTimeEntry.Text = popupResult.DateTimeValue?.ToString("g"); //If you are not using ViewModel
             }
         }
     }

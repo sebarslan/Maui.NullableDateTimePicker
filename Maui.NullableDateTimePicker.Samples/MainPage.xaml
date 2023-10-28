@@ -39,7 +39,7 @@
 
             <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
             <HorizontalStackLayout HorizontalOptions="Fill" HeightRequest="40">
-                <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" 
+                <Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
                        HorizontalOptions="Fill" 
                        VerticalOptions="Fill" 
                        IsReadOnly="True">
