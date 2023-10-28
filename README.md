@@ -9,7 +9,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-Add .ConfigureNullableDateTimePicker() to the MauiProgram.cs file in your project.
+0- Add .ConfigureNullableDateTimePicker() to the MauiProgram.cs file in your project.
 
 <pre>
 <code>
@@ -29,13 +29,19 @@ public static MauiApp CreateMauiApp()
 1- Add your entry or button for datetime in xaml page (eg. MainPage.xaml)
 <pre>
 <code>
-&lt;HorizontalStackLayout HorizontalOptions="Fill"&gt;
-    &lt;Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True"&gt;
+&lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
+    &lt;Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" 
+    HorizontalOptions="Fill"
+    VerticalOptions="Fill"
+    IsReadOnly="True"&gt;
         &lt;Entry.GestureRecognizers&gt;
             &lt;TapGestureRecognizer Tapped="DateTimePicker_Clicked" /&gt;
         &lt;/Entry.GestureRecognizers&gt;
     &lt;/Entry&gt;
-    &lt;ImageButton Source="{Binding CalendarIcon}" Clicked="DateTimePicker_Clicked" WidthRequest="30" HeightRequest="30" /&gt;
+    &lt;ImageButton Source="{Binding CalendarIcon}" 
+    Clicked="DateTimePicker_Clicked"
+    HorizontalOptions="Fill"
+    VerticalOptions="Fill" /&gt;
 &lt;/HorizontalStackLayout&gt;
  </code>
 </pre>  
@@ -146,13 +152,12 @@ on ios, android, windows
 
 # Changelog
 
-### 1.0.3
+### 1.1.0
 - The calendar popup can be opened directly via the NullableDateTimePicker, so you can use your own entry and button.
 - A Builder Extension has been added. In this way, Configure Nullable DateTimePicker can be used without adding CommunityToolKit to your own project.
-
-### 1.0.2
 - On some screens, week and day numbers were not displayed on the same line.
 
+### 1.0.2
 - The problem of displaying the default icon in default mode has been fixed.
 
 - Various improvements.
