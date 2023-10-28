@@ -68,6 +68,9 @@ More examples, please see the samples project
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
+
+# Other properties
+| Property | Description | Default Value |
 | Icon | ImageSource for Icon.	| null |
 | IconBackgroundColor | Backgroundcolor of the Icon.| #E1E1E1 |
 
