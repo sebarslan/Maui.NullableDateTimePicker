@@ -39,7 +39,12 @@
 
             <Label Text="Calling popup directly without contentview" />
             <HorizontalStackLayout HorizontalOptions="Fill">
-                <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" />
+                <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True">
+                    <Entry.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenCalendarEntry_Clicked"
+                              NumberOfTapsRequired="2" />
+                    </Entry.GestureRecognizers>
+                </Entry>
                 <ImageButton Source="{Binding CalendarIcon}" Clicked="OpenCalendarButton_Clicked" WidthRequest="30" HeightRequest="30" />
             </HorizontalStackLayout>
 
