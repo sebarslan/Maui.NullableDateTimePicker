@@ -9,7 +9,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-Add .ConfigureNullableDateTimePicker() to the MauiProgram.cs file in your project.
+0- Add .ConfigureNullableDateTimePicker() to the MauiProgram.cs file in your project.
 
 <pre>
 <code>
@@ -146,13 +146,12 @@ on ios, android, windows
 
 # Changelog
 
-### 1.0.3
+### 1.1.0
 - The calendar popup can be opened directly via the NullableDateTimePicker, so you can use your own entry and button.
 - A Builder Extension has been added. In this way, Configure Nullable DateTimePicker can be used without adding CommunityToolKit to your own project.
-
-### 1.0.2
 - On some screens, week and day numbers were not displayed on the same line.
 
+### 1.0.2
 - The problem of displaying the default icon in default mode has been fixed.
 
 - Various improvements.
