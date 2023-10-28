@@ -633,8 +633,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 ShowOtherMonthDays = this.ShowOtherMonthDays,
                 ActivityIndicatorColor = this.ActivityIndicatorColor,
                 ShowClearButton = this.ShowClearButton,
-                CloseOnOutsideClick = this.CloseOnOutsideClick,
-
+                CloseOnOutsideClick = this.CloseOnOutsideClick
             };
 
             var result = await NullableDateTimePicker.OpenPopupAsync(options);

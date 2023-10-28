@@ -41,10 +41,10 @@
             <HorizontalStackLayout HorizontalOptions="Fill">
                 <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True">
                     <Entry.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OpenCalendarEntry_Clicked" />
+                        <TapGestureRecognizer Tapped="OpenPopupAsync_Clicked" />
                     </Entry.GestureRecognizers>
                 </Entry>
-                <ImageButton Source="{Binding CalendarIcon}" Clicked="OpenCalendarButton_Clicked" WidthRequest="30" HeightRequest="30" />
+                <ImageButton Source="{Binding CalendarIcon}" Clicked="OpenPopupAsync_Clicked" WidthRequest="30" HeightRequest="30" />
             </HorizontalStackLayout>
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:dd.MM.yyyy HH:mm}'}" />
