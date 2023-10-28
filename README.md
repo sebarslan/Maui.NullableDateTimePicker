@@ -17,7 +17,7 @@ public static MauiApp CreateMauiApp()
 {
     var builder = MauiApp.CreateBuilder();
     builder
-    .UseMauiApp<App>()
+    .UseMauiApp&lt;App&gt;()
     .UseMauiCommunityToolkit()
     ....
 </code>
