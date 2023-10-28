@@ -26,7 +26,7 @@ public static MauiApp CreateMauiApp()
 
 ### Use direct calendar popup with your own entry and button
 
-1- Add your entry or button for datetime in xaml page (eg. MainPage.xaml)
+1- Add your entry or button for datetime in your xaml page (eg. MainPage.xaml)
 <pre>
 <code>
 &lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
@@ -64,6 +64,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
     if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
     {
         MyDateTime = popupResult.DateTimeValue;
+        // DateTimeEntry.Text = popupResult.DateTimeValue?.ToString("g"); //If you are not using ViewModel
     }
 }
 </code>
