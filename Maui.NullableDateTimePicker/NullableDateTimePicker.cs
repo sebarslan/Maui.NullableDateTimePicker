@@ -23,7 +23,6 @@ public class NullableDateTimePicker : ContentView
         Padding = 0;
         BackgroundColor = Colors.Transparent;
 
-
         _dateTimePickerEntry = new Entry()
         {
             IsVisible = true,
@@ -45,14 +44,12 @@ public class NullableDateTimePicker : ContentView
         {
             WidthRequest = 30,
             Aspect = Aspect.AspectFit,
-            BackgroundColor = Color.FromArgb("#E1E1E1"),
+            BackgroundColor = Color.FromRgba("#E1E1E1"),
             Padding = 2,
             Margin = 0
         };
 
-
         _dateTimePickerIcon.Clicked += OnDatePickerClicked;
-
 
         _contentLayout = new Microsoft.Maui.Controls.Grid
         {
@@ -472,7 +469,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         validateValue: null,
         propertyChanged: (b, o, n) =>
     {
-        ((NullableDateTimePicker)b)._dateTimePickerIcon.BackgroundColor = (Color)o ?? Color.FromArgb("#E1E1E1");
+        ((NullableDateTimePicker)b)._dateTimePickerIcon.BackgroundColor = (Color)o ?? Color.FromRgba("#E1E1E1");
     });
 
     public Color IconBackgroundColor

@@ -265,7 +265,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 // Fill the day grid with buttons for each day of the month
                 for (int day = 1; day <= daysInMonth; day++)
                 {
-                    var dayButton = _dayButtons[day-1];
+                    var dayButton = _dayButtons[day - 1];
                     _daysGrid.Add(dayButton, col + 1, row);
 
                     col++;
@@ -641,7 +641,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _calendarGrid = new Grid
         {
-            BackgroundColor = _options.BackgroundColor ?? Colors.White,
+            BackgroundColor = _options.BackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#2e2e2e") : Colors.White),
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
             Padding = new Thickness(0),
@@ -670,7 +670,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         Grid headerGrid = new()
         {
-            BackgroundColor = _options.HeaderBackgroundColor ?? Color.FromArgb("#2b0b98"),
+            BackgroundColor = _options.HeaderBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#191919") : Color.FromRgba("#2b0b98")),
             Padding = new Thickness(10, 0, 10, 0),
             Margin = 0,
             HorizontalOptions = LayoutOptions.Fill,
@@ -690,6 +690,7 @@ public partial class NullableDateTimePickerContent : ContentView
             FontSize = 16,
             Margin = new Thickness(0),
             TextColor = _options.HeaderForeColor ?? Colors.White,
+            TitleColor = _options.HeaderForeColor ?? Colors.White,
             BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
@@ -723,6 +724,7 @@ public partial class NullableDateTimePickerContent : ContentView
             Margin = 0,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
+            BackgroundColor = Colors.Transparent,
             ColumnDefinitions =
             {
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
@@ -734,7 +736,7 @@ public partial class NullableDateTimePickerContent : ContentView
         _previousMonthButton = new Button
         {
             Text = "<",
-            TextColor = _options.ForeColor ?? Colors.Black,
+            TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             BackgroundColor = Colors.Transparent,
             BorderColor = Colors.Transparent,
             FontAttributes = FontAttributes.Bold,
@@ -748,8 +750,9 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _monthYearLabel = new Label
         {
+            BackgroundColor = Colors.Transparent,
             FontSize = 14,
-            TextColor = _options.ForeColor ?? Colors.Black,
+            TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -760,7 +763,7 @@ public partial class NullableDateTimePickerContent : ContentView
         _nextMonthButton = new Button
         {
             Text = ">",
-            TextColor = _options.ForeColor ?? Colors.Black,
+            TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             BackgroundColor = Colors.Transparent,
             BorderColor = Colors.Transparent,
             FontAttributes = FontAttributes.Bold,
@@ -778,7 +781,7 @@ public partial class NullableDateTimePickerContent : ContentView
         #region days
         _daysGrid = new Grid
         {
-            BackgroundColor = _options.BackgroundColor ?? Colors.White,
+            BackgroundColor = Colors.Transparent,
             ColumnSpacing = 0,
             RowSpacing = 0,
             Padding = new Thickness(0),
@@ -806,7 +809,8 @@ public partial class NullableDateTimePickerContent : ContentView
             _hoursPicker = new Picker
             {
                 BackgroundColor = Colors.Transparent,
-                TextColor = _options.ForeColor ?? Colors.Black,
+                TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
@@ -820,7 +824,7 @@ public partial class NullableDateTimePickerContent : ContentView
             {
                 Text = ":",
                 BackgroundColor = Colors.Transparent,
-                TextColor = _options.ForeColor ?? Colors.Black,
+                TextColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 HeightRequest = 40,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
@@ -829,7 +833,8 @@ public partial class NullableDateTimePickerContent : ContentView
             _minutesPicker = new Picker
             {
                 BackgroundColor = Colors.Transparent,
-                TextColor = _options.ForeColor ?? Colors.Black,
+                TextColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                TitleColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
@@ -841,6 +846,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
             _timeStackLayout = new StackLayout
             {
+                Background = Colors.Transparent,
                 Orientation = StackOrientation.Horizontal,
                 Spacing = 0,
                 Margin = new Thickness(0),

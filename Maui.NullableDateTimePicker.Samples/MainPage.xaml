@@ -38,16 +38,24 @@
             <StackLayout x:Name="DateTimePlaceStackLayout"></StackLayout>
 
             <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
-            <HorizontalStackLayout HorizontalOptions="Fill">
-                <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True">
+            <HorizontalStackLayout HorizontalOptions="Fill" HeightRequest="40">
+                <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" 
+                       HorizontalOptions="Fill" 
+                       VerticalOptions="Fill" 
+                       IsReadOnly="True">
                     <Entry.GestureRecognizers>
                         <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
                     </Entry.GestureRecognizers>
                 </Entry>
-                <ImageButton Source="{Binding CalendarIcon}" Clicked="DateTimePicker_Clicked" WidthRequest="30" HeightRequest="30" />
+                <ImageButton Source="{Binding CalendarIcon}" 
+                             Clicked="DateTimePicker_Clicked" 
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill"
+                             Margin="0"
+                             BackgroundColor="{AppThemeBinding Dark=White, Default=#E1E1E1}" />
             </HorizontalStackLayout>
 
-            <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:d} {0:t}'}" />
+            <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" />
             <!-- Nullable datetime picker -->
 
 

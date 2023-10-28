@@ -60,7 +60,7 @@
                     };
 
                     _selectedDayStyle.Setters.Add(new Setter { Property = Button.CornerRadiusProperty, Value = DeviceInfo.Platform == DevicePlatform.iOS ? 15 : 50 });
-                    _selectedDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White });
+                    _selectedDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White  });
                     _selectedDayStyle.Setters.Add(new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Blue });
                 }
 
@@ -82,7 +82,7 @@
                             new Setter { Property = Label.HorizontalTextAlignmentProperty, Value = TextAlignment.Center },
                             new Setter { Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center },
                             new Setter { Property = Label.FontSizeProperty, Value = 12 },
-                            new Setter { Property = Label.TextColorProperty, Value =  Color.FromArgb("#512BD4") },
+                            new Setter { Property = Label.TextColorProperty, Value =  Color.FromRgba("#512BD4") },
                             new Setter { Property = Label.FontAttributesProperty, Value = FontAttributes.Bold },
                             new Setter { Property = Label.MarginProperty, Value = 0 },
                             new Setter { Property = Label.PaddingProperty, Value = 0 },
@@ -131,7 +131,7 @@
                             new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = View.MarginProperty, Value = new Thickness(10, 0, 10, 0) },
-                            new Setter { Property = Button.TextColorProperty, Value = Color.FromArgb("#7658dd") },
+                            new Setter { Property = Button.TextColorProperty, Value = Color.FromRgba("#7658dd") },
                             new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold }
                         }
                     };
