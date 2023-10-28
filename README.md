@@ -26,11 +26,11 @@ public static MauiApp CreateMauiApp()
 
 ### Use direct calendar popup with your own entry and button
 
-1- Add your entry or button for datetime in xaml page (eg. MainPage.xaml)
+1- Add your entry or button for datetime in your xaml page (eg. MainPage.xaml)
 <pre>
 <code>
 &lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
-    &lt;Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" 
+    &lt;Entry Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
     HorizontalOptions="Fill"
     VerticalOptions="Fill"
     IsReadOnly="True"&gt;
@@ -64,6 +64,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
     if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
     {
         MyDateTime = popupResult.DateTimeValue;
+        // DateTimeEntry.Text = popupResult.DateTimeValue?.ToString("g"); //If you are not using ViewModel
     }
 }
 </code>
@@ -156,6 +157,7 @@ on ios, android, windows
 - The calendar popup can be opened directly via the NullableDateTimePicker, so you can use your own entry and button.
 - A Builder Extension has been added. In this way, Configure Nullable DateTimePicker can be used without adding CommunityToolKit to your own project.
 - On some screens, week and day numbers were not displayed on the same line.
+- Dark theme adjusted
 
 ### 1.0.2
 - The problem of displaying the default icon in default mode has been fixed.
