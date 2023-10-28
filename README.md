@@ -10,6 +10,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
 1- Add .UseMauiCommunityToolkit() to the MauiProgram.cs file in your project.
+
 <pre>
 <code>
 public static MauiApp CreateMauiApp()
@@ -67,6 +68,12 @@ More examples, please see the samples project
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
+
+# Other properties
+| Property | Description | Default Value |
+|--------|-------------|---------|
+| Icon | ImageSource for Icon.	| null |
+| IconBackgroundColor | Backgroundcolor of the Icon.| #E1E1E1 |
 
 # NullableDateTimeChanged Event
 The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
