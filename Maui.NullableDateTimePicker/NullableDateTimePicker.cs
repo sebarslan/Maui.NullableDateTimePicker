@@ -646,7 +646,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                     var result = await popupControl.OpenPopupAsync();
                     if (result is PopupResult popupResult)
                     {
-                        NullableDateTime = popupResult.DateTimeResult;
+                        NullableDateTime = popupResult.DateTimeValue;
                     }
                 }
                 catch (Exception ex)
