@@ -25,23 +25,42 @@ public static MauiApp CreateMauiApp()
 </pre>
 
 ### Use direct calendar popup with your own entry and button
-<pre>
-    <code>
-INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
-{
-    InitDateTimeValue = MyDateTime,
-    PickerMode = PickerMode.DateTime,
-    ShowClearButton = true,
-    ShowWeekNumbers = true
-    // .. other options
-};
 
-var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
-if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
+1- Add your entry or button for datetime in xaml page (eg. MainPage.xaml)
+<pre>
+<code>
+&lt;HorizontalStackLayout HorizontalOptions="Fill"&gt;
+    &lt;Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" IsReadOnly="True"&gt;
+        &lt;Entry.GestureRecognizers&gt;
+            &lt;TapGestureRecognizer Tapped="DateTimePicker_Clicked" /&gt;
+        &lt;/Entry.GestureRecognizers&gt;
+    &lt;/Entry&gt;
+    &lt;ImageButton Source="{Binding CalendarIcon}" Clicked="DateTimePicker_Clicked" WidthRequest="30" HeightRequest="30" /&gt;
+&lt;/HorizontalStackLayout&gt;
+ </code>
+</pre>  
+
+2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenPopupAsync(options) to open the calendar.
+<pre>
+<code>
+private async void DateTimePicker_Clicked(object sender, EventArgs e)
 {
-    MyDateTime = popupResult.DateTimeValue;
+    INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
+    {
+        InitDateTimeValue = MyDateTime,
+        PickerMode = PickerMode.DateTime,
+        ShowClearButton = true,
+        ShowWeekNumbers = true
+        // .. other options
+    };
+
+    var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
+    if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
+    {
+        MyDateTime = popupResult.DateTimeValue;
+    }
 }
-    </code>
+</code>
 </pre>    
 
 ### or use as ContentView
