@@ -37,9 +37,9 @@ INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateT
 };
 
 var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
-if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtonResult.Cancel)
+if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
 {
-    MyDateTime = popupResult.DateTimeResult;
+    MyDateTime = popupResult.DateTimeValue;
 }
     </code>
 </pre>    
