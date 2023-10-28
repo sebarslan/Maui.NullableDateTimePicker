@@ -71,6 +71,7 @@ More examples, please see the samples project
 
 # Other properties
 | Property | Description | Default Value |
+|--------|-------------|---------|
 | Icon | ImageSource for Icon.	| null |
 | IconBackgroundColor | Backgroundcolor of the Icon.| #E1E1E1 |
 
