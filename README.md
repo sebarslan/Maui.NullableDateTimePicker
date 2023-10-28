@@ -91,11 +91,6 @@ More examples, please see the samples project
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
 
-# Other properties
-| Property | Description | Default Value |
-|--------|-------------|---------|
-| Icon | ImageSource for Icon.	| null |
-| IconBackgroundColor | Backgroundcolor of the Icon.| #E1E1E1 |
 
 # NullableDateTimeChanged Event
 The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
