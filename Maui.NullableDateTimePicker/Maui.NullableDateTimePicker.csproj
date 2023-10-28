@@ -41,7 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="NullableDateTimePickerContent.xaml">
+		<MauiXaml Update="Popup\NullableDateTimePickerContent.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>

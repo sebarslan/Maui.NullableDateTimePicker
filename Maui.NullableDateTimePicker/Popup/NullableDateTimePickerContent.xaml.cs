@@ -1,4 +1,8 @@
 ﻿using System.Globalization;
+using Maui.NullableDateTimePicker.Enums;
+using Maui.NullableDateTimePicker.Helpers;
+using Maui.NullableDateTimePicker.Interfaces;
+using Maui.NullableDateTimePicker.Models;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -11,7 +15,7 @@ public partial class NullableDateTimePickerContent : ContentView
     private DateTime _currentDate;
     readonly DateTime _minDate;
     readonly DateTime _maxDate;
-    readonly NullableDateTimePickerOptions _options;
+    readonly INullableDateTimePickerOptions _options;
     private Grid _calendarGrid;
     private Button _okButton;
     private Button _cancelButton;
@@ -33,7 +37,7 @@ public partial class NullableDateTimePickerContent : ContentView
     private StackLayout _timeStackLayout;
     private List<Button> _dayButtons;
 
-    internal NullableDateTimePickerContent(NullableDateTimePickerOptions options)
+    internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
     {
         options ??= new NullableDateTimePickerOptions();
 
@@ -261,7 +265,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 // Fill the day grid with buttons for each day of the month
                 for (int day = 1; day <= daysInMonth; day++)
                 {
-                    var dayButton = _dayButtons[^day];
+                    var dayButton = _dayButtons[day-1];
                     _daysGrid.Add(dayButton, col + 1, row);
 
                     col++;
@@ -348,8 +352,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 bool lastRowEmpty = true;
                 for (int i = 1; i <= 7; i++)
                 {
-                    Button lastButton = _daysGrid.Children.LastOrDefault(c => _daysGrid.GetRow(c) == 6 && _daysGrid.GetColumn(c) == i) as Button;
-                    if (lastButton != null && !string.IsNullOrEmpty(lastButton.Text))
+                    if (_daysGrid.Children.LastOrDefault(c => _daysGrid.GetRow(c) == 6 && _daysGrid.GetColumn(c) == i) is Button lastButton && !string.IsNullOrEmpty(lastButton.Text))
                     {
                         lastRowEmpty = false;
                         break;
@@ -387,7 +390,7 @@ public partial class NullableDateTimePickerContent : ContentView
     private void UpdateCurrentDateAndControls(DateTime? date)
     {
         _currentDate = date ?? DateTime.Now;
-        Console.Write($"UpdateCurrentDate: {_currentDate.ToString()}");
+        Console.Write($"UpdateCurrentDate: {_currentDate}");
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
             _yearsPicker.SelectedItem = _currentDate.Year;
@@ -626,7 +629,7 @@ public partial class NullableDateTimePickerContent : ContentView
             _dayButtons = new List<Button>();
             for (int day = 1; day <= 31; day++)
             {
-                Button button = new Button
+                Button button = new()
                 {
                     Text = day.ToString(),
                     Style = _dayStyle
@@ -645,6 +648,8 @@ public partial class NullableDateTimePickerContent : ContentView
             Margin = new Thickness(0),
             ColumnSpacing = 0,
             RowSpacing = 0,
+            MaximumWidthRequest = 300,
+            MaximumHeightRequest = 450,
             ColumnDefinitions =
             {
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
@@ -663,7 +668,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         #region header
 
-        Grid headerGrid = new Grid
+        Grid headerGrid = new()
         {
             BackgroundColor = _options.HeaderBackgroundColor ?? Color.FromArgb("#2b0b98"),
             Padding = new Thickness(10, 0, 10, 0),
@@ -712,7 +717,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         #endregion //header
 
-        Grid preNextButtonsGrid = new Grid
+        Grid preNextButtonsGrid = new()
         {
             Padding = new Thickness(5, 0),
             Margin = 0,
@@ -854,7 +859,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
 
         #region ToolButtons row
-        Grid toolButtonsGrid = new Grid
+        Grid toolButtonsGrid = new()
         {
             Margin = 0,
             Padding = new Thickness(5, 0),

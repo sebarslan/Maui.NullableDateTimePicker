@@ -1,4 +1,10 @@
-﻿namespace Maui.NullableDateTimePicker.Samples
+﻿using Maui.NullableDateTimePicker.Enums;
+using Maui.NullableDateTimePicker.Interfaces;
+using Maui.NullableDateTimePicker.Models;
+using Maui.NullableDateTimePicker.Modes;
+using Maui.NullableDateTimePicker.Popup;
+
+namespace Maui.NullableDateTimePicker.Samples
 {
     public partial class MainPage : ContentPage
     {
@@ -8,6 +14,8 @@
         {
             BindingContext = this;
             InitializeComponent();
+
+
 
             // Create Datetimepicker 
             CreateDateTimePickerProgrammatically();
@@ -29,7 +37,8 @@
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
             FontAutoScalingEnabled = true,
-            Color = Colors.Black
+            Color = Colors.Black,
+            Size = 20
         };
         public FontImageSource CalendarIcon => calendarIcon;
 
@@ -49,7 +58,7 @@
         {
             Maui.NullableDateTimePicker.NullableDateTimePicker datePicker = new()
             {
-                Mode = Maui.NullableDateTimePicker.PickerMode.Date,
+                Mode = PickerMode.Date,
                 Format = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                 ShowWeekNumbers = true,
                 ShowOtherMonthDays = true,
@@ -66,6 +75,24 @@
             datePicker.SetBinding(Maui.NullableDateTimePicker.NullableDateTimePicker.NullableDateTimeProperty, nameof(MyDateTime), BindingMode.TwoWay);
 
             DateTimePlaceStackLayout.Add(datePicker);
+        }
+
+        private async void OpenCalendarButton_Clicked(object sender, EventArgs e)
+        {
+            INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
+            {
+                InitDateTimeValue = MyDateTime,
+                ShowClearButton = true,
+                ShowWeekNumbers = true
+            };
+
+            INullableDateTimePickerPopup nullableDateTimePickerPopup = new NullableDateTimePickerPopup(nullableDateTimePickerOptions);
+            
+            var result = await nullableDateTimePickerPopup.OpenPopupAsync();
+            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtonResult.Cancel)
+            {
+                MyDateTime = popupResult.DateTimeResult;
+            }
         }
     }
 

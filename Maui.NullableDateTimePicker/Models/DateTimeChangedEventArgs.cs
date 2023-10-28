@@ -1,4 +1,4 @@
-﻿namespace Maui.NullableDateTimePicker
+﻿namespace Maui.NullableDateTimePicker.Models
 {
     public class DateTimeChangedEventArgs : EventArgs
     {

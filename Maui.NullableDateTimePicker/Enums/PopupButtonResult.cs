@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maui.NullableDateTimePicker
+namespace Maui.NullableDateTimePicker.Enums
 {
-    internal enum PopupButtonResult
+    public enum PopupButtonResult
     {
         Ok,
         Clear,

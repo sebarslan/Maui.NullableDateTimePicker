@@ -7,9 +7,7 @@
         {
             get
             {
-                if (_dayStyle == null)
-                {
-                    _dayStyle = new Style(typeof(Button))
+                _dayStyle ??= new Style(typeof(Button))
                     {
                         Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
@@ -28,7 +26,6 @@
                             new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 }
                         }
                     };
-                }
                 return _dayStyle;
             }
         }
@@ -76,9 +73,7 @@
         {
             get
             {
-                if (_weekNumberStyle == null)
-                {
-                    _weekNumberStyle = new Style(typeof(Label))
+                _weekNumberStyle ??= new Style(typeof(Label))
                     {
                         Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
@@ -94,7 +89,6 @@
                             new Setter { Property = Label.LineBreakModeProperty, Value = LineBreakMode.NoWrap }
                         }
                     };
-                }
 
                 return _weekNumberStyle;
             }
@@ -105,9 +99,7 @@
         {
             get
             {
-                if (_dayNamesStyle == null)
-                {
-                    _dayNamesStyle = new Style(typeof(Label))
+                _dayNamesStyle ??= new Style(typeof(Label))
                     {
                         Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
@@ -121,7 +113,6 @@
                             new Setter { Property = Label.TextColorProperty, Value = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black },
                         }
                     };
-                }
 
                 return _dayNamesStyle;
             }
@@ -132,9 +123,7 @@
         {
             get
             {
-                if (_toolButtonsStyle == null)
-                {
-                    _toolButtonsStyle = new Style(typeof(Button))
+                _toolButtonsStyle ??= new Style(typeof(Button))
                     {
                         Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
@@ -146,7 +135,6 @@
                             new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold }
                         }
                     };
-                }
 
                 return _toolButtonsStyle;
             }

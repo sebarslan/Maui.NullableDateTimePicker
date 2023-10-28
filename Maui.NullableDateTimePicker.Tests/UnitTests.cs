@@ -1,4 +1,5 @@
-﻿using Maui.NullableDateTimePicker;
+﻿using Maui.NullableDateTimePicker.Enums;
+using Maui.NullableDateTimePicker.Models;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;

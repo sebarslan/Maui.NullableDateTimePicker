@@ -37,8 +37,16 @@
             <Label Text="Datepicker programmatically" />
             <StackLayout x:Name="DateTimePlaceStackLayout"></StackLayout>
 
-            <Label Text="{Binding MyDate, StringFormat='The date is: {0:dd.MM.yyyy HH:mm}'}" />
+            <Label Text="Calling popup directly without contentview" />
+            <HorizontalStackLayout HorizontalOptions="Fill">
+                <Entry Text="{Binding MyDateTime, StringFormat='{0:d} {0:t}'}" HeightRequest="40" HorizontalOptions="Fill" />
+                <ImageButton Source="{Binding CalendarIcon}" Clicked="OpenCalendarButton_Clicked" WidthRequest="30" HeightRequest="30" />
+            </HorizontalStackLayout>
+
+            <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:dd.MM.yyyy HH:mm}'}" />
             <!-- Nullable datetime picker -->
+
+
 
             <Image
                 Source="dotnet_bot.png"
@@ -65,7 +73,7 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
-  
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

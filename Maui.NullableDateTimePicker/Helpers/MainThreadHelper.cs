@@ -1,4 +1,4 @@
-﻿namespace Maui.NullableDateTimePicker;
+﻿namespace Maui.NullableDateTimePicker.Helpers;
 
 internal class MainThreadHelper
 {

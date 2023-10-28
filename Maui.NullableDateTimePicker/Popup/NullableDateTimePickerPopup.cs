@@ -1,15 +1,19 @@
 ﻿using CommunityToolkit.Maui.Views;
-namespace Maui.NullableDateTimePicker
+using Maui.NullableDateTimePicker.Enums;
+using Maui.NullableDateTimePicker.Interfaces;
+using Maui.NullableDateTimePicker.Modes;
+using CommunityToolkitPopup = CommunityToolkit.Maui.Views.Popup;
+namespace Maui.NullableDateTimePicker.Popup
 {
-    internal class NullableDateTimePickerPopup : Popup
+    public class NullableDateTimePickerPopup : CommunityToolkitPopup, INullableDateTimePickerPopup
     {
-        static Page Page => Application.Current?.MainPage;
-        readonly EventHandler<EventArgs> okButtonClickedHandler = null;
-        readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
-        readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
-        NullableDateTimePickerContent _content = null;
+        private static Page Page => Application.Current?.MainPage;
+        private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
+        private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
+        private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
+        private NullableDateTimePickerContent _content = null;
 
-        internal NullableDateTimePickerPopup(NullableDateTimePickerOptions options)
+        public NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
         {
             _content = new NullableDateTimePickerContent(options);
 
@@ -65,7 +69,7 @@ namespace Maui.NullableDateTimePicker
             }
         }
 
-        internal async Task<object> OpenPopupAsync()
+        public async Task<object> OpenPopupAsync()
         {
             return await Page?.ShowPopupAsync(this);
         }

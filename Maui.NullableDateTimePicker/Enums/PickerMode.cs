@@ -1,4 +1,4 @@
-﻿namespace Maui.NullableDateTimePicker;
+﻿namespace Maui.NullableDateTimePicker.Enums;
 
 public enum PickerMode
 {
