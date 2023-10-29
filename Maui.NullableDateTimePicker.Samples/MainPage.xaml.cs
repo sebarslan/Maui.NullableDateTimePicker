@@ -15,8 +15,6 @@ namespace Maui.NullableDateTimePicker.Samples
             BindingContext = this;
             InitializeComponent();
 
-
-
             // Create Datetimepicker 
             CreateDateTimePickerProgrammatically();
         }
@@ -84,7 +82,6 @@ namespace Maui.NullableDateTimePicker.Samples
             {
                 NullableDateTime = MyDateTime,
                 PickerMode = PickerModes.DateTime,
-                ShowClearButton = true,
                 ShowWeekNumbers = true
             };
 
