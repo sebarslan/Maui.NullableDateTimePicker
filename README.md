@@ -73,7 +73,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 </code>
 </pre>    
 
-### or use as ContentView
+### or if you want to use it as ContentView control
 1- Add the NullableDateTimePicker control to your XAML layout file:
 
 xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
