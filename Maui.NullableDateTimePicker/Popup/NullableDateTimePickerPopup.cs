@@ -30,26 +30,26 @@ namespace Maui.NullableDateTimePicker.Popup
 
             okButtonClickedHandler = (s, e) =>
             {
-                ClosePopup(PopupButton.Ok);
+                ClosePopup(PopupButtons.Ok);
             };
             _content.OkButtonClicked += okButtonClickedHandler;
 
             clearButtonClickedHandler = (s, e) =>
             {
-                ClosePopup(PopupButton.Clear);
+                ClosePopup(PopupButtons.Clear);
             };
             _content.ClearButtonClicked += clearButtonClickedHandler;
 
             cancelButtonClickedHandler = (s, e) =>
             {
-                ClosePopup(PopupButton.Cancel);
+                ClosePopup(PopupButtons.Cancel);
             };
             _content.CancelButtonClicked += cancelButtonClickedHandler;
 
             Content = _content;
         }
 
-        internal void ClosePopup(PopupButton buttonResult)
+        internal void ClosePopup(PopupButtons buttonResult)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Maui.NullableDateTimePicker.Popup
                 _content.ClearButtonClicked -= clearButtonClickedHandler;
                 _content.CancelButtonClicked -= cancelButtonClickedHandler;
 
-                Close(new PopupResult { DateTimeValue = _content.SelectedDate, ButtonResult = buttonResult });
+                Close(new PopupResult { NullableDateTime = _content.SelectedDate, ButtonResult = buttonResult });
             }
             catch (Exception ex)
             {

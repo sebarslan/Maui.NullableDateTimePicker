@@ -20,7 +20,7 @@ namespace Maui.NullableDateTimePicker.Tests
         {
             options = new()
             {
-                InitDateTimeValue = testDate,
+                NullableDateTime = testDate,
                 PickerMode = PickerMode.Date
             };
             content = new NullableDateTimePickerContent(options);
@@ -88,7 +88,7 @@ namespace Maui.NullableDateTimePicker.Tests
         {
             NullableDateTimePickerOptions options = new()
             {
-                InitDateTimeValue = null,
+                NullableDateTime = null,
                 PickerMode = PickerMode.DateTime
             };
 
@@ -113,7 +113,7 @@ namespace Maui.NullableDateTimePicker.Tests
             var endDate = DateTime.Now.AddYears(10);
             var options = new NullableDateTimePickerOptions()
             {
-                InitDateTimeValue = DateTime.Now,
+                NullableDateTime = DateTime.Now,
                 PickerMode = PickerMode.Date,
                 MinDate = startDate,
                 MaxDate = endDate
@@ -122,7 +122,7 @@ namespace Maui.NullableDateTimePicker.Tests
 
             content.InitCalendar();
 
-            Random rnd = new Random();
+            Random rnd = new();
             int randomYear = rnd.Next(startDate.Year, endDate.Year);
 
             // Act

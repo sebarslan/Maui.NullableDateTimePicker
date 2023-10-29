@@ -42,8 +42,8 @@ public partial class NullableDateTimePickerContent : ContentView
         options ??= new NullableDateTimePickerOptions();
 
         _options = options;
-        _selectedDate = options.InitDateTimeValue;
-        _currentDate = options.InitDateTimeValue ?? DateTime.Now;
+        _selectedDate = options.NullableDateTime;
+        _currentDate = options.NullableDateTime ?? DateTime.Now;
         _minDate = options.MinDate ?? new DateTime(1900, 1, 1);
         _maxDate = options.MaxDate ?? new DateTime(DateTime.Now.Year + 100, 12, 31);
 

@@ -4,7 +4,7 @@ namespace Maui.NullableDateTimePicker.Modes
 {
     public class PopupResult
     {
-        public PopupButton ButtonResult { get; set; }
-        public DateTime? DateTimeValue { get; set; }
+        public PopupButtons ButtonResult { get; set; }
+        public DateTime? NullableDateTime { get; set; }
     }
 }

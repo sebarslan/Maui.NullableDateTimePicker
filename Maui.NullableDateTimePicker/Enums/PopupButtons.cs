@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Maui.NullableDateTimePicker.Enums
 {
-    public enum PopupButton
+    public enum PopupButtons
     {
         Ok,
         Clear,

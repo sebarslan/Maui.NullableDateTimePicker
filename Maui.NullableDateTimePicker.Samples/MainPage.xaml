@@ -10,6 +10,29 @@
             Padding="30,0"
             VerticalOptions="Center">
             <!-- Nullable datetime picker -->
+            <Label Text="Nullable and Clerable Datetime Picker" FontSize="16" />
+            
+            
+            <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
+            <HorizontalStackLayout HorizontalOptions="Fill" HeightRequest="40">
+                <Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
+           HorizontalOptions="Fill" 
+           VerticalOptions="Fill" 
+           IsReadOnly="True">
+                    <Entry.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
+                    </Entry.GestureRecognizers>
+                </Entry>
+                <ImageButton Source="{Binding CalendarIcon}" 
+                 Clicked="DateTimePicker_Clicked" 
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill"
+                 Margin="0"
+                 Padding="2"
+                 WidthRequest="30"
+                 BackgroundColor="{AppThemeBinding Dark=White, Default=#E1E1E1}" />
+            </HorizontalStackLayout>
+            
             <Label Text="Datepicker" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="Date" 
@@ -37,23 +60,7 @@
             <Label Text="Datepicker programmatically" />
             <StackLayout x:Name="DateTimePlaceStackLayout"></StackLayout>
 
-            <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
-            <HorizontalStackLayout HorizontalOptions="Fill" HeightRequest="40">
-                <Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
-                       HorizontalOptions="Fill" 
-                       VerticalOptions="Fill" 
-                       IsReadOnly="True">
-                    <Entry.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
-                    </Entry.GestureRecognizers>
-                </Entry>
-                <ImageButton Source="{Binding CalendarIcon}" 
-                             Clicked="DateTimePicker_Clicked" 
-                             HorizontalOptions="Fill"
-                             VerticalOptions="Fill"
-                             Margin="0"
-                             BackgroundColor="{AppThemeBinding Dark=White, Default=#E1E1E1}" />
-            </HorizontalStackLayout>
+            
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" />
             <!-- Nullable datetime picker -->

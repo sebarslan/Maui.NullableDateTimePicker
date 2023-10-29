@@ -41,7 +41,10 @@ public static MauiApp CreateMauiApp()
     &lt;ImageButton Source="{Binding CalendarIcon}" 
     Clicked="DateTimePicker_Clicked"
     HorizontalOptions="Fill"
-    VerticalOptions="Fill" /&gt;
+    VerticalOptions="Fill"
+    Margin="0"
+    Padding="2"
+    WidthRequest="30" /&gt;
 &lt;/HorizontalStackLayout&gt;
  </code>
 </pre>  
@@ -53,7 +56,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 {
     INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
     {
-        InitDateTimeValue = MyDateTime,
+        NullableDateTime = MyDateTime,
         PickerMode = PickerMode.DateTime,
         ShowClearButton = true,
         ShowWeekNumbers = true
@@ -61,10 +64,10 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
     };
 
     var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
-    if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
+    if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
     {
-        MyDateTime = popupResult.DateTimeValue;
-        // DateTimeEntry.Text = popupResult.DateTimeValue?.ToString("g"); //If you are not using ViewModel
+        MyDateTime = popupResult.NullableDateTime;
+        // DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
     }
 }
 </code>

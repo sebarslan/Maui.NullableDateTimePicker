@@ -33,7 +33,7 @@ public class NullableDateTimePicker : ContentView
             IsReadOnly = true
         };
 
-        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+        TapGestureRecognizer tapGestureRecognizer = new();
         tapGestureRecognizer.Tapped += (s, e) =>
         {
             OnDatePickerClicked(s, e);
@@ -616,7 +616,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         {
             var options = new NullableDateTimePickerOptions
             {
-                InitDateTimeValue = this.NullableDateTime,
+                NullableDateTime = this.NullableDateTime,
                 PickerMode = this.Mode,
                 MinDate = this.MinDate,
                 MaxDate = this.MaxDate,
@@ -643,9 +643,9 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
             var result = await NullableDateTimePicker.OpenPopupAsync(options);
 
             NullableDateTimePickerPopup popupControl = new(options);
-            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
+            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
-                NullableDateTime = popupResult.DateTimeValue;
+                NullableDateTime = popupResult.NullableDateTime;
             }
         }
         catch (Exception ex)

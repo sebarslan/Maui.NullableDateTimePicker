@@ -37,8 +37,7 @@ namespace Maui.NullableDateTimePicker.Samples
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
             FontAutoScalingEnabled = true,
-            Color = Colors.Black,
-            Size = 20
+            Color = Colors.Black
         };
         public FontImageSource CalendarIcon => calendarIcon;
 
@@ -77,21 +76,23 @@ namespace Maui.NullableDateTimePicker.Samples
             DateTimePlaceStackLayout.Add(datePicker);
         }
 
+
+        // NullableDateTimePicker with own entry and button
         private async void DateTimePicker_Clicked(object sender, EventArgs e)
         {
             INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
             {
-                InitDateTimeValue = MyDateTime,
+                NullableDateTime = MyDateTime,
                 PickerMode = PickerMode.DateTime,
                 ShowClearButton = true,
                 ShowWeekNumbers = true
             };
 
             var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
-            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButton.Cancel)
+            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
-                MyDateTime = popupResult.DateTimeValue;
-                //DateTimeEntry.Text = popupResult.DateTimeValue?.ToString("g"); //If you are not using ViewModel
+                MyDateTime = popupResult.NullableDateTime;
+                //DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
             }
         }
     }
