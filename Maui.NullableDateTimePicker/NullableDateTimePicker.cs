@@ -90,6 +90,9 @@ public class NullableDateTimePicker : ContentView
                 if (result is PopupResult popupResult)
                 {
                     popupResultTask.SetResult(popupResult);
+                } else
+                {
+                    popupResultTask.SetResult(null);
                 }
             }
             catch (Exception ex)

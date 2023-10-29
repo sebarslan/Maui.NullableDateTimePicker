@@ -10,7 +10,7 @@
             Padding="30,0"
             VerticalOptions="Center">
             <!-- Nullable datetime picker -->
-            <Label Text="Nullable and Clerable Datetime Picker" FontSize="16" />
+            <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
             
             
             <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
