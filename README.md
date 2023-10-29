@@ -49,7 +49,7 @@ public static MauiApp CreateMauiApp()
  </code>
 </pre>  
 
-2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenPopupAsync(options) to open the calendar.
+2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenPopupAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
 <pre>
 <code>
 private async void DateTimePicker_Clicked(object sender, EventArgs e)
