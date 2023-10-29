@@ -57,7 +57,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
     INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
     {
         NullableDateTime = MyDateTime,
-        PickerMode = PickerMode.DateTime,
+        PickerMode = PickerModes.DateTime,
         ShowClearButton = true,
         ShowWeekNumbers = true
         // .. other options

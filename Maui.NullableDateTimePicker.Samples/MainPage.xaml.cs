@@ -57,7 +57,7 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             Maui.NullableDateTimePicker.NullableDateTimePicker datePicker = new()
             {
-                Mode = PickerMode.Date,
+                Mode = PickerModes.Date,
                 Format = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                 ShowWeekNumbers = true,
                 ShowOtherMonthDays = true,
@@ -83,7 +83,7 @@ namespace Maui.NullableDateTimePicker.Samples
             INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
             {
                 NullableDateTime = MyDateTime,
-                PickerMode = PickerMode.DateTime,
+                PickerMode = PickerModes.DateTime,
                 ShowClearButton = true,
                 ShowWeekNumbers = true
             };

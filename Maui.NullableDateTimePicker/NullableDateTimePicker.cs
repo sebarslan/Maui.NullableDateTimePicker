@@ -122,15 +122,15 @@ public class NullableDateTimePicker : ContentView
 
             //Date changed event
             bool isDateTimeChanged = false;
-            if (self.Mode == PickerMode.Date && oldNullableDateTime?.Date != newNullableDateTime?.Date)
+            if (self.Mode == PickerModes.Date && oldNullableDateTime?.Date != newNullableDateTime?.Date)
             {
                 isDateTimeChanged = true;
             }
-            else if (self.Mode == PickerMode.DateTime && (oldNullableDateTime?.Date != newNullableDateTime?.Date || oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay))
+            else if (self.Mode == PickerModes.DateTime && (oldNullableDateTime?.Date != newNullableDateTime?.Date || oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay))
             {
                 isDateTimeChanged = true;
             }
-            else if (self.Mode == PickerMode.Time && oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay)
+            else if (self.Mode == PickerModes.Time && oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay)
             {
                 isDateTimeChanged = true;
             }
@@ -169,9 +169,9 @@ public class NullableDateTimePicker : ContentView
             var format = (string)GetValue(FormatProperty);
             if (string.IsNullOrEmpty(format))
             {
-                if (Mode == PickerMode.Time)
+                if (Mode == PickerModes.Time)
                     format = "t";
-                else if (Mode == PickerMode.DateTime)
+                else if (Mode == PickerModes.DateTime)
                     format = "g";
                 else
                     format = "d";
@@ -199,24 +199,24 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     public static readonly BindableProperty ModeProperty =
     BindableProperty.Create(
         nameof(Mode),
-        typeof(PickerMode),
+        typeof(PickerModes),
         typeof(NullableDateTimePicker),
-        PickerMode.Date,
+        PickerModes.Date,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
             ((NullableDateTimePicker)bindable).SetCalendarIcon();
             if (newValue is string strValue)
             {
-                if (PickerMode.TryParse(strValue, out PickerMode pickerMode))
+                if (PickerModes.TryParse(strValue, out PickerModes pickerMode))
                 {
                     newValue = pickerMode;
                 }
             }
         });
 
-    public PickerMode Mode
+    public PickerModes Mode
     {
-        get { return (PickerMode)GetValue(ModeProperty); }
+        get { return (PickerModes)GetValue(ModeProperty); }
         set { SetValue(ModeProperty, value); }
     }
 
@@ -690,9 +690,9 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         {
             string imageName = "date_icon.png";
 
-            if (Mode == PickerMode.DateTime)
+            if (Mode == PickerModes.DateTime)
                 imageName = "date_time_icon.png";
-            else if (Mode == PickerMode.Time)
+            else if (Mode == PickerModes.Time)
                 imageName = "time_icon.png";
 
             if (imgName != imageName)

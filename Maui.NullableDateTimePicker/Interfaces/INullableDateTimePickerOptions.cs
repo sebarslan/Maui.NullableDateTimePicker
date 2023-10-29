@@ -6,7 +6,7 @@ namespace Maui.NullableDateTimePicker.Interfaces;
 public interface INullableDateTimePickerOptions
 {
     DateTime? NullableDateTime { get; set; }
-    PickerMode PickerMode { get; set; }
+    PickerModes PickerMode { get; set; }
     DateTime? MinDate { get; set; }
     DateTime? MaxDate { get; set; }
     string OkButtonText { get; set; }
