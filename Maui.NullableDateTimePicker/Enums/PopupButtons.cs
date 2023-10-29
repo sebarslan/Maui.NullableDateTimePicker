@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Maui.NullableDateTimePicker.Enums;
 
-namespace Maui.NullableDateTimePicker.Enums
+public enum PopupButtons
 {
-    public enum PopupButtons
-    {
-        Ok,
-        Clear,
-        Cancel
-    }
+    Ok,
+    Clear,
+    Cancel
 }

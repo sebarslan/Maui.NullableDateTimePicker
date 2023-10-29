@@ -36,7 +36,7 @@ public partial class NullableDateTimePickerContent : ContentView
     private Picker _minutesPicker;
     private StackLayout _timeStackLayout;
     private List<Button> _dayButtons;
-
+    
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
     {
         options ??= new NullableDateTimePickerOptions();

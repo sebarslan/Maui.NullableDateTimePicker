@@ -2,16 +2,17 @@
 using Maui.NullableDateTimePicker.Enums;
 using Maui.NullableDateTimePicker.Interfaces;
 using Maui.NullableDateTimePicker.Modes;
+using System.Diagnostics;
 using CommunityToolkitPopup = CommunityToolkit.Maui.Views.Popup;
 namespace Maui.NullableDateTimePicker.Popup
 {
     internal class NullableDateTimePickerPopup : CommunityToolkitPopup
     {
-        private static Page Page => Application.Current?.MainPage;
+        private static Page CurrentPage => Application.Current?.MainPage;
         private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
-        private NullableDateTimePickerContent _content = null;
+        private  NullableDateTimePickerContent _content = null;
 
         internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
         {
@@ -22,8 +23,9 @@ namespace Maui.NullableDateTimePicker.Popup
             var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
             var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
             Size = new Size(popupWidth, popupHeight);
-            HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Fill;
-            VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Fill;
+            HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
+            VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
+
             CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 
             this.Opened += _content.NullableDateTimePickerPopupOpened; ;
@@ -57,7 +59,7 @@ namespace Maui.NullableDateTimePicker.Popup
                 _content.ClearButtonClicked -= clearButtonClickedHandler;
                 _content.CancelButtonClicked -= cancelButtonClickedHandler;
 
-                Close(new PopupResult { NullableDateTime = _content.SelectedDate, ButtonResult = buttonResult });
+                Close(new PopupResult(_content.SelectedDate, buttonResult));
             }
             catch (Exception ex)
             {
@@ -71,7 +73,7 @@ namespace Maui.NullableDateTimePicker.Popup
 
         internal async Task<object> OpenPopupAsync()
         {
-            return await Page?.ShowPopupAsync(this);
+            return await CurrentPage?.ShowPopupAsync(this);
         }
     }
 }

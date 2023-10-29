@@ -18,7 +18,7 @@ public interface INullableDateTimePickerOptions
     Color? HeaderBackgroundColor { get; set; }
     Style?    ToolButtonsStyle { get; set; }
     Style? DayStyle { get; set; }
-    Style OtherMonthDayStyle { get; set; }
+    Style? OtherMonthDayStyle { get; set; }
     Style? SelectedDayStyle { get; set; }
     Style? DayNamesStyle { get; set; }
     bool ShowWeekNumbers { get; set; }

@@ -21,7 +21,7 @@ public class NullableDateTimePicker : ContentView
     {
         Margin = 0;
         Padding = 0;
-        BackgroundColor = Colors.Transparent;
+        base.BackgroundColor = Colors.Transparent;
 
         _dateTimePickerEntry = new Entry()
         {
@@ -276,7 +276,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     BindableProperty.Create(nameof(BackgroundColor),
         typeof(Color),
         typeof(NullableDateTimePicker),
-        Colors.White,
+        null,
         defaultBindingMode: BindingMode.OneWay);
 
     public new Color BackgroundColor
@@ -525,7 +525,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     nameof(ForeColor),
     typeof(Color),
     typeof(NullableDateTimePicker),
-    defaultValue: Colors.Black,
+    defaultValue: null,
     defaultBindingMode: BindingMode.OneWay);
 
     public Color ForeColor

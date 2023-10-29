@@ -2,7 +2,6 @@
 using Maui.NullableDateTimePicker.Interfaces;
 using Maui.NullableDateTimePicker.Models;
 using Maui.NullableDateTimePicker.Modes;
-using Maui.NullableDateTimePicker.Popup;
 
 namespace Maui.NullableDateTimePicker.Samples
 {
