@@ -98,7 +98,6 @@ More examples, please see the samples project
 |--------|-------------|---------|
 | NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
 | Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
-| Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
 | MinDate | Minimum selectable date of the control. | DateTime.MinValue |
 | MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
 | OkButtonText | The text for the OK button. | OK |
