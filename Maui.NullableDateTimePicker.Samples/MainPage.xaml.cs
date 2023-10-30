@@ -80,7 +80,7 @@ namespace Maui.NullableDateTimePicker.Samples
             INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
             {
                 NullableDateTime = MyDateTime,
-                PickerMode = PickerModes.DateTime,
+                Mode = PickerModes.DateTime,
                 ShowWeekNumbers = true
             };
 

@@ -118,7 +118,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
     private void OnDayButtonTapped(object sender, EventArgs e)
     {
-        if (_options.PickerMode == PickerModes.Time) //Click skipping in time mode 
+        if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
             return;
 
         Button dayButton = sender as Button;
@@ -127,7 +127,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
     private void OnLastMonthDayButtonTapped(object sender, EventArgs e)
     {
-        if (_options.PickerMode == PickerModes.Time) //Click skipping in time mode 
+        if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
             return;
         int year = _currentDate.Year;
         int month = _currentDate.Month;
@@ -145,7 +145,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
     private void OnNextMonthDayButtonTapped(object sender, EventArgs e)
     {
-        if (_options.PickerMode == PickerModes.Time) //Click skipping in time mode 
+        if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
             return;
         int year = _currentDate.Year;
         int month = _currentDate.Month;
@@ -394,7 +394,7 @@ public partial class NullableDateTimePickerContent : ContentView
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
             _yearsPicker.SelectedItem = _currentDate.Year;
-            if (_options.PickerMode != PickerModes.Date)
+            if (_options.Mode != PickerModes.Date)
             {
                 _hoursPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Hour);
                 _minutesPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Minute);
@@ -440,7 +440,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         List<string> hours = null;
         List<string> minutes = null;
-        if (_options.PickerMode != PickerModes.Date)
+        if (_options.Mode != PickerModes.Date)
         {
             hours = new();
 
@@ -659,7 +659,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 new RowDefinition { Height = new GridLength(90, GridUnitType.Absolute) }, // header
                 new RowDefinition { Height = new GridLength(40, GridUnitType.Absolute) }, // pre/next button
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }, // mnonth days
-                new RowDefinition { Height = _options.PickerMode == PickerModes.Date // time
+                new RowDefinition { Height = _options.Mode == PickerModes.Date // time
                 ? new GridLength(0, GridUnitType.Absolute)
                 :  new GridLength(1, GridUnitType.Auto) },
                 new RowDefinition { Height = new GridLength(50, GridUnitType.Absolute) }, // buttons
@@ -695,7 +695,7 @@ public partial class NullableDateTimePickerContent : ContentView
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
             VerticalOptions = LayoutOptions.Center,
-            IsEnabled = _options.PickerMode != PickerModes.Time  //Click skipping in time mode 
+            IsEnabled = _options.Mode != PickerModes.Time  //Click skipping in time mode 
         };
         _yearsPicker.SelectedIndexChanged += OnYearsPickerIndexChanged;
 
@@ -743,7 +743,7 @@ public partial class NullableDateTimePickerContent : ContentView
             FontSize = 15,
             WidthRequest = 50,
             Margin = 0,
-            IsEnabled = _options.PickerMode != PickerModes.Time  //Click skipping in time mode 
+            IsEnabled = _options.Mode != PickerModes.Time  //Click skipping in time mode 
         };
         _previousMonthButton.Clicked += OnPreviousMonthButtonClicked;
         preNextButtonsGrid.Add(_previousMonthButton, 0, 0);
@@ -770,7 +770,7 @@ public partial class NullableDateTimePickerContent : ContentView
             FontSize = 15,
             WidthRequest = 50,
             Margin = 0,
-            IsEnabled = _options.PickerMode != PickerModes.Time  //Click skipping in time mode 
+            IsEnabled = _options.Mode != PickerModes.Time  //Click skipping in time mode 
         };
         _nextMonthButton.Clicked += OnNextMonthButtonClicked;
         preNextButtonsGrid.Add(_nextMonthButton, 2, 0);
@@ -804,7 +804,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
 
         #region Time row
-        if (_options.PickerMode != PickerModes.Date)
+        if (_options.Mode != PickerModes.Date)
         {
             _hoursPicker = new Picker
             {
@@ -853,7 +853,7 @@ public partial class NullableDateTimePickerContent : ContentView
                 Padding = new Thickness(0),
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.Center,
-                IsVisible = _options.PickerMode != PickerModes.Date
+                IsVisible = _options.Mode != PickerModes.Date
             };
             _timeStackLayout.Add(_hoursPicker);
             _timeStackLayout.Add(hoursMinutesSeparatorLabel);

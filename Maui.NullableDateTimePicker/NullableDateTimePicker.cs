@@ -621,7 +621,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
             var options = new NullableDateTimePickerOptions
             {
                 NullableDateTime = this.NullableDateTime,
-                PickerMode = this.Mode,
+                Mode = this.Mode,
                 MinDate = this.MinDate,
                 MaxDate = this.MaxDate,
                 OkButtonText = this.OkButtonText,

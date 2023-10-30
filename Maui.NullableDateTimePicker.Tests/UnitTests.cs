@@ -21,7 +21,7 @@ namespace Maui.NullableDateTimePicker.Tests
             options = new()
             {
                 NullableDateTime = testDate,
-                PickerMode = PickerModes.Date
+                Mode = PickerModes.Date
             };
             content = new NullableDateTimePickerContent(options);
             nullableDateTimePicker = new NullableDateTimePicker();
@@ -89,7 +89,7 @@ namespace Maui.NullableDateTimePicker.Tests
             NullableDateTimePickerOptions options = new()
             {
                 NullableDateTime = null,
-                PickerMode = PickerModes.DateTime
+                Mode = PickerModes.DateTime
             };
 
             // Arrange
@@ -114,7 +114,7 @@ namespace Maui.NullableDateTimePicker.Tests
             var options = new NullableDateTimePickerOptions()
             {
                 NullableDateTime = DateTime.Now,
-                PickerMode = PickerModes.Date,
+                Mode = PickerModes.Date,
                 MinDate = startDate,
                 MaxDate = endDate
             };
