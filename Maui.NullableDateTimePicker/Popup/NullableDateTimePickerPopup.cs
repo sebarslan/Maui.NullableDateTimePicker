@@ -28,7 +28,7 @@ namespace Maui.NullableDateTimePicker.Popup
 
             CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 
-            this.Opened += _content.NullableDateTimePickerPopupOpened; ;
+            this.Opened += _content.NullableDateTimePickerPopupOpened;
 
             okButtonClickedHandler = (s, e) =>
             {

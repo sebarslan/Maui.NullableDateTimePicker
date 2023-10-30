@@ -644,9 +644,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 CloseOnOutsideClick = this.CloseOnOutsideClick
             };
 
-            var result = await NullableDateTimePicker.OpenCalendarAsync(options);
-
-            NullableDateTimePickerPopup popupControl = new(options);
+            var result = await OpenCalendarAsync(options);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
                 NullableDateTime = popupResult.NullableDateTime;
