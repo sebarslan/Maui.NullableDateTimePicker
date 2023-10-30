@@ -84,7 +84,7 @@ namespace Maui.NullableDateTimePicker.Samples
                 ShowWeekNumbers = true
             };
 
-            var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
+            var result = await NullableDateTimePicker.OpenCalendarAsync(nullableDateTimePickerOptions);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
                 MyDateTime = popupResult.NullableDateTime;

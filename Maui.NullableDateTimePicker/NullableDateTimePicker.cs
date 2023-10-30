@@ -78,7 +78,7 @@ public class NullableDateTimePicker : ContentView
         Content = _contentLayout;
     }
 
-    public static async Task<object> OpenPopupAsync(INullableDateTimePickerOptions options)
+    public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
     {
         NullableDateTimePickerPopup popupControl = new(options);
         var popupResultTask = new PopupResultTask<PopupResult>();
@@ -90,7 +90,8 @@ public class NullableDateTimePicker : ContentView
                 if (result is PopupResult popupResult)
                 {
                     popupResultTask.SetResult(popupResult);
-                } else
+                }
+                else
                 {
                     popupResultTask.SetResult(null);
                 }
@@ -470,9 +471,9 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         defaultValue: Color.FromArgb("#E1E1E1"),
         defaultBindingMode: BindingMode.OneWay,
         validateValue: null,
-        propertyChanged: (b, o, n) =>
+        propertyChanged: (bindable, oldValue, newValue) =>
     {
-        ((NullableDateTimePicker)b)._dateTimePickerIcon.BackgroundColor = (Color)o ?? Color.FromRgba("#E1E1E1");
+        ((NullableDateTimePicker)bindable)._dateTimePickerIcon.BackgroundColor = (Color)newValue ?? Color.FromRgba("#E1E1E1");
     });
 
     public Color IconBackgroundColor
@@ -643,7 +644,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 CloseOnOutsideClick = this.CloseOnOutsideClick
             };
 
-            var result = await NullableDateTimePicker.OpenPopupAsync(options);
+            var result = await NullableDateTimePicker.OpenCalendarAsync(options);
 
             NullableDateTimePickerPopup popupControl = new(options);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)

@@ -9,7 +9,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-0- Add .ConfigureNullableDateTimePicker() to the MauiProgram.cs file in your project.
+0- Add .UseMauiCommunityToolkit() to the MauiProgram.cs file in your project.
 
 <pre>
 <code>
@@ -18,8 +18,7 @@ public static MauiApp CreateMauiApp()
     var builder = MauiApp.CreateBuilder();
     builder
     .UseMauiApp&lt;App&gt;()
-    .ConfigureNullableDateTimePicker()
-    //.UseMauiCommunityToolkit() //For versions 1.0.2 and earlier
+    .UseMauiCommunityToolkit()
     ....
 </code>
 </pre>
@@ -49,7 +48,7 @@ public static MauiApp CreateMauiApp()
  </code>
 </pre>  
 
-2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenPopupAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
+2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenCalendarAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
 <pre>
 <code>
 private async void DateTimePicker_Clicked(object sender, EventArgs e)
@@ -62,7 +61,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
         // .. other options
     };
 
-    var result = await NullableDateTimePicker.OpenPopupAsync(nullableDateTimePickerOptions);
+    var result = await NullableDateTimePicker.OpenCalendarAsync(nullableDateTimePickerOptions);
     if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
     {
         MyDateTime = popupResult.NullableDateTime;
