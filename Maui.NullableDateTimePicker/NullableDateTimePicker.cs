@@ -470,9 +470,9 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         defaultValue: Color.FromArgb("#E1E1E1"),
         defaultBindingMode: BindingMode.OneWay,
         validateValue: null,
-        propertyChanged: (b, o, n) =>
+        propertyChanged: (bindable, oldValue, newValue) =>
     {
-        ((NullableDateTimePicker)b)._dateTimePickerIcon.BackgroundColor = (Color)o ?? Color.FromRgba("#E1E1E1");
+        ((NullableDateTimePicker)bindable)._dateTimePickerIcon.BackgroundColor = (Color)newValue ?? (Color)oldValue ?? Color.FromRgba("#E1E1E1");
     });
 
     public Color IconBackgroundColor

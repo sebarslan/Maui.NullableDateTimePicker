@@ -40,6 +40,7 @@
                                         OkButtonText="Done" 
                                         HorizontalOptions="Fill"
                                         Icon="{Binding CalendarIcon}"
+                                        IconBackgroundColor="Transparent"
                                         WidthRequest="200"
                                         HeightRequest="40" />
 

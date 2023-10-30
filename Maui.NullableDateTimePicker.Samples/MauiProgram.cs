@@ -10,8 +10,9 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureNullableDateTimePicker()
-                .ConfigureFonts(fonts =>
+            .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("fa-solid-900.ttf", "FontAwesome");
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
