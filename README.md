@@ -167,6 +167,7 @@ on ios, android, windows
 - A Builder Extension has been added. In this way, Configure Nullable DateTimePicker can be used without adding CommunityToolKit to your own project.
 - On some screens, week and day numbers were not displayed on the same line.
 - Dark theme adjusted
+- Fixing various bugs
 
 ### 1.0.2
 - The problem of displaying the default icon in default mode has been fixed.
