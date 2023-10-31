@@ -15,10 +15,9 @@ To use the Nullable DateTimePicker control in your .NET MAUI application, follow
 <code>
 public static MauiApp CreateMauiApp()
 {
-    var builder = MauiApp.CreateBuilder();
-    MauiAppBuilder mauiAppBuilder = builder.UseMauiApp&lt;App&gt;();
-    mauiAppBuilder
-    .ConfigureNullableDateTimePicker()
+     var builder = MauiApp.CreateBuilder();
+     builder.UseMauiApp&lt;App&gt;()
+     .ConfigureNullableDateTimePicker()
     ....
 </code>
 </pre>
