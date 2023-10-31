@@ -106,7 +106,7 @@ More examples, please see the samples project
 | CancelButtonText | The text for the Cancel button. | Cancel |
 | ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
-| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Black |
+| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
 | BackgroundColor | Background color of the calendar.	| White |
 | HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
 | HeaderBackgroundColor | Background color of the control's header.	| #2b0b98 |
