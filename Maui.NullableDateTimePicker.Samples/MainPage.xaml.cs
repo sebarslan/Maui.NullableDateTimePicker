@@ -1,9 +1,4 @@
-﻿using Maui.NullableDateTimePicker.Enums;
-using Maui.NullableDateTimePicker.Interfaces;
-using Maui.NullableDateTimePicker.Models;
-using Maui.NullableDateTimePicker.Modes;
-
-namespace Maui.NullableDateTimePicker.Samples
+﻿namespace Maui.NullableDateTimePicker.Samples
 {
     public partial class MainPage : ContentPage
     {

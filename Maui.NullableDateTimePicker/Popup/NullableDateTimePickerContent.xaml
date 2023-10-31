@@ -11,7 +11,8 @@
             Margin="0"
             Padding="0"   
             HorizontalOptions = "Fill"
-            VerticalOptions = "Fill">
+            VerticalOptions = "Fill"
+            BackgroundColor="Transparent">
             <ActivityIndicator x:Name="CalendarActivityIndicator" 
                                IsVisible="True" 
                                IsRunning="True" 

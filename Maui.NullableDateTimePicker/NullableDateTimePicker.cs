@@ -1,10 +1,4 @@
-﻿using Maui.NullableDateTimePicker.Enums;
-using Maui.NullableDateTimePicker.Helpers;
-using Maui.NullableDateTimePicker.Interfaces;
-using Maui.NullableDateTimePicker.Models;
-using Maui.NullableDateTimePicker.Modes;
-using Maui.NullableDateTimePicker.Popup;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -116,11 +110,11 @@ public class NullableDateTimePicker : ContentView
         null,
         defaultBindingMode: BindingMode.TwoWay,
         null,
-        (b, o, n) =>
+        (bindable, oldValue, newValue) =>
         {
-            var self = (NullableDateTimePicker)b;
-            var oldNullableDateTime = (DateTime?)o;
-            var newNullableDateTime = (DateTime?)n;
+            var self = (NullableDateTimePicker)bindable;
+            var oldNullableDateTime = (DateTime?)oldValue;
+            var newNullableDateTime = (DateTime?)newValue;
 
             self._dateTimePickerEntry.Text = newNullableDateTime?.ToString(self.Format);
 

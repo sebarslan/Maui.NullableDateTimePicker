@@ -1,8 +1,8 @@
-﻿namespace Maui.NullableDateTimePicker.Helpers;
+﻿namespace Maui.NullableDateTimePicker;
 
 internal class MainThreadHelper
 {
-    public static void SafeBeginInvokeOnMainThread(Action action)
+    internal static void SafeBeginInvokeOnMainThread(Action action)
     {
         if (DeviceInfo.Platform == DevicePlatform.WinUI)
         {
@@ -14,7 +14,7 @@ internal class MainThreadHelper
         }
     }
 
-    public static async Task SafeInvokeOnMainThreadAsync(Action action)
+    internal static async Task SafeInvokeOnMainThreadAsync(Action action)
     {
         if (DeviceInfo.Platform == DevicePlatform.WinUI)
         {
@@ -26,7 +26,7 @@ internal class MainThreadHelper
         }
     }
 
-    public static async Task<T> SafeInvokeOnMainThreadAsync<T>(Func<Task<T>> funcTask)
+    internal static async Task<T> SafeInvokeOnMainThreadAsync<T>(Func<Task<T>> funcTask)
     {
         if (DeviceInfo.Platform == DevicePlatform.WinUI)
         {

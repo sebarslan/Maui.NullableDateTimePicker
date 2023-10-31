@@ -1,16 +1,13 @@
-﻿using Maui.NullableDateTimePicker.Enums;
+﻿namespace Maui.NullableDateTimePicker;
 
-namespace Maui.NullableDateTimePicker.Modes
+public class PopupResult
 {
-    public class PopupResult
+    internal PopupResult(DateTime? nullableDateTime, PopupButtons buttonResult)
     {
-        internal PopupResult(DateTime? nullableDateTime, PopupButtons buttonResult)
-        {
-            NullableDateTime = nullableDateTime;
-            ButtonResult = buttonResult;
-        }
-
-        public PopupButtons ButtonResult { get; }
-        public DateTime? NullableDateTime { get; }
+        NullableDateTime = nullableDateTime;
+        ButtonResult = buttonResult;
     }
+
+    public PopupButtons ButtonResult { get; }
+    public DateTime? NullableDateTime { get; }
 }

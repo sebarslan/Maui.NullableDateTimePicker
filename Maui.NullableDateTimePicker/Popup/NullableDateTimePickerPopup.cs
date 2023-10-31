@@ -1,10 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
-using Maui.NullableDateTimePicker.Enums;
-using Maui.NullableDateTimePicker.Interfaces;
-using Maui.NullableDateTimePicker.Modes;
-using System.Diagnostics;
 using CommunityToolkitPopup = CommunityToolkit.Maui.Views.Popup;
-namespace Maui.NullableDateTimePicker.Popup
+namespace Maui.NullableDateTimePicker
 {
     internal class NullableDateTimePickerPopup : CommunityToolkitPopup
     {
@@ -12,7 +8,7 @@ namespace Maui.NullableDateTimePicker.Popup
         private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
-        private  NullableDateTimePickerContent _content = null;
+        private NullableDateTimePickerContent _content = null;
 
         internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
         {
@@ -22,7 +18,7 @@ namespace Maui.NullableDateTimePicker.Popup
 
             var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
             var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
-            Size = new Size(popupWidth, popupHeight);
+            Size = new Size(Math.Max(popupWidth, 100), Math.Max(popupHeight, 100));
             HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
             VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
 

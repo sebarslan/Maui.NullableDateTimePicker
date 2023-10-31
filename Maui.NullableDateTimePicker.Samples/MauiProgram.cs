@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Compatibility.Hosting;
-
+﻿using Microsoft.Extensions.Logging;
 namespace Maui.NullableDateTimePicker.Samples
 {
     public static class MauiProgram
@@ -9,8 +6,9 @@ namespace Maui.NullableDateTimePicker.Samples
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder.UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+            builder = builder.UseMauiApp<App>();
+            builder
+                .ConfigureNullableDateTimePicker()
                 .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("fa-solid-900.ttf", "FontAwesome");

@@ -1,7 +1,5 @@
 ﻿#nullable enable
-using Maui.NullableDateTimePicker.Enums;
-
-namespace Maui.NullableDateTimePicker.Interfaces;
+namespace Maui.NullableDateTimePicker;
 
 public interface INullableDateTimePickerOptions
 {

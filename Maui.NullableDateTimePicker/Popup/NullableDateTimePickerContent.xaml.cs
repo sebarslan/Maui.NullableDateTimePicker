@@ -1,8 +1,4 @@
 ﻿using System.Globalization;
-using Maui.NullableDateTimePicker.Enums;
-using Maui.NullableDateTimePicker.Helpers;
-using Maui.NullableDateTimePicker.Interfaces;
-using Maui.NullableDateTimePicker.Models;
 
 namespace Maui.NullableDateTimePicker;
 

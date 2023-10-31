@@ -1,21 +1,21 @@
-﻿namespace Maui.NullableDateTimePicker.Helpers;
+﻿namespace Maui.NullableDateTimePicker;
 
 internal class PopupResultTask<T>
 {
-    public Task<T> Result { get; }
+    internal Task<T> Result { get; }
     private readonly TaskCompletionSource<T> _tcs = new();
 
-    public PopupResultTask()
+    internal PopupResultTask()
     {
         Result = _tcs.Task;
     }
 
-    public void SetResult(T result)
+    internal void SetResult(T result)
     {
         _tcs.SetResult(result);
     }
 
-    public void SetException(Exception exception)
+    internal void SetException(Exception exception)
     {
         _tcs.SetException(exception);
     }
