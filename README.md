@@ -23,7 +23,28 @@ public static MauiApp CreateMauiApp()
 </code>
 </pre>
 
-### Use direct calendar popup with your own entry and button
+### Usage 1: Use DateTimePicker as ContentView control
+1- Add the NullableDateTimePicker control to your XAML layout file:
+
+xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+<pre>
+<code>
+&lt;ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+             x:Class="Maui.NullableDateTimePicker.Samples.MainPage"&gt;
+</code>
+</pre>
+
+2- Bind the DateTime? value property to a property in your view model:
+<pre>
+<code>
+&lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
+</code>
+</pre>
+
+
+### Usage 2: Use direct calendar popup with your own entry and button
 
 1- Add your entry or button for datetime in your xaml page (eg. MainPage.xaml)
 <pre>
@@ -71,25 +92,6 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 </code>
 </pre>    
 
-### or if you want to use it as ContentView control
-1- Add the NullableDateTimePicker control to your XAML layout file:
-
-xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
-<pre>
-<code>
-&lt;ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
-             x:Class="Maui.NullableDateTimePicker.Samples.MainPage"&gt;
-</code>
-</pre>
-
-2- Bind the DateTime? value property to a property in your view model:
-<pre>
-<code>
-&lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
-</code>
-</pre>
 
 More examples, please see the samples project
 
@@ -97,15 +99,14 @@ More examples, please see the samples project
 | Option | Description | Default Value |
 |--------|-------------|---------|
 | NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
-| Mode | Specifies the mode of the control. Valid values are Date, DateTime, and Time. | Date |
-| Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
+| Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
 | MinDate | Minimum selectable date of the control. | DateTime.MinValue |
 | MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
 | OkButtonText | The text for the OK button. | OK |
 | CancelButtonText | The text for the Cancel button. | Cancel |
 | ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
-| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Black |
+| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
 | BackgroundColor | Background color of the calendar.	| White |
 | HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
 | HeaderBackgroundColor | Background color of the control's header.	| #2b0b98 |
@@ -117,6 +118,14 @@ More examples, please see the samples project
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
+
+
+## Other Options for ContentView Control
+| Option | Description | Default Value |
+|--------|-------------|---------|
+| Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
+| IconBackgroundColor | Background color of the icon. | #E1E1E1 |
+| Icon | Imagesource for the icon. | null |
 
 
 ## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
