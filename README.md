@@ -23,7 +23,28 @@ public static MauiApp CreateMauiApp()
 </code>
 </pre>
 
-### Use direct calendar popup with your own entry and button
+### Usage 1: Use DateTimePicker as ContentView control
+1- Add the NullableDateTimePicker control to your XAML layout file:
+
+xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+<pre>
+<code>
+&lt;ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+             x:Class="Maui.NullableDateTimePicker.Samples.MainPage"&gt;
+</code>
+</pre>
+
+2- Bind the DateTime? value property to a property in your view model:
+<pre>
+<code>
+&lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
+</code>
+</pre>
+
+
+### Usage 2: Use direct calendar popup with your own entry and button
 
 1- Add your entry or button for datetime in your xaml page (eg. MainPage.xaml)
 <pre>
@@ -71,25 +92,6 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 </code>
 </pre>    
 
-### or if you want to use it as ContentView control
-1- Add the NullableDateTimePicker control to your XAML layout file:
-
-xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
-<pre>
-<code>
-&lt;ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
-             x:Class="Maui.NullableDateTimePicker.Samples.MainPage"&gt;
-</code>
-</pre>
-
-2- Bind the DateTime? value property to a property in your view model:
-<pre>
-<code>
-&lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
-</code>
-</pre>
 
 More examples, please see the samples project
 
