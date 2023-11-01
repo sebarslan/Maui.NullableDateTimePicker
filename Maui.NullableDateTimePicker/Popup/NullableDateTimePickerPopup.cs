@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Maui.Views;
+using static System.Net.Mime.MediaTypeNames;
 using CommunityToolkitPopup = CommunityToolkit.Maui.Views.Popup;
 namespace Maui.NullableDateTimePicker
 {
     internal class NullableDateTimePickerPopup : CommunityToolkitPopup
     {
-        private static Page CurrentPage => Application.Current?.MainPage;
         private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
@@ -15,12 +15,11 @@ namespace Maui.NullableDateTimePicker
             _content = new NullableDateTimePickerContent(options);
 
             DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
-
+            Color = Colors.Transparent;
             var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
             var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
             Size = new Size(Math.Max(popupWidth, 100), Math.Max(popupHeight, 100));
-            HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
-            VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center;
+            
 
             CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 
@@ -65,11 +64,6 @@ namespace Maui.NullableDateTimePicker
             {
                 _content = null;
             }
-        }
-
-        internal async Task<object> OpenPopupAsync()
-        {
-            return await CurrentPage?.ShowPopupAsync(this);
         }
     }
 }

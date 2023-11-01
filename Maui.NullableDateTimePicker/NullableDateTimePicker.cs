@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using CommunityToolkit.Maui.Views;
+using System.Reflection;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -10,7 +11,7 @@ public class NullableDateTimePicker : ContentView
     internal Entry _dateTimePickerEntry;
     internal ImageButton _dateTimePickerIcon;
     internal bool isSetIconCalledForFirstTime = false;
-
+    static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
     public NullableDateTimePicker()
     {
         Margin = 0;
@@ -74,31 +75,31 @@ public class NullableDateTimePicker : ContentView
 
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
     {
-        NullableDateTimePickerPopup popupControl = new(options);
-        var popupResultTask = new PopupResultTask<PopupResult>();
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
+        NullableDateTimePickerPopup popupControl = new(options)
         {
-            try
+            HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center,
+            VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center
+        };
+        var popupResultTask = new PopupResultTask<PopupResult>();
+
+        try
+        {
+            var result = await Page.ShowPopupAsync(popupControl);
+
+            if (result is PopupResult popupResult)
             {
-                var result = await popupControl.OpenPopupAsync();
-                if (result is PopupResult popupResult)
-                {
-                    popupResultTask.SetResult(popupResult);
-                }
-                else
-                {
-                    popupResultTask.SetResult(null);
-                }
+                popupResultTask.SetResult(popupResult);
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.ToString());
+                popupResultTask.SetResult(null);
             }
-            finally
-            {
-                popupControl = null;
-            }
-        });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
         return await popupResultTask.Result;
     }
 
