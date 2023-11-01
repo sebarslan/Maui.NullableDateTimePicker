@@ -164,9 +164,9 @@ on ios, android, windows
 
 ### 1.1.0
 - The calendar popup can be opened directly via the NullableDateTimePicker, so you can use your own entry and button.
-- A Builder Extension has been added. In this way, Configure Nullable DateTimePicker can be used without adding CommunityToolKit to your own project.
 - On some screens, week and day numbers were not displayed on the same line.
 - Dark theme adjusted
+- Various bugs fixed
 
 ### 1.0.2
 - The problem of displaying the default icon in default mode has been fixed.
