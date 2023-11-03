@@ -164,6 +164,7 @@ on ios, android, windows
 
 ### 1.1.1.
 - Communitytoolkit developers released a new version (6.1.0) and this new version was added to the project NullableDateTimePicker
+- Updated the week number logic to align with ISO 8601 standards.
 - Bug fixed: When going back from the 1st month, the year was also decreased.
 
 ### 1.1.0
