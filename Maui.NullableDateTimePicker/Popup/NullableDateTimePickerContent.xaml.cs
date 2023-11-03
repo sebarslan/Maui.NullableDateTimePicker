@@ -32,7 +32,7 @@ public partial class NullableDateTimePickerContent : ContentView
     private Picker _minutesPicker;
     private StackLayout _timeStackLayout;
     private List<Button> _dayButtons;
-    
+
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
     {
         options ??= new NullableDateTimePickerOptions();
@@ -93,7 +93,7 @@ public partial class NullableDateTimePickerContent : ContentView
         var currentYear = _currentDate.Year;
         if (previousMonth < 1)
         {
-            previousMonth = 1;
+            previousMonth = 12;
             currentYear--;
         }
         SetCurrentDateAndRebuildCalendar(currentYear, previousMonth, _currentDate.Day);
@@ -201,8 +201,6 @@ public partial class NullableDateTimePickerContent : ContentView
                 CalendarActivityIndicator.IsVisible = true;
                 CalendarActivityIndicator.IsRunning = true;
 
-                _daysGrid.Clear();
-
                 if (!_options.ShowWeekNumbers)
                     _daysGrid.ColumnDefinitions[0].Width = 0;
 
@@ -250,6 +248,10 @@ public partial class NullableDateTimePickerContent : ContentView
 
             MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
             {
+                _daysGrid.Clear();
+                _daysGrid.Children?.Clear();
+                Task.Delay(300);
+
                 for (int i = 0; i < dayLabels.Count; i++)
                 {
                     _daysGrid.Add(dayLabels[i], i + 1, 0);
@@ -583,6 +585,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         // WeekNumberStyle
         _weekNumberStyle = new Style(targetType: typeof(Label));
+
         if (_options.WeekNumberStyle != null)
         {
             _options.WeekNumberStyle.BasedOn = DefaultStyles.WeekNumberStyle;
@@ -637,7 +640,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _calendarGrid = new Grid
         {
-            BackgroundColor = _options.BackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#2e2e2e") : Colors.White),
+            BackgroundColor = _options.BackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
             Padding = new Thickness(0),
@@ -666,7 +669,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         Grid headerGrid = new()
         {
-            BackgroundColor = _options.HeaderBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#191919") : Color.FromRgba("#2b0b98")),
+            BackgroundColor = _options.HeaderBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#252626") : Color.FromRgba("#2b0b98")),
             Padding = new Thickness(10, 0, 10, 0),
             Margin = 0,
             HorizontalOptions = LayoutOptions.Fill,
@@ -681,8 +684,6 @@ public partial class NullableDateTimePickerContent : ContentView
         _yearsPicker = new Picker
         {
             HeightRequest = 40,
-            VerticalTextAlignment = TextAlignment.Center,
-            HorizontalTextAlignment = TextAlignment.Center,
             FontSize = 16,
             Margin = new Thickness(0),
             TextColor = _options.HeaderForeColor ?? Colors.White,
@@ -697,13 +698,13 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _selectedDateLabel = new Label
         {
+            HeightRequest = 30,
             FontSize = 25,
             TextColor = _options.HeaderForeColor ?? Colors.White,
-            HorizontalOptions = LayoutOptions.Fill,
-            HorizontalTextAlignment = TextAlignment.Start,
+            BackgroundColor = Colors.Transparent,
+            HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
-            VerticalOptions = LayoutOptions.Fill,
-            VerticalTextAlignment = TextAlignment.Center
+            VerticalOptions = LayoutOptions.Center
         };
 
         headerGrid.Add(_yearsPicker);
@@ -751,8 +752,7 @@ public partial class NullableDateTimePickerContent : ContentView
             TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.Center,
-            VerticalOptions = LayoutOptions.Center,
-            VerticalTextAlignment = TextAlignment.Center
+            VerticalOptions = LayoutOptions.Center
         };
         preNextButtonsGrid.Add(_monthYearLabel, 1, 0);
 
@@ -810,9 +810,9 @@ public partial class NullableDateTimePickerContent : ContentView
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalOptions = LayoutOptions.Center,
                 FontAttributes = FontAttributes.Bold,
+                HorizontalTextAlignment = TextAlignment.Center
             };
             _hoursPicker.SelectedIndexChanged += OnHoursPickerIndexChanged;
 
@@ -822,8 +822,8 @@ public partial class NullableDateTimePickerContent : ContentView
                 BackgroundColor = Colors.Transparent,
                 TextColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 HeightRequest = 40,
-                VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
             };
 
             _minutesPicker = new Picker
@@ -834,9 +834,9 @@ public partial class NullableDateTimePickerContent : ContentView
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalTextAlignment = TextAlignment.Center,
-                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalOptions = LayoutOptions.Center,
                 FontAttributes = FontAttributes.Bold,
+                HorizontalTextAlignment = TextAlignment.Center
             };
             _minutesPicker.SelectedIndexChanged += OnMinutesPickerIndexChanged;
 

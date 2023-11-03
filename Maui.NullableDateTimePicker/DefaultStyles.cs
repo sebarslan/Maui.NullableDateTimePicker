@@ -8,8 +8,8 @@
             get
             {
                 _dayStyle ??= new Style(typeof(Button))
-                    {
-                        Setters = {
+                {
+                    Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
                             new Setter { Property = Button.TextColorProperty, Value = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black },
                             new Setter { Property = View.MarginProperty, Value = new Thickness(0) },
@@ -25,7 +25,7 @@
                             new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 }
                         }
-                    };
+                };
                 return _dayStyle;
             }
         }
@@ -41,7 +41,12 @@
                     {
                         BasedOn = DayStyle
                     };
-                    _otherMonthDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.Gray });
+                    _otherMonthDayStyle.Setters.Add(new Setter
+                    {
+                        Property = Button.TextColorProperty,
+                        Value = Application.Current.RequestedTheme == AppTheme.Dark
+                        ? Color.FromRgba("#ACACAC") : Colors.Gray
+                    });
                 }
                 return _otherMonthDayStyle;
             }
@@ -60,8 +65,9 @@
                     };
 
                     _selectedDayStyle.Setters.Add(new Setter { Property = Button.CornerRadiusProperty, Value = DeviceInfo.Platform == DevicePlatform.iOS ? 15 : 50 });
-                    _selectedDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White  });
-                    _selectedDayStyle.Setters.Add(new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Blue });
+                    _selectedDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White });
+                    _selectedDayStyle.Setters.Add(new Setter { Property = VisualElement.BackgroundColorProperty, Value  = Application.Current.RequestedTheme == AppTheme.Dark
+                        ? Color.FromRgba("#6e5df2") : Colors.Blue  });
                 }
 
                 return _selectedDayStyle;
@@ -74,21 +80,18 @@
             get
             {
                 _weekNumberStyle ??= new Style(typeof(Label))
-                    {
-                        Setters = {
-                            new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
-                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Fill },
-                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Fill},
-                            new Setter { Property = Label.HorizontalTextAlignmentProperty, Value = TextAlignment.Center },
-                            new Setter { Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center },
-                            new Setter { Property = Label.FontSizeProperty, Value = 12 },
-                            new Setter { Property = Label.TextColorProperty, Value =  Color.FromRgba("#512BD4") },
+                {
+                    Setters = {
+                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
+                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center},
+                           new Setter { Property = Label.FontSizeProperty, Value = 12 },
+                            new Setter { Property = Label.TextColorProperty, Value =  Color.FromRgba("#6e5df2") },
                             new Setter { Property = Label.FontAttributesProperty, Value = FontAttributes.Bold },
                             new Setter { Property = Label.MarginProperty, Value = 0 },
                             new Setter { Property = Label.PaddingProperty, Value = 0 },
                             new Setter { Property = Label.LineBreakModeProperty, Value = LineBreakMode.NoWrap }
                         }
-                    };
+                };
 
                 return _weekNumberStyle;
             }
@@ -100,19 +103,17 @@
             get
             {
                 _dayNamesStyle ??= new Style(typeof(Label))
-                    {
-                        Setters = {
+                {
+                    Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
-                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Fill },
-                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Fill },
-                            new Setter { Property = Label.HorizontalTextAlignmentProperty, Value = TextAlignment.Center },
-                            new Setter { Property = Label.VerticalTextAlignmentProperty, Value = TextAlignment.Center },
+                            new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
+                            new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 },
                             new Setter { Property = Label.FontSizeProperty, Value = 12 },
                             new Setter { Property = Label.TextColorProperty, Value = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black },
                         }
-                    };
+                };
 
                 return _dayNamesStyle;
             }
@@ -124,17 +125,17 @@
             get
             {
                 _toolButtonsStyle ??= new Style(typeof(Button))
-                    {
-                        Setters = {
+                {
+                    Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
                             new Setter { Property = Button.BorderColorProperty, Value = Colors.Transparent },
                             new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = View.MarginProperty, Value = new Thickness(10, 0, 10, 0) },
-                            new Setter { Property = Button.TextColorProperty, Value = Color.FromRgba("#7658dd") },
+                            new Setter { Property = Button.TextColorProperty, Value = Color.FromRgba("#6e5df2") },
                             new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold }
                         }
-                    };
+                };
 
                 return _toolButtonsStyle;
             }
