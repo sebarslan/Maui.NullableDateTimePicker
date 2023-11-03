@@ -9,7 +9,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-0- Add the NullableDateTimePicker package to your project with NugetManager and add the .UseMauiCommunityToolkit() element to the MauiProgram.cs file in your project.
+0- Add the Sebarslan.Maui.NullableDateTimePicker nuget package to your project and add the .UseMauiCommunityToolkit() element to the MauiProgram.cs file in your project.
 
 <pre>
 <code>
@@ -76,7 +76,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
     INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
     {
         NullableDateTime = MyDateTime,
-        PickerMode = PickerModes.DateTime,
+        Mode = PickerModes.DateTime,
         ShowWeekNumbers = true
         // .. other options
     };
