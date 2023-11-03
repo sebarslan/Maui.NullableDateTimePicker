@@ -230,7 +230,7 @@ public partial class NullableDateTimePickerContent : ContentView
             int daysInMonth = DateTime.DaysInMonth(_currentDate.Year, _currentDate.Month);
 
             // Get the DateTimeFormatInfo for the current culture
-            DateTimeFormatInfo dateTimeFormatInfo = CultureInfo.CurrentUICulture.DateTimeFormat;
+            DateTimeFormatInfo dateTimeFormatInfo = DateTimeFormatInfo.CurrentInfo;
             string[] dayNames = dateTimeFormatInfo.AbbreviatedDayNames;
             int firstDayOfWekkIndex = (int)dateTimeFormatInfo.FirstDayOfWeek;
 
@@ -289,11 +289,10 @@ public partial class NullableDateTimePickerContent : ContentView
                 if (_options.ShowWeekNumbers)
                 {
                     // Calculate the number of weeks in the current year
-                    //int weeksInYear = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(_currentDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) == 53 ? 53 : 52;
-                    int weeksInYear = GetIso8601WeekOfYear(new DateTime(_currentDate.Year, 12, 31)) == 53 ? 53 : 52;
+                    int weeksInYear = GetIsoWeekOfYear(new DateTime(_currentDate.Year, 12, 31)) == 53 ? 53 : 52;
 
                     // Calculate the week number for the first day of the current month
-                    int weekNumber = GetIso8601WeekOfYear(new DateTime(_currentDate.Year, _currentDate.Month, 1));
+                    int weekNumber = GetIsoWeekOfYear(new DateTime(_currentDate.Year, _currentDate.Month, 1));
 
                     for (int weekRow = 1; weekRow <= 6; weekRow++)
                     {
@@ -305,12 +304,6 @@ public partial class NullableDateTimePickerContent : ContentView
 
                         // If we have reached the end of the year, reset the week number to 1
                         if (weekNumber > weeksInYear)
-                            weekNumber = 1;
-
-                        // If we are on the last row and the last day is in the next year, set the week number to 1 for the next year
-                        if (weekRow == 6
-                        && DateTime.DaysInMonth(_currentDate.Year, _currentDate.Month) >= 28
-                        && weekNumber != GetIso8601WeekOfYear(new DateTime(_currentDate.Year, _currentDate.Month, DateTime.DaysInMonth(_currentDate.Year, _currentDate.Month))))
                             weekNumber = 1;
                     }
                 }
@@ -382,22 +375,14 @@ public partial class NullableDateTimePickerContent : ContentView
         });
     }
 
-
-    private static int GetIso8601WeekOfYear(DateTime dateTime)
+    /// <summary>
+    /// ISO 8601 week of year.
+    /// </summary>
+    /// <param name="date"></param>
+    /// <returns></returns>
+    private static int GetIsoWeekOfYear(DateTime date)
     {
-        //DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(dateTime);
-        //if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-        //{
-        //    dateTime = dateTime.AddDays(3);
-        //}
-
-        //// Return the ISO 8601 week of year.
-        //return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(dateTime, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-
-        DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
-        Calendar cal = dfi.Calendar;
-
-        return cal.GetWeekOfYear(dateTime, dfi.CalendarWeekRule, dfi.FirstDayOfWeek);
+        return System.Globalization.ISOWeek.GetWeekOfYear(date);
     }
 
 
