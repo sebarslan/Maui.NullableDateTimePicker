@@ -1,9 +1,5 @@
-﻿using Maui.NullableDateTimePicker.Enums;
-using Maui.NullableDateTimePicker.Models;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
-using System.Threading.Tasks;
-using Xamarin.UITest.Shared.Screenshots;
 
 namespace Maui.NullableDateTimePicker.Tests
 {
@@ -11,7 +7,7 @@ namespace Maui.NullableDateTimePicker.Tests
     public class UnitTests
     {
         private NullableDateTimePickerOptions options;
-        private DateTime? testDate = DateTime.Now;
+        private readonly DateTime? testDate = DateTime.Now;
         private NullableDateTimePickerContent content;
         private NullableDateTimePicker nullableDateTimePicker;
 
@@ -131,6 +127,50 @@ namespace Maui.NullableDateTimePicker.Tests
 
             // Assert
             Assert.AreEqual(randomYear, content.SelectedDate?.Year);
+        }
+
+        [Test]
+        public void NullableDateTimePickerContent_PreviousMonth_Test()
+        {
+            // Arrange
+            var options = new NullableDateTimePickerOptions()
+            {
+                NullableDateTime = DateTime.Now
+            };
+            var content = new NullableDateTimePickerContent(options);
+
+            content.InitCalendar();
+
+            var currentDate = options.NullableDateTime.Value;
+
+            // Act
+            content.SetPreviousMonth();
+            content.OnOkButtonClicked(this, null);
+
+            // Assert
+            Assert.AreEqual(currentDate.AddMonths(-1), content.SelectedDate?.Month);
+        }
+
+        [Test]
+        public void NullableDateTimePickerContent_NextMonth_Test()
+        {
+            // Arrange 
+            var options = new NullableDateTimePickerOptions()
+            {
+                NullableDateTime = DateTime.Now
+            };
+            var content = new NullableDateTimePickerContent(options);
+
+            content.InitCalendar();
+
+            var currentDate = options.NullableDateTime.Value;
+
+            // Act
+            content.SetNextMonth();
+            content.OnOkButtonClicked(this, null);
+
+            // Assert
+            Assert.AreEqual(currentDate.AddMonths(1), content.SelectedDate?.Month);
         }
     }
 }
