@@ -163,7 +163,7 @@ on ios, android, windows
 # Changelog
 
 ### 1.1.1.
-- Communitytoolkit developers released a new version (6.1.0) and this new version was added to the project NullableDateTimePicker
+- The .NET MAUI Communitytoolkit version (6.1.0) was added to the project.
 - Updated the week number logic to align with ISO 8601 standards.
 - Bug fixed: When going back from the 1st month, the year was also decreased.
 
