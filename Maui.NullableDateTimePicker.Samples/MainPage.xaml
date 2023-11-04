@@ -11,43 +11,23 @@
             VerticalOptions="Center">
             <!-- Nullable datetime picker -->
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
-            
-            
-            <Label Text="Calling nullabledatetimepicker calendar popup directly without contentview" />
-            <HorizontalStackLayout HorizontalOptions="Fill" HeightRequest="40">
-                <Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
-           HorizontalOptions="Fill" 
-           VerticalOptions="Fill" 
-           IsReadOnly="True">
-                    <Entry.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
-                    </Entry.GestureRecognizers>
-                </Entry>
-                <ImageButton Source="{Binding CalendarIcon}" 
-                 Clicked="DateTimePicker_Clicked" 
-                 HorizontalOptions="Fill"
-                 VerticalOptions="Fill"
-                 Margin="0"
-                 Padding="2"
-                 WidthRequest="30"
-                 BackgroundColor="{AppThemeBinding Dark=White, Default=#E1E1E1}" />
-            </HorizontalStackLayout>
-            
+
             <Label Text="Datepicker" />
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                                         Mode="Date" 
                                         MinDate="2023-01-01" 
                                         OkButtonText="Done" 
-                                        HorizontalOptions="Fill"
+                                        HorizontalOptions="Start"
                                         Icon="{Binding CalendarIcon}"
-                                        WidthRequest="200"
-                                        HeightRequest="40" />
+                                        WidthRequest="200" 
+                                        HeightRequest="40" IconBackgroundColor="Transparent" />
 
             <Label Text="DateTimepicker" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="DateTime"
                                         WidthRequest="300" 
                                         ShowWeekNumbers="True"
+                                        HorizontalOptions="Start"
                                         SelectedDayStyle="{StaticResource SelectedDayStyle}"
                                         />
 
@@ -55,16 +35,37 @@
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="Time"
                                         ShowOtherMonthDays="False"
+                                        HorizontalOptions="Start"
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}" />
-
-            <Label Text="Datepicker programmatically" />
-            <StackLayout x:Name="DateTimePlaceStackLayout"></StackLayout>
 
             
 
+            <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" />
+            <HorizontalStackLayout HorizontalOptions="Fill" HeightRequest="40">
+                <Entry x:Name="DateTimeEntry" 
+                        Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
+                        HorizontalOptions="Fill" 
+                        VerticalOptions="Fill" 
+                        IsReadOnly="True">
+                    <Entry.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
+                    </Entry.GestureRecognizers>
+                </Entry>
+                <ImageButton Source="{Binding CalendarIcon}" 
+                    Clicked="DateTimePicker_Clicked" 
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Margin="0"
+                    Padding="2"
+                    HeightRequest="35"
+                    BackgroundColor="Transparent" />
+            </HorizontalStackLayout>
+
+            <Label Text="Datepicker programmatically" />
+            <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
+
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" />
             <!-- Nullable datetime picker -->
-
 
             <Image
                 Source="dotnet_bot.png"
