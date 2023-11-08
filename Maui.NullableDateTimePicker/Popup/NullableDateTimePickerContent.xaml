@@ -8,12 +8,15 @@
         Padding = "0"
         HorizontalOptions = "Fill"
         VerticalOptions = "Fill">
-        <Grid x:Name="MainGrid" 
+        <Grid>
+            <Grid x:Name="MainGrid" 
             Margin="0"
             Padding="0"   
             HorizontalOptions = "Fill"
             VerticalOptions = "Fill"
             BackgroundColor="Transparent">
+
+            </Grid>
             <ActivityIndicator x:Name="CalendarActivityIndicator" 
                                IsVisible="True" 
                                IsRunning="True" 

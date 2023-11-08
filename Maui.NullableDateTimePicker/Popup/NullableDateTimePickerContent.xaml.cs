@@ -32,6 +32,8 @@ public partial class NullableDateTimePickerContent : ContentView
     private Picker _minutesPicker;
     private StackLayout _timeStackLayout;
     private List<Button> _dayButtons;
+    private Grid _monthListGrid;
+
 
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
     {
@@ -177,12 +179,6 @@ public partial class NullableDateTimePickerContent : ContentView
 
     private void FixAndSetCurrentDate(int year, int month, int day)
     {
-        if (year > _maxDate.Year)
-            year = _maxDate.Year;
-
-        if (year < _minDate.Year)
-            year = _minDate.Year;
-
         if (month > 12)
             month = 12;
 
@@ -192,6 +188,9 @@ public partial class NullableDateTimePickerContent : ContentView
         if (month > _maxDate.Month)
             month = _maxDate.Month;
 
+        if (month < _minDate.Month)
+            month = _minDate.Month;
+
 
         var daysInMonth = DateTime.DaysInMonth(year, month);
         if (day > daysInMonth)
@@ -199,7 +198,11 @@ public partial class NullableDateTimePickerContent : ContentView
         if (day < 1)
             day = 1;
 
-        _currentDate = new DateTime(year, month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second);
+        var currentDate = new DateTime(year, month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second);
+        if (currentDate < _minDate)
+            _currentDate = _minDate;
+        else
+            _currentDate = currentDate;
     }
 
     private void BuildCalendar()
@@ -207,23 +210,23 @@ public partial class NullableDateTimePickerContent : ContentView
         Task.Run(() =>
         {
             MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
-            {
-                CalendarActivityIndicator.IsVisible = true;
-                CalendarActivityIndicator.IsRunning = true;
+       {
+           CalendarActivityIndicator.IsVisible = true;
+           CalendarActivityIndicator.IsRunning = true;
 
-                if (!_options.ShowWeekNumbers)
-                    _daysGrid.ColumnDefinitions[0].Width = 0;
+           if (!_options.ShowWeekNumbers)
+               _daysGrid.ColumnDefinitions[0].Width = 0;
 
-                if (_currentDate > _minDate)
-                    _previousMonthButton.IsVisible = true;
-                else
-                    _previousMonthButton.IsVisible = false;
+           if (_currentDate > _minDate)
+               _previousMonthButton.IsVisible = true;
+           else
+               _previousMonthButton.IsVisible = false;
 
-                if (_currentDate <= _maxDate)
-                    _nextMonthButton.IsVisible = true;
-                else
-                    _nextMonthButton.IsVisible = false;
-            });
+           if (_currentDate <= _maxDate)
+               _nextMonthButton.IsVisible = true;
+           else
+               _nextMonthButton.IsVisible = false;
+       });
 
             // Get the first day of the month and the number of days in the month
             DayOfWeek firstDayOfMonth = new DateTime(_currentDate.Year, _currentDate.Month, 1).DayOfWeek;
@@ -239,8 +242,8 @@ public partial class NullableDateTimePickerContent : ContentView
 
             // Rotate the array so that the first day of the week comes first
             string[] rotatedDayNames = dayNames.Skip(firstDayOfWekkIndex)
-                                               .Concat(dayNames.Take(firstDayOfWekkIndex))
-                                               .ToArray();
+                                                   .Concat(dayNames.Take(firstDayOfWekkIndex))
+                                                   .ToArray();
 
             var dayLabels = new List<Label>();
             // Add the day labels to the top row of the grid
@@ -256,11 +259,11 @@ public partial class NullableDateTimePickerContent : ContentView
                 dayLabels.Add(label);
             }
 
-            MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+            MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
             {
                 _daysGrid.Clear();
                 _daysGrid.Children?.Clear();
-                Task.Delay(300);
+
 
                 for (int i = 0; i < dayLabels.Count; i++)
                 {
@@ -274,6 +277,8 @@ public partial class NullableDateTimePickerContent : ContentView
                 for (int day = 1; day <= daysInMonth; day++)
                 {
                     var dayButton = _dayButtons[day - 1];
+                    dayButton.IsEnabled = true;
+
                     _daysGrid.Add(dayButton, col + 1, row);
 
                     col++;
@@ -390,18 +395,20 @@ public partial class NullableDateTimePickerContent : ContentView
     {
         _currentDate = date ?? DateTime.Now;
         Console.Write($"UpdateCurrentDate: {_currentDate}");
+        RemoveMonthListView();
+
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
-        {
-            _yearsPicker.SelectedItem = _currentDate.Year;
-            if (_options.Mode != PickerModes.Date)
-            {
-                _hoursPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Hour);
-                _minutesPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Minute);
-            }
-            _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
-            _selectedDateLabel.Text = date.HasValue ? date.Value.ToString("ddd, MMM d") : "No Date Selected";
-            SetCurrentDayStyle(_currentDate.Day.ToString());
-        });
+       {
+           _yearsPicker.SelectedItem = _currentDate.Year;
+           if (_options.Mode != PickerModes.Date)
+           {
+               _hoursPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Hour);
+               _minutesPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Minute);
+           }
+           _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
+           _selectedDateLabel.Text = date.HasValue ? date.Value.ToString("ddd, MMM d") : "No Date Selected";
+           SetCurrentDayStyle(_currentDate.Day.ToString());
+       });
     }
 
     Button lastClickedDayButton = null;
@@ -755,6 +762,13 @@ public partial class NullableDateTimePickerContent : ContentView
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
+        TapGestureRecognizer tapGestureRecognizer = new();
+        tapGestureRecognizer.Tapped += (s, e) =>
+        {
+            OnMonthYearLabelClicked(s, e);
+        };
+        _monthYearLabel.GestureRecognizers.Add(tapGestureRecognizer);
+
         preNextButtonsGrid.Add(_monthYearLabel, 1, 0);
 
         _nextMonthButton = new Button
@@ -919,5 +933,110 @@ public partial class NullableDateTimePickerContent : ContentView
         {
             this.MainGrid.Add((IView)this._calendarGrid);
         }));
+    }
+
+    private void OnMonthYearLabelClicked(object s, TappedEventArgs e)
+    {
+        CreateMonthListGrid();
+        AddMonthListView();
+    }
+
+    private Grid CreateMonthListGrid()
+    {
+        if (_monthListGrid != null)
+            return _monthListGrid;
+
+        string[] months = DateTimeFormatInfo.CurrentInfo.AbbreviatedMonthNames;
+
+        _monthListGrid = new Grid
+        {
+            BackgroundColor = Colors.Transparent,
+            RowSpacing = 1,
+            ColumnSpacing = 1,
+            Margin = 5,
+            Padding = 0,
+            RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star }
+                },
+            ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Star },
+                }
+        };
+
+        int monthNumber = 1;
+        int row = 0;
+        int col = 0;
+        TapGestureRecognizer tapGestureRecognizer = new();
+        tapGestureRecognizer.Tapped += (s, e) =>
+        {
+            OnMonthNameLabelClicked(s, e);
+        };
+
+        foreach (string month in months)
+        {
+            if (string.IsNullOrEmpty(month))
+                continue;
+
+            Label monthLabel = new Label
+            {
+                Text = monthNumber.ToString("D2") + " " + month,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                LineBreakMode = LineBreakMode.HeadTruncation,
+                TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black)
+            };
+            monthLabel.GestureRecognizers.Add(tapGestureRecognizer);
+            _monthListGrid.Add(monthLabel, col, row);
+            monthNumber++;
+            col++;
+            if (col % 3 == 0)
+            {
+                col = 0;
+                row++;
+            }
+        }
+        return _monthListGrid;
+    }
+
+    private void AddMonthListView()
+    {
+        RemoveMonthListView();
+        MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
+          {
+              if (_daysGrid != null)
+                  _daysGrid.IsVisible = false;
+
+              if (_monthListGrid != null)
+                  _monthListGrid.IsVisible = true;
+
+              if (_calendarGrid != null)
+                  _calendarGrid.Add((IView)_monthListGrid, 0, 2);
+          }));
+    }
+
+    private void RemoveMonthListView()
+    {
+        MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
+      {
+          if (_monthListGrid != null)
+              _monthListGrid.IsVisible = false;
+
+          if (_calendarGrid != null)
+              _calendarGrid.Remove((IView)_monthListGrid);
+
+          if (_daysGrid != null)
+              _daysGrid.IsVisible = true;
+      }));
+    }
+    private void OnMonthNameLabelClicked(object s, TappedEventArgs e)
+    {
+        SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text.Substring(0, 2)), _currentDate.Day);
     }
 }

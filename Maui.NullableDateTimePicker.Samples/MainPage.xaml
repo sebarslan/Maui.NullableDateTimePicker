@@ -15,7 +15,7 @@
             <Label Text="Datepicker" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                                         Mode="Date" 
-                                        MinDate="2023-01-01" 
+                                        MinDate="2023-01-15" 
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
                                         Icon="{Binding CalendarIcon}"
