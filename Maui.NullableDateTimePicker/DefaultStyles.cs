@@ -1,4 +1,6 @@
-﻿namespace Maui.NullableDateTimePicker
+﻿using static Microsoft.Maui.Controls.Device;
+
+namespace Maui.NullableDateTimePicker
 {
     internal static class DefaultStyles
     {
@@ -23,7 +25,8 @@
                             new Setter { Property = VisualElement.MaximumWidthRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MaximumHeightRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
-                            new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 }
+                            new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 },
+                            new Setter {Property = VisualStateManager.VisualStateGroupsProperty, Value = CreateVisualStateGroups() }
                         }
                 };
                 return _dayStyle;
@@ -66,8 +69,12 @@
 
                     _selectedDayStyle.Setters.Add(new Setter { Property = Button.CornerRadiusProperty, Value = DeviceInfo.Platform == DevicePlatform.iOS ? 15 : 50 });
                     _selectedDayStyle.Setters.Add(new Setter { Property = Button.TextColorProperty, Value = Colors.White });
-                    _selectedDayStyle.Setters.Add(new Setter { Property = VisualElement.BackgroundColorProperty, Value  = Application.Current.RequestedTheme == AppTheme.Dark
-                        ? Color.FromRgba("#6e5df2") : Colors.Blue  });
+                    _selectedDayStyle.Setters.Add(new Setter
+                    {
+                        Property = VisualElement.BackgroundColorProperty,
+                        Value = Application.Current.RequestedTheme == AppTheme.Dark
+                        ? Color.FromRgba("#6e5df2") : Colors.Blue
+                    });
                 }
 
                 return _selectedDayStyle;
@@ -139,6 +146,29 @@
 
                 return _toolButtonsStyle;
             }
+        }
+
+        private static VisualStateGroupList CreateVisualStateGroups()
+        {
+            var visualStateGroups = new VisualStateGroupList
+            {
+                new VisualStateGroup
+                {
+                    Name = "CommonStates",
+                    States = {
+                        new VisualState
+                        {
+                            Name = "Disabled",
+                            Setters = {
+
+                                new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent }
+                            }
+                        }
+                    }
+                }
+            };
+
+            return visualStateGroups;
         }
     }
 }

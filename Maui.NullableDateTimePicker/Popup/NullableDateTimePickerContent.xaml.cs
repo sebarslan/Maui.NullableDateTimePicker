@@ -130,7 +130,12 @@ public partial class NullableDateTimePickerContent : ContentView
             return;
 
         Button dayButton = sender as Button;
-        UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, Convert.ToInt32(dayButton.Text), _currentDate.Hour, _currentDate.Minute, _currentDate.Second));
+        var day = Convert.ToInt32(dayButton.Text);
+
+        if (isDisableDay(_currentDate.Year, _currentDate.Month, day))
+            return;
+
+        UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second));
     }
 
     private void OnLastMonthDayButtonTapped(object sender, EventArgs e)
@@ -148,7 +153,11 @@ public partial class NullableDateTimePickerContent : ContentView
             month--;
 
         Button dayButton = sender as Button;
-        SetCurrentDateAndRebuildCalendar(year, month, Convert.ToInt32(dayButton.Text));
+        int day = Convert.ToInt32(dayButton.Text);
+        if (isDisableDay(year, month, day))
+            return;
+
+        SetCurrentDateAndRebuildCalendar(year, month, day);
     }
 
     private void OnNextMonthDayButtonTapped(object sender, EventArgs e)
@@ -166,7 +175,12 @@ public partial class NullableDateTimePickerContent : ContentView
             month++;
 
         Button dayButton = sender as Button;
-        SetCurrentDateAndRebuildCalendar(year, month, Convert.ToInt32(dayButton.Text));
+        int day = Convert.ToInt32(dayButton.Text);
+
+        if (isDisableDay(year, month, day))
+            return;
+
+        SetCurrentDateAndRebuildCalendar(year, month, day);
     }
 
 
@@ -277,7 +291,6 @@ public partial class NullableDateTimePickerContent : ContentView
                 for (int day = 1; day <= daysInMonth; day++)
                 {
                     var dayButton = _dayButtons[day - 1];
-                    dayButton.IsEnabled = true;
 
                     _daysGrid.Add(dayButton, col + 1, row);
 
@@ -1038,5 +1051,14 @@ public partial class NullableDateTimePickerContent : ContentView
     private void OnMonthNameLabelClicked(object s, TappedEventArgs e)
     {
         SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text.Substring(0, 2)), _currentDate.Day);
+    }
+    private bool isDisableDay(int year, int month, int day)
+    {
+        return year < _minDate.Year
+            || (year == _minDate.Year && month < _minDate.Month)
+            || (year == _minDate.Year && month == _minDate.Month && day < _minDate.Day)
+            || year > _maxDate.Year
+            || (year == _maxDate.Year && month > _maxDate.Month)
+            || (year == _maxDate.Year && month == _maxDate.Month && day > _maxDate.Day);
     }
 }
