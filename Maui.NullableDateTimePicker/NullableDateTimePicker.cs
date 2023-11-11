@@ -25,7 +25,8 @@ public class NullableDateTimePicker : ContentView
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             Margin = 0,
-            IsReadOnly = true
+            IsReadOnly = true,
+            AutomationId = "Sebarslan.Maui.NullableDateTimePicker.Entry"
         };
 
         TapGestureRecognizer tapGestureRecognizer = new();
@@ -41,7 +42,8 @@ public class NullableDateTimePicker : ContentView
             Aspect = Aspect.AspectFit,
             BackgroundColor = Color.FromRgba("#E1E1E1"),
             Padding = 2,
-            Margin = 0
+            Margin = 0,
+            AutomationId = "Sebarslan.Maui.NullableDateTimePicker.Icon"
         };
 
         _dateTimePickerIcon.Clicked += OnDatePickerClicked;
@@ -220,19 +222,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     }
 
     public static readonly BindableProperty MinDateProperty =
-    BindableProperty.Create(nameof(MinDate), typeof(DateTime?), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, (view, value) =>
-    {
-        return (value != null && (DateTime)value >= DateTime.MinValue && (DateTime)value <= DateTime.MaxValue);
-    },
+    BindableProperty.Create(nameof(MinDate), typeof(DateTime?), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, null,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
-            if (newValue is string strValue)
-            {
-                if (DateTime.TryParse(strValue, out DateTime minDate))
-                {
-                    newValue = minDate;
-                }
-            }
+            newValue = ParseDate(newValue);
         });
 
     public DateTime? MinDate
@@ -245,19 +238,27 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     }
 
     public static readonly BindableProperty MaxDateProperty =
-    BindableProperty.Create(nameof(MaxDate), typeof(DateTime?), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, (view, value) =>
+    BindableProperty.Create(nameof(MaxDate), typeof(DateTime?), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, null, propertyChanged: (bindable, oldValue, newValue) =>
     {
-        return (value != null && (DateTime)value >= DateTime.MinValue && (DateTime)value <= DateTime.MaxValue);
-    }, propertyChanged: (bindable, oldValue, newValue) =>
+        newValue = ParseDate(newValue);
+    });
+
+    private static DateTime? ParseDate(object? objectValue)
     {
-        if (newValue is string strValue)
+        DateTime? dateValue = null;
+        if (objectValue is DateTime)
         {
-            if (DateTime.TryParse(strValue, out DateTime maxDate))
+            dateValue = (DateTime?)objectValue;
+        }
+        else if (objectValue is string strValue)
+        {
+            if (DateTime.TryParse(strValue, out DateTime outputDate))
             {
-                newValue = maxDate;
+                dateValue = outputDate;
             }
         }
-    });
+        return dateValue;
+    }
 
     public DateTime? MaxDate
     {
@@ -328,6 +329,20 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
         }
     }
 
+    public static readonly BindableProperty DisabledDayStyleProperty =
+    BindableProperty.Create(nameof(DisabledDayStyle), typeof(Style), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, null, (b, o, n) =>
+    {
+    });
+
+    public Style DisabledDayStyle
+    {
+        get { return (Style)GetValue(DisabledDayStyleProperty); }
+        set
+        {
+            SetValue(DisabledDayStyleProperty, value);
+        }
+    }
+
     public static readonly BindableProperty OtherMonthDayStyleProperty =
     BindableProperty.Create(nameof(OtherMonthDayStyle), typeof(Style), typeof(NullableDateTimePicker), null, defaultBindingMode: BindingMode.OneWay, null, (b, o, n) =>
     {
@@ -353,8 +368,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
             SetValue(SelectedDayStyleProperty, value);
         }
     }
-
-
 
     public static readonly BindableProperty DayNamesStyleProperty =
     BindableProperty.Create(
@@ -628,6 +641,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
                 HeaderBackgroundColor = this.HeaderBackgroundColor,
                 ToolButtonsStyle = this.ToolButtonsStyle,
                 DayStyle = this.DayStyle,
+                DisabledDayStyle = this.DisabledDayStyle,
                 OtherMonthDayStyle = this.OtherMonthDayStyle,
                 SelectedDayStyle = this.SelectedDayStyle,
                 DayNamesStyle = this.DayNamesStyle,

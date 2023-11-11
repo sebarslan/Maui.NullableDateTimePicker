@@ -1,6 +1,4 @@
-﻿using static Microsoft.Maui.Controls.Device;
-
-namespace Maui.NullableDateTimePicker
+﻿namespace Maui.NullableDateTimePicker
 {
     internal static class DefaultStyles
     {
@@ -25,11 +23,26 @@ namespace Maui.NullableDateTimePicker
                             new Setter { Property = VisualElement.MaximumWidthRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MaximumHeightRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
-                            new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 },
-                            new Setter {Property = VisualStateManager.VisualStateGroupsProperty, Value = CreateVisualStateGroups() }
+                            new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 }
                         }
                 };
                 return _dayStyle;
+            }
+        }
+
+        private static Style _disabledDayStyle;
+        internal static Style DisabledDayStyle
+        {
+            get
+            {
+                _disabledDayStyle ??= new Style(typeof(Button))
+                {
+                    BasedOn = DayStyle,
+                    Setters = {
+                        new Setter { Property = Button.TextColorProperty, Value = Color.FromRgba("#919191")}
+                    }
+                };
+                return _disabledDayStyle;
             }
         }
 
@@ -91,7 +104,7 @@ namespace Maui.NullableDateTimePicker
                     Setters = {
                             new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Center },
                             new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center},
-                           new Setter { Property = Label.FontSizeProperty, Value = 12 },
+                            new Setter { Property = Label.FontSizeProperty, Value = 12 },
                             new Setter { Property = Label.TextColorProperty, Value =  Color.FromRgba("#6e5df2") },
                             new Setter { Property = Label.FontAttributesProperty, Value = FontAttributes.Bold },
                             new Setter { Property = Label.MarginProperty, Value = 0 },
@@ -146,29 +159,6 @@ namespace Maui.NullableDateTimePicker
 
                 return _toolButtonsStyle;
             }
-        }
-
-        private static VisualStateGroupList CreateVisualStateGroups()
-        {
-            var visualStateGroups = new VisualStateGroupList
-            {
-                new VisualStateGroup
-                {
-                    Name = "CommonStates",
-                    States = {
-                        new VisualState
-                        {
-                            Name = "Disabled",
-                            Setters = {
-
-                                new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent }
-                            }
-                        }
-                    }
-                }
-            };
-
-            return visualStateGroups;
         }
     }
 }

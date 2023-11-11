@@ -19,7 +19,8 @@
                                         HorizontalOptions="Start"
                                         Icon="{Binding CalendarIcon}"
                                         WidthRequest="200" 
-                                        HeightRequest="40" IconBackgroundColor="Transparent" />
+                                        HeightRequest="40" 
+                                        IconBackgroundColor="Transparent" />
 
             <Label Text="DateTimepicker" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
@@ -28,6 +29,7 @@
                                         ShowWeekNumbers="True"
                                         HorizontalOptions="Start"
                                         SelectedDayStyle="{StaticResource SelectedDayStyle}"
+                                        IconBackgroundColor="Transparent"
                                         />
 
             <Label Text="Timepicker" />
@@ -35,7 +37,8 @@
                                         Mode="Time"
                                         ShowOtherMonthDays="False"
                                         HorizontalOptions="Start"
-                                        ActivityIndicatorColor="{StaticResource Yellow200Accent}" />
+                                        ActivityIndicatorColor="{StaticResource Yellow200Accent}"
+                                        IconBackgroundColor="Transparent"/>
 
             
 
@@ -62,6 +65,18 @@
 
             <Label Text="Datepicker programmatically" />
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
+
+            <Label Text="MinDate MaxDate" />
+            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+                            Mode="Date"
+                            MinDate="{Binding MinDate}"
+                            MaxDate="{Binding MaxDate}"
+                            OkButtonText="Done" 
+                            HorizontalOptions="Start"
+                            Icon="{Binding CalendarIcon}"
+                            WidthRequest="200" 
+                            HeightRequest="40" 
+                            IconBackgroundColor="Transparent" />
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" />
             <!-- Nullable datetime picker -->

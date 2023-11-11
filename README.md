@@ -114,6 +114,7 @@ More examples, please see the samples project
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
 | DayNamesStyle | Style of the day names in the calendar. | null |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
+| DisabledDayStyle | Style of the disabled days in the calendar. | null |
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |

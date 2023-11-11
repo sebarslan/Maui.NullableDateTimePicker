@@ -17,8 +17,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<AssemblyVersion>1.1.1.0</AssemblyVersion>
-		<Version>1.1.1</Version>
+		<AssemblyVersion>1.2.0.0</AssemblyVersion>
+		<Version>1.2.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

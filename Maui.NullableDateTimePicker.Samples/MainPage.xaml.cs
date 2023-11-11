@@ -54,7 +54,8 @@
                 ShowWeekNumbers = true,
                 ShowOtherMonthDays = true,
                 HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.Center,
+                IconBackgroundColor = Colors.Transparent
             };
 
             datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.ForeColorProperty, Microsoft.Maui.Graphics.Colors.Black, Microsoft.Maui.Graphics.Colors.White);
@@ -86,6 +87,9 @@
                 //DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
             }
         }
+
+        public DateTime? MinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
+        public DateTime? MaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
     }
 
     static class IconFont

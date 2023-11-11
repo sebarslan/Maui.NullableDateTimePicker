@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Microsoft.Maui.Platform;
+using System.Globalization;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -24,6 +25,7 @@ public partial class NullableDateTimePickerContent : ContentView
     private Button _nextMonthButton;
     private Style _selectedDayStyle;
     private Style _dayStyle;
+    private Style _disabledDayStyle;
     private Style _otherMonthDayStyle;
     private Style _dayNamesStyle;
     private Style _toolButtonsStyle;
@@ -132,7 +134,7 @@ public partial class NullableDateTimePickerContent : ContentView
         Button dayButton = sender as Button;
         var day = Convert.ToInt32(dayButton.Text);
 
-        if (isDisableDay(_currentDate.Year, _currentDate.Month, day))
+        if (DayDisabled(_currentDate.Year, _currentDate.Month, day))
             return;
 
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second));
@@ -154,7 +156,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         Button dayButton = sender as Button;
         int day = Convert.ToInt32(dayButton.Text);
-        if (isDisableDay(year, month, day))
+        if (DayDisabled(year, month, day))
             return;
 
         SetCurrentDateAndRebuildCalendar(year, month, day);
@@ -177,12 +179,11 @@ public partial class NullableDateTimePickerContent : ContentView
         Button dayButton = sender as Button;
         int day = Convert.ToInt32(dayButton.Text);
 
-        if (isDisableDay(year, month, day))
+        if (DayDisabled(year, month, day))
             return;
 
         SetCurrentDateAndRebuildCalendar(year, month, day);
     }
-
 
 
     internal void SetCurrentDateAndRebuildCalendar(int year, int month, int day)
@@ -193,91 +194,91 @@ public partial class NullableDateTimePickerContent : ContentView
 
     private void FixAndSetCurrentDate(int year, int month, int day)
     {
+        if (year > DateTime.MaxValue.Year)
+            year = DateTime.MaxValue.Year;
+        else if (year < DateTime.MinValue.Year)
+            year = DateTime.MinValue.Year;
+
         if (month > 12)
             month = 12;
-
-        if (month < 1)
+        else if (month < 1)
             month = 1;
-
-        if (month > _maxDate.Month)
-            month = _maxDate.Month;
-
-        if (month < _minDate.Month)
-            month = _minDate.Month;
-
 
         var daysInMonth = DateTime.DaysInMonth(year, month);
         if (day > daysInMonth)
             day = daysInMonth;
-        if (day < 1)
+        else if (day < 1)
             day = 1;
 
         var currentDate = new DateTime(year, month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second);
         if (currentDate < _minDate)
             _currentDate = _minDate;
+        else if (currentDate > _maxDate)
+            _currentDate = _maxDate;
         else
             _currentDate = currentDate;
     }
 
     private void BuildCalendar()
     {
-        Task.Run(() =>
+        try
         {
-            MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
-       {
-           CalendarActivityIndicator.IsVisible = true;
-           CalendarActivityIndicator.IsRunning = true;
-
-           if (!_options.ShowWeekNumbers)
-               _daysGrid.ColumnDefinitions[0].Width = 0;
-
-           if (_currentDate > _minDate)
-               _previousMonthButton.IsVisible = true;
-           else
-               _previousMonthButton.IsVisible = false;
-
-           if (_currentDate <= _maxDate)
-               _nextMonthButton.IsVisible = true;
-           else
-               _nextMonthButton.IsVisible = false;
-       });
-
-            // Get the first day of the month and the number of days in the month
-            DayOfWeek firstDayOfMonth = new DateTime(_currentDate.Year, _currentDate.Month, 1).DayOfWeek;
-            int daysInMonth = DateTime.DaysInMonth(_currentDate.Year, _currentDate.Month);
-
-            // Get the DateTimeFormatInfo for the current culture
-            DateTimeFormatInfo dateTimeFormatInfo = DateTimeFormatInfo.CurrentInfo;
-            string[] dayNames = dateTimeFormatInfo.AbbreviatedDayNames;
-            int firstDayOfWekkIndex = (int)dateTimeFormatInfo.FirstDayOfWeek;
-
-            // Calculate the week number for this day
-
-
-            // Rotate the array so that the first day of the week comes first
-            string[] rotatedDayNames = dayNames.Skip(firstDayOfWekkIndex)
-                                                   .Concat(dayNames.Take(firstDayOfWekkIndex))
-                                                   .ToArray();
-
-            var dayLabels = new List<Label>();
-            // Add the day labels to the top row of the grid
-            for (int i = 0; i < rotatedDayNames.Length; i++)
-            {
-                string dayName = rotatedDayNames[i];
-
-                Label label = new()
-                {
-                    Text = dayName,
-                    Style = _options.DayNamesStyle ?? _dayNamesStyle as Style
-                };
-                dayLabels.Add(label);
-            }
-
             MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
             {
+                CalendarActivityIndicator.IsVisible = true;
+                CalendarActivityIndicator.IsRunning = true;
+                
+                lastClickedDayButton = null;
                 _daysGrid.Clear();
                 _daysGrid.Children?.Clear();
+                
 
+                DateTime lastMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(-1);
+                DateTime nextMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(1);
+                int daysInLastMonth = DateTime.DaysInMonth(lastMonthDate.Year, lastMonthDate.Month);
+                //int daysInNextMonth = DateTime.DaysInMonth(firstDayOfNextMonth.Year, firstDayOfNextMonth.Month);
+
+                if (!_options.ShowWeekNumbers)
+                    _daysGrid.ColumnDefinitions[0].Width = 0;
+
+                _previousMonthButton.IsVisible = true;
+                if (DayDisabled(lastMonthDate.Year, lastMonthDate.Month, daysInLastMonth))
+                    _previousMonthButton.IsVisible = false;
+
+                _nextMonthButton.IsVisible = true;
+                if (DayDisabled(nextMonthDate.Year, nextMonthDate.Month, 1))
+                    _nextMonthButton.IsVisible = false;
+
+                // Get the first day of the month and the number of days in the month
+                DayOfWeek firstDayOfMonth = new DateTime(_currentDate.Year, _currentDate.Month, 1).DayOfWeek;
+                int daysInMonth = DateTime.DaysInMonth(_currentDate.Year, _currentDate.Month);
+
+                // Get the DateTimeFormatInfo for the current culture
+                DateTimeFormatInfo dateTimeFormatInfo = DateTimeFormatInfo.CurrentInfo;
+                string[] dayNames = dateTimeFormatInfo.AbbreviatedDayNames;
+                int firstDayOfWekkIndex = (int)dateTimeFormatInfo.FirstDayOfWeek;
+
+                // Calculate the week number for this day
+
+
+                // Rotate the array so that the first day of the week comes first
+                string[] rotatedDayNames = dayNames.Skip(firstDayOfWekkIndex)
+                                                       .Concat(dayNames.Take(firstDayOfWekkIndex))
+                                                       .ToArray();
+
+                var dayLabels = new List<Label>();
+                // Add the day labels to the top row of the grid
+                for (int i = 0; i < rotatedDayNames.Length; i++)
+                {
+                    string dayName = rotatedDayNames[i];
+
+                    Label label = new()
+                    {
+                        Text = dayName,
+                        Style = _options.DayNamesStyle ?? _dayNamesStyle as Style
+                    };
+                    dayLabels.Add(label);
+                }
 
                 for (int i = 0; i < dayLabels.Count; i++)
                 {
@@ -291,6 +292,16 @@ public partial class NullableDateTimePickerContent : ContentView
                 for (int day = 1; day <= daysInMonth; day++)
                 {
                     var dayButton = _dayButtons[day - 1];
+
+                    if (dayButton.Style != _dayStyle)
+                    {
+                        dayButton.Style = _dayStyle;
+                    }
+
+                    if (DayDisabled(_currentDate.Year, _currentDate.Month, day))
+                    {
+                        dayButton.Style = _disabledDayStyle;
+                    }
 
                     _daysGrid.Add(dayButton, col + 1, row);
 
@@ -329,34 +340,39 @@ public partial class NullableDateTimePickerContent : ContentView
                 // other month days
                 if (_options.ShowOtherMonthDays)
                 {
-                    var lastMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(-1);
-                    int daysInLastMonth = DateTime.DaysInMonth(lastMonthDate.Year, lastMonthDate.Month);
                     // Fill in days for the last month
                     int daysNeededFromLastMonth = ((int)firstDayOfMonth - firstDayOfWekkIndex + 7) % 7;
                     for (int i = daysNeededFromLastMonth - 1; i >= 0; i--)
                     {
+                        int dayInLastMonth = daysInLastMonth - i;
                         Button lastMonthDayButton = new()
                         {
-                            Text = (daysInLastMonth - i).ToString(),
+                            Text = dayInLastMonth.ToString(),
                             Style = _otherMonthDayStyle
                         };
+
+                        if (DayDisabled(lastMonthDate.Year, lastMonthDate.Month, dayInLastMonth))
+                            lastMonthDayButton.Style = _disabledDayStyle;
+
                         lastMonthDayButton.Clicked += OnLastMonthDayButtonTapped;
 
                         _daysGrid.Add(lastMonthDayButton, daysNeededFromLastMonth - i, 1); //the first column of the grid is for the week numbers
                     }
 
-
-                    DateTime firstDayOfNextMonth = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(1);
-                    int daysInNextMonth = DateTime.DaysInMonth(firstDayOfNextMonth.Year, firstDayOfNextMonth.Month);
-                    int lastWeekLastDayIndex = ((int)firstDayOfNextMonth.DayOfWeek - 1 + 7) % 7;
+                    int lastWeekLastDayIndex = ((int)nextMonthDate.DayOfWeek - 1 + 7) % 7;
 
                     for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromLastMonth; i++)
                     {
+                        int dayInNextMonth = i + 1;
                         Button nextMonthDayButton = new()
                         {
-                            Text = (i + 1).ToString(),
+                            Text = dayInNextMonth.ToString(),
                             Style = _otherMonthDayStyle
                         };
+
+                        if (DayDisabled(nextMonthDate.Year, nextMonthDate.Month, dayInNextMonth))
+                            nextMonthDayButton.Style = _disabledDayStyle;
+
                         nextMonthDayButton.Clicked += OnNextMonthDayButtonTapped;
 
                         int nextDayRow = (daysNeededFromLastMonth + daysInMonth + i) / 7 + 1; //Add 1 because the first row is for day names
@@ -364,7 +380,6 @@ public partial class NullableDateTimePickerContent : ContentView
 
                         _daysGrid.Add(nextMonthDayButton, nextDayCol, nextDayRow);
                     }
-
                 }
 
                 //If the days from the previous or next month are not being displayed and the last row is empty, it should not be shown.
@@ -390,7 +405,10 @@ public partial class NullableDateTimePickerContent : ContentView
                 CalendarActivityIndicator.IsVisible = false;
                 CalendarActivityIndicator.IsRunning = false;
             });
-        });
+        }
+        catch (Exception ex)
+        {
+        }
     }
 
     /// <summary>
@@ -430,19 +448,13 @@ public partial class NullableDateTimePickerContent : ContentView
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
             if (lastClickedDayButton != null)
-                lastClickedDayButton.Style = _dayStyle as Style;
+                lastClickedDayButton.Style = _dayStyle;
 
-            foreach (var child in _dayButtons)
+            var currentButton = _dayButtons.FirstOrDefault(b => b.Text == day);
+            if (currentButton != null)
             {
-                if (child is Button button)
-                {
-                    if (button.Text == day)
-                    {
-                        button.Style = _selectedDayStyle as Style;
-                        lastClickedDayButton = button;
-                        break;
-                    }
-                }
+                currentButton.Style = _selectedDayStyle;
+                lastClickedDayButton = currentButton;
             }
         });
     }
@@ -580,6 +592,19 @@ public partial class NullableDateTimePickerContent : ContentView
             _dayStyle.BasedOn = DefaultStyles.DayStyle;
         }
 
+        _disabledDayStyle = new Style(targetType: typeof(Button));
+
+        if (_options.DisabledDayStyle != null)
+        {
+            _options.DisabledDayStyle.BasedOn = DefaultStyles.DisabledDayStyle;
+            _disabledDayStyle.BasedOn = _options.DisabledDayStyle;
+        }
+        else
+        {
+            _disabledDayStyle.BasedOn = DefaultStyles.DisabledDayStyle;
+        }
+
+
         // OtherMonthDayStyle
         _otherMonthDayStyle = new Style(targetType: typeof(Button));
         if (_options.OtherMonthDayStyle != null)
@@ -652,7 +677,8 @@ public partial class NullableDateTimePickerContent : ContentView
                 Button button = new()
                 {
                     Text = day.ToString(),
-                    Style = _dayStyle
+                    Style = _dayStyle,
+                    IsEnabled = true
                 };
                 button.Clicked += OnDayButtonTapped;
                 _dayButtons.Add(button);
@@ -969,18 +995,18 @@ public partial class NullableDateTimePickerContent : ContentView
             Margin = 5,
             Padding = 0,
             RowDefinitions = new RowDefinitionCollection
-                {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star }
-                },
+            {
+                new RowDefinition { Height = GridLength.Star },
+                new RowDefinition { Height = GridLength.Star },
+                new RowDefinition { Height = GridLength.Star },
+                new RowDefinition { Height = GridLength.Star }
+            },
             ColumnDefinitions = new ColumnDefinitionCollection
-                {
-                    new ColumnDefinition { Width = GridLength.Star },
-                    new ColumnDefinition { Width = GridLength.Star },
-                    new ColumnDefinition { Width = GridLength.Star },
-                }
+            {
+                new ColumnDefinition { Width = GridLength.Star },
+                new ColumnDefinition { Width = GridLength.Star },
+                new ColumnDefinition { Width = GridLength.Star },
+            }
         };
 
         int monthNumber = 1;
@@ -1052,7 +1078,7 @@ public partial class NullableDateTimePickerContent : ContentView
     {
         SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text.Substring(0, 2)), _currentDate.Day);
     }
-    private bool isDisableDay(int year, int month, int day)
+    private bool DayDisabled(int year, int month, int day)
     {
         return year < _minDate.Year
             || (year == _minDate.Year && month < _minDate.Month)

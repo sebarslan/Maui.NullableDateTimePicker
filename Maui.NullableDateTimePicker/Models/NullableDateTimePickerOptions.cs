@@ -16,6 +16,7 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public Color? HeaderBackgroundColor { get; set; }
     public Style? ToolButtonsStyle { get; set; }
     public Style? DayStyle { get; set; }
+    public Style? DisabledDayStyle { get; set; }
     public Style? OtherMonthDayStyle { get; set; }
     public Style? SelectedDayStyle { get; set; }
     public Style? DayNamesStyle { get; set; }
