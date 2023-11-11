@@ -68,7 +68,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
                 PopulatePickers();
 
-                BuildCalendar();
+                SetCurrentDateAndRebuildCalendar(_currentDate.Year, _currentDate.Month, _currentDate.Day);
             }
             catch (Exception ex)
             {
@@ -227,11 +227,11 @@ public partial class NullableDateTimePickerContent : ContentView
             {
                 CalendarActivityIndicator.IsVisible = true;
                 CalendarActivityIndicator.IsRunning = true;
-                
+
                 lastClickedDayButton = null;
                 _daysGrid.Clear();
                 _daysGrid.Children?.Clear();
-                
+
 
                 DateTime lastMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(-1);
                 DateTime nextMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(1);
