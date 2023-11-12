@@ -11,6 +11,8 @@ public class NullableDateTimePicker : ContentView
     internal Entry _dateTimePickerEntry;
     internal ImageButton _dateTimePickerIcon;
     internal bool isSetIconCalledForFirstTime = false;
+    private Style _entryStyle;
+    private Style _iconStyle;
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
     public NullableDateTimePicker()
     {
@@ -18,15 +20,33 @@ public class NullableDateTimePicker : ContentView
         Padding = 0;
         base.BackgroundColor = Colors.Transparent;
 
-        _dateTimePickerEntry = new Entry()
+        _entryStyle = new Style(typeof(Entry))
         {
-            IsVisible = true,
-            MinimumWidthRequest = 50,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            Margin = 0,
-            IsReadOnly = true,
-            AutomationId = "Sebarslan.Maui.NullableDateTimePicker.Entry"
+            Setters = {
+                new Setter { Property = VisualElement.IsVisibleProperty, Value = true },
+                new Setter { Property = InputView.MinimumWidthRequestProperty, Value = 50 },
+                new Setter { Property = View.HorizontalOptionsProperty, Value = LayoutOptions.Fill },
+                new Setter { Property = View.VerticalOptionsProperty, Value = LayoutOptions.Center },
+                new Setter { Property = Entry.MarginProperty, Value = new Thickness(0) }
+            }
+        };
+
+        _iconStyle = new Style(typeof(Image))
+        {
+            Setters = {
+                new Setter { Property = VisualElement.WidthRequestProperty, Value = 30 },
+                new Setter { Property = Image.AspectProperty, Value = Aspect.AspectFit },
+                new Setter { Property = VisualElement.BackgroundColorProperty, Value = Color.FromRgba(225, 225, 225, 1.0) },
+                new Setter { Property = ImageButton.PaddingProperty, Value = new Thickness(2) },
+                new Setter { Property = ImageButton.MarginProperty, Value = new Thickness(0) },
+            }
+        };
+
+
+        _dateTimePickerEntry = new NullableDateTimePickerEntry()
+        {
+            Style = _entryStyle,
+            IsReadOnly = true
         };
 
         TapGestureRecognizer tapGestureRecognizer = new();
@@ -38,12 +58,7 @@ public class NullableDateTimePicker : ContentView
 
         _dateTimePickerIcon = new ImageButton
         {
-            WidthRequest = 30,
-            Aspect = Aspect.AspectFit,
-            BackgroundColor = Color.FromRgba("#E1E1E1"),
-            Padding = 2,
-            Margin = 0,
-            AutomationId = "Sebarslan.Maui.NullableDateTimePicker.Icon"
+            Style = _iconStyle
         };
 
         _dateTimePickerIcon.Clicked += OnDatePickerClicked;
@@ -186,7 +201,7 @@ public class NullableDateTimePicker : ContentView
     }
 
     public static readonly BindableProperty ToolButtonsStyleProperty =
-BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button), defaultValue: null, defaultBindingMode: BindingMode.OneWay,
+BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(NullableDateTimePicker), defaultValue: null, defaultBindingMode: BindingMode.OneWay,
     propertyChanged: (bindable, oldValue, newValue) =>
     {
     });
@@ -607,6 +622,52 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Button),
     {
         get { return (bool)GetValue(CloseOnOutsideClickProperty); }
         set { SetValue(CloseOnOutsideClickProperty, value); }
+    }
+
+    public static readonly BindableProperty EntryStyleProperty =
+BindableProperty.Create(nameof(EntryStyle), typeof(Style), typeof(NullableDateTimePicker), defaultValue: null, defaultBindingMode: BindingMode.OneWay,
+    propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        var that = (NullableDateTimePicker)bindable;
+        var entryStyle = (Style)newValue;
+        if (entryStyle == null)
+        {
+            that._dateTimePickerEntry.Style = entryStyle;
+        }
+        else
+        {
+            entryStyle.BasedOn = that._entryStyle;
+            that._dateTimePickerEntry.Style = entryStyle;
+        }
+    });
+
+    public Style EntryStyle
+    {
+        get { return (Style)GetValue(EntryStyleProperty); }
+        set { SetValue(EntryStyleProperty, value); }
+    }
+
+    public static readonly BindableProperty IconStyleProperty =
+BindableProperty.Create(nameof(IconStyle), typeof(Style), typeof(NullableDateTimePicker), defaultValue: null, defaultBindingMode: BindingMode.OneWay,
+    propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        var that = (NullableDateTimePicker)bindable;
+        var iconStyle = (Style)newValue;
+        if (iconStyle == null)
+        {
+            that._dateTimePickerIcon.Style = iconStyle;
+        }
+        else
+        {
+            iconStyle.BasedOn = that._iconStyle;
+            that._dateTimePickerIcon.Style = iconStyle;
+        }
+    });
+
+    public Style IconStyle
+    {
+        get { return (Style)GetValue(IconStyleProperty); }
+        set { SetValue(IconStyleProperty, value); }
     }
     #endregion //bindable properties
 

@@ -9,7 +9,7 @@ namespace Maui.NullableDateTimePicker
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
         private NullableDateTimePickerContent _content = null;
-
+        
         internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
         {
             _content = new NullableDateTimePickerContent(options);
@@ -19,7 +19,6 @@ namespace Maui.NullableDateTimePicker
             var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
             var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
             Size = new Size(Math.Max(popupWidth, 100), Math.Max(popupHeight, 100));
-            
 
             CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 

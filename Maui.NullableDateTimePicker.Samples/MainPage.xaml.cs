@@ -8,6 +8,7 @@
         {
             BindingContext = this;
             InitializeComponent();
+            ModifyEntry();
 
             // Create Datetimepicker 
             CreateDateTimePickerProgrammatically();
@@ -90,6 +91,24 @@
 
         public DateTime? MinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
         public DateTime? MaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
+
+        void ModifyEntry()
+        {
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("MyCustomization", (handler, view) =>
+            {
+                if (view is Maui.NullableDateTimePicker.NullableDateTimePickerEntry)
+                {
+#if ANDROID
+            handler.PlatformView.SetPadding(10, 0, 5, 0);
+            handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+#elif IOS || MACCATALYST
+
+#elif WINDOWS
+            
+#endif
+                }
+            });
+        }
     }
 
     static class IconFont

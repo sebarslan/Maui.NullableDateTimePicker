@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker.Samples", "Maui.NullableDateTimePicker.Samples\Maui.NullableDateTimePicker.Samples.csproj", "{92E070F8-D50E-4946-A79F-5C0450A63E82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.NullableDateTimePicker.Tests", "Maui.NullableDateTimePicker.Tests\Maui.NullableDateTimePicker.Tests.csproj", "{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92E070F8-D50E-4946-A79F-5C0450A63E82}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C9D4EC9-E4F5-4817-831B-50190CAA7FAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
