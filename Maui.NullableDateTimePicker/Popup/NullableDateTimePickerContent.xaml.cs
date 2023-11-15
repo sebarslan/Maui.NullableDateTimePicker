@@ -687,7 +687,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         _calendarGrid = new Grid
         {
-            BackgroundColor = _options.BackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
+            BackgroundColor = _options.BodyBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
             Padding = new Thickness(0),

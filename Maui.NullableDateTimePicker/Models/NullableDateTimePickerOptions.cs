@@ -10,7 +10,7 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public string OkButtonText { get; set; } = "OK";
     public string CancelButtonText { get; set; } = "Cancel";
     public string ClearButtonText { get; set; } = "Clear";
-    public Color? BackgroundColor { get; set; }
+    public Color? BodyBackgroundColor { get; set; }
     public Color? ForeColor { get; set; }
     public Color? HeaderForeColor { get; set; }
     public Color? HeaderBackgroundColor { get; set; }

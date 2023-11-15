@@ -6,7 +6,7 @@ namespace Maui.NullableDateTimePicker
         public static MauiAppBuilder ConfigureNullableDateTimePicker(this MauiAppBuilder builder)
         {
 #if DEBUG
-               return builder.UseMauiCommunityToolkit();
+            return builder.UseMauiCommunityToolkit();
 #else
             return builder.UseMauiCommunityToolkit(options =>
                  {

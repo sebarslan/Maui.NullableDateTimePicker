@@ -1,4 +1,6 @@
-﻿namespace Maui.NullableDateTimePicker.Samples
+﻿using Microsoft.Maui.Platform;
+
+namespace Maui.NullableDateTimePicker.Samples
 {
     public partial class MainPage : ContentPage
     {
@@ -9,9 +11,15 @@
             BindingContext = this;
             InitializeComponent();
             ModifyEntry();
+            try
+            {
+                // Create Datetimepicker 
+                CreateDateTimePickerProgrammatically();
+            }
+            catch (Exception ex)
+            {
 
-            // Create Datetimepicker 
-            CreateDateTimePickerProgrammatically();
+            }
         }
 
         DateTime? myDateTime = DateTime.Now;
@@ -32,7 +40,18 @@
             FontAutoScalingEnabled = true,
             Color = Colors.Black
         };
+
         public FontImageSource CalendarIcon => calendarIcon;
+
+        readonly FontImageSource calendarIconAppTheme = new()
+        {
+            Glyph = IconFont.CalendarDays,
+            FontFamily = "FontAwesome",
+            FontAutoScalingEnabled = true,
+            Color = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black,
+            Size = 20
+        };
+        public FontImageSource CalendarIconAppTheme => calendarIconAppTheme;
 
         private void OnCounterClicked(object sender, EventArgs e)
         {
@@ -46,6 +65,7 @@
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
 
+        // Datepicker programmatically
         private void CreateDateTimePickerProgrammatically()
         {
             Maui.NullableDateTimePicker.NullableDateTimePicker datePicker = new()
@@ -55,12 +75,11 @@
                 ShowWeekNumbers = true,
                 ShowOtherMonthDays = true,
                 HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Center,
-                IconBackgroundColor = Colors.Transparent
+                VerticalOptions = LayoutOptions.Center
             };
 
             datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.ForeColorProperty, Microsoft.Maui.Graphics.Colors.Black, Microsoft.Maui.Graphics.Colors.White);
-            datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.BackgroundColorProperty, Microsoft.Maui.Graphics.Colors.White, Microsoft.Maui.Graphics.Colors.Black);
+            datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.BodyBackgroundColorProperty, Microsoft.Maui.Graphics.Colors.White, Microsoft.Maui.Graphics.Colors.Black);
 
 
             // binding
@@ -71,7 +90,7 @@
         }
 
 
-        // NullableDateTimePicker with own entry and button
+        // Calling nullabledatetimepicker calendar popup directly with own entry and button
         private async void DateTimePicker_Clicked(object sender, EventArgs e)
         {
             INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
@@ -89,8 +108,8 @@
             }
         }
 
-        public DateTime? MinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
-        public DateTime? MaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
+        public DateTime? MyMinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
+        public DateTime? MyMaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
 
         void ModifyEntry()
         {
@@ -99,12 +118,11 @@
                 if (view is Maui.NullableDateTimePicker.NullableDateTimePickerEntry)
                 {
 #if ANDROID
-            handler.PlatformView.SetPadding(10, 0, 5, 0);
-            handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
-#elif IOS || MACCATALYST
-
+            handler.PlatformView.SetPadding(0, 0, 0, 0);
+            handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent); //We remove the entry line in Android.
 #elif WINDOWS
-            
+                    handler.PlatformView.Background = Colors.Transparent.ToPlatform();
+                    handler.PlatformView.Padding = new Microsoft.UI.Xaml.Thickness(0);
 #endif
                 }
             });

@@ -9,7 +9,7 @@ This control uses the <a href="https://github.com/CommunityToolkit/Maui" target=
 # Usage
 To use the Nullable DateTimePicker control in your .NET MAUI application, follow these steps:
 
-0- Add the Sebarslan.Maui.NullableDateTimePicker nuget package to your project and add the .UseMauiCommunityToolkit() element to the MauiProgram.cs file in your project.
+0- Add the Sebarslan.Maui.NullableDateTimePicker nuget package to your project and add the .ConfigureNullableDateTimePicker() element to the MauiProgram.cs file in your project.
 
 <pre>
 <code>
@@ -17,7 +17,7 @@ public static MauiApp CreateMauiApp()
 {
     var builder = MauiApp.CreateBuilder();
     builder.UseMauiApp&lt;App&gt;();
-    .UseMauiCommunityToolkit()
+    .ConfigureNullableDateTimePicker()
     ....
 </code>
 </pre>
@@ -95,6 +95,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 More examples, please see the samples project
 
 # Options
+## DateTimePicker Calendar options
 | Option | Description | Default Value |
 |--------|-------------|---------|
 | NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
@@ -105,10 +106,10 @@ More examples, please see the samples project
 | CancelButtonText | The text for the Cancel button. | Cancel |
 | ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
-| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
-| BackgroundColor | Background color of the calendar.	| White |
 | HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
 | HeaderBackgroundColor | Background color of the control's header.	| #2b0b98 |
+| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
+| BodyBackgroundColor | Background color of the calendar.	| White |
 | ToolButtonsStyle | Style of the control's tool buttons. | null |
 | DayStyle | Style of the days in the calendar. | null |
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
@@ -120,12 +121,18 @@ More examples, please see the samples project
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
 
 
-## Other Options for ContentView Control
+## Datetimepicker Input Options (Entry and Icon)
 | Option | Description | Default Value |
 |--------|-------------|---------|
 | Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
-| IconBackgroundColor | Background color of the icon. | #E1E1E1 |
+| BackgroundColor | Background color of the datetimepicker input.	| White |
+| IconBackgroundColor | Background color of the icon. | Transparent |
 | Icon | Imagesource for the icon. | null |
+| TextColor | Text color of the entry. | Black |
+| FontSize | Font size of the entry. | 14 |
+| BorderColor | Border color of the control | Transparent |
+| CornerRadius | Corner radius of the control | 0 |
+| PlaceHolder | Placeholder of the entry | empty |
 
 
 ## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
@@ -163,7 +170,11 @@ on ios, android, windows
 
 # Changelog
 
-### 1.1.1.
+### 1.2.0
+- Months can be quickly selected from the list.
+- MinDate and MaxDate validations have been reviewed and revised.
+
+### 1.1.1
 - The .NET MAUI Communitytoolkit version (6.1.0) was added to the project.
 - Updated the week number logic to align with ISO 8601 standards.
 - Bug fixed: When going back from the 1st month, the year was also decreased.

@@ -10,7 +10,7 @@ public interface INullableDateTimePickerOptions
     string OkButtonText { get; set; }
     string CancelButtonText { get; set; }
     string ClearButtonText { get; set; }
-    Color? BackgroundColor { get; set; }
+    Color? BodyBackgroundColor { get; set; }
     Color? ForeColor { get; set; }
     Color? HeaderForeColor { get; set; }
     Color? HeaderBackgroundColor { get; set; }

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ndp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
-             x:Class="Maui.NullableDateTimePicker.Samples.MainPage">
+             x:Class="Maui.NullableDateTimePicker.Samples.MainPage"
+             BackgroundColor="AliceBlue">
 
     <ScrollView>
         <VerticalStackLayout
@@ -10,62 +11,62 @@
             Padding="30,0"
             VerticalOptions="Center">
             <!-- Nullable datetime picker -->
-            <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
+            <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
-            <Label Text="Datepicker" />
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+            <Label Text="Datepicker" TextColor="Black" />
+          
+                <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                                         Mode="Date"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
+                                            
                                         Icon="{Binding CalendarIcon}"
                                         WidthRequest="200" 
-                                        HeightRequest="40" 
-                                        IconBackgroundColor="Transparent" />
+                                        HeightRequest="40"
+                                            BorderColor="Black"
+                                            BorderWidth="1"
+                                            CornerRadius="10"
+                                            Margin="0" 
+                                            Padding="0"/>
+      
 
-            <Label Text="DateTimepicker" />
-            <Frame BorderColor="{AppThemeBinding Light='#303030', Dark='#5b5b5b'}" 
-               HorizontalOptions="Start" 
-               CornerRadius="10"
-               Padding="2.5" 
-               HeightRequest="35" 
-               MaximumWidthRequest="200"
-               VerticalOptions="Center"
-               BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}">
-                <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <Label Text="DateTimepicker" TextColor="Black" />
+
+            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="DateTime"
                                         WidthRequest="300" 
                                         ShowWeekNumbers="True"
                                         HorizontalOptions="Start"
                                         SelectedDayStyle="{StaticResource SelectedDayStyle}"
-                                        IconBackgroundColor="Transparent"
                                         />
-            </Frame>
 
-            <Label Text="Timepicker" />
+            <Label Text="Timepicker" TextColor="Black" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="Time"
                                         ShowOtherMonthDays="False"
                                         HorizontalOptions="Start"
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}"
-                                        IconBackgroundColor="Transparent"/>
+                                        />
 
 
 
-            <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" />
-            <Frame BorderColor="{AppThemeBinding Light='#303030', Dark='#5b5b5b'}" 
+            <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" TextColor="Black" />
+            <Border Stroke="{AppThemeBinding Light='#303030', Dark='#5b5b5b'}" 
                    HorizontalOptions="Start" 
-                   CornerRadius="10"
-                   Padding="2.5" 
+                   StrokeThickness="1"
+                   StrokeShape="RoundRectangle 10"
+                   Padding="0" 
                    HeightRequest="35" 
                    MaximumWidthRequest="200"
                    BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}">
-                <Grid HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0">
+                <Grid HorizontalOptions="Fill" VerticalOptions="Center" Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ndp:NullableDateTimePickerEntry x:Name="DateTimeEntry" 
                         Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
+                                                     Margin="0"
                         HorizontalOptions="Fill" 
                         VerticalOptions="Center" 
                         IsReadOnly="True"
@@ -74,34 +75,35 @@
                             <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
                         </Entry.GestureRecognizers>
                     </ndp:NullableDateTimePickerEntry>
-                    <ImageButton Grid.Column="1" Source="{Binding CalendarIcon}" 
-                    Clicked="DateTimePicker_Clicked" 
-                    HorizontalOptions="Fill"
-                                 Aspect="AspectFit"
-                    VerticalOptions="Fill"
-                                 HeightRequest="25"
-                    Margin="0"
-                    Padding="0"    
-                    BackgroundColor="Transparent" />
-                </Grid>
-            </Frame>
 
-            <Label Text="Datepicker programmatically" />
+                    <ImageButton Grid.Column="1" Source="{Binding CalendarIconAppTheme}" 
+                    Clicked="DateTimePicker_Clicked" 
+                                 BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}"
+                    HorizontalOptions="Center"
+                                 
+                    VerticalOptions="Center"
+                    Margin="0"
+                    Padding="{OnPlatform WinUI='0,-10,0,0', Default='0'}" />
+                </Grid>
+            </Border>
+
+            <Label Text="Datepicker programmatically" TextColor="Black" />
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
 
-            <Label Text="MinDate MaxDate" />
+            <Label Text="MinDate MaxDate" TextColor="Black" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                             Mode="Date"
-                            MinDate="{Binding MinDate}"
-                            MaxDate="{Binding MaxDate}"
+                            MinDate="{Binding MyMinDate}"
+                            MaxDate="{Binding MyMaxDate}"
                             OkButtonText="Done" 
                             HorizontalOptions="Start"
                             Icon="{Binding CalendarIcon}"
                             WidthRequest="200" 
-                            HeightRequest="40" 
-                            IconBackgroundColor="Transparent" />
+                            HeightRequest="40"
+                                        IconHeightRequest="35"
+                            Padding="10,0"/>
 
-            <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" />
+            <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" TextColor="Black" />
             <!-- Nullable datetime picker -->
 
             <Image
