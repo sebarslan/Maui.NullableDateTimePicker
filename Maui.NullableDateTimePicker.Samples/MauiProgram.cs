@@ -1,5 +1,6 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Platform;
+
 namespace Maui.NullableDateTimePicker.Samples
 {
     public static class MauiProgram
@@ -18,6 +19,33 @@ namespace Maui.NullableDateTimePicker.Samples
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+
+            // Remove Entry control underline, padding and background color
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NullableDateTimePicker", (handler, view) =>
+            {
+                if (view is Maui.NullableDateTimePicker.NullableDateTimePickerEntry)
+                {
+#if ANDROID
+                    handler.PlatformView.SetPadding(0, 0, 0, 0);
+                    handler.PlatformView.SetBackgroundColor(Colors.Transparent.ToPlatform());
+                   
+#elif IOS || MACCATALYST
+                    handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
+                    handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#elif WINDOWS
+                    handler.PlatformView.Background = Colors.Transparent.ToPlatform();
+                    handler.PlatformView.Padding = new Microsoft.UI.Xaml.Thickness(0);
+                    handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness()
+                {
+                    Bottom = 0,
+                    Top = 0,
+                    Left = 0,
+                    Right = 0,
+                };
+#endif
+                }
+            });
+
             return builder.Build();
         }
     }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Platform;
-
+﻿
 namespace Maui.NullableDateTimePicker.Samples
 {
     public partial class MainPage : ContentPage
@@ -10,16 +9,9 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             BindingContext = this;
             InitializeComponent();
-            ModifyEntry();
-            try
-            {
-                // Create Datetimepicker 
-                CreateDateTimePickerProgrammatically();
-            }
-            catch (Exception ex)
-            {
 
-            }
+            // Create Datetimepicker 
+            CreateDateTimePickerProgrammatically();
         }
 
         DateTime? myDateTime = DateTime.Now;
@@ -38,7 +30,8 @@ namespace Maui.NullableDateTimePicker.Samples
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
             FontAutoScalingEnabled = true,
-            Color = Colors.Black
+            Color = Colors.Black,
+            Size = 20
         };
 
         public FontImageSource CalendarIcon => calendarIcon;
@@ -110,23 +103,6 @@ namespace Maui.NullableDateTimePicker.Samples
 
         public DateTime? MyMinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
         public DateTime? MyMaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
-
-        void ModifyEntry()
-        {
-            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("MyCustomization", (handler, view) =>
-            {
-                if (view is Maui.NullableDateTimePicker.NullableDateTimePickerEntry)
-                {
-#if ANDROID
-            handler.PlatformView.SetPadding(0, 0, 0, 0);
-            handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent); //We remove the entry line in Android.
-#elif WINDOWS
-                    handler.PlatformView.Background = Colors.Transparent.ToPlatform();
-                    handler.PlatformView.Padding = new Microsoft.UI.Xaml.Thickness(0);
-#endif
-                }
-            });
-        }
     }
 
     static class IconFont

@@ -9,7 +9,7 @@
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="Fill">
             <!-- Nullable datetime picker -->
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
@@ -19,15 +19,14 @@
                                         Mode="Date"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
-                                            
                                         Icon="{Binding CalendarIcon}"
                                         WidthRequest="200" 
                                         HeightRequest="40"
                                             BorderColor="Black"
                                             BorderWidth="1"
-                                            CornerRadius="10"
-                                            Margin="0" 
-                                            Padding="0"/>
+                                            CornerRadius="10" 
+                                            Padding="5,0"
+                                            />
       
 
             <Label Text="DateTimepicker" TextColor="Black" />
@@ -37,6 +36,7 @@
                                         WidthRequest="300" 
                                         ShowWeekNumbers="True"
                                         HorizontalOptions="Start"
+                                        CornerRadius="10"
                                         SelectedDayStyle="{StaticResource SelectedDayStyle}"
                                         />
 
@@ -55,18 +55,18 @@
                    HorizontalOptions="Start" 
                    StrokeThickness="1"
                    StrokeShape="RoundRectangle 10"
-                   Padding="0" 
+                   Padding="5" 
                    HeightRequest="35" 
                    MaximumWidthRequest="200"
                    BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}">
-                <Grid HorizontalOptions="Fill" VerticalOptions="Center" Margin="0">
+                <Grid HorizontalOptions="Fill" VerticalOptions="Center" Margin="0" Padding="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ndp:NullableDateTimePickerEntry x:Name="DateTimeEntry" 
                         Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
-                                                     Margin="0"
+                        Margin="0"
                         HorizontalOptions="Fill" 
                         VerticalOptions="Center" 
                         IsReadOnly="True"
@@ -78,12 +78,11 @@
 
                     <ImageButton Grid.Column="1" Source="{Binding CalendarIconAppTheme}" 
                     Clicked="DateTimePicker_Clicked" 
-                                 BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}"
-                    HorizontalOptions="Center"
-                                 
-                    VerticalOptions="Center"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}"
+                     Aspect="AspectFit"            
                     Margin="0"
-                    Padding="{OnPlatform WinUI='0,-10,0,0', Default='0'}" />
+                                 WidthRequest="30"
+                    Padding="0,2" />
                 </Grid>
             </Border>
 
@@ -100,8 +99,15 @@
                             Icon="{Binding CalendarIcon}"
                             WidthRequest="200" 
                             HeightRequest="40"
-                                        IconHeightRequest="35"
                             Padding="10,0"/>
+
+            <Label Text="Disabled" TextColor="Black" />
+            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+                            Mode="DateTime"
+                            HorizontalOptions="Start"
+                            IsEnabled="False"
+                                        BackgroundColor="{StaticResource Gray400}"
+                            />
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" TextColor="Black" />
             <!-- Nullable datetime picker -->

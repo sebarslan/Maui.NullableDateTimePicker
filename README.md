@@ -3,7 +3,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 
 This control uses the <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup.
 
-[![NuGet](https://img.shields.io/badge/nuget-v1.1.1-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v1.2.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -107,7 +107,7 @@ More examples, please see the samples project
 | ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
 | HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
-| HeaderBackgroundColor | Background color of the control's header.	| #2b0b98 |
+| HeaderBackgroundColor | Background color of the calendar's header.	| #2b0b98 |
 | ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
 | BodyBackgroundColor | Background color of the calendar.	| White |
 | ToolButtonsStyle | Style of the control's tool buttons. | null |
@@ -125,12 +125,13 @@ More examples, please see the samples project
 | Option | Description | Default Value |
 |--------|-------------|---------|
 | Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
-| BackgroundColor | Background color of the datetimepicker input.	| White |
-| IconBackgroundColor | Background color of the icon. | Transparent |
+| BackgroundColor | Background color of the datetimepicker control.	| White |
+| IconBackgroundColor | Background color of the icon. | none |
 | Icon | Imagesource for the icon. | null |
 | TextColor | Text color of the entry. | Black |
 | FontSize | Font size of the entry. | 14 |
-| BorderColor | Border color of the control | Transparent |
+| BorderColor | Border color of the datetimepicker control | none |
+| BorderWidth | Border width of the control | 0 |
 | CornerRadius | Corner radius of the control | 0 |
 | PlaceHolder | Placeholder of the entry | empty |
 
@@ -173,6 +174,7 @@ on ios, android, windows
 ### 1.2.0
 - Months can be quickly selected from the list.
 - MinDate and MaxDate validations have been reviewed and revised.
+- A border and CornerRadius has been added to the input field for the datetimepicker.
 
 ### 1.1.1
 - The .NET MAUI Communitytoolkit version (6.1.0) was added to the project.
