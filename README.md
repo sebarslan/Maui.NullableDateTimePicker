@@ -135,10 +135,12 @@ More examples, please see the samples project
 | CornerRadius | Corner radius of the control | 0 |
 | PlaceHolder | Placeholder of the entry | empty |
 
-If you want to add a border to the DateTimePicker, you first need to remove the underline in the native entry. You can achieve this with a .NET MAUI handler. Please refer to the MauiProgram.cs file in the sample project for an example.
+
+If you want to add a border to the DateTimePicker and remove the underline in the native entry, you can achieve this using a .NET MAUI handler. Please refer to the MauiProgram.cs file in the sample project for an example.
 
 For more detailed information about handlers, please check:
 https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-8.0
+
 
 
 ## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
