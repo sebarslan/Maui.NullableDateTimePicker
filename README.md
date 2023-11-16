@@ -78,7 +78,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
         NullableDateTime = MyDateTime,
         Mode = PickerModes.DateTime,
         ShowWeekNumbers = true
-        // .. other options
+        // .. other calendar options
     };
 
     var result = await NullableDateTimePicker.OpenCalendarAsync(nullableDateTimePickerOptions);
