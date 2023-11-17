@@ -10,7 +10,7 @@ namespace Maui.NullableDateTimePicker.Samples
             BindingContext = this;
             InitializeComponent();
 
-            // Create Datetimepicker 
+            // Create Datetimepicker Programmatically
             CreateDateTimePickerProgrammatically();
         }
 
@@ -30,8 +30,7 @@ namespace Maui.NullableDateTimePicker.Samples
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
             FontAutoScalingEnabled = true,
-            Color = Colors.Black,
-            Size = 20
+            Color = Colors.Black
         };
 
         public FontImageSource CalendarIcon => calendarIcon;
@@ -40,9 +39,7 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
-            FontAutoScalingEnabled = true,
-            Color = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black,
-            Size = 20
+            Color = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
         };
         public FontImageSource CalendarIconAppTheme => calendarIconAppTheme;
 
