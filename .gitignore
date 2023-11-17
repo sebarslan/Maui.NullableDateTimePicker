@@ -363,4 +363,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Maui.NullableDateTimePicker.Tests/Maui.NullableDateTimePicker.Tests.csproj
