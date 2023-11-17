@@ -52,7 +52,11 @@
 
             <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" TextColor="Black" />
 
-            <Grid HorizontalOptions="Fill" VerticalOptions="Center" Margin="0" Padding="0">
+            <Grid HorizontalOptions="Fill" 
+                  VerticalOptions="Center" 
+                  Margin="0" 
+                  Padding="0" 
+                  BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -63,7 +67,7 @@
                         HorizontalOptions="Fill" 
                         VerticalOptions="Center" 
                         IsReadOnly="True"
-                       BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}"
+                       BackgroundColor="Transparent"
                         TextColor="{AppThemeBinding Light=Black, Dark=White}">
                     <Entry.GestureRecognizers>
                         <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
@@ -72,7 +76,7 @@
 
                 <ImageButton Grid.Column="1" Source="{Binding CalendarIconAppTheme}" 
                     Clicked="DateTimePicker_Clicked" 
-                    BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}"
+                    BackgroundColor="Transparent"
                      Aspect="AspectFit"            
                     Margin="0"
                                  WidthRequest="30"

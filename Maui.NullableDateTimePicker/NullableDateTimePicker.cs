@@ -30,7 +30,7 @@ public class NullableDateTimePicker : ContentView
             BackgroundColor = Colors.Transparent,
             FontSize = this.FontSize,
             TextColor = this.TextColor,
-            VerticalOptions = LayoutOptions.Fill
+            HorizontalOptions = LayoutOptions.Fill
         };
 
         _dateTimePickerIcon = new ImageButton

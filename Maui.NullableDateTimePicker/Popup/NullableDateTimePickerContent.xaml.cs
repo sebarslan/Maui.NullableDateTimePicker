@@ -976,6 +976,9 @@ public partial class NullableDateTimePickerContent : ContentView
 
     private void OnMonthYearLabelClicked(object s, TappedEventArgs e)
     {
+        if (_options.Mode == PickerModes.Time)
+            return;
+
         CreateMonthListGrid();
         AddMonthListView();
     }
