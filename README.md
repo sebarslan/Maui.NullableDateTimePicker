@@ -121,7 +121,7 @@ More examples, please see the samples project
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
 
 
-## Datetimepicker Input Options (Entry and Icon)
+## Datetimepicker Input Options (If NullableDateTimePicker is used as ContentView)
 | Option | Description | Default Value |
 |--------|-------------|---------|
 | Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
