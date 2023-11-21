@@ -126,7 +126,7 @@ More examples, please see the samples project
 |--------|-------------|---------|
 | Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
 | BackgroundColor | Background color of the datetimepicker control.	| White |
-| IconBackgroundColor | Background color of the icon. | none |
+| IconBackgroundColor | Background color of the icon. | Transparent |
 | Icon | Imagesource for the icon. | null |
 | TextColor | Text color of the entry. | Black |
 | FontSize | Font size of the entry. | 14 |
