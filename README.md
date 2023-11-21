@@ -179,6 +179,10 @@ on ios, android, windows
 
 # Changelog
 
+### 1.2.1
+- Layout adjustments
+- Fixed: The months list was opening in Time mode.
+
 ### 1.2.0
 - Months can be quickly selected from the list.
 - MinDate and MaxDate validations have been reviewed and revised.

@@ -87,14 +87,14 @@ public class NullableDateTimePicker : ContentView
         _dateTimePickerBorder = new Border
         {
             BackgroundColor = this.BackgroundColor,
-            Stroke = Colors.Transparent,
+            Stroke = this.BorderColor,
             StrokeThickness = this.BorderWidth,
             Content = _dateTimePickerGrid,
             Margin = 0,
             Padding = new Thickness(5, 0),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-            HeightRequest = 30
+            HeightRequest = 32
         };
 
         Loaded += (s, e) =>
@@ -775,6 +775,27 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         get { return (TextAlignment)GetValue(VerticalTextAlignmentProperty); }
         set { SetValue(VerticalTextAlignmentProperty, value); }
     }
+
+    public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(
+    nameof(HeightRequest),
+    typeof(double),
+    typeof(NullableDateTimePicker),
+    defaultValue: 30d,
+    defaultBindingMode: BindingMode.OneWay,
+    propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is double heightRequest)
+        {
+            nullableDateTimePickerBindable.HeightRequest = heightRequest;
+            nullableDateTimePickerBindable._dateTimePickerBorder.HeightRequest = heightRequest+2;
+        }
+    });
+
+    public new double HeightRequest
+    {
+        get { return (double)GetValue(HeightRequestProperty); }
+        set { SetValue(HeightRequestProperty, value); }
+    }
     #endregion //bindable properties
 
     private void OnDatePickerClicked(object sender, EventArgs e)
@@ -849,10 +870,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 _dateTimePickerBorder.IsEnabled = base.IsEnabled;
                 _dateTimePickerIcon.IsEnabled = base.IsEnabled;
                 _dateTimePickerEntry.IsEnabled = base.IsEnabled;
-                break;
-
-            case nameof(base.Height):
-                _dateTimePickerBorder.HeightRequest = base.Height + 2;
                 break;
         }
     }

@@ -14,17 +14,15 @@
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
             <Label Text="DateTimepicker" TextColor="Black" />
-
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             WidthRequest="300" 
                             ShowWeekNumbers="True"
                             HorizontalOptions="Start"
-                            CornerRadius="10"
+                            CornerRadius="5"
                             SelectedDayStyle="{StaticResource SelectedDayStyle}"
                             />
-
-            <Label Text="Datepicker with border" TextColor="Black" />
+                <Label Text="Datepicker with border" TextColor="Black" />
 
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                                         Mode="Date"
