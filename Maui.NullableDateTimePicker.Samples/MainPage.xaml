@@ -14,20 +14,19 @@
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
             <Label Text="Datepicker" TextColor="Black" />
-          
-                <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+
+            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                                         Mode="Date"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
-                                        Icon="{Binding CalendarIcon}"
                                         WidthRequest="200" 
-                                        HeightRequest="30"
-                                        BorderColor="Black"
+                                        HeightRequest="40"
+                                        BorderColor="Blue"
                                         BorderWidth="1"
-                                        CornerRadius="10"
-                                        Padding="5,2.5"
+                                        CornerRadius="5"  
+                                        Padding="5,0,0,0"
                                             />
-      
+
 
             <Label Text="DateTimepicker" TextColor="Black" />
 
@@ -67,7 +66,6 @@
                         HorizontalOptions="Fill" 
                         VerticalOptions="Center" 
                         IsReadOnly="True"
-                       BackgroundColor="Transparent"
                         TextColor="{AppThemeBinding Light=Black, Dark=White}">
                     <Entry.GestureRecognizers>
                         <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
@@ -85,7 +83,7 @@
             <Label Text="Datepicker programmatically" TextColor="Black" />
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
 
-            <Label Text="MinDate MaxDate" TextColor="Black" />
+            <Label Text="MinDate MaxDate and FontImageSource for Icon" TextColor="Black" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                             Mode="Date"
                             MinDate="{Binding MyMinDate}"

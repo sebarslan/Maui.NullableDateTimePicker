@@ -1,9 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
-using Microsoft.Maui;
-using Microsoft.Maui.Animations;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
-using System.Net.Http.Headers;
 using System.Reflection;
 
 namespace Maui.NullableDateTimePicker;
@@ -15,13 +11,13 @@ public class NullableDateTimePicker : ContentView
     private Microsoft.Maui.Controls.Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
     private Image _dateTimePickerIcon;
-    private Border _dateTimePickerWrapper;
+    private Border _dateTimePickerBorder;
     private bool isSetIconCalledForFirstTime = false;
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
     public NullableDateTimePicker()
     {
         base.Margin = 0;
-        base.Padding = 0;
+        base.Padding = -1;
         base.BackgroundColor = Colors.Transparent;
         base.Style = null;
         base.HeightRequest = 30;
@@ -33,7 +29,8 @@ public class NullableDateTimePicker : ContentView
             BackgroundColor = Colors.Transparent,
             FontSize = this.FontSize,
             TextColor = this.TextColor,
-            HorizontalOptions = LayoutOptions.Fill
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Center
         };
 
         var trigger = new DataTrigger(typeof(Entry))
@@ -46,23 +43,20 @@ public class NullableDateTimePicker : ContentView
 
         _dateTimePickerEntry.Triggers.Add(trigger);
 
+
         _dateTimePickerIcon = new Image
         {
             BackgroundColor = this.IconBackgroundColor,
             Aspect = Aspect.AspectFit,
-            Margin = new Thickness(0, 2.5),
-            HorizontalOptions = LayoutOptions.End,
-            VerticalOptions = LayoutOptions.Center
+            Margin = new Thickness(0),
+            HorizontalOptions = LayoutOptions.End
         };
 
         TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
         tapGestureRecognizer.Tapped += (s, e) =>
         {
-            // Handle the tap
-            if (base.IsEnabled)
-                OnDatePickerClicked(s, e);
+            OnDatePickerClicked(s, e);
         };
-
         _dateTimePickerIcon.GestureRecognizers.Add(tapGestureRecognizer);
 
         _dateTimePickerGrid = new Microsoft.Maui.Controls.Grid
@@ -90,9 +84,7 @@ public class NullableDateTimePicker : ContentView
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
         _dateTimePickerGrid.Add(_dateTimePickerIcon);
 
-        _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: _dateTimePickerGrid));
-
-        _dateTimePickerWrapper = new Border
+        _dateTimePickerBorder = new Border
         {
             BackgroundColor = this.BackgroundColor,
             Stroke = Colors.Transparent,
@@ -101,17 +93,19 @@ public class NullableDateTimePicker : ContentView
             Margin = 0,
             Padding = new Thickness(5, 0),
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
+            VerticalOptions = LayoutOptions.Fill,
+            HeightRequest = 30
         };
-
 
         Loaded += (s, e) =>
         {
             if (!isSetIconCalledForFirstTime)
                 SetCalendarIcon();
-        };
 
-        Content = _dateTimePickerWrapper;
+            _dateTimePickerBorder.HeightRequest = base.Height + 2;
+            Content = _dateTimePickerBorder;
+            base.Padding = 0;
+        };
     }
 
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
@@ -209,7 +203,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         PickerModes.Date,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
-            ((NullableDateTimePicker)bindable).SetCalendarIcon();
             if (newValue is string strValue)
             {
                 if (PickerModes.TryParse(strValue, out PickerModes pickerMode))
@@ -217,6 +210,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                     newValue = pickerMode;
                 }
             }
+            ((NullableDateTimePicker)bindable).SetCalendarIcon();
         });
 
     public PickerModes Mode
@@ -255,10 +249,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             SetValue(MaxDateProperty, value);
         }
     }
-
-
-
-
 
     public static readonly BindableProperty BodyBackgroundColorProperty =
     BindableProperty.Create(nameof(BodyBackgroundColor),
@@ -670,8 +660,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     {
         if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color backgroundColor)
         {
-            nullableDateTimePickerBindable._dateTimePickerWrapper.BackgroundColor = backgroundColor;
-            nullableDateTimePickerBindable._dateTimePickerEntry.BackgroundColor = backgroundColor;
+            nullableDateTimePickerBindable._dateTimePickerBorder.BackgroundColor = backgroundColor;
         }
     });
 
@@ -691,7 +680,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     {
         if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color borderColor)
         {
-            nullableDateTimePickerBindable._dateTimePickerWrapper.Stroke = borderColor;
+            nullableDateTimePickerBindable._dateTimePickerBorder.Stroke = borderColor;
         }
     });
     public Color BorderColor
@@ -709,7 +698,9 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     propertyChanged: (bindable, oldValue, newValue) =>
     {
         if (newValue is double)
-            ((NullableDateTimePicker)bindable)._dateTimePickerWrapper.StrokeThickness = (double)newValue;
+        {
+            ((NullableDateTimePicker)bindable)._dateTimePickerBorder.StrokeThickness = (double)newValue;
+        }
 
     });
     public double BorderWidth
@@ -728,7 +719,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     {
         if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Thickness cornerRadius)
         {
-            nullableDateTimePickerBindable._dateTimePickerWrapper.StrokeShape = new RoundRectangle
+            nullableDateTimePickerBindable._dateTimePickerBorder.StrokeShape = new RoundRectangle
             {
                 CornerRadius = new Microsoft.Maui.CornerRadius(cornerRadius.Left, cornerRadius.Top, cornerRadius.Right, cornerRadius.Bottom)
             };
@@ -751,7 +742,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     {
         if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Thickness padding)
         {
-            nullableDateTimePickerBindable._dateTimePickerWrapper.Padding = padding;
+            nullableDateTimePickerBindable._dateTimePickerBorder.Padding = padding;
+            nullableDateTimePickerBindable._dateTimePickerIcon.Margin = 0;
         }
     });
     public new Thickness Padding
@@ -759,10 +751,39 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         get { return (Thickness)GetValue(PaddingProperty); }
         set { SetValue(PaddingProperty, value); }
     }
+
+
+    public static readonly BindableProperty VerticalTextAlignmentProperty = BindableProperty.Create(
+    nameof(VerticalTextAlignment),
+    typeof(TextAlignment),
+    typeof(NullableDateTimePicker),
+    defaultValue: TextAlignment.Center,
+    defaultBindingMode: BindingMode.OneWay,
+    propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is TextAlignment verticalTextAlignment)
+        {
+            var verticalOptions = LayoutOptions.Center;
+            if (verticalTextAlignment == TextAlignment.Start)
+                verticalOptions = LayoutOptions.Start;
+            else if (verticalTextAlignment == TextAlignment.End)
+                verticalOptions = LayoutOptions.End;
+
+            nullableDateTimePickerBindable._dateTimePickerEntry.VerticalOptions = verticalOptions;
+        }
+    });
+    public TextAlignment VerticalTextAlignment
+    {
+        get { return (TextAlignment)GetValue(VerticalTextAlignmentProperty); }
+        set { SetValue(VerticalTextAlignmentProperty, value); }
+    }
     #endregion //bindable properties
 
     private void OnDatePickerClicked(object sender, EventArgs e)
     {
+        if (!base.IsEnabled)
+            return;
+
         OpenCalendarPopupAsync();
     }
 
@@ -827,13 +848,15 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         switch (propertyName)
         {
             case nameof(base.IsEnabled):
-                _dateTimePickerWrapper.IsEnabled = base.IsEnabled;
+                _dateTimePickerBorder.IsEnabled = base.IsEnabled;
                 _dateTimePickerIcon.IsEnabled = base.IsEnabled;
                 _dateTimePickerEntry.IsEnabled = base.IsEnabled;
                 break;
+
             case nameof(base.Height):
-                _dateTimePickerWrapper.HeightRequest = base.Height;
+                _dateTimePickerBorder.HeightRequest = base.Height + 2;
                 break;
+
         }
     }
 
@@ -870,7 +893,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         }
     }
 
-    private static DateTime? ParseDateTime(object? objectValue)
+    private static DateTime? ParseDateTime(object objectValue)
     {
         DateTime? dateValue = null;
         if (objectValue is DateTime)
