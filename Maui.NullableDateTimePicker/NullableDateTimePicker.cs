@@ -17,7 +17,7 @@ public class NullableDateTimePicker : ContentView
     public NullableDateTimePicker()
     {
         base.Margin = 0;
-        base.Padding = -1;
+        base.Padding = 0;
         base.BackgroundColor = Colors.Transparent;
         base.Style = null;
         base.HeightRequest = 30;
@@ -102,9 +102,7 @@ public class NullableDateTimePicker : ContentView
             if (!isSetIconCalledForFirstTime)
                 SetCalendarIcon();
 
-            _dateTimePickerBorder.HeightRequest = base.Height + 2;
             Content = _dateTimePickerBorder;
-            base.Padding = 0;
         };
     }
 
@@ -856,7 +854,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             case nameof(base.Height):
                 _dateTimePickerBorder.HeightRequest = base.Height + 2;
                 break;
-
         }
     }
 
