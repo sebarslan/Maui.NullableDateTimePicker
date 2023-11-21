@@ -13,6 +13,7 @@ public class NullableDateTimePicker : ContentView
     private Image _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
     private bool isSetIconCalledForFirstTime = false;
+    const double defaultHeightRequest = 30;
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
     public NullableDateTimePicker()
     {
@@ -20,7 +21,7 @@ public class NullableDateTimePicker : ContentView
         base.Padding = 0;
         base.BackgroundColor = Colors.Transparent;
         base.Style = null;
-        base.HeightRequest = 30;
+        base.HeightRequest = defaultHeightRequest;
 
         _dateTimePickerEntry = new NullableDateTimePickerEntry()
         {
@@ -72,10 +73,6 @@ public class NullableDateTimePicker : ContentView
             {
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) }
-            },
-            RowDefinitions =
-            {
-                new RowDefinition{Height = new GridLength(1, GridUnitType.Star) }
             }
         };
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
@@ -94,7 +91,7 @@ public class NullableDateTimePicker : ContentView
             Padding = new Thickness(5, 0),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-            HeightRequest = 32
+            HeightRequest = GetBorderHeight(defaultHeightRequest)
         };
 
         Loaded += (s, e) =>
@@ -104,6 +101,14 @@ public class NullableDateTimePicker : ContentView
 
             Content = _dateTimePickerBorder;
         };
+    }
+
+    private double GetBorderHeight(double height)
+    {
+        if (DeviceInfo.Platform == DevicePlatform.Android)
+            return height + 2;
+        else
+            return height;
     }
 
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
@@ -787,7 +792,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is double heightRequest)
         {
             nullableDateTimePickerBindable.HeightRequest = heightRequest;
-            nullableDateTimePickerBindable._dateTimePickerBorder.HeightRequest = heightRequest+2;
+            nullableDateTimePickerBindable._dateTimePickerBorder.HeightRequest = nullableDateTimePickerBindable.GetBorderHeight(heightRequest);
         }
     });
 
