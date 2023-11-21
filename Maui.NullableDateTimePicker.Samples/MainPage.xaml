@@ -38,18 +38,15 @@
                                         Padding="5,0,0,0"
                                             />
 
-
-            
-
             <Label Text="Timepicker" TextColor="Black" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="Time"
+                                        WidthRequest="100"
                                         ShowOtherMonthDays="False"
                                         HorizontalOptions="Start"
+                                        Padding="5"
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}"
                                         />
-
-
 
             <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" TextColor="Black" />
 
