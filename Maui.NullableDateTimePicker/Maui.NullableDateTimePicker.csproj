@@ -39,10 +39,4 @@
 	<ItemGroup>
 	  <EmbeddedResource Include="Images\*" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<MauiXaml Update="Popup\NullableDateTimePickerContent.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-	</ItemGroup>
 </Project>

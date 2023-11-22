@@ -126,7 +126,6 @@ More examples, please see the samples project
 |--------|-------------|---------|
 | Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
 | BackgroundColor | Background color of the datetimepicker control.	| White |
-| IconBackgroundColor | Background color of the icon. | Transparent |
 | Icon | Imagesource for the icon. | null |
 | TextColor | Text color of the entry. | Black |
 | FontSize | Font size of the entry. | 14 |
@@ -134,12 +133,6 @@ More examples, please see the samples project
 | BorderWidth | Border width of the control | 0 |
 | CornerRadius | Corner radius of the control | 0 |
 | PlaceHolder | Placeholder of the entry | empty |
-
-
-> If you want to add a border to the DateTimePicker and remove the underline in the native entry, you can achieve this using a .NET MAUI handler.
-> Please refer to the MauiProgram.cs file in the sample project for an example.
-> For more detailed information about handlers, please check:
-> https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-8.0
 
 
 
@@ -163,6 +156,12 @@ private static void OnNullableDateTimeChanged(object sender, DateTimeChangedEven
 }
 </code>
 </pre>
+
+
+> .NET MAUI handler was used in the test project to add a border to the DateTimePicker and remove the underline in the original entry.
+> Please refer to the MauiProgram.cs file in the sample project for an example.
+> For more detailed information about handlers, please check:
+> https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-8.0
 
 
 

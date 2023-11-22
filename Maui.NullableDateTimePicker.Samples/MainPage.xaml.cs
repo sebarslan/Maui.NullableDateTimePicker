@@ -28,8 +28,8 @@ namespace Maui.NullableDateTimePicker.Samples
         readonly FontImageSource calendarIcon = new()
         {
             Glyph = IconFont.CalendarDays,
-            FontFamily = "FontAwesome",
             FontAutoScalingEnabled = true,
+            FontFamily = "FontAwesome",
             Color = Colors.Black
         };
 
@@ -39,6 +39,7 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             Glyph = IconFont.CalendarDays,
             FontFamily = "FontAwesome",
+            FontAutoScalingEnabled = true,
             Color = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
         };
         public FontImageSource CalendarIconAppTheme => calendarIconAppTheme;

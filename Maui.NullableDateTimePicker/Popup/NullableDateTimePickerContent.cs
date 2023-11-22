@@ -1,9 +1,10 @@
 ﻿using Microsoft.Maui.Platform;
 using System.Globalization;
+using System.Xml.Linq;
 
 namespace Maui.NullableDateTimePicker;
 
-public partial class NullableDateTimePickerContent : ContentView
+internal class NullableDateTimePickerContent : ContentView
 {
     internal event EventHandler<EventArgs> OkButtonClicked;
     internal event EventHandler<EventArgs> ClearButtonClicked;
@@ -35,10 +36,15 @@ public partial class NullableDateTimePickerContent : ContentView
     private StackLayout _timeStackLayout;
     private List<Button> _dayButtons;
     private Grid _monthListGrid;
+    private Grid _mainGrid;
+    private ActivityIndicator _activityIndicator;
+    private ScrollView _scrollView;
 
 
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
     {
+        base.Padding = 0;
+        base.Margin = 0;
         options ??= new NullableDateTimePickerOptions();
 
         _options = options;
@@ -47,10 +53,43 @@ public partial class NullableDateTimePickerContent : ContentView
         _minDate = options.MinDate ?? new DateTime(1900, 1, 1);
         _maxDate = options.MaxDate ?? new DateTime(DateTime.Now.Year + 100, 12, 31);
 
-        InitializeComponent();
+        _mainGrid = new Grid
+        {
+            Margin = new Thickness(0),
+            Padding = new Thickness(0),
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            BackgroundColor = Colors.Transparent
+        };
+
+        _activityIndicator = new ActivityIndicator
+        {
+            IsVisible = true,
+            IsRunning = true,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+
+        _scrollView = new ScrollView
+        {
+            Margin = new Thickness(0),
+            Padding = new Thickness(0),
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Content = new Grid
+            {
+                Children =
+                {
+                    _mainGrid,
+                    _activityIndicator
+                }
+            }
+        };
+
+        Content = _scrollView;
 
         if (_options.ActivityIndicatorColor != null)
-            CalendarActivityIndicator.Color = _options.ActivityIndicatorColor;
+            _activityIndicator.Color = _options.ActivityIndicatorColor;
     }
 
     internal void NullableDateTimePickerPopupOpened(object sender, CommunityToolkit.Maui.Core.PopupOpenedEventArgs e)
@@ -225,8 +264,8 @@ public partial class NullableDateTimePickerContent : ContentView
         {
             MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
             {
-                CalendarActivityIndicator.IsVisible = true;
-                CalendarActivityIndicator.IsRunning = true;
+                _activityIndicator.IsVisible = true;
+                _activityIndicator.IsRunning = true;
 
                 lastClickedDayButton = null;
                 _daysGrid.Clear();
@@ -402,8 +441,8 @@ public partial class NullableDateTimePickerContent : ContentView
 
                 UpdateCurrentDateAndControls(_currentDate);
 
-                CalendarActivityIndicator.IsVisible = false;
-                CalendarActivityIndicator.IsRunning = false;
+                _activityIndicator.IsVisible = false;
+                _activityIndicator.IsRunning = false;
             });
         }
         catch (Exception ex)
@@ -970,7 +1009,7 @@ public partial class NullableDateTimePickerContent : ContentView
 
         await MainThreadHelper.SafeInvokeOnMainThreadAsync((Action)(() =>
         {
-            this.MainGrid.Add((IView)this._calendarGrid);
+            this._mainGrid.Add((IView)this._calendarGrid);
         }));
     }
 
