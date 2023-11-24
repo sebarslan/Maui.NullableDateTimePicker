@@ -18,10 +18,11 @@
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             WidthRequest="300" 
-                            HeightRequest="30"
+                            HeightRequest="40"
                             ShowWeekNumbers="True"
                             HorizontalOptions="Start"
                             CornerRadius="5"
+                            Padding="5,0,5,0"
                             SelectedDayStyle="{StaticResource SelectedDayStyle}"
                 
                             />
@@ -42,43 +43,43 @@
             <Label Text="Timepicker" TextColor="Black" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="Time"
-                                        WidthRequest="100"
+                                        WidthRequest="150"
+                                        HeightRequest="40"
                                         ShowOtherMonthDays="False"
                                         HorizontalOptions="Start"
                                         Padding="5,2.5"
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}"
                                         />
 
+
             <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" TextColor="Black" />
-
-            <Grid HorizontalOptions="Fill" 
-                  VerticalOptions="Center" 
-                  Margin="0" 
-                  Padding="0" 
-                  BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Entry x:Name="DateTimeEntry" 
-                        Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
-                        Margin="0"
-                        HorizontalOptions="Fill" 
-                        VerticalOptions="Center" 
-                        IsReadOnly="True"
-                        TextColor="{AppThemeBinding Light=Black, Dark=White}">
-                    <Entry.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
-                    </Entry.GestureRecognizers>
-                </Entry>
-
-                <ImageButton Grid.Column="1" Source="{Binding CalendarIconAppTheme}" 
+            <StackLayout Padding="0" BackgroundColor="Transparent" HeightRequest="40" >
+                <Border Stroke="#CCCCCC" StrokeThickness="1" StrokeShape="RoundRectangle 5,5,5,5" Margin="0" Padding="0" BackgroundColor="{AppThemeBinding Light=White, Dark='#303030'}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Entry  x:Name="DateTimeEntry" 
+                                Text="{Binding MyDateTime, StringFormat='{0:g}'}"
+                               IsReadOnly="True"
+                                TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                               VerticalOptions="CenterAndExpand" BackgroundColor="Transparent">
+                            <Entry.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
+                            </Entry.GestureRecognizers>
+                        </Entry>
+                        <ImageButton Grid.Column="1" 
+                               VerticalOptions="Center" 
+                               HorizontalOptions="End"  
+                               Source="{Binding CalendarIconAppTheme}" 
                     Clicked="DateTimePicker_Clicked" 
                     BackgroundColor="Transparent"
                      Aspect="AspectFit"            
-                    Margin="5"
-                    WidthRequest="30" />
-            </Grid>
+                    Margin="5" />
+                    </Grid>
+                </Border>
+            </StackLayout>
 
             <Label Text="Datepicker programmatically" TextColor="Black" />
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>

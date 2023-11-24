@@ -158,8 +158,8 @@ private static void OnNullableDateTimeChanged(object sender, DateTimeChangedEven
 </pre>
 
 
-> .NET MAUI handler was used in the test project to add a border to the DateTimePicker and remove the underline in the original entry.
-> Please refer to the MauiProgram.cs file in the sample project for an example.
+> .NET MAUI handler was used in the test project to remove the underline in the original entry.
+> Please refer to the MauiProgram.cs file in the sample project.
 > For more detailed information about handlers, please check:
 > https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-8.0
 

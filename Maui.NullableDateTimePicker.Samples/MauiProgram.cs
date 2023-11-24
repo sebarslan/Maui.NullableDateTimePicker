@@ -26,9 +26,8 @@ namespace Maui.NullableDateTimePicker.Samples
                 if (view is Maui.NullableDateTimePicker.NullableDateTimePickerEntry)
                 {
 #if ANDROID
-                    handler.PlatformView.SetPadding(0, 0, 0, 0);
                     handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
-
+                    //handler.PlatformView.SetPadding(0,0,0,0);
 #elif IOS || MACCATALYST
                     handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
                     handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
