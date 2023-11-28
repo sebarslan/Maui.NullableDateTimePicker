@@ -8,17 +8,18 @@ namespace Maui.NullableDateTimePicker;
 public class NullableDateTimePicker : ContentView
 {
     public event EventHandler<DateTimeChangedEventArgs> NullableDateTimeChanged;
-    private Microsoft.Maui.Controls.Grid _dateTimePickerGrid;
+    private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
     private Image _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
     private bool isSetIconCalledForFirstTime = false;
     const double defaultHeightRequest = 40;
-    private StackLayout _dateTimePickerWrapperStackLayout;
+
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
     public NullableDateTimePicker()
     {
         base.Padding = 0;
+        base.Margin = 0;
         base.BackgroundColor = Colors.Transparent;
         base.HeightRequest = defaultHeightRequest;
 
@@ -39,9 +40,7 @@ public class NullableDateTimePicker : ContentView
         {
             BackgroundColor = this.IconBackgroundColor,
             Aspect = Aspect.AspectFit,
-            Margin = new Thickness(0),
-            HorizontalOptions = LayoutOptions.End,
-            VerticalOptions = LayoutOptions.Center
+            Margin = 0
         };
 
         TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
@@ -55,9 +54,9 @@ public class NullableDateTimePicker : ContentView
         {
             Margin = 0,
             Padding = 0,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
             BackgroundColor = Colors.Transparent,
-            HorizontalOptions= LayoutOptions.Fill,
-            VerticalOptions= LayoutOptions.Fill,
             ColumnDefinitions =
             {
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
@@ -73,11 +72,9 @@ public class NullableDateTimePicker : ContentView
 
         var dateTimePickerStackLayout = new StackLayout
         {
-            Margin = new Thickness(0),
-            Padding = new Thickness(0),
-            BackgroundColor = Colors.Transparent,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
+            Margin = 0,
+            Padding = 0,
+            BackgroundColor = Colors.Transparent
         };
         dateTimePickerStackLayout.Add(_dateTimePickerGrid);
 
@@ -91,28 +88,25 @@ public class NullableDateTimePicker : ContentView
         {
             BackgroundColor = this.BackgroundColor,
             Stroke = this.BorderColor,
+            StrokeShape = new RoundRectangle
+            {
+                CornerRadius = new CornerRadius(0, 0, 0, 0)
+            },
             StrokeThickness = this.BorderWidth,
             Content = dateTimePickerStackLayout,
-            Margin = new Thickness(0),
-            Padding = new Thickness(0)
-        };
-
-        _dateTimePickerWrapperStackLayout = new StackLayout
-        {
-            Margin = 0,
-            Padding = new Thickness(0),
-            BackgroundColor = Colors.Transparent,
+            Margin = DeviceInfo.Platform == DevicePlatform.Android ? new Thickness(0, -1, 0, 0) : 0,
+            Padding = this.Padding,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill
         };
-        _dateTimePickerWrapperStackLayout.Add(_dateTimePickerBorder);
 
-        _dateTimePickerBorder.SetBinding(Border.HeightRequestProperty, new Binding("Height", source: _dateTimePickerWrapperStackLayout));
+        this.Loaded += (s, e) =>
+        {
+            if (!isSetIconCalledForFirstTime)
+                SetCalendarIcon();
+        };
 
-        Content = _dateTimePickerWrapperStackLayout;
-
-        if (!isSetIconCalledForFirstTime)
-            SetCalendarIcon();
+        Content = _dateTimePickerBorder;
     }
 
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
@@ -700,7 +694,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     nameof(BorderWidth),
     typeof(double),
     typeof(NullableDateTimePicker),
-    defaultValue: 0d,
+    defaultValue: 0.0d,
     defaultBindingMode: BindingMode.OneWay,
     propertyChanged: (bindable, oldValue, newValue) =>
     {
@@ -857,17 +851,15 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
     string imgName;
     ImageSource imgSource;
-    private void SetCalendarIcon()
+
+    private async void SetCalendarIcon()
     {
         isSetIconCalledForFirstTime = true;
-
+        await Task.Delay(100);
         if (Icon != null)
         {
-            if (!object.Equals(imgSource, Icon))
-            {
-                imgSource = Icon;
+            if (imgSource != Icon)
                 _dateTimePickerIcon.Source = Icon;
-            }
         }
         else
         {
@@ -881,7 +873,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             if (imgName != imageName)
             {
                 imgName = imageName;
-
                 _dateTimePickerIcon.Source = ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly);
             }
         }

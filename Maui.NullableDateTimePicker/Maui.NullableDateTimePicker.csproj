@@ -39,4 +39,16 @@
 	<ItemGroup>
 	  <EmbeddedResource Include="Images\*" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Images\date_icon.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Images\date_time_icon.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Images\time_icon.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
 </Project>

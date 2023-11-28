@@ -137,8 +137,14 @@ internal class NullableDateTimePickerContent : ContentView
 
     internal void SetPreviousMonth()
     {
-        var previousMonth = _currentDate.Month - 1;
+        var previousMonth = _currentDate.Month;
         var currentYear = _currentDate.Year;
+
+        if (_monthListGrid?.IsVisible == true)
+            currentYear -= 1;
+        else
+            previousMonth -= 1;
+
         if (previousMonth < 1)
         {
             previousMonth = 12;
@@ -149,13 +155,18 @@ internal class NullableDateTimePickerContent : ContentView
 
     private void OnNextMonthButtonClicked(object sender, EventArgs e)
     {
-        SetNextMonth();
+        SetNextMonthOrYear();
     }
 
-    internal void SetNextMonth()
+    private void SetNextMonthOrYear()
     {
-        var nextMonth = _currentDate.Month + 1;
+        var nextMonth = _currentDate.Month;
         var currentYear = _currentDate.Year;
+        if (_monthListGrid?.IsVisible == true)
+            currentYear += 1;
+        else
+            nextMonth += 1;
+
         if (nextMonth > 12)
         {
             nextMonth = 1;
@@ -465,7 +476,6 @@ internal class NullableDateTimePickerContent : ContentView
     {
         _currentDate = date ?? DateTime.Now;
         Console.Write($"UpdateCurrentDate: {_currentDate}");
-        RemoveMonthListView();
 
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
        {
@@ -1018,14 +1028,16 @@ internal class NullableDateTimePickerContent : ContentView
         if (_options.Mode == PickerModes.Time)
             return;
 
-        CreateMonthListGrid();
-        AddMonthListView();
+        if (_monthListGrid == null || !_calendarGrid.Children.Contains(_monthListGrid) || !_monthListGrid.IsVisible)
+            AddMonthListView();
+        else
+            RemoveMonthListView();
     }
 
-    private Grid CreateMonthListGrid()
+    private void CreateMonthListGrid()
     {
         if (_monthListGrid != null)
-            return _monthListGrid;
+            return;
 
         string[] months = DateTimeFormatInfo.CurrentInfo.AbbreviatedMonthNames;
 
@@ -1036,6 +1048,7 @@ internal class NullableDateTimePickerContent : ContentView
             ColumnSpacing = 1,
             Margin = 5,
             Padding = 0,
+            IsVisible = false,
             RowDefinitions = new RowDefinitionCollection
             {
                 new RowDefinition { Height = GridLength.Star },
@@ -1083,12 +1096,11 @@ internal class NullableDateTimePickerContent : ContentView
                 row++;
             }
         }
-        return _monthListGrid;
     }
 
     private void AddMonthListView()
     {
-        RemoveMonthListView();
+        CreateMonthListGrid();
         MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
           {
               if (_daysGrid != null)
@@ -1097,7 +1109,7 @@ internal class NullableDateTimePickerContent : ContentView
               if (_monthListGrid != null)
                   _monthListGrid.IsVisible = true;
 
-              if (_calendarGrid != null)
+              if (_calendarGrid != null && !_calendarGrid.Children.Contains(_monthListGrid))
                   _calendarGrid.Add((IView)_monthListGrid, 0, 2);
           }));
     }
@@ -1107,17 +1119,20 @@ internal class NullableDateTimePickerContent : ContentView
         MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
       {
           if (_monthListGrid != null)
+          {
               _monthListGrid.IsVisible = false;
 
-          if (_calendarGrid != null)
-              _calendarGrid.Remove((IView)_monthListGrid);
+              //if (_calendarGrid != null)
+              //   _calendarGrid.Remove((IView)_monthListGrid);
 
-          if (_daysGrid != null)
-              _daysGrid.IsVisible = true;
+              if (_daysGrid != null)
+                  _daysGrid.IsVisible = true;
+          }
       }));
     }
     private void OnMonthNameLabelClicked(object s, TappedEventArgs e)
     {
+        RemoveMonthListView();
         SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text.Substring(0, 2)), _currentDate.Day);
     }
     private bool DayDisabled(int year, int month, int day)

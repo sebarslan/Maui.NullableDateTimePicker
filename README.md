@@ -181,6 +181,8 @@ on ios, android, windows
 ### 1.2.1
 - Layout adjustments
 - Fixed: The months list was opening in Time mode.
+- If the months list is open, the year changes with the next/previous button.
+- Default height: 40
 
 ### 1.2.0
 - Months can be quickly selected from the list.

@@ -18,7 +18,7 @@
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             WidthRequest="300" 
-                            HeightRequest="40"
+                            HeightRequest="30"
                             ShowWeekNumbers="True"
                             HorizontalOptions="Start"
                             CornerRadius="5"
