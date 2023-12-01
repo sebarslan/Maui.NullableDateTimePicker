@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Platform;
-using System.Globalization;
-using System.Xml.Linq;
+﻿using System.Globalization;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -273,7 +271,7 @@ internal class NullableDateTimePickerContent : ContentView
     {
         try
         {
-            MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
+            MainThreadHelper.SafeBeginInvokeOnMainThread( () =>
             {
                 _activityIndicator.IsVisible = true;
                 _activityIndicator.IsRunning = true;
@@ -831,6 +829,7 @@ internal class NullableDateTimePickerContent : ContentView
             Text = "<",
             TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             BackgroundColor = Colors.Transparent,
+            Background = Colors.Transparent,
             BorderColor = Colors.Transparent,
             FontAttributes = FontAttributes.Bold,
             FontSize = 15,
@@ -864,6 +863,7 @@ internal class NullableDateTimePickerContent : ContentView
             Text = ">",
             TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             BackgroundColor = Colors.Transparent,
+            Background = Colors.Transparent,
             BorderColor = Colors.Transparent,
             FontAttributes = FontAttributes.Bold,
             FontSize = 15,

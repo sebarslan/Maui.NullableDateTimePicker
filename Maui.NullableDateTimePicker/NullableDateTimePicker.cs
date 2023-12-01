@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls.Shapes;
 using System.Reflection;
 
@@ -43,7 +44,10 @@ public class NullableDateTimePicker : ContentView
             Margin = 0
         };
 
-        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
+        {
+            NumberOfTapsRequired = 1
+        };
         tapGestureRecognizer.Tapped += (s, e) =>
         {
             OnDatePickerClicked(s, e);
@@ -111,15 +115,16 @@ public class NullableDateTimePicker : ContentView
 
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
     {
-        NullableDateTimePickerPopup popupControl = new(options)
-        {
-            HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center,
-            VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center
-        };
-        var popupResultTask = new PopupResultTask<PopupResult>();
+        PopupResultTask<PopupResult> popupResultTask = null;
 
         try
         {
+            popupResultTask = new PopupResultTask<PopupResult>();
+            NullableDateTimePickerPopup popupControl = new(options)
+            {
+                HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center,
+                VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center
+            };
             var result = await Page.ShowPopupAsync(popupControl);
 
             if (result is PopupResult popupResult)
@@ -136,7 +141,7 @@ public class NullableDateTimePicker : ContentView
             Console.WriteLine(ex.ToString());
         }
 
-        return await popupResultTask.Result;
+        return await popupResultTask?.Result;
     }
 
     #region bindable properties
@@ -773,26 +778,26 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     }
     #endregion //bindable properties
 
-    private void OnDatePickerClicked(object sender, EventArgs e)
+    private async void OnDatePickerClicked(object sender, EventArgs e)
     {
         if (!base.IsEnabled)
             return;
 
-        OpenCalendarPopupAsync();
+        await OpenCalendarPopupAsync();
     }
 
     bool isPopupOpen = false;
 
-    private async void OpenCalendarPopupAsync()
+    private async Task OpenCalendarPopupAsync()
     {
-        if (isPopupOpen)
-            return;
-
-        isPopupOpen = true;
-
         try
         {
-            var options = new NullableDateTimePickerOptions
+            if (isPopupOpen)
+                return;
+
+            isPopupOpen = true;
+
+            INullableDateTimePickerOptions options = new NullableDateTimePickerOptions
             {
                 NullableDateTime = this.NullableDateTime,
                 Mode = this.Mode,
@@ -819,7 +824,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 CloseOnOutsideClick = this.CloseOnOutsideClick
             };
 
-            var result = await OpenCalendarAsync(options);
+            var result = await NullableDateTimePicker.OpenCalendarAsync(options);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
                 NullableDateTime = popupResult.NullableDateTime;
@@ -859,7 +864,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         if (Icon != null)
         {
             if (imgSource != Icon)
+            {
+                imgSource = Icon;
                 _dateTimePickerIcon.Source = Icon;
+            }
+
         }
         else
         {

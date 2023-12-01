@@ -7,15 +7,15 @@ namespace Maui.NullableDateTimePicker.Samples
     {
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
-            builder = builder.UseMauiApp<App>();
-            builder.ConfigureNullableDateTimePicker()
-            .ConfigureFonts(fonts =>
-        {
-            fonts.AddFont("fa-solid-900.ttf", "FontAwesome");
-            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-        });
+            var builder = MauiApp.CreateBuilder()
+                .UseMauiApp<App>()
+                .ConfigureNullableDateTimePicker()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("fa-solid-900.ttf", "FontAwesome");
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
@@ -28,11 +28,15 @@ namespace Maui.NullableDateTimePicker.Samples
 #if ANDROID
                     handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
                     handler.PlatformView.SetPadding(0,0,0,0);
+#if NET8_0_OR_GREATER
+                    handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(view.Background.ToColor().ToAndroid());
+#endif
 #elif IOS || MACCATALYST
                     handler.PlatformView.BackgroundColor = Colors.Transparent.ToPlatform();
                     handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #elif WINDOWS
-                    handler.PlatformView.Background = Colors.Transparent.ToPlatform();
+                    //handler.PlatformView.Background = Colors.Transparent.ToPlatform();
+                    handler.PlatformView.Background = view.Background.ToColor().ToPlatform();
                     handler.PlatformView.Padding = new Microsoft.UI.Xaml.Thickness(0);
                     handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness()
                     {

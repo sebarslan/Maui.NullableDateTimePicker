@@ -94,7 +94,7 @@
                             Icon="{Binding CalendarIcon}"
                             WidthRequest="200" 
                             HeightRequest="40"
-                            Padding="5,0"/>
+                            Padding="5"/>
 
             <Label Text="Disabled" TextColor="Black" />
             <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
