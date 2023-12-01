@@ -22,7 +22,7 @@ public static MauiApp CreateMauiApp()
 </code>
 </pre>
 
-### Usage 1: Use DateTimePicker as ContentView control
+### Usage 1: Use DateTimePicker as ContentView control (With input field and icon)
 1- Add the NullableDateTimePicker control to your XAML layout file:
 
 xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
