@@ -237,7 +237,7 @@ internal class NullableDateTimePickerContent : ContentView
     internal void SetCurrentDateAndRebuildCalendar(int year, int month, int day)
     {
         FixAndSetCurrentDate(year, month, day);
-        BuildCalendar();
+        BuildCalendar().Wait();
     }
 
     private void FixAndSetCurrentDate(int year, int month, int day)
@@ -267,11 +267,11 @@ internal class NullableDateTimePickerContent : ContentView
             _currentDate = currentDate;
     }
 
-    private void BuildCalendar()
+    private async Task BuildCalendar()
     {
-        try
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
         {
-            MainThreadHelper.SafeBeginInvokeOnMainThread( () =>
+            try
             {
                 _activityIndicator.IsVisible = true;
                 _activityIndicator.IsRunning = true;
@@ -279,7 +279,6 @@ internal class NullableDateTimePickerContent : ContentView
                 lastClickedDayButton = null;
                 _daysGrid.Clear();
                 _daysGrid.Children?.Clear();
-
 
                 DateTime lastMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(-1);
                 DateTime nextMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(1);
@@ -311,8 +310,8 @@ internal class NullableDateTimePickerContent : ContentView
 
                 // Rotate the array so that the first day of the week comes first
                 string[] rotatedDayNames = dayNames.Skip(firstDayOfWekkIndex)
-                                                       .Concat(dayNames.Take(firstDayOfWekkIndex))
-                                                       .ToArray();
+                                                           .Concat(dayNames.Take(firstDayOfWekkIndex))
+                                                           .ToArray();
 
                 var dayLabels = new List<Label>();
                 // Add the day labels to the top row of the grid
@@ -452,12 +451,13 @@ internal class NullableDateTimePickerContent : ContentView
 
                 _activityIndicator.IsVisible = false;
                 _activityIndicator.IsRunning = false;
-            });
-        }
-        catch (Exception ex)
-        {
-        }
+            }
+            catch (Exception ex)
+            {
+            }
+        });
     }
+
 
     /// <summary>
     /// ISO 8601 week of year.

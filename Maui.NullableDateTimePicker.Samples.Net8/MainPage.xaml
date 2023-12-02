@@ -33,8 +33,6 @@
                  CornerRadius="5"
                  Padding="5,0,5,0" />
 
-
-
             <Button
                 x:Name="CounterBtn"
                 Text="Click me" 
