@@ -4,9 +4,12 @@
              xmlns:ndp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
              x:Class="Maui.NullableDateTimePicker.Samples.Net8.NewPage"
              Title="NewPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="25">
         <Label 
         Text="Testing nullabledatetimepicker on modal page"
+        Style="{StaticResource SubHeadline}"
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
         <ndp:NullableDateTimePicker
@@ -16,5 +19,10 @@
         ShowWeekNumbers="True"
         Placeholder="Choose a date"
         HorizontalOptions="Start" />
+
+        <Button
+        Text="Close modal" 
+        Clicked="OnCloseClicked"
+        HorizontalOptions="Fill" />
     </VerticalStackLayout>
 </ContentPage>
