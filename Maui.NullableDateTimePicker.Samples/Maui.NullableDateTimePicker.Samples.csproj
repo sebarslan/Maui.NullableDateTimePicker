@@ -66,4 +66,10 @@
 	  </MauiFont>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="NewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

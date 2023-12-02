@@ -44,7 +44,7 @@ namespace Maui.NullableDateTimePicker.Samples
         };
         public FontImageSource CalendarIconAppTheme => calendarIconAppTheme;
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void OnCounterClicked(object sender, EventArgs e)
         {
             count++;
 
@@ -54,6 +54,8 @@ namespace Maui.NullableDateTimePicker.Samples
                 CounterBtn.Text = $"Clicked {count} times";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
+
+            await Navigation.PushModalAsync(new NewPage());
         }
 
         // Datepicker programmatically
