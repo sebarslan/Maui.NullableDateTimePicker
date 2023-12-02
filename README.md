@@ -183,6 +183,7 @@ on ios, android, windows
 - Fixed: The months list was opening in Time mode.
 - If the months list is open, the year changes with the next/previous button.
 - Default height: 40
+- Net 8.0 compatibility
 
 ### 1.2.0
 - Months can be quickly selected from the list.
