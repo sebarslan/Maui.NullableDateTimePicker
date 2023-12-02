@@ -59,17 +59,4 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Maui.NullableDateTimePicker\Maui.NullableDateTimePicker.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiFont Update="Resources\Fonts\fa-solid-900.ttf">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </MauiFont>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="NewPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
-
 </Project>

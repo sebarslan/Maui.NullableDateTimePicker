@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Maui.NullableDateTimePicker.Samples.NewPage"
              xmlns:ndp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+             x:Class="Maui.NullableDateTimePicker.Samples.Net8.NewPage"
              Title="NewPage">
     <VerticalStackLayout>
         <Label 
-            Text="Testing nullabledatetimepicker on modal page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        Text="Testing nullabledatetimepicker on modal page"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
         <ndp:NullableDateTimePicker
-                Mode="DateTime"
-                WidthRequest="300" 
-                HeightRequest="30"
-                ShowWeekNumbers="True"
-                HorizontalOptions="Start" />
+        Margin="10"
+        Mode="DateTime"
+        WidthRequest="300" 
+        ShowWeekNumbers="True"
+        Placeholder="Choose a date"
+        HorizontalOptions="Start" />
     </VerticalStackLayout>
 </ContentPage>
