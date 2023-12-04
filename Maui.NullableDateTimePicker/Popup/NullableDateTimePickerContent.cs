@@ -1029,9 +1029,9 @@ internal class NullableDateTimePickerContent : ContentView
             return;
 
         if (_monthListGrid == null || !_calendarGrid.Children.Contains(_monthListGrid) || !_monthListGrid.IsVisible)
-            AddMonthListView();
+            ShowMonthListView();
         else
-            RemoveMonthListView();
+            HideMonthListView();
     }
 
     private void CreateMonthListGrid()
@@ -1082,6 +1082,7 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Text = monthNumber.ToString("D2") + " " + month,
                 HorizontalOptions = LayoutOptions.Center,
+                FontSize = 14,
                 VerticalOptions = LayoutOptions.Center,
                 LineBreakMode = LineBreakMode.HeadTruncation,
                 TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black)
@@ -1098,7 +1099,7 @@ internal class NullableDateTimePickerContent : ContentView
         }
     }
 
-    private void AddMonthListView()
+    private void ShowMonthListView()
     {
         CreateMonthListGrid();
         MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
@@ -1114,7 +1115,7 @@ internal class NullableDateTimePickerContent : ContentView
           }));
     }
 
-    private void RemoveMonthListView()
+    private void HideMonthListView()
     {
         MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
       {
@@ -1132,7 +1133,7 @@ internal class NullableDateTimePickerContent : ContentView
     }
     private void OnMonthNameLabelClicked(object s, TappedEventArgs e)
     {
-        RemoveMonthListView();
+        HideMonthListView();
         SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text.Substring(0, 2)), _currentDate.Day);
     }
     private bool DayDisabled(int year, int month, int day)

@@ -30,7 +30,7 @@ namespace Maui.NullableDateTimePicker.Samples
             Glyph = IconFont.CalendarDay,
             FontAutoScalingEnabled = false,
             FontFamily = "FontAwesome",
-            Color = Colors.Black
+            Color = Colors.Blue
         };
 
         public FontImageSource CalendarIcon => calendarIcon;

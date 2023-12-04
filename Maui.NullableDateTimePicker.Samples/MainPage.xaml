@@ -64,11 +64,8 @@
                                 Text="{Binding MyDateTime, StringFormat='{0:g}'}"
                                IsReadOnly="True"
                                 TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                               VerticalOptions="CenterAndExpand" BackgroundColor="Transparent">
-                            <Entry.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="DateTimePicker_Clicked" />
-                            </Entry.GestureRecognizers>
-                        </Entry>
+                               VerticalOptions="CenterAndExpand" BackgroundColor="Transparent" />
+
                         <ImageButton Grid.Column="1" 
                                VerticalOptions="Center" 
                                HorizontalOptions="End"  

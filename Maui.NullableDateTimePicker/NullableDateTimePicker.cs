@@ -23,6 +23,7 @@ public class NullableDateTimePicker : ContentView
         base.Margin = 0;
         base.BackgroundColor = Colors.Transparent;
         base.HeightRequest = defaultHeightRequest;
+        base.MaximumHeightRequest = defaultHeightRequest;
 
         _dateTimePickerEntry = new NullableDateTimePickerEntry()
         {
@@ -41,7 +42,9 @@ public class NullableDateTimePicker : ContentView
         {
             BackgroundColor = this.IconBackgroundColor,
             Aspect = Aspect.AspectFit,
-            Margin = 0
+            Margin = 0,
+            HorizontalOptions = LayoutOptions.End,
+            VerticalOptions = LayoutOptions.Center
         };
 
         TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
@@ -58,6 +61,8 @@ public class NullableDateTimePicker : ContentView
         {
             Margin = 0,
             Padding = 0,
+            RowSpacing = 0,
+            ColumnSpacing = 0,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             BackgroundColor = Colors.Transparent,
@@ -98,7 +103,7 @@ public class NullableDateTimePicker : ContentView
             },
             StrokeThickness = this.BorderWidth,
             Content = dateTimePickerStackLayout,
-            Margin = DeviceInfo.Platform == DevicePlatform.Android ? new Thickness(0, -1, 0, 0) : 0,
+            Margin = 0,
             Padding = this.Padding,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill
@@ -868,7 +873,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 imgSource = Icon;
                 _dateTimePickerIcon.Source = Icon;
             }
-
         }
         else
         {

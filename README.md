@@ -135,7 +135,6 @@ More examples, please see the samples project
 | PlaceHolder | Placeholder of the entry | empty |
 
 
-
 ## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
 The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
 This event is commonly used in programming or software environments and is triggered when the NullableDateTime value is modified.
