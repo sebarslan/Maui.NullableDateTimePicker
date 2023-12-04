@@ -23,7 +23,6 @@ public class NullableDateTimePicker : ContentView
         base.Margin = 0;
         base.BackgroundColor = Colors.Transparent;
         base.HeightRequest = defaultHeightRequest;
-        base.MaximumHeightRequest = defaultHeightRequest;
 
         _dateTimePickerEntry = new NullableDateTimePickerEntry()
         {
