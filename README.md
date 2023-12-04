@@ -52,11 +52,7 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
     &lt;Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
     HorizontalOptions="Fill"
     VerticalOptions="Fill"
-    IsReadOnly="True"&gt;
-        &lt;Entry.GestureRecognizers&gt;
-            &lt;TapGestureRecognizer Tapped="DateTimePicker_Clicked" /&gt;
-        &lt;/Entry.GestureRecognizers&gt;
-    &lt;/Entry&gt;
+    IsReadOnly="True" /&gt;
     &lt;ImageButton Source="{Binding CalendarIcon}" 
     Clicked="DateTimePicker_Clicked"
     HorizontalOptions="Fill"
