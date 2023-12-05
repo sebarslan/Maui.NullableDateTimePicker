@@ -55,8 +55,6 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
     IsReadOnly="True" /&gt;
     &lt;ImageButton Source="{Binding CalendarIcon}" 
     Clicked="DateTimePicker_Clicked"
-    HorizontalOptions="Fill"
-    VerticalOptions="Fill"
     Margin="0"
     Padding="2"
     WidthRequest="30" /&gt;
