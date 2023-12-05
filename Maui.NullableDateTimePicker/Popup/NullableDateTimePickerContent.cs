@@ -111,10 +111,6 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Console.Write($"BuildCalendar-Error: {ex}");
             }
-            finally
-            {
-
-            }
         });
     }
 
@@ -454,6 +450,7 @@ internal class NullableDateTimePickerContent : ContentView
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
             }
         });
     }
@@ -926,7 +923,8 @@ internal class NullableDateTimePickerContent : ContentView
                 TextColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.Fill,
+                VerticalTextAlignment = TextAlignment.Center
             };
 
             _minutesPicker = new Picker
@@ -1134,7 +1132,7 @@ internal class NullableDateTimePickerContent : ContentView
     private void OnMonthNameLabelClicked(object s, TappedEventArgs e)
     {
         HideMonthListView();
-        SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text.Substring(0, 2)), _currentDate.Day);
+        SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text[..2]), _currentDate.Day);
     }
     private bool DayDisabled(int year, int month, int day)
     {

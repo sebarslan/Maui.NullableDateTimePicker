@@ -15,8 +15,8 @@ public class NullableDateTimePicker : ContentView
     private Border _dateTimePickerBorder;
     private bool isSetIconCalledForFirstTime = false;
     const double defaultHeightRequest = 40;
-
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
+
     public NullableDateTimePicker()
     {
         base.Padding = 0;
@@ -121,16 +121,12 @@ public class NullableDateTimePicker : ContentView
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
     {
         PopupResultTask<PopupResult> popupResultTask = null;
-
+        NullableDateTimePickerPopup popupControl = null;
         try
         {
             popupResultTask = new PopupResultTask<PopupResult>();
-            NullableDateTimePickerPopup popupControl = new(options)
-            {
-                HorizontalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center,
-                VerticalOptions = Microsoft.Maui.Primitives.LayoutAlignment.Center
-            };
-            var result = await Page.ShowPopupAsync(popupControl);
+            popupControl = new NullableDateTimePickerPopup(options);
+            var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
 
             if (result is PopupResult popupResult)
             {
@@ -144,6 +140,11 @@ public class NullableDateTimePicker : ContentView
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
+        }
+        finally
+        {
+            if (popupControl != null)
+                popupControl = null;
         }
 
         return await popupResultTask?.Result;

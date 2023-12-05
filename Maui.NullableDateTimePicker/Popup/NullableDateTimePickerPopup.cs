@@ -61,6 +61,7 @@ namespace Maui.NullableDateTimePicker
             }
             finally
             {
+                Content = null;
                 _content = null;
             }
         }
