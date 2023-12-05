@@ -171,7 +171,7 @@ on ios, android, windows
 
 # Changelog
 
-### 2.0.0 (not released yet)
+### 2.0.0
 - Layout adjustments
 - Fixed: The months list was opening in Time mode.
 - If the months list is open, the year changes with the next/previous button.
