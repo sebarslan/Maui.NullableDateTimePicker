@@ -181,7 +181,7 @@ on ios, android, windows
 ### 1.2.0
 - Months can be quickly selected from the list.
 - MinDate and MaxDate validations have been reviewed and revised.
-- A border and CornerRadius has been added to the input field for the datetimepicker.
+- A border and CornerRadius has been added to the datetimepicker control.
 
 ### 1.1.1
 - The .NET MAUI Communitytoolkit version (6.1.0) was added to the project.
