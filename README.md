@@ -45,7 +45,7 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 
 ### Usage 2: Use direct calendar popup with your own entry and button
 
-1- Add your entry or button for datetime in your xaml page (eg. MainPage.xaml)
+1- Add your entry and button for datetime in your xaml page (eg. MainPage.xaml)
 <pre>
 <code>
 &lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
