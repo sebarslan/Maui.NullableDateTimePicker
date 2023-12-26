@@ -3,13 +3,13 @@ using static System.Net.Mime.MediaTypeNames;
 using CommunityToolkitPopup = CommunityToolkit.Maui.Views.Popup;
 namespace Maui.NullableDateTimePicker
 {
-    internal class NullableDateTimePickerPopup : CommunityToolkitPopup
+    internal class NullableDateTimePickerPopup : CommunityToolkitPopup, IDisposable
     {
         private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
         private NullableDateTimePickerContent _content = null;
-        
+        private bool _disposed = false;
         internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
         {
             _content = new NullableDateTimePickerContent(options);
@@ -62,7 +62,30 @@ namespace Maui.NullableDateTimePicker
             finally
             {
                 Content = null;
-                _content = null;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        ~NullableDateTimePickerPopup()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _content = null;
+                }
+                _disposed = true;
             }
         }
     }

@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ndp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+             xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
              x:Class="Maui.NullableDateTimePicker.Samples.MainPage"
              BackgroundColor="AliceBlue">
-
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Fill">
+            
             <!-- Nullable datetime picker -->
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
             <Label Text="DateTimepicker" TextColor="Black" />
 
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             WidthRequest="300" 
                             HeightRequest="30"
@@ -28,7 +28,7 @@
                             />
             <Label Text="Datepicker with border" TextColor="Black" />
 
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                                         Mode="Date"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
@@ -41,7 +41,7 @@
                                             />
 
             <Label Text="Timepicker" TextColor="Black" />
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                                         Mode="Time"
                                         WidthRequest="150"
                                         HeightRequest="40"
@@ -82,7 +82,7 @@
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
 
             <Label Text="MinDate MaxDate and FontImageSource for Icon" TextColor="Black" />
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                             Mode="Date"
                             MinDate="{Binding MyMinDate}"
                             MaxDate="{Binding MyMaxDate}"
@@ -94,7 +94,7 @@
                             Padding="5"/>
 
             <Label Text="Disabled" TextColor="Black" />
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             HorizontalOptions="Start"
                             IsEnabled="False"

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ndp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
+             xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
              x:Class="Maui.NullableDateTimePicker.Samples.Net8.MainPage">
 
     <ScrollView>
@@ -24,8 +24,7 @@
     Style="{StaticResource SubHeadline}"
     SemanticProperties.HeadingLevel="Level2"
     SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <ndp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
                  Mode="DateTime"
                  WidthRequest="300" 
                  ShowWeekNumbers="True"

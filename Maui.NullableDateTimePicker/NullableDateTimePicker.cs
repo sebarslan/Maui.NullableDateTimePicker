@@ -120,30 +120,27 @@ public class NullableDateTimePicker : ContentView
     public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
     {
         PopupResultTask<PopupResult> popupResultTask = null;
-        NullableDateTimePickerPopup popupControl = null;
         try
         {
             popupResultTask = new PopupResultTask<PopupResult>();
-            popupControl = new NullableDateTimePickerPopup(options);
-            var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
+            
+            using (var popupControl = new NullableDateTimePickerPopup(options))
+            {
+                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
 
-            if (result is PopupResult popupResult)
-            {
-                popupResultTask.SetResult(popupResult);
-            }
-            else
-            {
-                popupResultTask.SetResult(null);
-            }
+                if (result is PopupResult popupResult)
+                {
+                    popupResultTask.SetResult(popupResult);
+                }
+                else
+                {
+                    popupResultTask.SetResult(null);
+                }
+            };
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
-        }
-        finally
-        {
-            if (popupControl != null)
-                popupControl = null;
         }
 
         return await popupResultTask?.Result;
