@@ -45,7 +45,7 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 
 ### Usage 2: Use direct calendar popup with your own entry and button
 
-1- Add your entry or button for datetime in your xaml page (eg. MainPage.xaml)
+1- Add your entry and button for datetime in your xaml page (eg. MainPage.xaml)
 <pre>
 <code>
 &lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
@@ -181,7 +181,7 @@ on ios, android, windows
 ### 1.2.0
 - Months can be quickly selected from the list.
 - MinDate and MaxDate validations have been reviewed and revised.
-- A border and CornerRadius has been added to the input field for the datetimepicker.
+- A border and CornerRadius has been added to the datetimepicker control.
 
 ### 1.1.1
 - The .NET MAUI Communitytoolkit version (6.1.0) was added to the project.
