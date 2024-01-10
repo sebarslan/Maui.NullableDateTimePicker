@@ -90,28 +90,25 @@ internal class NullableDateTimePickerContent : ContentView
             _activityIndicator.Color = _options.ActivityIndicatorColor;
     }
 
-    internal void NullableDateTimePickerPopupOpened(object sender, CommunityToolkit.Maui.Core.PopupOpenedEventArgs e)
+    internal async void NullableDateTimePickerPopupOpened(object sender, CommunityToolkit.Maui.Core.PopupOpenedEventArgs e)
     {
-        InitCalendar();
+        await InitCalendar();
     }
 
-    internal void InitCalendar()
+    internal async Task InitCalendar()
     {
-        Task.Run(async () =>
+        try
         {
-            try
-            {
-                await InitContent();
+            await InitContent();
 
-                PopulatePickers();
+            await PopulatePickers();
 
-                await SetCurrentDateAndRebuildCalendar(_currentDate.Year, _currentDate.Month, _currentDate.Day);
-            }
-            catch (Exception ex)
-            {
-                Console.Write($"BuildCalendar-Error: {ex}");
-            }
-        });
+            await SetCurrentDateAndRebuildCalendar(_currentDate.Year, _currentDate.Month, _currentDate.Day);
+        }
+        catch (Exception ex)
+        {
+            Console.Write($"BuildCalendar-Error: {ex}");
+        }
     }
 
     internal DateTime? SelectedDate
@@ -503,7 +500,7 @@ internal class NullableDateTimePickerContent : ContentView
         });
     }
 
-    private void PopulatePickers()
+    private async Task PopulatePickers()
     {
         List<int> years = new();
         int minYear = _minDate.Year;
@@ -534,7 +531,7 @@ internal class NullableDateTimePickerContent : ContentView
             minutes.Add("00");
         }
 
-        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
         {
             _yearsPicker.ItemsSource = years;
             if (_hoursPicker != null)
@@ -920,7 +917,7 @@ internal class NullableDateTimePickerContent : ContentView
                 BackgroundColor = Colors.Transparent,
                 TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 FontSize = 14,
-                Margin = new Thickness(5,0),
+                Margin = new Thickness(5, 0),
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center
             };

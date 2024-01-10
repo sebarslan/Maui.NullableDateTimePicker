@@ -171,6 +171,10 @@ on ios, android, windows
 
 # Changelog
 
+### 2.1.0
+- Fixed: Content is already a child of Microsoft.Maui.Controls.ContentPage.
+- Fixed: When the months were changed in Windows, the application would hang.
+
 ### 2.0.0
 - Layout adjustments
 - Fixed: The months list was opening in Time mode.
