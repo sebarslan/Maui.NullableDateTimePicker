@@ -105,7 +105,7 @@ internal class NullableDateTimePickerContent : ContentView
 
                 PopulatePickers();
 
-                SetCurrentDateAndRebuildCalendar(_currentDate.Year, _currentDate.Month, _currentDate.Day);
+                await SetCurrentDateAndRebuildCalendar(_currentDate.Year, _currentDate.Month, _currentDate.Day);
             }
             catch (Exception ex)
             {
@@ -124,12 +124,12 @@ internal class NullableDateTimePickerContent : ContentView
         }
     }
 
-    private void OnPreviousMonthButtonClicked(object sender, EventArgs e)
+    private async void OnPreviousMonthButtonClicked(object sender, EventArgs e)
     {
-        SetPreviousMonth();
+        await SetPreviousMonth();
     }
 
-    internal void SetPreviousMonth()
+    internal async Task SetPreviousMonth()
     {
         var previousMonth = _currentDate.Month;
         var currentYear = _currentDate.Year;
@@ -144,15 +144,15 @@ internal class NullableDateTimePickerContent : ContentView
             previousMonth = 12;
             currentYear--;
         }
-        SetCurrentDateAndRebuildCalendar(currentYear, previousMonth, _currentDate.Day);
+        await SetCurrentDateAndRebuildCalendar(currentYear, previousMonth, _currentDate.Day);
     }
 
-    private void OnNextMonthButtonClicked(object sender, EventArgs e)
+    private async void OnNextMonthButtonClicked(object sender, EventArgs e)
     {
-        SetNextMonthOrYear();
+        await SetNextMonthOrYear();
     }
 
-    private void SetNextMonthOrYear()
+    private async Task SetNextMonthOrYear()
     {
         var nextMonth = _currentDate.Month;
         var currentYear = _currentDate.Year;
@@ -167,7 +167,7 @@ internal class NullableDateTimePickerContent : ContentView
             currentYear++;
         }
 
-        SetCurrentDateAndRebuildCalendar(currentYear, nextMonth, _currentDate.Day);
+        await SetCurrentDateAndRebuildCalendar(currentYear, nextMonth, _currentDate.Day);
     }
 
     private void OnDayButtonTapped(object sender, EventArgs e)
@@ -184,7 +184,7 @@ internal class NullableDateTimePickerContent : ContentView
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second));
     }
 
-    private void OnLastMonthDayButtonTapped(object sender, EventArgs e)
+    private async void OnLastMonthDayButtonTapped(object sender, EventArgs e)
     {
         if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
             return;
@@ -203,10 +203,10 @@ internal class NullableDateTimePickerContent : ContentView
         if (DayDisabled(year, month, day))
             return;
 
-        SetCurrentDateAndRebuildCalendar(year, month, day);
+        await SetCurrentDateAndRebuildCalendar(year, month, day);
     }
 
-    private void OnNextMonthDayButtonTapped(object sender, EventArgs e)
+    private async void OnNextMonthDayButtonTapped(object sender, EventArgs e)
     {
         if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
             return;
@@ -226,14 +226,14 @@ internal class NullableDateTimePickerContent : ContentView
         if (DayDisabled(year, month, day))
             return;
 
-        SetCurrentDateAndRebuildCalendar(year, month, day);
+        await SetCurrentDateAndRebuildCalendar(year, month, day);
     }
 
 
-    internal void SetCurrentDateAndRebuildCalendar(int year, int month, int day)
+    internal async Task SetCurrentDateAndRebuildCalendar(int year, int month, int day)
     {
         FixAndSetCurrentDate(year, month, day);
-        BuildCalendar().Wait();
+        await BuildCalendar();
     }
 
     private void FixAndSetCurrentDate(int year, int month, int day)
@@ -562,16 +562,16 @@ internal class NullableDateTimePickerContent : ContentView
         OkButtonClicked?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnYearsPickerIndexChanged(object sender, EventArgs e)
+    private async void OnYearsPickerIndexChanged(object sender, EventArgs e)
     {
         var selectedItem = ((Picker)sender).SelectedItem;
         if (selectedItem == null)
             return;
 
-        SetYear((int)selectedItem);
+        await SetYear((int)selectedItem);
     }
 
-    internal void SetYear(int year)
+    internal async Task SetYear(int year)
     {
         if (year == _currentDate.Year)
             return;
@@ -581,7 +581,7 @@ internal class NullableDateTimePickerContent : ContentView
         if (year > _maxDate.Year)
             year = _maxDate.Year;
 
-        SetCurrentDateAndRebuildCalendar(year, _currentDate.Month, _currentDate.Day);
+        await SetCurrentDateAndRebuildCalendar(year, _currentDate.Month, _currentDate.Day);
     }
 
     private void OnHoursPickerIndexChanged(object sender, EventArgs e)
@@ -810,8 +810,6 @@ internal class NullableDateTimePickerContent : ContentView
         {
             Padding = new Thickness(5, 0),
             Margin = 0,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
             BackgroundColor = Colors.Transparent,
             ColumnDefinitions =
             {
@@ -920,18 +918,18 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Text = ":",
                 BackgroundColor = Colors.Transparent,
-                TextColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
-                HeightRequest = 40,
+                TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                FontSize = 14,
+                Margin = new Thickness(5,0),
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Fill,
-                VerticalTextAlignment = TextAlignment.Center
+                VerticalOptions = LayoutOptions.Center
             };
 
             _minutesPicker = new Picker
             {
                 BackgroundColor = Colors.Transparent,
-                TextColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
-                TitleColor = _options.ForeColor ?? _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 FontSize = 14,
                 HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
@@ -1129,10 +1127,10 @@ internal class NullableDateTimePickerContent : ContentView
           }
       }));
     }
-    private void OnMonthNameLabelClicked(object s, TappedEventArgs e)
+    private async void OnMonthNameLabelClicked(object s, TappedEventArgs e)
     {
         HideMonthListView();
-        SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text[..2]), _currentDate.Day);
+        await SetCurrentDateAndRebuildCalendar(_currentDate.Year, Convert.ToInt16((s as Label).Text[..2]), _currentDate.Day);
     }
     private bool DayDisabled(int year, int month, int day)
     {

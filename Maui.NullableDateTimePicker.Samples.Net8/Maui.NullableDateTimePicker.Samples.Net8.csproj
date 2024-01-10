@@ -24,7 +24,7 @@
 		<ApplicationTitle>Maui.NullableDateTimePicker.Samples.Net8</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.maui.nullabledatetimepicker.samples.net8</ApplicationId>
+		<ApplicationId>com.companyname.maui.nullabledatetimepicker.net8</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
