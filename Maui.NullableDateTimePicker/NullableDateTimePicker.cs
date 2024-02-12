@@ -123,7 +123,7 @@ public class NullableDateTimePicker : ContentView
         try
         {
             popupResultTask = new PopupResultTask<PopupResult>();
-            
+
             using (var popupControl = new NullableDateTimePickerPopup(options))
             {
                 var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
@@ -859,16 +859,19 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     string imgName;
     ImageSource imgSource;
 
-    private async void SetCalendarIcon()
+    private void SetCalendarIcon()
     {
         isSetIconCalledForFirstTime = true;
-        await Task.Delay(100);
+
         if (Icon != null)
         {
             if (imgSource != Icon)
             {
                 imgSource = Icon;
-                _dateTimePickerIcon.Source = Icon;
+                MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+                {
+                    _dateTimePickerIcon.Source = Icon;
+                });
             }
         }
         else
@@ -883,7 +886,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             if (imgName != imageName)
             {
                 imgName = imageName;
-                _dateTimePickerIcon.Source = ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly);
+                MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+                {
+                    _dateTimePickerIcon.Source = ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly);
+                });
             }
         }
     }
