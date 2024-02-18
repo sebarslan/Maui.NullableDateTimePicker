@@ -26,4 +26,5 @@ public interface INullableDateTimePickerOptions
     Color? ActivityIndicatorColor { get; set; }
     bool ShowClearButton { get; set; }
     bool CloseOnOutsideClick { get; set; }
+    bool Is12HourClock { get; set; }
 };

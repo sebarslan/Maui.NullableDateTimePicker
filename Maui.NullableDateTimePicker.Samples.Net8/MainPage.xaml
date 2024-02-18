@@ -30,7 +30,8 @@
                  ShowWeekNumbers="True"
                  HorizontalOptions="Start"
                  CornerRadius="5"
-                 Padding="5,0,5,0" />
+                 Padding="5,0,5,0"
+                 Is12HourClock="{Binding Is12HourClock}" />
 
             <Button
                 x:Name="CounterBtn"

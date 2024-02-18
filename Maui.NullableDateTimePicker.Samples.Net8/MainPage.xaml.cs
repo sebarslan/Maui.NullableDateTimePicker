@@ -21,6 +21,8 @@
             }
         }
 
+        public bool Is12HourClock => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("tt");
+
 
         private async void OnCounterClicked(object sender, EventArgs e)
         {

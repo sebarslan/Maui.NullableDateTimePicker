@@ -23,9 +23,8 @@
                             HorizontalOptions="Start"
                             CornerRadius="5"
                             Padding="5,0,5,0"
-                            SelectedDayStyle="{StaticResource SelectedDayStyle}"
-                
-                            />
+                            SelectedDayStyle="{StaticResource SelectedDayStyle}" />
+            
             <Label Text="Datepicker with border" TextColor="Black" />
 
             <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  

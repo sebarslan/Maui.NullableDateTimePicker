@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using Maui.NullableDateTimePicker.Models;
+using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -31,12 +33,15 @@ internal class NullableDateTimePickerContent : ContentView
     private Style _weekNumberStyle;
     private Picker _hoursPicker;
     private Picker _minutesPicker;
+    private Picker _amPmPicker;
     private StackLayout _timeStackLayout;
     private List<Button> _dayButtons;
     private Grid _monthListGrid;
     private Grid _mainGrid;
     private ActivityIndicator _activityIndicator;
     private ScrollView _scrollView;
+    List<PickerItem> hours = null;
+    List<PickerItem> minutes = null;
 
 
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
@@ -474,8 +479,11 @@ internal class NullableDateTimePickerContent : ContentView
            _yearsPicker.SelectedItem = _currentDate.Year;
            if (_options.Mode != PickerModes.Date)
            {
-               _hoursPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Hour);
-               _minutesPicker.SelectedItem = string.Format("{0:D2}", _currentDate.Minute);
+               _hoursPicker.SelectedItem = hours?.FirstOrDefault(x => x.Value == _currentDate.Hour);
+               _minutesPicker.SelectedItem = minutes?.FirstOrDefault(x => x.Value == _currentDate.Minute);
+
+               if (_amPmPicker != null)
+                   _amPmPicker.SelectedItem = _currentDate.Hour < 12 ? "AM" : "PM";
            }
            _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
            _selectedDateLabel.Text = date.HasValue ? date.Value.ToString("ddd, MMM d") : "No Date Selected";
@@ -502,6 +510,7 @@ internal class NullableDateTimePickerContent : ContentView
 
     private async Task PopulatePickers()
     {
+        // Years picker
         List<int> years = new();
         int minYear = _minDate.Year;
         int maxYear = _maxDate.Year;
@@ -510,34 +519,52 @@ internal class NullableDateTimePickerContent : ContentView
             years.Add(y);
         }
 
-        List<string> hours = null;
-        List<string> minutes = null;
+
+        // Hours and Minutes Picker
         if (_options.Mode != PickerModes.Date)
         {
             hours = new();
 
-            for (int h = 1; h < 24; h++)
+            for (int h = 1; h <= 24; h++)
             {
-                hours.Add(string.Format("{0:D2}", h));
+                string hourText = h.ToString("00");
+
+                if (_options.Is12HourClock)
+                {
+                    int hour12 = (h == 24 ? 12 : h > 12 ? h - 12 : h);
+                    hourText = $"{hour12:00}";
+                }
+
+                hours.Add(new PickerItem { Text = hourText, Value = h == 24 ? 0 : h });
             }
-            hours.Add("00");
 
 
             minutes = new();
-            for (int m = 1; m < 60; m++)
+            for (int m = 0; m < 60; m++)
             {
-                minutes.Add(string.Format("{0:D2}", m));
+                minutes.Add(new PickerItem { Text = m.ToString("00"), Value = m });
             }
-            minutes.Add("00");
         }
 
         await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
         {
+            //years
             _yearsPicker.ItemsSource = years;
+
+            // hours
             if (_hoursPicker != null)
                 _hoursPicker.ItemsSource = hours;
+
+            // minutes
             if (_minutesPicker != null)
                 _minutesPicker.ItemsSource = minutes;
+
+            // am/pm
+            if (_options.Is12HourClock && _amPmPicker != null)
+            {
+                _amPmPicker.Items.Add("AM");
+                _amPmPicker.Items.Add("PM");
+            }
         });
     }
 
@@ -583,12 +610,11 @@ internal class NullableDateTimePickerContent : ContentView
 
     private void OnHoursPickerIndexChanged(object sender, EventArgs e)
     {
-        var selectedItem = ((Picker)sender).SelectedItem;
+        var selectedItem = ((Picker)sender).SelectedItem as PickerItem;
         if (selectedItem == null)
             return;
 
-        if (int.TryParse((string)selectedItem, out int selectedHour))
-            SetHour(selectedHour);
+        SetHour(selectedItem.Value);
     }
 
     internal void SetHour(int hour)
@@ -601,12 +627,11 @@ internal class NullableDateTimePickerContent : ContentView
 
     private void OnMinutesPickerIndexChanged(object sender, EventArgs e)
     {
-        var selectedItem = ((Picker)sender).SelectedItem;
+        var selectedItem = ((Picker)sender).SelectedItem as PickerItem;
         if (selectedItem == null)
             return;
 
-        if (int.TryParse((string)selectedItem, out int selectedMinute))
-            SetMinute(selectedMinute);
+        SetMinute(selectedItem.Value);
     }
 
     internal void SetMinute(int minute)
@@ -615,6 +640,22 @@ internal class NullableDateTimePickerContent : ContentView
             return;
 
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, _currentDate.Hour, minute, _currentDate.Second));
+    }
+
+    private void OnAmPmPickerIndexChanged(object sender, EventArgs e)
+    {
+        var selectedItem = ((Picker)sender).SelectedItem as string;
+        if (string.IsNullOrEmpty(selectedItem))
+            return;
+
+        if (selectedItem.ToUpper() == "AM" && _currentDate.Hour > 12)
+        {
+            SetHour(_currentDate.Hour - 12);
+        }
+        else if (selectedItem.ToUpper() == "PM" && _currentDate.Hour < 12)
+        {
+            SetHour(_currentDate.Hour + 12);
+        }
     }
 
     private async Task InitContent()
@@ -904,6 +945,7 @@ internal class NullableDateTimePickerContent : ContentView
                 TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 FontSize = 14,
                 HeightRequest = 40,
+                ItemDisplayBinding = new Binding("Text"),
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 FontAttributes = FontAttributes.Bold,
@@ -929,6 +971,7 @@ internal class NullableDateTimePickerContent : ContentView
                 TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 FontSize = 14,
                 HeightRequest = 40,
+                ItemDisplayBinding = new Binding("Text"),
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 FontAttributes = FontAttributes.Bold,
@@ -950,6 +993,25 @@ internal class NullableDateTimePickerContent : ContentView
             _timeStackLayout.Add(_hoursPicker);
             _timeStackLayout.Add(hoursMinutesSeparatorLabel);
             _timeStackLayout.Add(_minutesPicker);
+
+            // am/pm picker
+            if (_options.Is12HourClock)
+            {
+                _amPmPicker = new Picker
+                {
+                    BackgroundColor = Colors.Transparent,
+                    TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                    TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
+                    FontSize = 14,
+                    HeightRequest = 40,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
+                    FontAttributes = FontAttributes.Bold,
+                    HorizontalTextAlignment = TextAlignment.Center
+                };
+                _amPmPicker.SelectedIndexChanged += OnAmPmPickerIndexChanged;
+                _timeStackLayout.Add(_amPmPicker);
+            }
 
             _calendarGrid.Add(_timeStackLayout, 0, 3);
         }
