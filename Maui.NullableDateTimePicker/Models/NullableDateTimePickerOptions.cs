@@ -23,8 +23,8 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public bool ShowWeekNumbers { get; set; }
     public Style? WeekNumberStyle { get; set; }
     public bool ShowOtherMonthDays { get; set; } = true;
-    public Color? ActivityIndicatorColor { get; set; }
     public bool ShowClearButton { get; set; } = true;
+    public Color? ActivityIndicatorColor { get; set; }
     public bool CloseOnOutsideClick { get; set; }
-    public bool Is12HourClock { get; set; }
+    public bool Is12HourFormat { get; set; }
 }

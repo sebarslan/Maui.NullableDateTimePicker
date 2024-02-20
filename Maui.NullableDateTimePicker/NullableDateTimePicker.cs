@@ -784,17 +784,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     }
 
 
-    public static readonly BindableProperty Is12HourClockProperty = BindableProperty.Create(
-       nameof(Is12HourClock),
+    public static readonly BindableProperty Is12HourFormatProperty = BindableProperty.Create(
+       nameof(Is12HourFormat),
        typeof(bool),
        typeof(NullableDateTimePicker),
        defaultValue: false,
        defaultBindingMode: BindingMode.OneWay);
 
-    public bool Is12HourClock
+    public bool Is12HourFormat
     {
-        get { return (bool)GetValue(Is12HourClockProperty); }
-        set { SetValue(Is12HourClockProperty, value); }
+        get { return (bool)GetValue(Is12HourFormatProperty); }
+        set { SetValue(Is12HourFormatProperty, value); }
     }
 
     #endregion //bindable properties
@@ -843,7 +843,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 ActivityIndicatorColor = this.ActivityIndicatorColor,
                 ShowClearButton = this.ShowClearButton,
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
-                Is12HourClock = this.Is12HourClock
+                Is12HourFormat = this.Is12HourFormat
             };
 
             var result = await NullableDateTimePicker.OpenCalendarAsync(options);
@@ -881,36 +881,37 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
     private void SetCalendarIcon()
     {
-        isSetIconCalledForFirstTime = true;
-        if (Icon != null)
+        MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
         {
-            if (imgSource != Icon)
+            isSetIconCalledForFirstTime = true;
+            await Task.Delay(100);
+
+            if (Icon != null)
             {
-                imgSource = Icon;
-                MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+                if (imgSource != Icon)
                 {
+                    imgSource = Icon;
+
                     _dateTimePickerIcon.Source = Icon;
-                });
+                }
             }
-        }
-        else
-        {
-            string imageName = "date_icon.png";
-
-            if (Mode == PickerModes.DateTime)
-                imageName = "date_time_icon.png";
-            else if (Mode == PickerModes.Time)
-                imageName = "time_icon.png";
-
-            if (imgName != imageName)
+            else
             {
-                imgName = imageName;
-                MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
+                string imageName = "date_icon.png";
+
+                if (Mode == PickerModes.DateTime)
+                    imageName = "date_time_icon.png";
+                else if (Mode == PickerModes.Time)
+                    imageName = "time_icon.png";
+
+                if (imgName != imageName)
                 {
+                    imgName = imageName;
+
                     _dateTimePickerIcon.Source = await Task.Run(() => ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly));
-                });
+                }
             }
-        }
+        });
     }
 
     private static DateTime? ParseDateTime(object objectValue)

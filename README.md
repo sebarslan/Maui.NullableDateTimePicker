@@ -1,6 +1,7 @@
 # Maui Nullable and Clearable DateTimePicker
 The Nullable DateTimePicker is a custom calendar control for selecting a nullable date and time value in a .NET MAUI application. It provides a consistent and platform-independent user interface for selecting dates, and allows the user to clear the value if needed.
 
+
 This control uses the <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup.
 
 [![NuGet](https://img.shields.io/badge/nuget-v2.1.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
@@ -113,6 +114,7 @@ More examples, please see the samples project
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
+| Is12HourFormat | Determines whether to display the am/pm picker for the 12-hour format.	| false |
 
 
 ## Datetimepicker Input Options (If NullableDateTimePicker is used as ContentView)
@@ -170,6 +172,10 @@ on ios, android, windows
 ![DateTimePicker](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
 
 # Changelog
+
+### 2.2.0 (not released yet)
+- 12 hour format added (AM/PM picker)
+- Fixed issue: Icons displayed inconsistently
 
 ### 2.1.0
 - Fixed: Content is already a child of Microsoft.Maui.Controls.ContentPage.
