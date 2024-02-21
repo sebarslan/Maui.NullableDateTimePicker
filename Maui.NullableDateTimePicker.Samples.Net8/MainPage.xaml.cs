@@ -21,7 +21,7 @@
             }
         }
 
-        public bool Is12HourFormat => true; // System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("tt");
+        public bool Is12HourFormat => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("tt");
 
 
         private async void OnCounterClicked(object sender, EventArgs e)

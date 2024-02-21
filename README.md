@@ -176,6 +176,9 @@ on ios, android, windows
 ### 2.2.0 (not released yet)
 - 12 hour format added (AM/PM picker)
 - Fixed issue: Icons displayed inconsistently
+- Time icon fixed
+- The calendar can be opened by clicking on the entry.
+- In time picker, only time is shown in the header
 
 ### 2.1.0
 - Fixed: Content is already a child of Microsoft.Maui.Controls.ContentPage.

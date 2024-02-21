@@ -63,11 +63,18 @@ public class NullableDateTimePicker : ContentView
         };
 
 
+
+
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
 
         _dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
         _dateTimePickerGrid.Add(_dateTimePickerIcon);
+
+        var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill };
+        _dateTimePickerGrid.SetColumn(clickableView, 0);
+        _dateTimePickerGrid.SetColumnSpan(clickableView, 2);
+        _dateTimePickerGrid.Add(clickableView);
 
         TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
         {
@@ -78,7 +85,8 @@ public class NullableDateTimePicker : ContentView
             OnDatePickerClicked(s, e);
         };
 
-        _dateTimePickerIcon.GestureRecognizers.Add(tapGestureRecognizer);
+        clickableView.GestureRecognizers.Add(tapGestureRecognizer);
+
 
         var dateTimePickerStackLayout = new StackLayout
         {
@@ -109,8 +117,6 @@ public class NullableDateTimePicker : ContentView
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill
         };
-
-        _dateTimePickerBorder.GestureRecognizers.Add(tapGestureRecognizer);
 
         this.Loaded += (s, e) =>
         {
@@ -799,25 +805,22 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
     #endregion //bindable properties
 
+
     private async void OnDatePickerClicked(object sender, EventArgs e)
     {
-        if (!base.IsEnabled)
-            return;
-
         await OpenCalendarPopupAsync();
     }
 
     bool isPopupOpen = false;
-
     private async Task OpenCalendarPopupAsync()
     {
+        if (!base.IsEnabled || isPopupOpen)
+            return;
+
+        isPopupOpen = true;
+
         try
         {
-            if (isPopupOpen)
-                return;
-
-            isPopupOpen = true;
-
             INullableDateTimePickerOptions options = new NullableDateTimePickerOptions
             {
                 NullableDateTime = this.NullableDateTime,

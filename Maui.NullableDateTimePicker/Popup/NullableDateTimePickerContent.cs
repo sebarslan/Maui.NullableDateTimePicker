@@ -490,14 +490,25 @@ internal class NullableDateTimePickerContent : ContentView
                    _amPmPicker.SelectedItem = _currentDate.ToString("tt");
            }
            _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
-           if (_options.Mode == PickerModes.Time)
+
+           string selectedDateText = string.Empty;
+           if (date != null && date.HasValue)
            {
-               _selectedDateLabel.Text = date.HasValue ? date.Value.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern) : "";
+               if (_options.Mode == PickerModes.Date || _options.Mode == PickerModes.DateTime)
+                   selectedDateText = date.Value.ToString("ddd, MMM d");
+
+               if (_options.Mode == PickerModes.Time)
+               {
+                   selectedDateText = date.Value.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+               }
            }
            else
            {
-               _selectedDateLabel.Text = date.HasValue ? date.Value.ToString("ddd, MMM d") : "No Date Selected";
+               selectedDateText = "No Date Selected";
            }
+
+           _selectedDateLabel.Text = selectedDateText;
+
            SetCurrentDayStyle(_currentDate.Day.ToString());
        });
     }
@@ -530,7 +541,6 @@ internal class NullableDateTimePickerContent : ContentView
             years.Add(y);
         }
 
-
         // Hours and Minutes Picker
         if (_options.Mode != PickerModes.Date)
         {
@@ -543,7 +553,6 @@ internal class NullableDateTimePickerContent : ContentView
 
                 _hours.Add(new PickerItem { Text = hourText, Value = h == 24 ? 0 : h });
             }
-
 
             _minutes = new();
             for (int m = 0; m < 60; m++)
@@ -825,7 +834,8 @@ internal class NullableDateTimePickerContent : ContentView
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
             VerticalOptions = LayoutOptions.Center,
-            IsEnabled = _options.Mode != PickerModes.Time  //Click skipping in time mode 
+            IsEnabled = _options.Mode != PickerModes.Time,  //Click skipping in time mode
+            IsVisible = _options.Mode != PickerModes.Time
         };
         _yearsPicker.SelectedIndexChanged += OnYearsPickerIndexChanged;
 
@@ -837,7 +847,8 @@ internal class NullableDateTimePickerContent : ContentView
             BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
-            VerticalOptions = LayoutOptions.Center
+            VerticalOptions = LayoutOptions.Center,
+            LineBreakMode = LineBreakMode.TailTruncation
         };
 
         headerGrid.Add(_yearsPicker);

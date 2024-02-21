@@ -30,16 +30,8 @@
                  ShowWeekNumbers="True"
                  HorizontalOptions="Start"
                  CornerRadius="5"
-                 Padding="5,0,5,0" />
-
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
-             Mode="DateTime"
-             WidthRequest="300" 
-             ShowWeekNumbers="True"
-             HorizontalOptions="Start"
-             CornerRadius="5"
-             Padding="5,0,5,0"
-             Is12HourFormat="{Binding Is12HourFormat}" /> 
+                 Padding="5,0,5,0"
+                 Is12HourFormat="{Binding Is12HourFormat}" />
 
             <Button
                 x:Name="CounterBtn"
