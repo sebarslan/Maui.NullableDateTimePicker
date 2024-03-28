@@ -169,6 +169,9 @@ public class NullableDateTimePicker : ContentView
             var oldNullableDateTime = (DateTime?)oldValue;
             var newNullableDateTime = (DateTime?)newValue;
 
+            // Reset the text, so that the text color will be updated
+            // https://github.com/dotnet/maui/issues/17843
+            self._dateTimePickerEntry.Text = "";
             self._dateTimePickerEntry.Text = newNullableDateTime?.ToString(self.Format);
 
             //Date changed event
