@@ -47,6 +47,7 @@ public class NullableDateTimePicker : ContentView
             BackgroundColor = Colors.Transparent,
             FontSize = this.FontSize,
             TextColor = this.TextColor,
+            FontFamily = FontFamily,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             HorizontalTextAlignment = TextAlignment.Start,
@@ -61,9 +62,6 @@ public class NullableDateTimePicker : ContentView
             HorizontalOptions = LayoutOptions.End,
             VerticalOptions = LayoutOptions.Center
         };
-
-
-
 
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
@@ -668,6 +666,26 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(TextColorProperty, value); }
     }
 
+    public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
+        nameof(FontFamily),
+        typeof(string),
+        typeof(NullableDateTimePicker),
+        defaultValue: "Arial",
+        defaultBindingMode: BindingMode.OneWay,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is string fontFamily)
+            {
+                nullableDateTimePickerBindable._dateTimePickerEntry.FontFamily = fontFamily;
+            }
+        });
+    
+    public string FontFamily
+    {
+        get { return (string)GetValue(FontFamilyProperty); }
+        set { SetValue(FontFamilyProperty, value); }
+    }
+    
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
     nameof(BackgroundColor),
     typeof(Color),
