@@ -898,24 +898,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     }
 
 
-    string imgName;
-    ImageSource imgSource;
 
-    private void SetCalendarIcon()
+    private async void SetCalendarIcon()
     {
-        MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
-        {
-            isSetIconCalledForFirstTime = true;
-            await Task.Delay(100);
+        isSetIconCalledForFirstTime = true;
+        await Task.Delay(100);
 
+        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+        {
             if (Icon != null)
             {
-                if (imgSource != Icon)
-                {
-                    imgSource = Icon;
-
-                    _dateTimePickerIcon.Source = Icon;
-                }
+                _dateTimePickerIcon.Source = Icon;
             }
             else
             {
@@ -926,12 +919,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 else if (Mode == PickerModes.Time)
                     imageName = "time_icon.png";
 
-                if (imgName != imageName)
-                {
-                    imgName = imageName;
-
-                    _dateTimePickerIcon.Source = await Task.Run(() => ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly));
-                }
+                _dateTimePickerIcon.Source = ImageSource.FromResource($"Maui.NullableDateTimePicker.Images.{imageName}", typeof(NullableDateTimePicker).GetTypeInfo().Assembly);
             }
         });
     }
