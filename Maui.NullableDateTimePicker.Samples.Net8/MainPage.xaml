@@ -32,7 +32,7 @@
                  CornerRadius="5"
                  Padding="5,0,5,0"
                  Is12HourFormat="{Binding Is12HourFormat}"
-                 TextColor="Red"/>
+                 />
 
             <Button
                 x:Name="CounterBtn"

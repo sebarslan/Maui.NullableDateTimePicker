@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Controls.Shapes;
+﻿using Microsoft.Maui.Controls.Shapes;
 using System.Reflection;
 
 namespace Maui.NullableDateTimePicker;
@@ -682,13 +680,13 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 nullableDateTimePickerBindable._dateTimePickerEntry.FontFamily = fontFamily;
             }
         });
-    
+
     public string FontFamily
     {
         get { return (string)GetValue(FontFamilyProperty); }
         set { SetValue(FontFamilyProperty, value); }
     }
-    
+
     public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(
     nameof(BackgroundColor),
     typeof(Color),
