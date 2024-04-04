@@ -9,7 +9,7 @@ public class NullableDateTimePicker : ContentView
     public event EventHandler<DateTimeChangedEventArgs> NullableDateTimeChanged;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
-    private Image _dateTimePickerIcon;
+    private ImageButton _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
     private bool isSetIconCalledForFirstTime = false;
     const double defaultHeightRequest = 40;
@@ -52,7 +52,7 @@ public class NullableDateTimePicker : ContentView
             VerticalTextAlignment = this.VerticalTextAlignment
         };
 
-        _dateTimePickerIcon = new Image
+        _dateTimePickerIcon = new ImageButton
         {
             BackgroundColor = this.IconBackgroundColor,
             Aspect = Aspect.AspectFit,
