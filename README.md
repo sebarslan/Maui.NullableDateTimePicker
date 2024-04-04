@@ -173,7 +173,7 @@ on ios, android, windows
 
 # Changelog
 
-### 2.3.0
+### 2.3.0 (not published yet)
 - Setting TextColor had no effect.
 - FontFamily added.
 
