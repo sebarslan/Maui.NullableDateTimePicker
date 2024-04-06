@@ -176,6 +176,7 @@ on ios, android, windows
 ### 2.3.0 (not published yet)
 - Setting TextColor had no effect.
 - FontFamily added.
+- Fixed issue: Icons displayed inconsistently
 
 ### 2.2.0
 - 12 hour format added (AM/PM picker)
