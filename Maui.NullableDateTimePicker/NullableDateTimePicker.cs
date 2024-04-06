@@ -9,7 +9,7 @@ public class NullableDateTimePicker : ContentView
     public event EventHandler<DateTimeChangedEventArgs> NullableDateTimeChanged;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
-    private ImageButton _dateTimePickerIcon;
+    private Image _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
     private bool isSetIconCalledForFirstTime = false;
     const double defaultHeightRequest = 40;
@@ -52,13 +52,13 @@ public class NullableDateTimePicker : ContentView
             VerticalTextAlignment = this.VerticalTextAlignment
         };
 
-        _dateTimePickerIcon = new ImageButton
+        _dateTimePickerIcon = new Image
         {
             BackgroundColor = this.IconBackgroundColor,
             Aspect = Aspect.AspectFit,
             Margin = 0,
             HorizontalOptions = LayoutOptions.End,
-            VerticalOptions = LayoutOptions.Center
+            VerticalOptions = LayoutOptions.Fill
         };
 
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
@@ -67,7 +67,7 @@ public class NullableDateTimePicker : ContentView
         _dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
         _dateTimePickerGrid.Add(_dateTimePickerIcon);
 
-        var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill };
+        var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill };
         _dateTimePickerGrid.SetColumn(clickableView, 0);
         _dateTimePickerGrid.SetColumnSpan(clickableView, 2);
         _dateTimePickerGrid.Add(clickableView);
@@ -84,19 +84,20 @@ public class NullableDateTimePicker : ContentView
         clickableView.GestureRecognizers.Add(tapGestureRecognizer);
 
 
-        var dateTimePickerStackLayout = new StackLayout
-        {
-            Margin = 0,
-            Padding = 0,
-            BackgroundColor = Colors.Transparent
-        };
-        dateTimePickerStackLayout.Add(_dateTimePickerGrid);
+        //var dateTimePickerStackLayout = new StackLayout
+        //{
+        //    Margin = 0,
+        //    Padding = 0,
+        //    BackgroundColor = Colors.Transparent,
+        //    VerticalOptions = LayoutOptions.CenterAndExpand
+        //};
+        //dateTimePickerStackLayout.Add(_dateTimePickerGrid);
 
-        _dateTimePickerIcon.SetBinding(Image.WidthRequestProperty, new Binding("Height", source: dateTimePickerStackLayout));
+        _dateTimePickerIcon.SetBinding(Image.WidthRequestProperty, new Binding("Height", source: clickableView));
 
-        _dateTimePickerIcon.SetBinding(Image.HeightRequestProperty, new Binding("Height", source: dateTimePickerStackLayout));
+        _dateTimePickerIcon.SetBinding(Image.HeightRequestProperty, new Binding("Height", source: clickableView));
 
-        _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: dateTimePickerStackLayout));
+        _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: clickableView));
 
         _dateTimePickerBorder = new Border
         {
@@ -107,7 +108,7 @@ public class NullableDateTimePicker : ContentView
                 CornerRadius = new CornerRadius(0, 0, 0, 0)
             },
             StrokeThickness = this.BorderWidth,
-            Content = dateTimePickerStackLayout,
+            Content = _dateTimePickerGrid,
             Margin = 0,
             Padding = this.Padding,
             HorizontalOptions = LayoutOptions.Fill,
@@ -899,10 +900,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
 
 
-    private async void SetCalendarIcon()
+    private  void SetCalendarIcon()
     {
         isSetIconCalledForFirstTime = true;
-        await Task.Delay(100);
+        
 
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
