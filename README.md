@@ -124,6 +124,7 @@ More examples, please see the samples project
 | BackgroundColor | Background color of the datetimepicker control.	| White |
 | Icon | Imagesource for the icon. | null |
 | TextColor | Text color of the entry. | Black |
+| FontFamily | Font family of the entry. | Arial |
 | FontSize | Font size of the entry. | 14 |
 | BorderColor | Border color of the datetimepicker control | none |
 | BorderWidth | Border width of the control | 0 |
