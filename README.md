@@ -4,7 +4,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 
 This control uses the <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup.
 
-[![NuGet](https://img.shields.io/badge/nuget-v2.2.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v2.3.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -174,7 +174,7 @@ on ios, android, windows
 
 # Changelog
 
-### 2.3.0 (not published yet)
+### 2.3.0
 - Setting TextColor had no effect.
 - FontFamily added.
 - Fixed issue: Icons displayed inconsistently
