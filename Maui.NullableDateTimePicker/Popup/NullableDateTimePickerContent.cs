@@ -41,6 +41,7 @@ internal class NullableDateTimePickerContent : ContentView
     private ScrollView _scrollView;
     List<PickerItem> _hours = null;
     List<PickerItem> _minutes = null;
+    List<string> _amPmList = null;
 
 
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
@@ -487,7 +488,7 @@ internal class NullableDateTimePickerContent : ContentView
                _minutesPicker.SelectedItem = _minutes?.FirstOrDefault(x => x.Value == _currentDate.Minute);
 
                if (_options.Is12HourFormat)
-                   _amPmPicker.SelectedItem = _currentDate.ToString("tt");
+                   _amPmPicker.SelectedItem = _amPmList?.FirstOrDefault(x => x == _currentDate.ToString("tt", CultureInfo.InvariantCulture));
            }
            _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
 
@@ -559,6 +560,15 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 _minutes.Add(new PickerItem { Text = m.ToString("00"), Value = m });
             }
+
+            if (_options.Is12HourFormat)
+            {
+                _amPmList = new()
+                {
+                    "AM",
+                    "PM"
+                };
+            }
         }
 
         await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
@@ -577,8 +587,7 @@ internal class NullableDateTimePickerContent : ContentView
             // am/pm
             if (_options.Is12HourFormat && _amPmPicker != null)
             {
-                _amPmPicker.Items.Add("AM");
-                _amPmPicker.Items.Add("PM");
+                _amPmPicker.ItemsSource = _amPmList;
             }
         });
     }
@@ -1234,7 +1243,8 @@ internal class NullableDateTimePickerContent : ContentView
     /// <returns></returns>
     private static int ConvertTo24HourFormat(int hour12Format, DateTime currentDate)
     {
-        DateTime dateTime = DateTime.ParseExact($"{hour12Format} {currentDate:tt}", "h tt", CultureInfo.InvariantCulture);
+        string amPmDesignator = currentDate.ToString("tt", CultureInfo.InvariantCulture);
+        DateTime dateTime = DateTime.ParseExact($"{hour12Format} {amPmDesignator}", "h tt", CultureInfo.InvariantCulture);
         return dateTime.Hour;
     }
 

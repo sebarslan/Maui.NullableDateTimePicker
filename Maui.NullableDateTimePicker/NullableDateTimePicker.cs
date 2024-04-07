@@ -900,10 +900,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
 
 
-    private  void SetCalendarIcon()
+    private void SetCalendarIcon()
     {
         isSetIconCalledForFirstTime = true;
-        
+
 
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
