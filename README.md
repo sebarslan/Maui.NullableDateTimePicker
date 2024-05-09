@@ -174,15 +174,16 @@ on ios, android, windows
 
 # Changelog
 
+### 2.3.1
+- Fixed issue: Icons displayed inconsistently
+
 ### 2.3.0
 - Setting TextColor had no effect.
 - FontFamily added.
-- Fixed issue: Icons displayed inconsistently
 - Fixed am/pm picker issue in windows
 
 ### 2.2.0
 - 12 hour format added (AM/PM picker)
-- Fixed issue: Icons displayed inconsistently
 - Time icon fixed
 - The calendar can also be opened by clicking on the entry.
 - In time picker, only time is shown in the header

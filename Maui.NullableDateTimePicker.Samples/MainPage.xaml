@@ -81,6 +81,7 @@
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
 
             <Label Text="MinDate MaxDate and FontImageSource for Icon" TextColor="Black" />
+
             <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
                             Mode="Date"
                             MinDate="{Binding MyMinDate}"

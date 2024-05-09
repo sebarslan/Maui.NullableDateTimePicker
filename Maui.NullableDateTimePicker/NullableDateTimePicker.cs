@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.ImageSources;
-using Microsoft.Maui.Controls.Shapes;
-using System.IO;
+﻿using Microsoft.Maui.Controls.Shapes;
 using System.Reflection;
 
 namespace Maui.NullableDateTimePicker;
@@ -11,9 +9,8 @@ public class NullableDateTimePicker : ContentView
     public event EventHandler<DateTimeChangedEventArgs> NullableDateTimeChanged;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
-    private ImageButton _dateTimePickerIcon;
+    private Image _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
-    private bool isSetIconCalledForFirstTime = false;
     const double defaultHeightRequest = 40;
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
 
@@ -54,12 +51,11 @@ public class NullableDateTimePicker : ContentView
             VerticalTextAlignment = this.VerticalTextAlignment
         };
 
-        _dateTimePickerIcon = new ImageButton
+        _dateTimePickerIcon = new Image
         {
             BackgroundColor = this.IconBackgroundColor,
             Aspect = Aspect.AspectFit,
             Margin = 0,
-            Padding = 0,
             HorizontalOptions = LayoutOptions.End,
             VerticalOptions = LayoutOptions.Fill
         };
@@ -86,19 +82,10 @@ public class NullableDateTimePicker : ContentView
 
         clickableView.GestureRecognizers.Add(tapGestureRecognizer);
 
-
-        //var dateTimePickerStackLayout = new StackLayout
-        //{
-        //    Margin = 0,
-        //    Padding = 0,
-        //    BackgroundColor = Colors.Transparent,
-        //    VerticalOptions = LayoutOptions.CenterAndExpand
-        //};
-        //dateTimePickerStackLayout.Add(_dateTimePickerGrid);
-
         _dateTimePickerIcon.SetBinding(Image.WidthRequestProperty, new Binding("Height", source: clickableView));
-
+        _dateTimePickerIcon.SetBinding(Image.MaximumWidthRequestProperty, new Binding("Height", source: clickableView));
         _dateTimePickerIcon.SetBinding(Image.HeightRequestProperty, new Binding("Height", source: clickableView));
+        _dateTimePickerIcon.SetBinding(Image.MaximumHeightRequestProperty, new Binding("Height", source: clickableView));
 
         _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: clickableView));
 
@@ -900,14 +887,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         }
     }
 
-
-
     private void SetCalendarIcon()
     {
-        isSetIconCalledForFirstTime = true;
-
-        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+        MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
         {
+            await Task.Delay(100);
             if (Icon != null)
             {
                 _dateTimePickerIcon.Source = Icon;
@@ -920,16 +904,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                     PickerModes.Time => "time_icon.png",
                     _ => "date_icon.png"
                 };
-
-                var assembly = typeof(NullableDateTimePicker).GetTypeInfo().Assembly;
-                var assemblyName = assembly.GetName().Name;
-                var imagePath = $"{assemblyName}.Images.{imageName}";
-                _dateTimePickerIcon.Source = ImageSource.FromResource($"{imagePath}");
+                try
+                {
+                    var assembly = typeof(NullableDateTimePicker).GetTypeInfo().Assembly;
+                    var assemblyName = assembly.GetName().Name;
+                    var imagePath = $"{assemblyName}.Images.{imageName}";
+                    _dateTimePickerIcon.Source = ImageSource.FromResource($"{imagePath}");
+                }
+                catch { }
             }
         });
     }
-
-
 
     private static DateTime? ParseDateTime(object objectValue)
     {
