@@ -31,6 +31,7 @@
                  HorizontalOptions="Start"
                  CornerRadius="5"
                  Padding="5,0,5,0"
+                 Placeholder="Enter date"
                  Is12HourFormat="{Binding Is12HourFormat}"
                  />
 
