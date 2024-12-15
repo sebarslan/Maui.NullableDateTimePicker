@@ -27,4 +27,6 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public Color? ActivityIndicatorColor { get; set; }
     public bool CloseOnOutsideClick { get; set; }
     public bool Is12HourFormat { get; set; }
+    public string AutomationId { get; set; }
+
 }

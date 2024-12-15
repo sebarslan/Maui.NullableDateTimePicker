@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Maui.Handlers;
+
 namespace Maui.NullableDateTimePicker.Samples
 {
     public partial class MainPage : ContentPage
@@ -13,6 +15,7 @@ namespace Maui.NullableDateTimePicker.Samples
             // Create Datetimepicker Programmatically
             CreateDateTimePickerProgrammatically();
         }
+       
 
         DateTime? myDateTime = DateTime.Now;
         public DateTime? MyDateTime
@@ -44,7 +47,9 @@ namespace Maui.NullableDateTimePicker.Samples
         };
         public FontImageSource CalendarIconAppTheme => calendarIconAppTheme;
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        public bool Is12HourFormat => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("tt");
+
+        private async void OnCounterClicked(object sender, EventArgs e)
         {
             count++;
 
@@ -54,6 +59,8 @@ namespace Maui.NullableDateTimePicker.Samples
                 CounterBtn.Text = $"Clicked {count} times";
 
             SemanticScreenReader.Announce(CounterBtn.Text);
+
+            await Navigation.PushModalAsync(new NewPage());
         }
 
         // Datepicker programmatically

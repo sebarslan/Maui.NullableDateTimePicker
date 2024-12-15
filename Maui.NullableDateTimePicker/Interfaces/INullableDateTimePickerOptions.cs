@@ -14,7 +14,7 @@ public interface INullableDateTimePickerOptions
     Color? ForeColor { get; set; }
     Color? HeaderForeColor { get; set; }
     Color? HeaderBackgroundColor { get; set; }
-    Style?    ToolButtonsStyle { get; set; }
+    Style? ToolButtonsStyle { get; set; }
     Style? DayStyle { get; set; }
     Style? DisabledDayStyle { get; set; }
     Style? OtherMonthDayStyle { get; set; }
@@ -27,4 +27,5 @@ public interface INullableDateTimePickerOptions
     bool ShowClearButton { get; set; }
     bool CloseOnOutsideClick { get; set; }
     bool Is12HourFormat { get; set; }
+    string AutomationId { get; set; }
 };

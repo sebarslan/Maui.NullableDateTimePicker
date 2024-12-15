@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ndp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
-             x:Class="Maui.NullableDateTimePicker.Samples.Net8.NewPage"
+             x:Class="Maui.NullableDateTimePicker.Samples.NewPage"
              Title="NewPage">
     <VerticalStackLayout
         Padding="30,0"

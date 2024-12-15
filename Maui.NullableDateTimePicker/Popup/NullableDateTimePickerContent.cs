@@ -58,6 +58,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _mainGrid = new Grid
         {
+            AutomationId = options.AutomationId + "_CalendarMainGrid",
             Margin = new Thickness(0),
             Padding = new Thickness(0),
             HorizontalOptions = LayoutOptions.Fill,
@@ -834,6 +835,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _yearsPicker = new Picker
         {
+            AutomationId = _options.AutomationId + "_YearsPicker",
             HeightRequest = 40,
             FontSize = 16,
             Margin = new Thickness(0),
@@ -883,6 +885,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _previousMonthButton = new Button
         {
+            AutomationId = _options.AutomationId + "_CalendarPreviousMonthButton",
             Text = "<",
             TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             BackgroundColor = Colors.Transparent,
@@ -899,6 +902,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _monthYearLabel = new Label
         {
+            AutomationId = _options.AutomationId + "_CalendarMontYearLabel",
             BackgroundColor = Colors.Transparent,
             FontSize = 14,
             TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
@@ -917,6 +921,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _nextMonthButton = new Button
         {
+            AutomationId = _options.AutomationId + "_CalendarNextMonthButton",
             Text = ">",
             TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
             BackgroundColor = Colors.Transparent,
@@ -964,6 +969,7 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _hoursPicker = new Picker
             {
+                AutomationId = _options.AutomationId + "_CalendarHoursPicker",
                 BackgroundColor = Colors.Transparent,
                 TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
@@ -990,6 +996,7 @@ internal class NullableDateTimePickerContent : ContentView
 
             _minutesPicker = new Picker
             {
+                AutomationId = _options.AutomationId + "_CalendarMinutesPicker",
                 BackgroundColor = Colors.Transparent,
                 TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                 TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
@@ -1023,6 +1030,7 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 _amPmPicker = new Picker
                 {
+                    AutomationId = _options.AutomationId + "_CalendarAmPmPicker",
                     BackgroundColor = Colors.Transparent,
                     TextColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
                     TitleColor = _options.ForeColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black),
@@ -1061,6 +1069,7 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _clearButton = new Button
             {
+                AutomationId = _options.AutomationId + "_CalendarClearButton",
                 Text = !string.IsNullOrEmpty(_options.ClearButtonText) ? _options.ClearButtonText : "Clear",
                 Style = _toolButtonsStyle,
                 HorizontalOptions = LayoutOptions.Center,
@@ -1073,6 +1082,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _cancelButton = new Button
         {
+            AutomationId = _options.AutomationId + "_CalendarCancelButton",
             Text = !string.IsNullOrEmpty(_options.CancelButtonText) ? _options.CancelButtonText : "Cancel",
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,
@@ -1084,6 +1094,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _okButton = new Button
         {
+            AutomationId = _options.AutomationId + "_CalendarOkButton",
             Text = !string.IsNullOrEmpty(_options.OkButtonText) ? _options.OkButtonText : "Ok",
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,

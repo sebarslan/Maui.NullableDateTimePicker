@@ -14,134 +14,6 @@ public class NullableDateTimePicker : ContentView
     const double defaultHeightRequest = 40;
     static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
 
-    public NullableDateTimePicker()
-    {
-        base.Padding = 0;
-        base.Margin = 0;
-        base.BackgroundColor = Colors.Transparent;
-        base.HeightRequest = defaultHeightRequest;
-
-        _dateTimePickerGrid = new Microsoft.Maui.Controls.Grid
-        {
-            Margin = 0,
-            Padding = 0,
-            RowSpacing = 0,
-            ColumnSpacing = 0,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            BackgroundColor = Colors.Transparent,
-            ColumnDefinitions =
-            {
-                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) }
-            }
-        };
-
-        _dateTimePickerEntry = new NullableDateTimePickerEntry()
-        {
-            IsReadOnly = true,
-            Margin = 0,
-            BackgroundColor = Colors.Transparent,
-            FontSize = this.FontSize,
-            TextColor = this.TextColor,
-            FontFamily = FontFamily,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            HorizontalTextAlignment = TextAlignment.Start,
-            VerticalTextAlignment = this.VerticalTextAlignment
-        };
-
-        _dateTimePickerIcon = new Image
-        {
-            BackgroundColor = this.IconBackgroundColor,
-            Aspect = Aspect.AspectFit,
-            Margin = 0,
-            HorizontalOptions = LayoutOptions.End,
-            VerticalOptions = LayoutOptions.Fill
-        };
-
-        _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
-        _dateTimePickerGrid.Add(_dateTimePickerEntry);
-
-        _dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
-        _dateTimePickerGrid.Add(_dateTimePickerIcon);
-
-        var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill };
-        _dateTimePickerGrid.SetColumn(clickableView, 0);
-        _dateTimePickerGrid.SetColumnSpan(clickableView, 2);
-        _dateTimePickerGrid.Add(clickableView);
-
-        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
-        {
-            NumberOfTapsRequired = 1
-        };
-        tapGestureRecognizer.Tapped += (s, e) =>
-        {
-            OnDatePickerClicked(s, e);
-        };
-
-        clickableView.GestureRecognizers.Add(tapGestureRecognizer);
-
-        _dateTimePickerIcon.SetBinding(Image.WidthRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerIcon.SetBinding(Image.MaximumWidthRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerIcon.SetBinding(Image.HeightRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerIcon.SetBinding(Image.MaximumHeightRequestProperty, new Binding("Height", source: clickableView));
-
-        _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: clickableView));
-
-        _dateTimePickerBorder = new Border
-        {
-            BackgroundColor = this.BackgroundColor,
-            Stroke = this.BorderColor,
-            StrokeShape = new RoundRectangle
-            {
-                CornerRadius = new CornerRadius(0, 0, 0, 0)
-            },
-            StrokeThickness = this.BorderWidth,
-            Content = _dateTimePickerGrid,
-            Margin = 0,
-            Padding = this.Padding,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
-        };
-
-        this.Loaded += (s, e) =>
-        {
-            SetCalendarIcon();
-        };
-
-        Content = _dateTimePickerBorder;
-    }
-
-    public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
-    {
-        PopupResultTask<PopupResult> popupResultTask = null;
-        try
-        {
-            popupResultTask = new PopupResultTask<PopupResult>();
-
-            using (var popupControl = new NullableDateTimePickerPopup(options))
-            {
-                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
-
-                if (result is PopupResult popupResult)
-                {
-                    popupResultTask.SetResult(popupResult);
-                }
-                else
-                {
-                    popupResultTask.SetResult(null);
-                }
-            };
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-
-        return await popupResultTask?.Result;
-    }
-
     #region bindable properties
 
     public static readonly BindableProperty NullableDateTimeProperty =
@@ -812,9 +684,164 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(Is12HourFormatProperty, value); }
     }
 
+    public static readonly BindableProperty HideIconProperty = BindableProperty.Create(
+       nameof(HideIcon),
+       typeof(bool),
+       typeof(NullableDateTimePicker),
+       defaultValue: false,
+       defaultBindingMode: BindingMode.OneWay,
+       propertyChanged: (bindable, oldValue, newValue) =>
+       {
+           if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is bool hideIcon)
+           {
+               nullableDateTimePickerBindable._dateTimePickerGrid.ColumnDefinitions[1].Width = hideIcon ? new GridLength(0) : GridLength.Auto;
+               nullableDateTimePickerBindable._dateTimePickerIcon.IsVisible = !hideIcon;
+           }
+       });
+
+    public bool HideIcon
+    {
+        get { return (bool)GetValue(HideIconProperty); }
+        set { SetValue(HideIconProperty, value); }
+    }
+
+
     #endregion //bindable properties
 
+    #region constructor
+    public NullableDateTimePicker()
+    {
+        base.Padding = 0;
+        base.Margin = 0;
+        base.BackgroundColor = Colors.Transparent;
+        base.HeightRequest = defaultHeightRequest;
 
+        _dateTimePickerGrid = new Microsoft.Maui.Controls.Grid
+        {
+            Margin = 0,
+            Padding = 0,
+            RowSpacing = 0,
+            ColumnSpacing = 0,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            BackgroundColor = Colors.Transparent,
+            ColumnDefinitions =
+            {
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) }
+            }
+        };
+
+        _dateTimePickerEntry = new NullableDateTimePickerEntry()
+        {
+            IsReadOnly = true,
+            Margin = 0,
+            BackgroundColor = Colors.Transparent,
+            FontSize = this.FontSize,
+            TextColor = this.TextColor,
+            FontFamily = FontFamily,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            HorizontalTextAlignment = TextAlignment.Start,
+            VerticalTextAlignment = this.VerticalTextAlignment
+        };
+        _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
+        _dateTimePickerGrid.Add(_dateTimePickerEntry);
+
+
+        _dateTimePickerIcon = new Image
+        {
+            BackgroundColor = this.IconBackgroundColor,
+            Aspect = Aspect.AspectFit,
+            Margin = 0,
+            HorizontalOptions = LayoutOptions.End,
+            VerticalOptions = LayoutOptions.Fill
+        };
+        _dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
+        _dateTimePickerGrid.Add(_dateTimePickerIcon);
+
+        var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill };
+        _dateTimePickerGrid.SetColumn(clickableView, 0);
+
+        _dateTimePickerGrid.SetColumnSpan(clickableView, 2);
+        _dateTimePickerGrid.Add(clickableView);
+
+        TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
+        {
+            NumberOfTapsRequired = 1
+        };
+        tapGestureRecognizer.Tapped += (s, e) =>
+        {
+            OnDatePickerClicked(s, e);
+        };
+
+        clickableView.GestureRecognizers.Add(tapGestureRecognizer);
+
+
+        _dateTimePickerIcon.SetBinding(Image.WidthRequestProperty, new Binding("Height", source: clickableView));
+        _dateTimePickerIcon.SetBinding(Image.MaximumWidthRequestProperty, new Binding("Height", source: clickableView));
+        _dateTimePickerIcon.SetBinding(Image.HeightRequestProperty, new Binding("Height", source: clickableView));
+        _dateTimePickerIcon.SetBinding(Image.MaximumHeightRequestProperty, new Binding("Height", source: clickableView));
+        _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: clickableView));
+
+        _dateTimePickerBorder = new Border
+        {
+            BackgroundColor = this.BackgroundColor,
+            Stroke = this.BorderColor,
+            StrokeShape = new RoundRectangle
+            {
+                CornerRadius = new CornerRadius(0, 0, 0, 0)
+            },
+            StrokeThickness = this.BorderWidth,
+            Content = _dateTimePickerGrid,
+            Margin = 0,
+            Padding = this.Padding,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill
+        };
+
+        this.Loaded += (s, e) =>
+        {
+            SetCalendarIcon();
+        };
+
+        Content = _dateTimePickerBorder;
+    }
+    #endregion //consturctor
+
+
+    #region public methods
+    public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
+    {
+        PopupResultTask<PopupResult> popupResultTask = null;
+        try
+        {
+            popupResultTask = new PopupResultTask<PopupResult>();
+
+            using (var popupControl = new NullableDateTimePickerPopup(options))
+            {
+                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
+
+                if (result is PopupResult popupResult)
+                {
+                    popupResultTask.SetResult(popupResult);
+                }
+                else
+                {
+                    popupResultTask.SetResult(null);
+                }
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        return await popupResultTask?.Result;
+    }
+    #endregion //public metlods
+
+    #region private methods
     private async void OnDatePickerClicked(object sender, EventArgs e)
     {
         await OpenCalendarPopupAsync();
@@ -855,7 +882,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 ActivityIndicatorColor = this.ActivityIndicatorColor,
                 ShowClearButton = this.ShowClearButton,
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
-                Is12HourFormat = this.Is12HourFormat
+                Is12HourFormat = this.Is12HourFormat,
+                AutomationId = base.AutomationId
             };
 
             var result = await NullableDateTimePicker.OpenCalendarAsync(options);
@@ -874,21 +902,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         }
     }
 
-    protected override void OnPropertyChanged(string propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
-
-        switch (propertyName)
-        {
-            case nameof(base.IsEnabled):
-                _dateTimePickerBorder.IsEnabled = base.IsEnabled;
-                _dateTimePickerIcon.IsEnabled = base.IsEnabled;
-                break;
-        }
-    }
-
     private void SetCalendarIcon()
     {
+        if (HideIcon)
+            return;
+
         MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
         {
             await Task.Delay(100);
@@ -932,4 +950,21 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         }
         return dateValue;
     }
+    protected override void OnPropertyChanged(string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        switch (propertyName)
+        {
+            case nameof(base.IsEnabled):
+                _dateTimePickerBorder.IsEnabled = base.IsEnabled;
+                _dateTimePickerIcon.IsEnabled = base.IsEnabled;
+                break;
+            case nameof(base.AutomationId):
+                _dateTimePickerEntry.AutomationId = base.AutomationId + "_DatetimePickerEntry";
+                _dateTimePickerIcon.AutomationId = base.AutomationId + "_DatetimePickerIcon";
+                break;
+        }
+    }
+    #endregion //private methods
 }

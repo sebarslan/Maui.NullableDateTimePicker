@@ -1,4 +1,4 @@
-namespace Maui.NullableDateTimePicker.Samples.Net8;
+namespace Maui.NullableDateTimePicker.Samples;
 
 public partial class NewPage : ContentPage
 {

@@ -115,6 +115,7 @@ More examples, please see the samples project
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
 | Is12HourFormat | Determines whether to display the am/pm picker for the 12-hour format.	| false |
+| AutomationId | You can give your own automation id. With this you can access Calendar elements. Example: {Your-AutomationId}_CalendarYearsPicker, {Your-AutomationId}_CalendarOkButton | empty |
 
 
 ## Datetimepicker Input Options (If NullableDateTimePicker is used as ContentView)
@@ -130,6 +131,7 @@ More examples, please see the samples project
 | BorderWidth | Border width of the control | 0 |
 | CornerRadius | Corner radius of the control | 0 |
 | PlaceHolder | Placeholder of the entry | empty |
+| HideIcon | Determines whether to show or hide the calendar icon. | false |
 
 
 ## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
@@ -173,6 +175,13 @@ on ios, android, windows
 ![DateTimePicker](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
 
 # Changelog
+
+### 2.4.0
+- Added HideIcon property
+- You can access calendar elements by providing your own AutomationId.
+- Net 9.0 compatibility
+- net7.0 support removed
+- Added new version of .NET MAUI Communitytoolkit
 
 ### 2.3.1
 - Fixed issue: Icons displayed inconsistently

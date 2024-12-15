@@ -9,7 +9,7 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Fill">
-            
+
             <!-- Nullable datetime picker -->
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
@@ -24,7 +24,7 @@
                             CornerRadius="5"
                             Padding="5,0,5,0"
                             SelectedDayStyle="{StaticResource SelectedDayStyle}" />
-            
+
             <Label Text="Datepicker with border" TextColor="Black" />
 
             <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
@@ -49,6 +49,17 @@
                                         Padding="5,2.5"
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}"
                                         />
+            <Label Text="Timepicker 12 hour format" TextColor="Black" />
+            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"
+     Mode="DateTime"
+     WidthRequest="300" 
+     ShowWeekNumbers="True"
+     HorizontalOptions="Start"
+     CornerRadius="5"
+     Padding="5,0,5,0"
+     Placeholder="Enter date"
+     Is12HourFormat="{Binding Is12HourFormat}"
+     />
 
 
             <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" TextColor="Black" />

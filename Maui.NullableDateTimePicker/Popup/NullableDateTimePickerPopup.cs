@@ -14,6 +14,11 @@ namespace Maui.NullableDateTimePicker
         {
             _content = new NullableDateTimePickerContent(options);
 
+            if (options.AutomationId == null)
+                options.AutomationId = "";
+
+            this.AutomationId = options.AutomationId + "_DatetimePickerPopup";
+
             DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
             Color = Colors.Transparent;
             var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
