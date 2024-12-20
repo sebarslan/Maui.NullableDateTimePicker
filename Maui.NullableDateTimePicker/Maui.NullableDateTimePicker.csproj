@@ -22,6 +22,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="Images\*" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="..\README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
@@ -32,16 +36,16 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0'))">
-		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
-	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0')) != true">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0')) == true">
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 	</ItemGroup>
-
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net9.0')) == true">
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Images\*" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />	
 	</ItemGroup>
 </Project>

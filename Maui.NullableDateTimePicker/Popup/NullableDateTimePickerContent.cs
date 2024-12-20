@@ -781,6 +781,7 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Button button = new()
                 {
+                    AutomationId = $"{_options.AutomationId}_CalendarDayButton_{day}",
                     Text = day.ToString(),
                     Style = _dayStyle,
                     IsEnabled = true
@@ -792,6 +793,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _calendarGrid = new Grid
         {
+            AutomationId = $"{_options.AutomationId}_CalendarGrid",
             BackgroundColor = _options.BodyBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
