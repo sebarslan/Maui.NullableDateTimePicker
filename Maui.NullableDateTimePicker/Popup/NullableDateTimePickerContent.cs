@@ -783,7 +783,7 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Button button = new()
                 {
-                    AutomationId = $"{_options.AutomationId}_CalendarCurrentMothDayButton_{day}",
+                    AutomationId = $"{_options.AutomationId}_CalendarCurrentMonthDayButton_{day}",
                     Text = day.ToString(),
                     Style = _dayStyle,
                     IsEnabled = true
