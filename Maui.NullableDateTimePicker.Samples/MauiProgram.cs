@@ -10,6 +10,7 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             var builder = MauiApp.CreateBuilder();
             builder.UseMauiApp<App>();
+            builder.UseMauiCommunityToolkit();
             builder.ConfigureNullableDateTimePicker()
             .ConfigureFonts(fonts =>
             {

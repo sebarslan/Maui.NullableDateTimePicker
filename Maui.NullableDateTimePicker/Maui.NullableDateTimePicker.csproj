@@ -35,17 +35,22 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0')) == true">
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('net9.0'))">
+		<MauiVersion>9.0.21</MauiVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('net8.0'))">
+		<MauiVersion>8.0.83</MauiVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0'))">
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net9.0')) == true">
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net9.0'))">
+		<PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />	
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 	</ItemGroup>
 </Project>
