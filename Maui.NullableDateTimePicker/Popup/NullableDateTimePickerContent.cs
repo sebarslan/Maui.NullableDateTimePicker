@@ -338,7 +338,6 @@ internal class NullableDateTimePickerContent : ContentView
                 for (int day = 1; day <= daysInMonth; day++)
                 {
                     var dayButton = _dayButtons[day - 1];
-                    dayButton.AutomationId = $"{_options.AutomationId}_CalendarDayButton_{_currentDate.Year}_{_currentDate.Month}_{day}";
 
                     if (dayButton.Style != _dayStyle)
                     {
@@ -394,7 +393,7 @@ internal class NullableDateTimePickerContent : ContentView
                         int dayInLastMonth = daysInLastMonth - i;
                         Button lastMonthDayButton = new()
                         {
-                            AutomationId = $"{_options.AutomationId}_CalendarDayButton_{lastMonthDate.Year}_{lastMonthDate.Month}_{dayInLastMonth}",
+                            AutomationId = $"{_options.AutomationId}_CalendarLastMonthDayButton_{lastMonthDate.Year}_{lastMonthDate.Month}_{dayInLastMonth}",
                             Text = dayInLastMonth.ToString(),
                             Style = _otherMonthDayStyle
                         };
@@ -414,7 +413,7 @@ internal class NullableDateTimePickerContent : ContentView
                         int dayInNextMonth = i + 1;
                         Button nextMonthDayButton = new()
                         {
-                            AutomationId = $"{_options.AutomationId}_CalendarDayButton_{nextMonthDate.Year}_{nextMonthDate.Month}_{dayInNextMonth}",
+                            AutomationId = $"{_options.AutomationId}_CalendarNextMonthDayButton_{nextMonthDate.Year}_{nextMonthDate.Month}_{dayInNextMonth}",
                             Text = dayInNextMonth.ToString(),
                             Style = _otherMonthDayStyle
                         };
@@ -784,6 +783,7 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Button button = new()
                 {
+                    AutomationId = $"{_options.AutomationId}_CalendarCurrentMothDayButton_{day}",
                     Text = day.ToString(),
                     Style = _dayStyle,
                     IsEnabled = true
