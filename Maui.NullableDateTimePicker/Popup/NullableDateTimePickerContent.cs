@@ -291,7 +291,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _yearsSelectList = new NullableDateTimePickerSelectList
         {
-            AutomationId = _options.AutomationId + "_YearsSelectList",
+            AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
             Margin = new Thickness(0, 5),
             TextColor = _options.HeaderForeColor ?? Colors.Black,
             BackgroundColor = Colors.White,
@@ -307,6 +307,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _selectedYearLabel = new Label
         {
+            AutomationId = _options.AutomationId + "_CalendarSelectedYearLabel",
             HeightRequest = 30,
             FontSize = 25,
             TextColor = _options.HeaderForeColor ?? Colors.White,
@@ -325,6 +326,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _selectedDateLabel = new Label
         {
+            AutomationId = _options.AutomationId + "_CalendarSelectedDateLabel",
             HeightRequest = 30,
             FontSize = 25,
             TextColor = _options.HeaderForeColor ?? Colors.White,
@@ -1181,7 +1183,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _monthsSelectList = new NullableDateTimePickerSelectList
         {
-            AutomationId = _options.AutomationId + "_MonthsSelectList",
+            AutomationId = _options.AutomationId + "_CalendarMonthsSelectList",
             BackgroundColor = Colors.Transparent,
             Margin = 5,
             Padding = 0,
