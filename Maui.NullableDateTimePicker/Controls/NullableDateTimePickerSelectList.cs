@@ -76,7 +76,11 @@ internal class NullableDateTimePickerSelectList : ContentView
 
         _collectionView = new CollectionView
         {
-            ItemsLayout = new GridItemsLayout(3, ItemsLayoutOrientation.Vertical),
+            ItemsLayout = new GridItemsLayout(3, ItemsLayoutOrientation.Vertical)
+            {
+                HorizontalItemSpacing = 2,
+                VerticalItemSpacing = 2
+            },
             SelectionMode = SelectionMode.Single,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
@@ -90,15 +94,19 @@ internal class NullableDateTimePickerSelectList : ContentView
         {
             var label = new Label
             {
-                TextColor = TextColor,
+                TextColor = Colors.Black,
                 FontSize = 12,
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
+                FontAttributes = FontAttributes.Bold,
                 BackgroundColor = Colors.Transparent,
-                Background = Colors.Transparent
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.Center,
+                Padding = 0,
+                Margin = 0
             };
 
-            label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? ".", source: label.BindingContext));
+            label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? "."));
 
             var border = new Border
             {
@@ -106,8 +114,10 @@ internal class NullableDateTimePickerSelectList : ContentView
                 {
                     CornerRadius = new CornerRadius(5, 5, 5, 5)
                 },
-                Margin = 2,
+                Margin = 0,
                 Padding = 5,
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
                 Content = label
             };
 
