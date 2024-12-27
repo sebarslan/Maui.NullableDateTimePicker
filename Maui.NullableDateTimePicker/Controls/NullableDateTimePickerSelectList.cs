@@ -93,7 +93,9 @@ internal class NullableDateTimePickerSelectList : ContentView
                 TextColor = TextColor,
                 FontSize = 12,
                 VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center
+                HorizontalOptions = LayoutOptions.Center,
+                BackgroundColor = Colors.Transparent,
+                Background = Colors.Transparent
             };
 
             label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? ".", source: label.BindingContext));
@@ -105,7 +107,8 @@ internal class NullableDateTimePickerSelectList : ContentView
                     CornerRadius = new CornerRadius(5, 5, 5, 5)
                 },
                 Margin = 2,
-                Padding = 5
+                Padding = 5,
+                Content = label
             };
 
             // Define visual states for the border
@@ -142,7 +145,6 @@ internal class NullableDateTimePickerSelectList : ContentView
                 }
             });
 
-            border.Content = label;
             return border;
         });
 

@@ -182,6 +182,7 @@ on ios, android, windows
 - Net 9.0 compatibility
 - net7.0 support removed
 - Added new version of .NET MAUI Communitytoolkit
+- A new select list is created for years and months and the scroll bar is moved to the selected year.
 
 ### 2.3.1
 - Fixed issue: Icons displayed inconsistently
