@@ -78,8 +78,8 @@ internal class NullableDateTimePickerSelectList : ContentView
         {
             ItemsLayout = new GridItemsLayout(3, ItemsLayoutOrientation.Vertical)
             {
-                HorizontalItemSpacing = 2,
-                VerticalItemSpacing = 2
+                HorizontalItemSpacing = 3,
+                VerticalItemSpacing = 3
             },
             SelectionMode = SelectionMode.Single,
             HorizontalOptions = LayoutOptions.Fill,
