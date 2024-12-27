@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Shapes;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -8,6 +9,7 @@ internal class NullableDateTimePickerSelectList : ContentView
     public event EventHandler SelectedIndexChanged;
     public event EventHandler Closed;
 
+    #region BindableProperties
     // ItemsSource BindableProperty
     public static readonly BindableProperty ItemsSourceProperty =
         BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(NullableDateTimePickerSelectList), null, propertyChanged: OnItemsSourceChanged);
@@ -55,14 +57,7 @@ internal class NullableDateTimePickerSelectList : ContentView
             typeof(Color),      // Property type
             typeof(NullableDateTimePickerSelectList), // Declaring type
             Colors.Black,       // Default value
-            BindingMode.OneWay, // Binding mode
-            propertyChanged: (bindable, oldValue, newValue) =>
-            {
-                if (bindable is NullableDateTimePickerSelectList control && newValue is Color newColor)
-                {
-                    control._label.TextColor = newColor; // Update the Label's TextColor
-                }
-            }
+            BindingMode.OneWay // Binding mode
         );
 
     public Color TextColor
@@ -70,9 +65,10 @@ internal class NullableDateTimePickerSelectList : ContentView
         get => (Color)GetValue(TextColorProperty);
         set => SetValue(TextColorProperty, value);
     }
+    #endregion //BindableProperties
 
     private readonly CollectionView _collectionView;
-    private Label _label;
+
     public NullableDateTimePickerSelectList()
     {
         VerticalOptions = LayoutOptions.Fill;
@@ -83,7 +79,8 @@ internal class NullableDateTimePickerSelectList : ContentView
             ItemsLayout = new GridItemsLayout(3, ItemsLayoutOrientation.Vertical),
             SelectionMode = SelectionMode.Single,
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
+            VerticalOptions = LayoutOptions.Fill,
+            ItemSizingStrategy = ItemSizingStrategy.MeasureFirstItem
         };
 
         _collectionView.SelectionChanged += OnSelectionChanged;
@@ -91,7 +88,7 @@ internal class NullableDateTimePickerSelectList : ContentView
         // Define the item template
         _collectionView.ItemTemplate = new DataTemplate(() =>
         {
-            _label = new Label
+            var label = new Label
             {
                 TextColor = TextColor,
                 FontSize = 12,
@@ -99,7 +96,7 @@ internal class NullableDateTimePickerSelectList : ContentView
                 HorizontalOptions = LayoutOptions.Center
             };
 
-            _label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? ".", source: _label.BindingContext));
+            label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? ".", source: label.BindingContext));
 
             var border = new Border
             {
@@ -145,40 +142,43 @@ internal class NullableDateTimePickerSelectList : ContentView
                 }
             });
 
-            border.Content = _label;
+            border.Content = label;
             return border;
         });
 
         var grid = new Grid
         {
+            Background = Colors.Transparent,
+            BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             RowDefinitions =
             {
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-                new RowDefinition { Height = new GridLength(20, GridUnitType.Absolute) }
+                new RowDefinition { Height = new GridLength(22, GridUnitType.Absolute) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
             }
         };
 
         var closeButton = new Button
         {
-            Text = " X ",
+            Text = "X",
             FontAttributes = FontAttributes.Bold,
-            VerticalOptions = LayoutOptions.End,
+            HorizontalOptions = LayoutOptions.End,
             FontSize = 16,
-            MaximumWidthRequest = 100,
-            MaximumHeightRequest = 20,
+            MaximumWidthRequest = 50,
+            MaximumHeightRequest = 22,
             BorderWidth = 1,
-            HeightRequest = 20,
+            WidthRequest = 50,
+            HeightRequest = 22,
             Padding = 0,
-            Margin = 0
+            Margin = new Thickness(0, 0, 5, 0)
         };
         closeButton.Clicked += (s, e) =>
         {
             Closed?.Invoke(this, EventArgs.Empty);
         };
-        grid.Add(_collectionView, 0, 0);
-        grid.Add(closeButton, 0, 1);
+        grid.Add(closeButton, 0, 0);
+        grid.Add(_collectionView, 0, 1);
 
         Content = grid;
     }
@@ -194,16 +194,15 @@ internal class NullableDateTimePickerSelectList : ContentView
     private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (NullableDateTimePickerSelectList)bindable;
-        if (newValue != null)
-        {
-            control._collectionView.SelectedItem = newValue;
-        }
+
+        control._collectionView.SelectedItem = newValue;
     }
 
     // Update the selected item in CollectionView when SelectedIndex changes
     private static void OnSelectedIndexChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (NullableDateTimePickerSelectList)bindable;
+
         int selectedIndex = (int)newValue;
 
         // If the index is out of range, set selection to null
@@ -223,9 +222,11 @@ internal class NullableDateTimePickerSelectList : ContentView
         if (e.CurrentSelection != null && e.CurrentSelection.Count > 0)
         {
             var selectedItem = e.CurrentSelection[0];
-            SelectedItem = selectedItem;
-            SelectedIndex = ItemsSource?.IndexOf(selectedItem) ?? -1;
 
+            int selectedIndex = ItemsSource?.IndexOf(selectedItem) ?? -1;
+
+            SelectedIndex = selectedIndex;
+            SelectedItem = selectedItem;
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
             ScrollToSelectedItem();
         }
@@ -234,13 +235,23 @@ internal class NullableDateTimePickerSelectList : ContentView
     // Scroll to the selected item
     private void ScrollToSelectedItem()
     {
-        if (ItemsSource == null || SelectedItem == null)
+        if (ItemsSource == null || SelectedItem == null || SelectedIndex == -1)
             return;
 
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            await Task.Delay(300);
-            _collectionView.ScrollTo(SelectedItem, position: ScrollToPosition.Center, animate: true);
+            int delay = Math.Min(ItemsSource.Count * 2, 2000);
+            await Task.Delay(delay);
+            _collectionView.ScrollTo(SelectedIndex, position: ScrollToPosition.Center, animate: false);
         });
+    }
+
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+        if (propertyName == nameof(IsEnabled))
+        {
+            _collectionView.IsEnabled = this.IsEnabled;
+        }
     }
 }
