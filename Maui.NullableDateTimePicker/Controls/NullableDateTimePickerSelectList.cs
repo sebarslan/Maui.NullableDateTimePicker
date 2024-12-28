@@ -50,20 +50,67 @@ internal class NullableDateTimePickerSelectList : ContentView
         set => SetValue(ItemDisplayBindingProperty, value);
     }
 
-    // TextColor BindableProperty
-    public static readonly BindableProperty TextColorProperty =
+    // ItemTextColor BindableProperty
+    public static readonly BindableProperty ItemTextColorProperty =
         BindableProperty.Create(
-            nameof(TextColor), // Property name
+            nameof(ItemTextColor), // Property name
             typeof(Color),      // Property type
             typeof(NullableDateTimePickerSelectList), // Declaring type
             Colors.Black,       // Default value
             BindingMode.OneWay // Binding mode
         );
 
-    public Color TextColor
+    public Color ItemTextColor
     {
-        get => (Color)GetValue(TextColorProperty);
-        set => SetValue(TextColorProperty, value);
+        get => (Color)GetValue(ItemTextColorProperty);
+        set => SetValue(ItemTextColorProperty, value);
+    }
+
+    // ItemBackgroundColor BindableProperty
+    public static readonly BindableProperty ItemBackgroundColorProperty =
+        BindableProperty.Create(
+            nameof(ItemBackgroundColor), // Property name
+            typeof(Color),      // Property type
+            typeof(NullableDateTimePickerSelectList), // Declaring type
+            Colors.White,       // Default value
+            BindingMode.OneWay // Binding mode
+        );
+
+    public Color ItemBackgroundColor
+    {
+        get => (Color)GetValue(ItemBackgroundColorProperty);
+        set => SetValue(ItemBackgroundColorProperty, value);
+    }
+
+    // SelectedItemTextColor BindableProperty
+    public static readonly BindableProperty SelectedItemTextColorProperty =
+        BindableProperty.Create(
+            nameof(SelectedItemTextColor), // Property name
+            typeof(Color),      // Property type
+            typeof(NullableDateTimePickerSelectList), // Declaring type
+            Colors.Black,       // Default value
+            BindingMode.OneWay // Binding mode
+        );
+
+    public Color SelectedItemTextColor
+    {
+        get => (Color)GetValue(SelectedItemTextColorProperty);
+        set => SetValue(SelectedItemTextColorProperty, value);
+    }
+    // SelectedItemBackgroundColor BindableProperty
+    public static readonly BindableProperty SelectedItemBackgroundColorProperty =
+        BindableProperty.Create(
+            nameof(SelectedItemBackgroundColor), // Property name
+            typeof(Color),      // Property type
+            typeof(NullableDateTimePickerSelectList), // Declaring type
+            Colors.LightBlue,       // Default value
+            BindingMode.OneWay // Binding mode
+        );
+
+    public Color SelectedItemBackgroundColor
+    {
+        get => (Color)GetValue(SelectedItemBackgroundColorProperty);
+        set => SetValue(SelectedItemBackgroundColorProperty, value);
     }
     #endregion //BindableProperties
 
@@ -94,12 +141,10 @@ internal class NullableDateTimePickerSelectList : ContentView
         {
             var label = new Label
             {
-                TextColor = Colors.Black,
                 FontSize = 12,
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 FontAttributes = FontAttributes.Bold,
-                BackgroundColor = Colors.Transparent,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
                 Padding = 0,
@@ -107,6 +152,28 @@ internal class NullableDateTimePickerSelectList : ContentView
             };
 
             label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? "."));
+
+            VisualStateManager.SetVisualStateGroups(label, new VisualStateGroupList
+            {
+                new VisualStateGroup
+                {
+                    Name = "CommonStates",
+                    States =
+                    {
+                        new VisualState
+                        {
+                            Name = "Normal",
+                            Setters = { new Setter { Property = Label.TextColorProperty, Value = ItemTextColor ?? Colors.Black } }
+                        },
+                        new VisualState
+                        {
+                            Name = "Selected",
+                            Setters = { new Setter { Property = Label.TextColorProperty, Value = SelectedItemTextColor ?? Colors.Black } }
+                        }
+                    }
+                }
+
+            });
 
             var border = new Border
             {
@@ -134,8 +201,8 @@ internal class NullableDateTimePickerSelectList : ContentView
                             Name = "Normal",
                             Setters =
                             {
-                                new Setter { Property = Border.BackgroundColorProperty, Value = Colors.White },
-                                new Setter { Property = Border.BackgroundProperty, Value = Colors.White },
+                                new Setter { Property = Border.BackgroundColorProperty, Value = ItemBackgroundColor ?? Colors.White },
+                                new Setter { Property = Border.BackgroundProperty, Value =  ItemBackgroundColor ?? Colors.White },
                                 new Setter { Property = Border.StrokeProperty, Value = Colors.Gray },
                                 new Setter { Property = Border.StrokeThicknessProperty, Value = 1 }
                             }
@@ -145,8 +212,8 @@ internal class NullableDateTimePickerSelectList : ContentView
                             Name = "Selected",
                             Setters =
                             {
-                                new Setter { Property = Border.BackgroundColorProperty, Value = Colors.LightBlue },
-                                new Setter { Property = Border.BackgroundProperty, Value = Colors.LightBlue },
+                                new Setter { Property = Border.BackgroundColorProperty, Value = SelectedItemBackgroundColor ?? Colors.LightBlue },
+                                new Setter { Property = Border.BackgroundProperty, Value = SelectedItemBackgroundColor ?? Colors.LightBlue },
                                 new Setter { Property = Border.StrokeProperty, Value = Colors.Blue },
                                 new Setter { Property = Border.StrokeThicknessProperty, Value = 2 }
                             }
@@ -166,7 +233,7 @@ internal class NullableDateTimePickerSelectList : ContentView
             VerticalOptions = LayoutOptions.Fill,
             RowDefinitions =
             {
-                new RowDefinition { Height = new GridLength(22, GridUnitType.Absolute) },
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) },
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
             }
         };
@@ -178,12 +245,12 @@ internal class NullableDateTimePickerSelectList : ContentView
             HorizontalOptions = LayoutOptions.End,
             FontSize = 16,
             MaximumWidthRequest = 50,
-            MaximumHeightRequest = 22,
+            MaximumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
             BorderWidth = 1,
             WidthRequest = 50,
-            HeightRequest = 22,
+            HeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
             Padding = 0,
-            Margin = new Thickness(0, 0, 5, 0)
+            Margin = new Thickness(5)
         };
         closeButton.Clicked += (s, e) =>
         {
@@ -264,6 +331,7 @@ internal class NullableDateTimePickerSelectList : ContentView
         if (propertyName == nameof(IsEnabled))
         {
             _collectionView.IsEnabled = this.IsEnabled;
+            this.IsEnabled = true;
         }
     }
 }

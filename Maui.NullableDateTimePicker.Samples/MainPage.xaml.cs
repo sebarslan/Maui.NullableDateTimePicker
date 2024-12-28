@@ -11,6 +11,7 @@ namespace Maui.NullableDateTimePicker.Samples
         {
             BindingContext = this;
             InitializeComponent();
+            themeSwitch.IsToggled = Application.Current.RequestedTheme == AppTheme.Dark;
 
             // Create Datetimepicker Programmatically
             CreateDateTimePickerProgrammatically();
@@ -108,6 +109,13 @@ namespace Maui.NullableDateTimePicker.Samples
 
         public DateTime? MyMinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
         public DateTime? MyMaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
+
+        private void OnThemeToggled(object sender, ToggledEventArgs e)
+        {
+            bool isDarkMode = e.Value;
+
+            App.Current.UserAppTheme = isDarkMode ? AppTheme.Dark : AppTheme.Light;
+        }
     }
 
     static class IconFont

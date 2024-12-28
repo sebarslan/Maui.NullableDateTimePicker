@@ -10,8 +10,19 @@
             Padding="30,0"
             VerticalOptions="Fill">
 
-            <!-- Nullable datetime picker -->
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
+
+            <HorizontalStackLayout VerticalOptions="Center">
+                <Label Text="Toggle Dark Mode"
+               FontSize="16"
+               HorizontalOptions="Center" />
+
+                <Switch x:Name="themeSwitch"
+                Toggled="OnThemeToggled"
+                HorizontalOptions="Center" />
+            </HorizontalStackLayout>
+            <!-- Nullable datetime picker -->
+
 
             <Label Text="DateTimepicker" TextColor="Black" />
 

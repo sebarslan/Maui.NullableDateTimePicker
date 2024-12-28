@@ -1166,14 +1166,35 @@ internal class NullableDateTimePickerContent : ContentView
         {
             years.Add(y);
         }
+        var itemTextColor = Colors.Black;
+        var dayTextColorSetter = _dayStyle.Setters.FirstOrDefault(s => s.Property == Button.TextColorProperty);
 
+        if (dayTextColorSetter != null)
+        {
+            itemTextColor = (Color)dayTextColorSetter.Value;
+        }
+        var itemBackgroundColor = Colors.White;
+        var itemBackgroundColorSetter = _dayStyle.Setters.FirstOrDefault(s => s.Property == Button.BackgroundColorProperty);
 
+        if (itemBackgroundColorSetter != null)
+        {
+            itemBackgroundColor = (Color)itemBackgroundColorSetter.Value; // Colors.Transparent döner
+        }
+        var selectedItemBackgroundColor = Colors.White;
+        var selectedItemBackgroundColorSetter = _selectedDayStyle.Setters.FirstOrDefault(s => s.Property == Button.BackgroundColorProperty);
+        if (selectedItemBackgroundColorSetter != null)
+        {
+            selectedItemBackgroundColor = (Color)itemBackgroundColorSetter.Value; // Colors.Transparent döner
+        }
         _yearsSelectList = new NullableDateTimePickerSelectList
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
             Margin = new Thickness(0, 5),
-            TextColor = _options.HeaderForeColor ?? Colors.Black,
-            BackgroundColor = Colors.White,
+            BackgroundColor = _options.BodyBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
+            ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
+            SelectedItemTextColor = GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black),
+            ItemBackgroundColor = GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, Colors.White),
+            SelectedItemBackgroundColor = GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             ItemsSource = years,
@@ -1198,7 +1219,11 @@ internal class NullableDateTimePickerContent : ContentView
         _monthsSelectList = new NullableDateTimePickerSelectList
         {
             AutomationId = _options.AutomationId + "_CalendarMonthsSelectList",
-            BackgroundColor = Colors.Transparent,
+            BackgroundColor = _options.BodyBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
+            ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
+            SelectedItemTextColor = GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black),
+            ItemBackgroundColor = GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, Colors.White),
+            SelectedItemBackgroundColor = GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
             Margin = 5,
             Padding = 0,
             IsVisible = false,
@@ -1219,7 +1244,6 @@ internal class NullableDateTimePickerContent : ContentView
         MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
         {
             CreateYearsSelectList();
-
 
             if (_daysGrid != null)
                 _daysGrid.IsVisible = false;
@@ -1369,5 +1393,21 @@ internal class NullableDateTimePickerContent : ContentView
         }
 
         return currentHour;
+    }
+
+    private static Color GetColorFromStyle(Style style, BindableProperty bindableProperty, Color defaultColor)
+    {
+        try
+        {
+            var colorSetter = style.Setters.FirstOrDefault(s => s.Property == bindableProperty);
+
+            if (colorSetter != null)
+            {
+                return (Color)colorSetter.Value;
+            }
+        }
+        catch (Exception ex) { }
+
+        return defaultColor;
     }
 }
