@@ -125,13 +125,12 @@ internal class NullableDateTimePickerSelectList : ContentView
         {
             ItemsLayout = new GridItemsLayout(3, ItemsLayoutOrientation.Vertical)
             {
-                HorizontalItemSpacing = 3,
-                VerticalItemSpacing = 3
+                HorizontalItemSpacing = DeviceInfo.Platform == DevicePlatform.WinUI ? 2 : 4,
+                VerticalItemSpacing = DeviceInfo.Platform == DevicePlatform.WinUI ? 2 : 4
             },
             SelectionMode = SelectionMode.Single,
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            ItemSizingStrategy = ItemSizingStrategy.MeasureFirstItem
+            VerticalOptions = LayoutOptions.Fill
         };
 
         _collectionView.SelectionChanged += OnSelectionChanged;
@@ -151,6 +150,7 @@ internal class NullableDateTimePickerSelectList : ContentView
                 Margin = 0
             };
 
+
             label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? "."));
 
             VisualStateManager.SetVisualStateGroups(label, new VisualStateGroupList
@@ -163,12 +163,16 @@ internal class NullableDateTimePickerSelectList : ContentView
                         new VisualState
                         {
                             Name = "Normal",
-                            Setters = { new Setter { Property = Label.TextColorProperty, Value = ItemTextColor ?? Colors.Black } }
+
+                            Setters = { new Setter { Property = Label.TextColorProperty, Value = ItemTextColor ?? Colors.Black }
+                            }
                         },
                         new VisualState
                         {
                             Name = "Selected",
-                            Setters = { new Setter { Property = Label.TextColorProperty, Value = SelectedItemTextColor ?? Colors.Black } }
+                            Setters = {
+                                new Setter { Property = Label.TextColorProperty, Value = SelectedItemTextColor ?? Colors.Black }
+                             }
                         }
                     }
                 }
@@ -182,9 +186,9 @@ internal class NullableDateTimePickerSelectList : ContentView
                     CornerRadius = new CornerRadius(5, 5, 5, 5)
                 },
                 Margin = 0,
-                Padding = 5,
-                VerticalOptions = LayoutOptions.Fill,
+                Padding = 0,
                 HorizontalOptions = LayoutOptions.Fill,
+                HeightRequest = 35,
                 Content = label
             };
 
@@ -202,7 +206,6 @@ internal class NullableDateTimePickerSelectList : ContentView
                             Setters =
                             {
                                 new Setter { Property = Border.BackgroundColorProperty, Value = ItemBackgroundColor ?? Colors.White },
-                                new Setter { Property = Border.BackgroundProperty, Value =  ItemBackgroundColor ?? Colors.White },
                                 new Setter { Property = Border.StrokeProperty, Value = Colors.Gray },
                                 new Setter { Property = Border.StrokeThicknessProperty, Value = 1 }
                             }
@@ -212,8 +215,7 @@ internal class NullableDateTimePickerSelectList : ContentView
                             Name = "Selected",
                             Setters =
                             {
-                                new Setter { Property = Border.BackgroundColorProperty, Value = SelectedItemBackgroundColor ?? Colors.LightBlue },
-                                new Setter { Property = Border.BackgroundProperty, Value = SelectedItemBackgroundColor ?? Colors.LightBlue },
+                                new Setter { Property = Border.BackgroundColorProperty, Value = SelectedItemBackgroundColor ??  Colors.LightBlue },
                                 new Setter { Property = Border.StrokeProperty, Value = Colors.Blue },
                                 new Setter { Property = Border.StrokeThicknessProperty, Value = 2 }
                             }
@@ -244,10 +246,11 @@ internal class NullableDateTimePickerSelectList : ContentView
             FontAttributes = FontAttributes.Bold,
             HorizontalOptions = LayoutOptions.End,
             FontSize = 16,
-            MaximumWidthRequest = 50,
+            MaximumWidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 40 : 50,
             MaximumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
+            MinimumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
             BorderWidth = 1,
-            WidthRequest = 50,
+            WidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 40 : 50,
             HeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
             Padding = 0,
             Margin = new Thickness(5)
@@ -266,6 +269,7 @@ internal class NullableDateTimePickerSelectList : ContentView
     private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (NullableDateTimePickerSelectList)bindable;
+
         control._collectionView.ItemsSource = (IList)newValue;
     }
 
@@ -303,9 +307,8 @@ internal class NullableDateTimePickerSelectList : ContentView
             var selectedItem = e.CurrentSelection[0];
 
             int selectedIndex = ItemsSource?.IndexOf(selectedItem) ?? -1;
-
-            SelectedIndex = selectedIndex;
             SelectedItem = selectedItem;
+            SelectedIndex = selectedIndex;
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
             ScrollToSelectedItem();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Maui.NullableDateTimePicker.Models
 {
-    internal class Month
+    internal class MonthModel
     {
         public int Number { get; set; }
         public string Name { get; set; }

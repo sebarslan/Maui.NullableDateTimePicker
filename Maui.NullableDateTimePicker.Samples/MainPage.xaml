@@ -23,7 +23,6 @@
             </HorizontalStackLayout>
             <!-- Nullable datetime picker -->
 
-
             <Label Text="DateTimepicker" TextColor="Black" />
 
             <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 

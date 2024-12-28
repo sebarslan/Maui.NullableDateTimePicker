@@ -40,6 +40,7 @@ internal class NullableDateTimePickerContent : ContentView
     private Picker _amPmPicker;
     private StackLayout _timeStackLayout;
     private ScrollView _scrollView;
+    List<YearModel> _years = null;
     List<PickerItem> _hours = null;
     List<PickerItem> _minutes = null;
     List<string> _amPmList = null;
@@ -926,7 +927,7 @@ internal class NullableDateTimePickerContent : ContentView
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
        {
            if (_yearsSelectList != null)
-               _yearsSelectList.SelectedItem = _currentDate.Year;
+               _yearsSelectList.SelectedIndex = _years?.FindIndex(y => y.Year == _currentDate.Year) ?? -1;
 
            if (_monthsSelectList != null)
                _monthsSelectList.SelectedIndex = _currentDate.Month - 1;
@@ -1062,10 +1063,10 @@ internal class NullableDateTimePickerContent : ContentView
         HideYearsSelectList();
 
         var yearSelectList = (NullableDateTimePickerSelectList)sender;
-        if (yearSelectList.SelectedItem is not int selectedYear)
+        if (yearSelectList.SelectedItem is not YearModel selectedYear)
             return;
 
-        await SetYear(selectedYear);
+        await SetYear(selectedYear.Year);
     }
 
     internal async Task SetYear(int year)
@@ -1159,12 +1160,12 @@ internal class NullableDateTimePickerContent : ContentView
             return;
 
         // Years picker
-        List<int> years = new();
+        _years = new();
         int minYear = _minDate.Year;
         int maxYear = _maxDate.Year;
         for (int y = minYear; y <= maxYear; y++)
         {
-            years.Add(y);
+            _years.Add(new YearModel(y));
         }
         var itemTextColor = Colors.Black;
         var dayTextColorSetter = _dayStyle.Setters.FirstOrDefault(s => s.Property == Button.TextColorProperty);
@@ -1189,7 +1190,7 @@ internal class NullableDateTimePickerContent : ContentView
         _yearsSelectList = new NullableDateTimePickerSelectList
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
-            Margin = new Thickness(0, 5),
+            Margin = new Thickness(5,0),
             BackgroundColor = _options.BodyBackgroundColor ?? (Application.Current.RequestedTheme == AppTheme.Dark ? Color.FromRgba("#434343") : Colors.White),
             ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
             SelectedItemTextColor = GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black),
@@ -1197,9 +1198,10 @@ internal class NullableDateTimePickerContent : ContentView
             SelectedItemBackgroundColor = GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-            ItemsSource = years,
-            SelectedItem = _currentDate.Year,
-            IsVisible = false
+            ItemsSource = _years.ToList(),
+            SelectedIndex = _years?.FindIndex(y => y.Year == _currentDate.Year) ?? -1,
+            IsVisible = false,
+            ItemDisplayBinding = "Year"
         };
 
         _yearsSelectList.SelectedIndexChanged += OnYearsPickerIndexChanged;
@@ -1227,7 +1229,7 @@ internal class NullableDateTimePickerContent : ContentView
             Margin = 5,
             Padding = 0,
             IsVisible = false,
-            ItemsSource = Enumerable.Range(0, 12).Select(m => new Month { Name = months[m], Number = m + 1 }).ToList(),
+            ItemsSource = Enumerable.Range(0, 12).Select(m => new MonthModel { Name = months[m], Number = m + 1 }).ToList(),
             ItemDisplayBinding = "Name",
             SelectedIndex = _currentDate.Month - 1
         };
@@ -1324,7 +1326,7 @@ internal class NullableDateTimePickerContent : ContentView
         HideMonthListView();
 
         var monthsSelectList = (NullableDateTimePickerSelectList)sender;
-        if (monthsSelectList.SelectedItem is not Month selectedMonth)
+        if (monthsSelectList.SelectedItem is not MonthModel selectedMonth)
             return;
 
         await SetCurrentDateAndRebuildCalendar(_currentDate.Year, selectedMonth.Number, _currentDate.Day);
