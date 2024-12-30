@@ -1198,7 +1198,7 @@ internal class NullableDateTimePickerContent : ContentView
             SelectedItemBackgroundColor = GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-            ItemsSource = _years.ToList(),
+            ItemsSource = _years,
             SelectedIndex = _years?.FindIndex(y => y.Year == _currentDate.Year) ?? -1,
             IsVisible = false,
             ItemDisplayBinding = "Year"
@@ -1242,11 +1242,10 @@ internal class NullableDateTimePickerContent : ContentView
     }
 
     private void ShowYearsSelectList()
-    {
+    { 
         MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
         {
             CreateYearsSelectList();
-
             if (_daysGrid != null)
                 _daysGrid.IsVisible = false;
 
