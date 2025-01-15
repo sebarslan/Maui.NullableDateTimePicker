@@ -820,8 +820,13 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
             using (var popupControl = new NullableDateTimePickerPopup(options))
             {
-                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
-
+#if WINDOWS
+                await Mopups.Services.MopupService.Instance.PushAsync(popupControl);
+                var result = await popupControl.WaitForResultAsync();
+                _ = Mopups.Services.MopupService.Instance.RemovePageAsync(popupControl);
+#else
+                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);                
+#endif
                 if (result is PopupResult popupResult)
                 {
                     popupResultTask.SetResult(popupResult);

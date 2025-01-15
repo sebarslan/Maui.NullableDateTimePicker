@@ -1,9 +1,15 @@
-﻿using CommunityToolkit.Maui.Views;
-using static System.Net.Mime.MediaTypeNames;
-using CommunityToolkitPopup = CommunityToolkit.Maui.Views.Popup;
+﻿// The MauiCommunityToolkit popup crashes on Windows when used in a Modal Page. (System.Runtime.InteropServices.COMException: 'Catastrophic failure XamlRoot must be explicitly set for unparented popup')
+// The Mopup popup displays behind Modal on Android
+// => if Windows Use Mopup else use MauiCommunityToolkit
+#if WINDOWS
+using PopupLib = Mopups.Pages.PopupPage;
+#else
+using PopupLib = CommunityToolkit.Maui.Views.Popup;
+#endif
+
 namespace Maui.NullableDateTimePicker
 {
-    internal class NullableDateTimePickerPopup : CommunityToolkitPopup, IDisposable
+    internal class NullableDateTimePickerPopup : PopupLib, IDisposable
     {
         private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
@@ -20,14 +26,33 @@ namespace Maui.NullableDateTimePicker
             this.AutomationId = options.AutomationId + "_DatetimePickerPopup";
 
             DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
-            Color = Colors.Transparent;
-            var popupWidth = Math.Min(displayMetrics.Width / displayMetrics.Density, 300);
-            var popupHeight = Math.Min(displayMetrics.Height / displayMetrics.Density, 450);
-            Size = new Size(Math.Max(popupWidth, 100), Math.Max(popupHeight, 100));
+#if WINDOWS
+            this.BackgroundColor = Colors.Transparent;
+#else
+            this.Color = Colors.Transparent;
+#endif
 
-            CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
+            var popupWidth = Math.Max(Math.Min(displayMetrics.Width / displayMetrics.Density, 300), 100);
+            var popupHeight = Math.Max(Math.Min(displayMetrics.Height / displayMetrics.Density, 450), 100);
 
+#if WINDOWS
+            if (options.CloseOnOutsideClick)
+            {
+                _content.WidthRequest = popupWidth;
+                _content.HeightRequest = popupHeight;
+            }
+#else
+            this.Size = new Size(popupWidth, popupHeight);
+            this.CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
+#endif
+
+
+#if WINDOWS
+            this.Appearing += _content.NullableDateTimePickerPopupAppearing;
+#else
             this.Opened += _content.NullableDateTimePickerPopupOpened;
+#endif
+
 
             okButtonClickedHandler = (s, e) =>
             {
@@ -50,6 +75,15 @@ namespace Maui.NullableDateTimePicker
             Content = _content;
         }
 
+
+#if WINDOWS
+        private TaskCompletionSource<object?> _tcs = new TaskCompletionSource<object?>();
+        public Task<object?> WaitForResultAsync()
+        {
+            return _tcs.Task;
+        }
+#endif
+
         internal void ClosePopup(PopupButtons buttonResult)
         {
             try
@@ -58,7 +92,12 @@ namespace Maui.NullableDateTimePicker
                 _content.ClearButtonClicked -= clearButtonClickedHandler;
                 _content.CancelButtonClicked -= cancelButtonClickedHandler;
 
+#if WINDOWS     
+                _tcs.TrySetResult(new PopupResult(_content.SelectedDate, buttonResult));
+#else
                 Close(new PopupResult(_content.SelectedDate, buttonResult));
+#endif
+
             }
             catch (Exception ex)
             {
