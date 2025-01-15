@@ -842,7 +842,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             Console.WriteLine(ex.ToString());
         }
 
-        return await popupResultTask?.Result;
+        return await (popupResultTask?.Result ?? Task.FromResult<PopupResult>(null));
     }
     #endregion //public metlods
 
