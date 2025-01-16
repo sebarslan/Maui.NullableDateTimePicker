@@ -2,14 +2,14 @@
 // The Mopup popup displays behind Modal on Android
 // => if Windows Use Mopup else use MauiCommunityToolkit
 #if WINDOWS
-using PopupLib = Mopups.Pages.PopupPage;
+using LibraryPopup = Mopups.Pages.PopupPage;
 #else
-using PopupLib = CommunityToolkit.Maui.Views.Popup;
+using LibraryPopup = CommunityToolkit.Maui.Views.Popup;
 #endif
 
 namespace Maui.NullableDateTimePicker
 {
-    internal class NullableDateTimePickerPopup : PopupLib, IDisposable
+    internal class NullableDateTimePickerPopup : LibraryPopup, IDisposable
     {
         private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
         private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
