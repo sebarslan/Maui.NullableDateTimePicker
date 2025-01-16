@@ -82,6 +82,12 @@ namespace Maui.NullableDateTimePicker
         {
             return _tcs.Task;
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _tcs.TrySetResult(null);
+        }
 #endif
 
         internal void ClosePopup(PopupButtons buttonResult)
