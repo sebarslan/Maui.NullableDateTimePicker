@@ -1,4 +1,6 @@
-﻿namespace Maui.NullableDateTimePicker
+﻿using CommunityToolkit.Maui;
+
+namespace Maui.NullableDateTimePicker
 {
     internal static class DefaultStyles
     {
@@ -11,7 +13,7 @@
                 {
                     Setters = {
                             new Setter { Property = VisualElement.BackgroundColorProperty, Value = Colors.Transparent },
-                            new Setter { Property = Button.TextColorProperty, Value = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black },
+                            new Setter { Property = Button.TextColorProperty, Value = new AppThemeColor { Light = Colors.Black, Dark = Colors.White }.GetBinding() },
                             new Setter { Property = View.MarginProperty, Value = new Thickness(0) },
                             new Setter { Property = Button.PaddingProperty, Value = new Thickness(0) },
                             new Setter { Property = Button.FontSizeProperty, Value = 12 },
@@ -60,8 +62,7 @@
                     _otherMonthDayStyle.Setters.Add(new Setter
                     {
                         Property = Button.TextColorProperty,
-                        Value = Application.Current.RequestedTheme == AppTheme.Dark
-                        ? Color.FromRgba("#ACACAC") : Colors.Gray
+                        Value = new AppThemeColor { Light = Colors.Gray, Dark = Color.FromRgba("#ACACAC") }.GetBinding()
                     });
                 }
                 return _otherMonthDayStyle;
@@ -85,8 +86,7 @@
                     _selectedDayStyle.Setters.Add(new Setter
                     {
                         Property = VisualElement.BackgroundColorProperty,
-                        Value = Application.Current.RequestedTheme == AppTheme.Dark
-                        ? Color.FromRgba("#6e5df2") : Colors.Blue
+                        Value = new AppThemeColor { Light = Colors.Blue, Dark = Color.FromRgba("#6e5df2") }.GetBinding()
                     });
                 }
 
@@ -131,7 +131,7 @@
                             new Setter { Property = VisualElement.MinimumWidthRequestProperty, Value = 30 },
                             new Setter { Property = VisualElement.MinimumHeightRequestProperty, Value = 30 },
                             new Setter { Property = Label.FontSizeProperty, Value = 12 },
-                            new Setter { Property = Label.TextColorProperty, Value = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black },
+                            new Setter { Property = Label.TextColorProperty, Value = new AppThemeColor { Light = Colors.Black, Dark = Colors.White }.GetBinding() },
                         }
                 };
 
