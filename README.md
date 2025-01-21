@@ -176,6 +176,9 @@ on ios, android, windows
 
 # Changelog
 
+### 2.4.1
+- Since CommunityToolkit Popup does not work on modal pages in windows, <a href="https://github.com/LuckyDucko/Mopups" target="_blank">Mopup-Library</a> is used temporarily in windows. (Thanks @sferhah)
+
 ### 2.4.0
 - Added HideIcon property
 - You can access calendar elements by providing your own AutomationId.
