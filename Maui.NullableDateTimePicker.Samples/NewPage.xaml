@@ -8,8 +8,7 @@
         Padding="30,0"
         Spacing="25">
         <Label 
-        Text="Testing nullabledatetimepicker on modal page"
-        Style="{StaticResource SubHeadline}"
+        Text="Testing nullabledatetimepicker on modal page"        
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
         <ndp:NullableDateTimePicker
