@@ -20,6 +20,11 @@
         HorizontalOptions="Start" />
 
         <Button
+          Text="Select a date from calendar popup" 
+          Clicked="Button_Clicked"
+          HorizontalOptions="Center" />
+
+        <Button
         Text="Close modal" 
         Clicked="OnCloseClicked"
         HorizontalOptions="Fill" />

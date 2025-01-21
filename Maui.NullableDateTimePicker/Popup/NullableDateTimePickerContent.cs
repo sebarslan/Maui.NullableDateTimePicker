@@ -1,4 +1,5 @@
 ﻿using Maui.NullableDateTimePicker.Models;
+using Microsoft.Maui.Controls.Shapes;
 using System.Globalization;
 
 namespace Maui.NullableDateTimePicker;
@@ -40,6 +41,7 @@ internal class NullableDateTimePickerContent : ContentView
     private Picker _amPmPicker;
     private StackLayout _timeStackLayout;
     private ScrollView _scrollView;
+    private Border _border;
     List<YearModel> _years = null;
     List<PickerItem> _hours = null;
     List<PickerItem> _minutes = null;
@@ -81,22 +83,45 @@ internal class NullableDateTimePickerContent : ContentView
             Padding = new Thickness(0),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-            Content = new Grid
+            Content = _border = new Border
             {
-                Children =
+                StrokeThickness = _options.PopupBorderWidth,
+                StrokeShape = new RoundRectangle
                 {
-                    _mainGrid,
-                    _activityIndicator
+                    CornerRadius = _options.PopupBorderCornerRadius,
+                },
+                Content = new Grid
+                {
+                    Children =
+                    {
+                        _mainGrid,
+                        _activityIndicator
+                    }
                 }
             }
         };
 
+        if (_options.PopupBorderColor != null)
+        {
+            _border.Stroke = _options.PopupBorderColor;
+        }
+        else if (_options.PopupBorderThemeColor != null)
+        {
+            _border.SetBinding(Border.StrokeProperty, _options.PopupBorderThemeColor.GetBinding());
+        }
+
         Content = _scrollView;
 
         if (_options.ActivityIndicatorColor != null)
+        {
             _activityIndicator.Color = _options.ActivityIndicatorColor;
+        }
+        else if (_options.ActivityIndicatorThemeColor != null)
+        {
+            _activityIndicator.SetBinding(ActivityIndicator.ColorProperty, _options.ActivityIndicatorThemeColor.GetBinding());
+        }
     }
-    
+
 #if WINDOWS
     internal async void NullableDateTimePickerPopupAppearing(object? sender, EventArgs e)
     {
@@ -120,7 +145,7 @@ internal class NullableDateTimePickerContent : ContentView
         {
 
         }
-    }  
+    }
 #endif
 
     internal async Task InitCalendar()
@@ -264,7 +289,7 @@ internal class NullableDateTimePickerContent : ContentView
             AutomationId = $"{_options.AutomationId}_CalendarGrid",
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
-            Padding = new Thickness(0),
+            Padding = _options.PopupPadding,
             Margin = new Thickness(0),
             ColumnSpacing = 0,
             RowSpacing = 0,
@@ -290,9 +315,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _calendarGrid.BackgroundColor = _options.BodyBackgroundColor;
         }
-        else
+        else if (_options.BodyBackgroundThemeColor != null)
         {
-            _calendarGrid.SetAppThemeColor(Grid.BackgroundColorProperty, Colors.White, Color.FromRgba("#434343"));
+            _calendarGrid.SetBinding(Grid.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
         }
 
         #region header
@@ -300,7 +325,7 @@ internal class NullableDateTimePickerContent : ContentView
         Grid headerGrid = new()
         {
             Padding = new Thickness(10, 0, 10, 0),
-            Margin = 0,
+            Margin = new Thickness(-_options.PopupPadding.Left, -_options.PopupPadding.Top, -_options.PopupPadding.Right, 0),
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             RowDefinitions =
@@ -314,9 +339,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             headerGrid.BackgroundColor = _options.HeaderBackgroundColor;
         }
-        else
+        else if (_options.HeaderBackgroundThemeColor != null)
         {
-            headerGrid.SetAppThemeColor(Grid.BackgroundColorProperty, Color.FromRgba("#2b0b98"), Color.FromRgba("#252626"));
+            headerGrid.SetBinding(Grid.BackgroundColorProperty, _options.HeaderBackgroundThemeColor.GetBinding());
         }
 
         _selectedYearLabel = new Label
@@ -324,7 +349,6 @@ internal class NullableDateTimePickerContent : ContentView
             AutomationId = _options.AutomationId + "_CalendarSelectedYearLabel",
             HeightRequest = 30,
             FontSize = 25,
-            TextColor = _options.HeaderForeColor ?? Colors.White,
             BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
@@ -333,6 +357,16 @@ internal class NullableDateTimePickerContent : ContentView
             IsEnabled = _options.Mode != PickerModes.Time,  //Click skipping in time mode
             IsVisible = _options.Mode != PickerModes.Time
         };
+
+        if (_options.HeaderForeColor != null)
+        {
+            _selectedYearLabel.TextColor = _options.HeaderForeColor;
+        }
+        else if (_options.HeaderForeThemeColor != null)
+        {
+            _selectedYearLabel.SetBinding(Label.TextColorProperty, _options.HeaderForeThemeColor.GetBinding());
+        }
+
         var tapGestureRecognizerForYearLabel = new TapGestureRecognizer();
         tapGestureRecognizerForYearLabel.Tapped += OnYearLabelClicked;
 
@@ -343,13 +377,21 @@ internal class NullableDateTimePickerContent : ContentView
             AutomationId = _options.AutomationId + "_CalendarSelectedDateLabel",
             HeightRequest = 30,
             FontSize = 25,
-            TextColor = _options.HeaderForeColor ?? Colors.White,
             BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
             VerticalOptions = LayoutOptions.Center,
             LineBreakMode = LineBreakMode.TailTruncation
         };
+
+        if (_options.HeaderForeColor != null)
+        {
+            _selectedDateLabel.TextColor = _options.HeaderForeColor;
+        }
+        else if (_options.HeaderForeThemeColor != null)
+        {
+            _selectedDateLabel.SetBinding(Label.TextColorProperty, _options.HeaderForeThemeColor.GetBinding());
+        }
 
         headerGrid.Add(_selectedYearLabel);
         headerGrid.SetRow(_selectedYearLabel, 0);
@@ -390,9 +432,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _previousMonthButton.TextColor = _options.ForeColor;
         }
-        else
+        else if (_options.ForeColorThemeColor != null)
         {
-            _previousMonthButton.SetAppThemeColor(Button.TextColorProperty, Colors.Black, Colors.White);
+            _previousMonthButton.SetBinding(Button.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
         }
 
         _previousMonthButton.Clicked += OnPreviousMonthButtonClicked;
@@ -412,9 +454,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _monthYearLabel.TextColor = _options.ForeColor;
         }
-        else
+        else if (_options.ForeColorThemeColor != null)
         {
-            _monthYearLabel.SetAppThemeColor(Label.TextColorProperty, Colors.Black, Colors.White);
+            _monthYearLabel.SetBinding(Button.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
         }
 
         TapGestureRecognizer tapGestureRecognizer = new();
@@ -445,9 +487,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _nextMonthButton.TextColor = _options.ForeColor;
         }
-        else
+        else if (_options.ForeColorThemeColor != null)
         {
-            _nextMonthButton.SetAppThemeColor(Button.TextColorProperty, Colors.Black, Colors.White);
+            _nextMonthButton.SetBinding(Button.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
         }
 
         _nextMonthButton.Clicked += OnNextMonthButtonClicked;
@@ -487,7 +529,7 @@ internal class NullableDateTimePickerContent : ContentView
             _hoursPicker = new Picker
             {
                 AutomationId = _options.AutomationId + "_CalendarHoursPicker",
-                BackgroundColor = Colors.Transparent,                
+                BackgroundColor = Colors.Transparent,
                 FontSize = 14,
                 HeightRequest = 40,
                 ItemDisplayBinding = new Binding("Text"),
@@ -502,10 +544,10 @@ internal class NullableDateTimePickerContent : ContentView
                 _hoursPicker.TextColor = _options.ForeColor;
                 _hoursPicker.TitleColor = _options.ForeColor;
             }
-            else
+            else if (_options.ForeColorThemeColor != null)
             {
-                _hoursPicker.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
-                _hoursPicker.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
+                _hoursPicker.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
+                _hoursPicker.SetBinding(Picker.TitleColorProperty, _options.ForeColorThemeColor.GetBinding());
             }
 
             _hoursPicker.SelectedIndexChanged += OnHoursPickerIndexChanged;
@@ -524,15 +566,15 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 hoursMinutesSeparatorLabel.TextColor = _options.ForeColor;
             }
-            else
+            else if (_options.ForeColorThemeColor != null)
             {
-                hoursMinutesSeparatorLabel.SetAppThemeColor(Label.TextColorProperty, Colors.Black, Colors.White);
+                hoursMinutesSeparatorLabel.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
             }
 
             _minutesPicker = new Picker
             {
                 AutomationId = _options.AutomationId + "_CalendarMinutesPicker",
-                BackgroundColor = Colors.Transparent,                
+                BackgroundColor = Colors.Transparent,
                 FontSize = 14,
                 HeightRequest = 40,
                 ItemDisplayBinding = new Binding("Text"),
@@ -547,10 +589,10 @@ internal class NullableDateTimePickerContent : ContentView
                 _minutesPicker.TextColor = _options.ForeColor;
                 _minutesPicker.TitleColor = _options.ForeColor;
             }
-            else
+            else if (_options.ForeColorThemeColor != null)
             {
-                _minutesPicker.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
-                _minutesPicker.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
+                _minutesPicker.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
+                _minutesPicker.SetBinding(Picker.TitleColorProperty, _options.ForeColorThemeColor.GetBinding());
             }
 
             _minutesPicker.SelectedIndexChanged += OnMinutesPickerIndexChanged;
@@ -576,7 +618,7 @@ internal class NullableDateTimePickerContent : ContentView
                 _amPmPicker = new Picker
                 {
                     AutomationId = _options.AutomationId + "_CalendarAmPmPicker",
-                    BackgroundColor = Colors.Transparent,                   
+                    BackgroundColor = Colors.Transparent,
                     FontSize = 14,
                     HeightRequest = 40,
                     HorizontalOptions = LayoutOptions.Center,
@@ -590,10 +632,10 @@ internal class NullableDateTimePickerContent : ContentView
                     _amPmPicker.TextColor = _options.ForeColor;
                     _amPmPicker.TitleColor = _options.ForeColor;
                 }
-                else
+                else if (_options.ForeColorThemeColor != null)
                 {
-                    _amPmPicker.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
-                    _amPmPicker.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
+                    _amPmPicker.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
+                    _amPmPicker.SetBinding(Picker.TitleColorProperty, _options.ForeColorThemeColor.GetBinding());
                 }
 
                 _amPmPicker.SelectedIndexChanged += OnAmPmPickerIndexChanged;
@@ -662,10 +704,7 @@ internal class NullableDateTimePickerContent : ContentView
         _calendarGrid.Add(toolButtonsGrid, 0, 4);
         #endregion //Tool buttons row
 
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync((Action)(() =>
-        {
-            this._mainGrid.Add((IView)this._calendarGrid);
-        }));
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() => this._mainGrid.Add(_calendarGrid));
     }
 
     private async void OnPreviousMonthButtonClicked(object sender, EventArgs e)
@@ -862,7 +901,7 @@ internal class NullableDateTimePickerContent : ContentView
                     Label label = new()
                     {
                         Text = dayName,
-                        Style = _options.DayNamesStyle ?? _dayNamesStyle as Style
+                        Style = _options.DayNamesStyle ?? _dayNamesStyle
                     };
                     dayLabels.Add(label);
                 }
@@ -1019,49 +1058,49 @@ internal class NullableDateTimePickerContent : ContentView
         Console.Write($"UpdateCurrentDate: {_currentDate}");
 
         MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
-       {
-           if (_yearsSelectList != null)
-               _yearsSelectList.SelectedIndex = _years?.FindIndex(y => y.Year == _currentDate.Year) ?? -1;
+        {
+            if (_yearsSelectList != null)
+                _yearsSelectList.SelectedIndex = _years?.FindIndex(y => y.Year == _currentDate.Year) ?? -1;
 
-           if (_monthsSelectList != null)
-               _monthsSelectList.SelectedIndex = _currentDate.Month - 1;
+            if (_monthsSelectList != null)
+                _monthsSelectList.SelectedIndex = _currentDate.Month - 1;
 
-           if (_options.Mode != PickerModes.Date)
-           {
-               int currentHour = _currentDate.Hour;
-               if (_options.Is12HourFormat)
-               {
-                   currentHour = ConvertTo12HourFormat(currentHour);
-               }
-               _hoursPicker.SelectedItem = _hours?.FirstOrDefault(x => x.Value == currentHour);
-               _minutesPicker.SelectedItem = _minutes?.FirstOrDefault(x => x.Value == _currentDate.Minute);
+            if (_options.Mode != PickerModes.Date)
+            {
+                int currentHour = _currentDate.Hour;
+                if (_options.Is12HourFormat)
+                {
+                    currentHour = ConvertTo12HourFormat(currentHour);
+                }
+                _hoursPicker.SelectedItem = _hours?.FirstOrDefault(x => x.Value == currentHour);
+                _minutesPicker.SelectedItem = _minutes?.FirstOrDefault(x => x.Value == _currentDate.Minute);
 
-               if (_options.Is12HourFormat)
-                   _amPmPicker.SelectedItem = _amPmList?.FirstOrDefault(x => x == _currentDate.ToString("tt", CultureInfo.InvariantCulture));
-           }
-           _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
+                if (_options.Is12HourFormat)
+                    _amPmPicker.SelectedItem = _amPmList?.FirstOrDefault(x => x == _currentDate.ToString("tt", CultureInfo.InvariantCulture));
+            }
+            _monthYearLabel.Text = _currentDate.ToString("MMMM yyyy");
 
-           string selectedDateText = string.Empty;
-           if (date != null && date.HasValue)
-           {
-               if (_options.Mode == PickerModes.Date || _options.Mode == PickerModes.DateTime)
-                   selectedDateText = date.Value.ToString("ddd, MMM d");
+            string selectedDateText = string.Empty;
+            if (date != null && date.HasValue)
+            {
+                if (_options.Mode == PickerModes.Date || _options.Mode == PickerModes.DateTime)
+                    selectedDateText = date.Value.ToString("ddd, MMM d");
 
-               if (_options.Mode == PickerModes.Time)
-               {
-                   selectedDateText = date.Value.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
-               }
-           }
-           else
-           {
-               selectedDateText = "No Date Selected";
-           }
+                if (_options.Mode == PickerModes.Time)
+                {
+                    selectedDateText = date.Value.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+                }
+            }
+            else
+            {
+                selectedDateText = "No Date Selected";
+            }
 
-           _selectedDateLabel.Text = selectedDateText;
-           _selectedYearLabel.Text = date?.Year.ToString() ?? "";
+            _selectedDateLabel.Text = selectedDateText;
+            _selectedYearLabel.Text = date?.Year.ToString() ?? "";
 
-           SetCurrentDayStyle(_currentDate.Day.ToString());
-       });
+            SetCurrentDayStyle(_currentDate.Day.ToString());
+        });
     }
 
     Button lastClickedDayButton = null;
@@ -1284,7 +1323,7 @@ internal class NullableDateTimePickerContent : ContentView
         _yearsSelectList = new NullableDateTimePickerSelectList
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
-            Margin = new Thickness(5,0),
+            Margin = new Thickness(5, 0),
             ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
             SelectedItemTextColor = GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black),
             ItemBackgroundColor = GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, Colors.White),
@@ -1302,9 +1341,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _yearsSelectList.BackgroundColor = _options.BodyBackgroundColor;
         }
-        else
+        else if (_options.BodyBackgroundThemeColor != null)
         {
-            _yearsSelectList.SetAppThemeColor(NullableDateTimePickerSelectList.BackgroundColorProperty, Colors.White, Color.FromRgba("#434343"));
+            _yearsSelectList.SetBinding(NullableDateTimePickerSelectList.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
         }
 
         _yearsSelectList.SelectedIndexChanged += OnYearsPickerIndexChanged;
@@ -1340,9 +1379,9 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _monthsSelectList.BackgroundColor = _options.BodyBackgroundColor;
         }
-        else
+        else if (_options.BodyBackgroundThemeColor != null)
         {
-            _monthsSelectList.SetAppThemeColor(NullableDateTimePickerSelectList.BackgroundColorProperty, Colors.White, Color.FromRgba("#434343"));
+            _monthsSelectList.SetBinding(NullableDateTimePickerSelectList.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
         }
 
         _monthsSelectList.SelectedIndexChanged += OnMonthsPickerIndexChanged;
@@ -1353,8 +1392,8 @@ internal class NullableDateTimePickerContent : ContentView
     }
 
     private void ShowYearsSelectList()
-    { 
-        MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
+    {
+        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
             CreateYearsSelectList();
             if (_daysGrid != null)
@@ -1370,17 +1409,17 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 if (!_calendarGrid.Children.Contains(_yearsSelectList))
                 {
-                    _calendarGrid.Add((IView)_yearsSelectList, 0, 1);
+                    _calendarGrid.Add(_yearsSelectList, 0, 1);
                     _calendarGrid.SetRowSpan(_yearsSelectList, 4);
                 }
                 _yearsSelectList.IsVisible = true;
             }
-        }));
+        });
     }
 
     private void HideYearsSelectList()
     {
-        MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
+        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
             if (_yearsSelectList != null)
             {
@@ -1389,47 +1428,47 @@ internal class NullableDateTimePickerContent : ContentView
                 if (_daysGrid != null)
                     _daysGrid.IsVisible = true;
             }
-        }));
+        });
     }
 
     private void ShowMonthListView()
     {
         CreateMonthsSelectList();
-        MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
-          {
-              if (_daysGrid != null)
-                  _daysGrid.IsVisible = false;
+        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+        {
+            if (_daysGrid != null)
+                _daysGrid.IsVisible = false;
 
-              if (_yearsSelectList != null)
-                  _yearsSelectList.IsVisible = false;
+            if (_yearsSelectList != null)
+                _yearsSelectList.IsVisible = false;
 
-              if (_calendarGrid != null && _monthsSelectList != null)
-              {
-                  _monthsSelectList.IsVisible = true;
-                  if (!_calendarGrid.Children.Contains(_monthsSelectList))
-                  {
-                      _calendarGrid.Add((IView)_monthsSelectList, 0, 2);
-                      _calendarGrid.SetRowSpan(_monthsSelectList, 2);
-                  }
-              }
-          }));
+            if (_calendarGrid != null && _monthsSelectList != null)
+            {
+                _monthsSelectList.IsVisible = true;
+                if (!_calendarGrid.Children.Contains(_monthsSelectList))
+                {
+                    _calendarGrid.Add(_monthsSelectList, 0, 2);
+                    _calendarGrid.SetRowSpan(_monthsSelectList, 2);
+                }
+            }
+        });
     }
 
     private void HideMonthListView()
     {
-        MainThreadHelper.SafeBeginInvokeOnMainThread((Action)(() =>
-      {
-          if (_monthsSelectList != null)
-          {
-              _monthsSelectList.IsVisible = false;
+        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
+        {
+            if (_monthsSelectList != null)
+            {
+                _monthsSelectList.IsVisible = false;
 
-              //if (_calendarGrid != null)
-              //   _calendarGrid.Remove((IView)_monthListGrid);
+                //if (_calendarGrid != null)
+                //   _calendarGrid.Remove((IView)_monthListGrid);
 
-              if (_daysGrid != null)
-                  _daysGrid.IsVisible = true;
-          }
-      }));
+                if (_daysGrid != null)
+                    _daysGrid.IsVisible = true;
+            }
+        });
     }
     private async void OnMonthsPickerIndexChanged(object sender, EventArgs e)
     {
