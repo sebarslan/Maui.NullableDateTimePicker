@@ -176,7 +176,7 @@ on ios, android, windows
 
 # Changelog
 
-### 2.4.1
+### 2.4.1-preview
 - Since CommunityToolkit Popup does not work on modal pages in windows, <a href="https://github.com/LuckyDucko/Mopups" target="_blank">Mopup-Library</a> is used temporarily in windows. (Thanks @sferhah)
 
 ### 2.4.0
