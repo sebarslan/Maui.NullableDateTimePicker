@@ -1,5 +1,5 @@
-﻿// The MauiCommunityToolkit popup crashes on Windows when used in a Modal Page. (System.Runtime.InteropServices.COMException: 'Catastrophic failure XamlRoot must be explicitly set for unparented popup')
-// The Mopup popup displays behind Modal on Android
+﻿// The MauiCommunityToolkit popup crashes on Windows when used in a Modal Page. See: https://github.com/CommunityToolkit/Maui/issues/2459
+// The Mopup popup displays behind Modal on Android. See: https://github.com/LuckyDucko/Mopups/issues/82
 // => if Windows Use Mopup else use MauiCommunityToolkit
 #if WINDOWS
 using LibraryPopup = Mopups.Pages.PopupPage;
@@ -7,136 +7,133 @@ using LibraryPopup = Mopups.Pages.PopupPage;
 using LibraryPopup = CommunityToolkit.Maui.Views.Popup;
 #endif
 
-namespace Maui.NullableDateTimePicker
+namespace Maui.NullableDateTimePicker;
+
+internal class NullableDateTimePickerPopup : LibraryPopup, IDisposable
 {
-    internal class NullableDateTimePickerPopup : LibraryPopup, IDisposable
+    private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
+    private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
+    private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
+    private NullableDateTimePickerContent _content = null;
+    private bool _disposed = false;
+    internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
     {
-        private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
-        private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
-        private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
-        private NullableDateTimePickerContent _content = null;
-        private bool _disposed = false;
-        internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
-        {
-            _content = new NullableDateTimePickerContent(options);
+        _content = new NullableDateTimePickerContent(options);
 
-            if (options.AutomationId == null)
-                options.AutomationId = "";
+        if (options.AutomationId == null)
+            options.AutomationId = "";
 
-            this.AutomationId = options.AutomationId + "_DatetimePickerPopup";
+        this.AutomationId = options.AutomationId + "_DatetimePickerPopup";
 
-            DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
+        DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
 #if WINDOWS
-            this.BackgroundColor = Colors.Transparent;
+        this.BackgroundColor = Colors.Transparent;
 #else
-            this.Color = Colors.Transparent;
+        this.Color = Colors.Transparent;
 #endif
 
-            var popupWidth = Math.Max(Math.Min(displayMetrics.Width / displayMetrics.Density, 300), 100);
-            var popupHeight = Math.Max(Math.Min(displayMetrics.Height / displayMetrics.Density, 450), 100);
+        var popupWidth = Math.Max(Math.Min(displayMetrics.Width / displayMetrics.Density, 300), 100);
+        var popupHeight = Math.Max(Math.Min(displayMetrics.Height / displayMetrics.Density, 450), 100);
 
 #if WINDOWS
-            if (options.CloseOnOutsideClick)
-            {
-                _content.WidthRequest = popupWidth;
-                _content.HeightRequest = popupHeight;
-            }
+        _content.WidthRequest = popupWidth;
+        _content.HeightRequest = popupHeight;
+        this.CloseWhenBackgroundIsClicked = options.CloseOnOutsideClick;
 #else
-            this.Size = new Size(popupWidth, popupHeight);
-            this.CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
+        this.Size = new Size(popupWidth, popupHeight);
+        this.CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
 #endif
 
 
 #if WINDOWS
-            this.Appearing += _content.NullableDateTimePickerPopupAppearing;
+        this.Appearing += _content.NullableDateTimePickerPopupAppearing;
 #else
-            this.Opened += _content.NullableDateTimePickerPopupOpened;
+        this.Opened += _content.NullableDateTimePickerPopupOpened;
 #endif
 
 
-            okButtonClickedHandler = (s, e) =>
-            {
-                ClosePopup(PopupButtons.Ok);
-            };
-            _content.OkButtonClicked += okButtonClickedHandler;
+        okButtonClickedHandler = (s, e) =>
+        {
+            ClosePopup(PopupButtons.Ok);
+        };
+        _content.OkButtonClicked += okButtonClickedHandler;
 
-            clearButtonClickedHandler = (s, e) =>
-            {
-                ClosePopup(PopupButtons.Clear);
-            };
-            _content.ClearButtonClicked += clearButtonClickedHandler;
+        clearButtonClickedHandler = (s, e) =>
+        {
+            ClosePopup(PopupButtons.Clear);
+        };
+        _content.ClearButtonClicked += clearButtonClickedHandler;
 
-            cancelButtonClickedHandler = (s, e) =>
-            {
-                ClosePopup(PopupButtons.Cancel);
-            };
-            _content.CancelButtonClicked += cancelButtonClickedHandler;
+        cancelButtonClickedHandler = (s, e) =>
+        {
+            ClosePopup(PopupButtons.Cancel);
+        };
+        _content.CancelButtonClicked += cancelButtonClickedHandler;
 
-            Content = _content;
-        }
+        Content = _content;
+    }
 
 
 #if WINDOWS
-        private TaskCompletionSource<object?> _tcs = new TaskCompletionSource<object?>();
-        public Task<object?> WaitForResultAsync()
-        {
-            return _tcs.Task;
-        }
+    private TaskCompletionSource<object?> _tcs = new TaskCompletionSource<object?>();
+    public Task<object?> WaitForResultAsync()
+    {
+        return _tcs.Task;
+    }
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            _tcs.TrySetResult(null);
-        }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _tcs.TrySetResult(null);
+    }
 #endif
 
-        internal void ClosePopup(PopupButtons buttonResult)
+    internal void ClosePopup(PopupButtons buttonResult)
+    {
+        try
         {
-            try
-            {
-                _content.OkButtonClicked -= okButtonClickedHandler;
-                _content.ClearButtonClicked -= clearButtonClickedHandler;
-                _content.CancelButtonClicked -= cancelButtonClickedHandler;
+            _content.OkButtonClicked -= okButtonClickedHandler;
+            _content.ClearButtonClicked -= clearButtonClickedHandler;
+            _content.CancelButtonClicked -= cancelButtonClickedHandler;
 
 #if WINDOWS     
-                _tcs.TrySetResult(new PopupResult(_content.SelectedDate, buttonResult));
+            _tcs.TrySetResult(new PopupResult(_content.SelectedDate, buttonResult));
 #else
-                Close(new PopupResult(_content.SelectedDate, buttonResult));
+            Close(new PopupResult(_content.SelectedDate, buttonResult));
 #endif
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            finally
-            {
-                Content = null;
-            }
         }
-
-        public void Dispose()
+        catch (Exception ex)
         {
-            Dispose(true);
-
-            GC.SuppressFinalize(this);
+            Console.WriteLine(ex.ToString());
         }
-
-        ~NullableDateTimePickerPopup()
+        finally
         {
-            Dispose(false);
+            Content = null;
         }
+    }
 
-        protected virtual void Dispose(bool disposing)
+    public void Dispose()
+    {
+        Dispose(true);
+
+        GC.SuppressFinalize(this);
+    }
+
+    ~NullableDateTimePickerPopup()
+    {
+        Dispose(false);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
         {
-            if (!_disposed)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _content = null;
-                }
-                _disposed = true;
+                _content = null;
             }
+            _disposed = true;
         }
     }
 }
