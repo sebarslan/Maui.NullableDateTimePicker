@@ -4,8 +4,11 @@
              xmlns:local="clr-namespace:Maui.NullableDateTimePicker.Samples"
              xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
              x:Class="Maui.NullableDateTimePicker.Samples.MainPage"
-             BackgroundColor="AliceBlue"
+             BackgroundColor="{AppThemeBinding Light=AliceBlue, Dark=DarkGray}"
              x:DataType="local:MainPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Modal" Command="{Binding OpenModalCommand}"/>        
+    </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
@@ -92,14 +95,21 @@
                                 TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                VerticalOptions="CenterAndExpand" BackgroundColor="Transparent" />
 
-                        <ImageButton Grid.Column="1" 
-                               VerticalOptions="Center" 
-                               HorizontalOptions="End"  
-                               Source="{Binding CalendarIconAppTheme}" 
-                    Clicked="DateTimePicker_Clicked" 
-                    BackgroundColor="Transparent"
-                     Aspect="AspectFit"            
-                    Margin="5" />
+                        <ImageButton Grid.Column="1"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="End"
+                                     Clicked="DateTimePicker_Clicked"
+                                     BackgroundColor="Transparent"
+                                     Aspect="AspectFit"
+                                     Margin="5"
+                                     HeightRequest="30">
+                            <ImageButton.Source>
+                                <FontImageSource Glyph="{x:Static local:IconFont.CalendarDays}"
+                                                 FontFamily="FontAwesome" 
+                                                 FontAutoScalingEnabled="False" 
+                                                 Color="{AppThemeBinding Light=Black, Dark=White}" />
+                            </ImageButton.Source>
+                        </ImageButton>
                     </Grid>
                 </Border>
             </StackLayout>
@@ -115,12 +125,17 @@
                             MaxDate="{Binding MyMaxDate}"
                             OkButtonText="Done" 
                             HorizontalOptions="Start"
-                            Icon="{Binding CalendarIcon}"
                             WidthRequest="200" 
                             HeightRequest="40"
                             Padding="5"
-                            TextColor="Red"
-                            />
+                            TextColor="Red">
+                <ndtp:NullableDateTimePicker.Icon>
+                    <FontImageSource Glyph="{x:Static local:IconFont.CalendarDay}"
+                      FontFamily="FontAwesome" 
+                      FontAutoScalingEnabled="False" 
+                      Color="{AppThemeBinding Light=Blue, Dark=Blue}" />
+                </ndtp:NullableDateTimePicker.Icon>
+            </ndtp:NullableDateTimePicker>
 
             <Label Text="Disabled" TextColor="Black" />
             <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
@@ -132,34 +147,7 @@
                             />
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" TextColor="Black" />
-            <!-- Nullable datetime picker -->
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
+            <!-- Nullable datetime picker -->           
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

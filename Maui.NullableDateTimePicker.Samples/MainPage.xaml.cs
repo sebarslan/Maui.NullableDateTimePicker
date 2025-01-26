@@ -1,9 +1,9 @@
-﻿namespace Maui.NullableDateTimePicker.Samples;
+﻿using System.Windows.Input;
+
+namespace Maui.NullableDateTimePicker.Samples;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
-
     public MainPage()
     {
         BindingContext = this;
@@ -26,45 +26,15 @@ public partial class MainPage : ContentPage
         }
     }
 
-    readonly FontImageSource calendarIcon = new()
-    {
-        Glyph = IconFont.CalendarDay,
-        FontAutoScalingEnabled = false,
-        FontFamily = "FontAwesome",
-        Color = Colors.Blue
-    };
-
-    public FontImageSource CalendarIcon => calendarIcon;
-
-    readonly FontImageSource calendarIconAppTheme = new()
-    {
-        Glyph = IconFont.CalendarDays,
-        FontFamily = "FontAwesome",
-        FontAutoScalingEnabled = false,
-        Color = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
-    };
-    public FontImageSource CalendarIconAppTheme => calendarIconAppTheme;
-
     public bool Is12HourFormat => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("tt");
 
-    private async void OnCounterClicked(object sender, EventArgs e)
-    {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
-
-        await Navigation.PushModalAsync(new NewPage());
-    }
+    private ICommand _OpenModalCommand;
+    public ICommand OpenModalCommand => _OpenModalCommand ??= new Command(async () => await Navigation.PushModalAsync(new NavigationPage(new NewPage())));
 
     // Datepicker programmatically
     private void CreateDateTimePickerProgrammatically()
     {
-        Maui.NullableDateTimePicker.NullableDateTimePicker datePicker = new()
+        NullableDateTimePicker datePicker = new()
         {
             Mode = PickerModes.Date,
             Format = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern,
@@ -74,13 +44,13 @@ public partial class MainPage : ContentPage
             VerticalOptions = LayoutOptions.Center
         };
 
-        datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.ForeColorProperty, Microsoft.Maui.Graphics.Colors.Black, Microsoft.Maui.Graphics.Colors.White);
-        datePicker.SetAppThemeColor(Maui.NullableDateTimePicker.NullableDateTimePicker.BodyBackgroundColorProperty, Microsoft.Maui.Graphics.Colors.White, Microsoft.Maui.Graphics.Colors.Black);
+        datePicker.SetAppThemeColor(NullableDateTimePicker.ForeColorProperty, Colors.Black, Colors.White);
+        datePicker.SetAppThemeColor(NullableDateTimePicker.BodyBackgroundColorProperty, Colors.White, Colors.Black);
 
 
         // binding
         datePicker.BindingContext = this;
-        datePicker.SetBinding(Maui.NullableDateTimePicker.NullableDateTimePicker.NullableDateTimeProperty, nameof(MyDateTime), BindingMode.TwoWay);
+        datePicker.SetBinding(NullableDateTimePicker.NullableDateTimeProperty, nameof(MyDateTime), BindingMode.TwoWay);
 
         DateTimePlaceStackLayout.Add(datePicker);
     }
