@@ -8,8 +8,7 @@
         Padding="30,0"
         Spacing="25">
         <Label 
-        Text="Testing nullabledatetimepicker on modal page"
-        Style="{StaticResource SubHeadline}"
+        Text="Testing nullabledatetimepicker on modal page"        
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
         <ndp:NullableDateTimePicker
@@ -19,6 +18,11 @@
         ShowWeekNumbers="True"
         Placeholder="Choose a date"
         HorizontalOptions="Start" />
+
+        <Button
+          Text="Select a date from calendar popup" 
+          Clicked="Button_Clicked"
+          HorizontalOptions="Center" />
 
         <Button
         Text="Close modal" 

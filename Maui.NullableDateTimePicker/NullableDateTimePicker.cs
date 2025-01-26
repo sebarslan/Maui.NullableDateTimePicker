@@ -339,6 +339,56 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(ShowOtherMonthDaysProperty, value); }
     }
 
+    public static readonly BindableProperty PopupBorderColorProperty = BindableProperty.Create(
+    nameof(PopupBorderColor),
+    typeof(Color),
+    typeof(NullableDateTimePicker),
+    defaultValue: Colors.Transparent,
+    defaultBindingMode: BindingMode.OneWay);
+    public Color PopupBorderColor
+    {
+        get { return (Color)GetValue(PopupBorderColorProperty); }
+        set { SetValue(PopupBorderColorProperty, value); }
+    }
+
+    public static readonly BindableProperty PopupBorderWidthProperty = BindableProperty.Create(
+    nameof(PopupBorderWidth),
+    typeof(double),
+    typeof(NullableDateTimePicker),
+    defaultValue: 0.0d,
+    defaultBindingMode: BindingMode.OneWay);
+    public double PopupBorderWidth
+    {
+        get { return (double)GetValue(PopupBorderWidthProperty); }
+        set { SetValue(PopupBorderWidthProperty, value); }
+    }
+
+    public static readonly BindableProperty PopupCornerRadiusProperty = BindableProperty.Create(
+    nameof(PopupCornerRadius),
+    typeof(CornerRadius),
+    typeof(NullableDateTimePicker),
+    defaultValue: new CornerRadius(0),
+    defaultBindingMode: BindingMode.OneWay);
+
+    public CornerRadius PopupCornerRadius
+    {
+        get { return (CornerRadius)GetValue(PopupCornerRadiusProperty); }
+        set { SetValue(PopupCornerRadiusProperty, value); }
+    }
+
+    public static readonly BindableProperty PopupPaddingProperty = BindableProperty.Create(
+    nameof(PopupPadding),
+    typeof(Thickness),
+    typeof(NullableDateTimePicker),
+    defaultValue: new Thickness(0),
+    defaultBindingMode: BindingMode.OneWay);
+
+    public Thickness PopupPadding
+    {
+        get { return (Thickness)GetValue(PopupPaddingProperty); }
+        set { SetValue(PopupPaddingProperty, value); }
+    }
+
     public static readonly BindableProperty ForeColorProperty = BindableProperty.Create(
     nameof(ForeColor),
     typeof(Color),
@@ -841,8 +891,13 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
             using (var popupControl = new NullableDateTimePickerPopup(options))
             {
-                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);
-
+#if WINDOWS
+                await Mopups.Services.MopupService.Instance.PushAsync(popupControl);
+                var result = await popupControl.WaitForResultAsync();
+                _ = Mopups.Services.MopupService.Instance.RemovePageAsync(popupControl);
+#else
+                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);                
+#endif
                 if (result is PopupResult popupResult)
                 {
                     popupResultTask.SetResult(popupResult);
@@ -858,7 +913,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             Console.WriteLine(ex.ToString());
         }
 
-        return await popupResultTask?.Result;
+        return await (popupResultTask?.Result ?? Task.FromResult<PopupResult>(null));
     }
     #endregion //public metlods
 
@@ -887,6 +942,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 OkButtonText = this.OkButtonText,
                 CancelButtonText = this.CancelButtonText,
                 ClearButtonText = this.ClearButtonText,
+                PopupBorderColor = this.PopupBorderColor,
+                PopupBorderWidth = this.PopupBorderWidth,
+                PopupBorderCornerRadius = this.PopupCornerRadius,
+                PopupPadding = this.PopupPadding,
                 ForeColor = this.ForeColor,
                 BodyBackgroundColor = this.BodyBackgroundColor,
                 HeaderForeColor = this.HeaderForeColor,
