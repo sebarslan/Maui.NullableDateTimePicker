@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Maui.Platform;
 
 namespace Maui.NullableDateTimePicker.Samples
@@ -50,7 +51,7 @@ namespace Maui.NullableDateTimePicker.Samples
 #endif
                 }
             });
-
+         
             return builder.Build();
         }
     }

@@ -486,6 +486,25 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(PlaceholderProperty, value); }
     }
 
+    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
+    nameof(PlaceholderColor),
+    typeof(Color),
+    typeof(NullableDateTimePicker),
+    defaultValue: Colors.Gray,
+    defaultBindingMode: BindingMode.OneWay,
+    propertyChanged: (bindable, oldValue, newValue) =>
+    {
+        if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color placeholderColor)
+        {
+            nullableDateTimePickerBindable._dateTimePickerEntry.PlaceholderColor = placeholderColor;
+        }
+    });
+    public Color PlaceholderColor
+    {
+        get { return (Color)GetValue(PlaceholderColorProperty); }
+        set { SetValue(PlaceholderColorProperty, value); }
+    }
+
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
     nameof(FontSize),
     typeof(double),
@@ -743,8 +762,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             HorizontalTextAlignment = TextAlignment.Start,
-            VerticalTextAlignment = this.VerticalTextAlignment
+            VerticalTextAlignment = this.VerticalTextAlignment,
+            PlaceholderColor = this.PlaceholderColor
         };
+        
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
 

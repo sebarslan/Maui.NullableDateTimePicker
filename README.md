@@ -131,6 +131,7 @@ More examples, please see the samples project
 | BorderWidth | Border width of the control | 0 |
 | CornerRadius | Corner radius of the control | 0 |
 | PlaceHolder | Placeholder of the entry | empty |
+| PlaceHolderColor | Placeholder color of the entry | Gray |
 | HideIcon | Determines whether to show or hide the calendar icon. | false |
 
 
