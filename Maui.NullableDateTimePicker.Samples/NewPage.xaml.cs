@@ -1,16 +1,17 @@
+using System.Windows.Input;
+
 namespace Maui.NullableDateTimePicker.Samples;
 
 public partial class NewPage : ContentPage
 {
     public NewPage()
     {
+        BindingContext = this;
         InitializeComponent();
     }
 
-    private async void OnCloseClicked(object sender, EventArgs e)
-    {
-        await Navigation.PopModalAsync();
-    }
+    private ICommand _CloseModalCommand;
+    public ICommand CloseModalCommand => _CloseModalCommand ??= new Command(async () => await Navigation.PopModalAsync());
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
