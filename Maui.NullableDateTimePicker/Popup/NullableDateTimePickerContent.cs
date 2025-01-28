@@ -1083,12 +1083,17 @@ internal class NullableDateTimePickerContent : ContentView
             string selectedDateText = string.Empty;
             if (date != null && date.HasValue)
             {
-                if (_options.Mode == PickerModes.Date || _options.Mode == PickerModes.DateTime)
-                    selectedDateText = date.Value.ToString("ddd, MMM d");
-
-                if (_options.Mode == PickerModes.Time)
+                if (_options.Mode == PickerModes.DateTime)
                 {
-                    selectedDateText = date.Value.ToString(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+                    selectedDateText = date.Value.ToString($"ddd, MMM d, {(_options.Is12HourFormat ? CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern : "HH:mm")}");
+                }
+                else if (_options.Mode == PickerModes.Time)
+                {
+                    selectedDateText = date.Value.ToString(_options.Is12HourFormat ? CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern : "HH:mm");
+                }
+                else
+                {
+                    selectedDateText = date.Value.ToString("ddd, MMM d");
                 }
             }
             else
