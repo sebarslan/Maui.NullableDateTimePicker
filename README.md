@@ -2,9 +2,10 @@
 The Nullable DateTimePicker is a custom calendar control for selecting a nullable date and time value in a .NET MAUI application. It provides a consistent and platform-independent user interface for selecting dates, and allows the user to clear the value if needed.
 
 
-This control uses the <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup.
+This control uses the 
+<a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v2.4.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.0.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -125,7 +126,7 @@ More examples, please see the samples project
 | BackgroundColor | Background color of the datetimepicker control.	| White |
 | Icon | Imagesource for the icon. | null |
 | TextColor | Text color of the entry. | Black |
-| FontFamily | Font family of the entry. | Arial |
+| FontFamily | Font family of the entry. | OpenSansRegular |
 | FontSize | Font size of the entry. | 14 |
 | BorderColor | Border color of the datetimepicker control | none |
 | BorderWidth | Border width of the control | 0 |
@@ -177,8 +178,16 @@ on ios, android, windows
 
 # Changelog
 
-### 2.4.1-preview
-- Since CommunityToolkit Popup does not work on modal pages in windows, <a href="https://github.com/LuckyDucko/Mopups" target="_blank">Mopup-Library</a> is used temporarily in windows. (Thanks @sferhah)
+### 3.0.0-Preview
+- OpenSansRegular was used instead of arial font for FontFamilyProperty (Thanks @VitaliBalyk)
+- Added new version of .NET MAUI Communitytoolkit (12.0.0)
+- Added a graphical clock so hours and minutes can be selected.
+- net8.0 support removed
+- Automation-Ids have been renamed
+- Added popup corner rounding and shadow and border properties. (Thanks @sferhah)
+
+### 2.4.1 (skipped)
+- Since CommunityToolkit Popup does not work on modal pages in windows, Mopup-Library is used temporarily in windows. (Thanks @sferhah)
 
 ### 2.4.0
 - Added HideIcon property

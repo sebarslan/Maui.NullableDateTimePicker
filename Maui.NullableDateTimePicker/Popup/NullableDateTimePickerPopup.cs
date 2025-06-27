@@ -1,115 +1,105 @@
 ﻿// The MauiCommunityToolkit popup crashes on Windows when used in a Modal Page. See: https://github.com/CommunityToolkit/Maui/issues/2459
-// The Mopup popup displays behind Modal on Android. See: https://github.com/LuckyDucko/Mopups/issues/82
-// => if Windows Use Mopup else use MauiCommunityToolkit
-#if WINDOWS
-using LibraryPopup = Mopups.Pages.PopupPage;
-#else
-using LibraryPopup = CommunityToolkit.Maui.Views.Popup;
-#endif
+// Fixed https://github.com/CommunityToolkit/Maui/pull/2476
+
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
+using Microsoft.Maui.Controls.Shapes;
+
 
 namespace Maui.NullableDateTimePicker;
 
-internal class NullableDateTimePickerPopup : LibraryPopup, IDisposable
+internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<PopupResult>, IDisposable
 {
     private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
     private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
     private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
     private NullableDateTimePickerContent _content = null;
     private bool _disposed = false;
+    INullableDateTimePickerOptions _options;
+    CancellationTokenSource _cancellationTokenSource;
     internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
     {
+        _cancellationTokenSource = new CancellationTokenSource();
+        _options = options;
         _content = new NullableDateTimePickerContent(options);
 
         if (options.AutomationId == null)
             options.AutomationId = "";
 
-        this.AutomationId = options.AutomationId + "_DatetimePickerPopup";
+        base.AutomationId = options.AutomationId + "_DatetimePickerPopup";
 
         DisplayInfo displayMetrics = DeviceDisplay.MainDisplayInfo;
-#if WINDOWS
-        this.BackgroundColor = Colors.Transparent;
-#else
-        this.Color = Colors.Transparent;
-#endif
 
-        var popupWidth = Math.Max(Math.Min(displayMetrics.Width / displayMetrics.Density, 300), 100);
-        var popupHeight = Math.Max(Math.Min(displayMetrics.Height / displayMetrics.Density, 450), 100);
+        base.BackgroundColor = Colors.Transparent;
 
-#if WINDOWS
-        _content.WidthRequest = popupWidth;
-        _content.HeightRequest = popupHeight;
-        this.CloseWhenBackgroundIsClicked = options.CloseOnOutsideClick;
-#else
-        this.Size = new Size(popupWidth, popupHeight);
-        this.CanBeDismissedByTappingOutsideOfPopup = options.CloseOnOutsideClick;
-#endif
+        WidthRequest = Math.Max(Math.Min(displayMetrics.Width / displayMetrics.Density, 300), 100);
+        HeightRequest = Math.Max(Math.Min(displayMetrics.Height / displayMetrics.Density, 450), 100);
+        Margin = 0;
+        Padding = 0;
 
-
-#if WINDOWS
-        this.Appearing += _content.NullableDateTimePickerPopupAppearing;
-#else
-        this.Opened += _content.NullableDateTimePickerPopupOpened;
-#endif
-
+        base.Opened += _content.NullableDateTimePickerPopupOpened;
 
         okButtonClickedHandler = (s, e) =>
         {
-            ClosePopup(PopupButtons.Ok);
+            ClosePopupAsync(PopupButtons.Ok);
         };
         _content.OkButtonClicked += okButtonClickedHandler;
 
         clearButtonClickedHandler = (s, e) =>
         {
-            ClosePopup(PopupButtons.Clear);
+            ClosePopupAsync(PopupButtons.Clear);
         };
         _content.ClearButtonClicked += clearButtonClickedHandler;
 
         cancelButtonClickedHandler = (s, e) =>
         {
-            ClosePopup(PopupButtons.Cancel);
+            ClosePopupAsync(PopupButtons.Cancel);
         };
         _content.CancelButtonClicked += cancelButtonClickedHandler;
 
         Content = _content;
     }
 
-
-#if WINDOWS
-    private TaskCompletionSource<object?> _tcs = new TaskCompletionSource<object?>();
-    public Task<object?> WaitForResultAsync()
+    static Page MainPage => Shell.Current;
+    internal async Task<Maui.NullableDateTimePicker.PopupResult> OpenPopupAsync()
     {
-        return _tcs.Task;
+        //var mainPage = Application.Current?.Windows.FirstOrDefault()?.Page;
+        //if (mainPage == null)
+        //    return null;
+
+        if (MainPage == null)
+            return null;
+
+        var result = await MainPage.ShowPopupAsync<PopupResult>(this, new PopupOptions
+        {
+            CanBeDismissedByTappingOutsideOfPopup = _options.CloseOnOutsideClick,
+            PageOverlayColor = _options.PopupPageOverlayColor,
+            Shape = new RoundRectangle
+            {
+                CornerRadius = _options.PopupBorderCornerRadius,
+                Stroke = _options.PopupBorderColor,
+                StrokeThickness = _options.PopupBorderWidth
+            }
+        }, _cancellationTokenSource.Token);
+
+        if (result is IPopupResult<PopupResult> popupResult && !result.WasDismissedByTappingOutsideOfPopup)
+        {
+            return popupResult.Result;
+        }
+        return null;
     }
 
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        _tcs.TrySetResult(null);
-    }
-#endif
 
-    internal void ClosePopup(PopupButtons buttonResult)
+    internal async void ClosePopupAsync(PopupButtons buttonResult)
     {
         try
         {
-            _content.OkButtonClicked -= okButtonClickedHandler;
-            _content.ClearButtonClicked -= clearButtonClickedHandler;
-            _content.CancelButtonClicked -= cancelButtonClickedHandler;
-
-#if WINDOWS     
-            _tcs.TrySetResult(new PopupResult(_content.SelectedDate, buttonResult));
-#else
-            Close(new PopupResult(_content.SelectedDate, buttonResult));
-#endif
-
+            await base.CloseAsync(new PopupResult(_content.SelectedDate, buttonResult));
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
-        }
-        finally
-        {
-            Content = null;
         }
     }
 
@@ -131,6 +121,10 @@ internal class NullableDateTimePickerPopup : LibraryPopup, IDisposable
         {
             if (disposing)
             {
+                _content.OkButtonClicked -= okButtonClickedHandler;
+                _content.ClearButtonClicked -= clearButtonClickedHandler;
+                _content.CancelButtonClicked -= cancelButtonClickedHandler;
+                this.Content = null;
                 _content = null;
             }
             _disposed = true;

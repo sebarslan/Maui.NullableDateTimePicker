@@ -21,11 +21,7 @@ public partial class NewPage : ContentPage
             CloseOnOutsideClick = true,
             ShowClearButton = true,          
             PopupBorderCornerRadius = 10,
-            PopupBorderThemeColor = new CommunityToolkit.Maui.AppThemeColor
-            {
-                Light = Colors.Black,
-                Dark = Colors.White,
-            },
+            PopupBorderColor = Colors.Black,
             PopupBorderWidth = 1,
             PopupPadding = 5,
         });

@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-#if WINDOWS
-using Mopups.Hosting;
-#endif
 
 namespace Maui.NullableDateTimePicker
 {
@@ -9,10 +6,6 @@ namespace Maui.NullableDateTimePicker
     {
         public static MauiAppBuilder ConfigureNullableDateTimePicker(this MauiAppBuilder builder)
         {
-#if WINDOWS          
-            builder.ConfigureMopups();
-#endif
-
 #if DEBUG
             builder.UseMauiCommunityToolkit();
 #else
@@ -23,6 +16,10 @@ namespace Maui.NullableDateTimePicker
                      options.SetShouldSuppressExceptionsInAnimations(true);
                  });
 #endif
+            builder.ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            });
             return builder;
         }
     }

@@ -10,13 +10,7 @@ internal class PopupResultTask<T>
         Result = _tcs.Task;
     }
 
-    internal void SetResult(T result)
-    {
-        _tcs.SetResult(result);
-    }
-
-    internal void SetException(Exception exception)
-    {
-        _tcs.SetException(exception);
-    }
+    internal void SetResult(T result) => _tcs.SetResult(result);
+    internal void SetException(Exception exception) => _tcs.SetException(exception);
 }
+

@@ -12,11 +12,13 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public string OkButtonText { get; set; } = "OK";
     public string CancelButtonText { get; set; } = "Cancel";
     public string ClearButtonText { get; set; } = "Clear";
-    public Color? PopupBorderColor { get; set; }
-    public AppThemeColor? PopupBorderThemeColor { get; set; }
+    public Color? PopupBorderColor { get; set; } = Colors.LightGray;
     public double PopupBorderWidth { get; set; } = 0;
-    public CornerRadius PopupBorderCornerRadius { get; set; } = new CornerRadius(0);
+    public CornerRadius PopupBorderCornerRadius { get; set; } = new CornerRadius(5);
     public Thickness PopupPadding { get; set; } = new Thickness(0);
+
+    public Color PopupPageOverlayColor { get; set; } = Colors.Black.WithAlpha(0.3f);
+
     public Color? BodyBackgroundColor { get; set; }
     public AppThemeColor? BodyBackgroundThemeColor { get; set; } = new AppThemeColor { Light = Colors.White, Dark = Color.FromRgba("#434343") };
     public Color? ForeColor { get; set; }

@@ -1,7 +1,6 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Platform;
-
+using CommunityToolkit.Maui; 
 namespace Maui.NullableDateTimePicker.Samples
 {
     public static class MauiProgram

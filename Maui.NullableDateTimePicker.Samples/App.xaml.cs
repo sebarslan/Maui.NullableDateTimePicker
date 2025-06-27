@@ -6,11 +6,14 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
-
             // Register a handler for unhandled XAML exceptions
-
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+        }
+
+        protected override Window CreateWindow(IActivationState activationState)
+        {
+            var window = new Window(new AppShell());
+            return window;
         }
 
 

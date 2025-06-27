@@ -1,5 +1,5 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using System.Reflection;
+﻿using Maui.NullableDateTimePicker.Helpers;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -12,7 +12,6 @@ public class NullableDateTimePicker : ContentView
     private Image _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
     const double defaultHeightRequest = 40;
-    static Page Page => Application.Current?.MainPage ?? throw new NullReferenceException();
 
     #region bindable properties
 
@@ -602,7 +601,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         nameof(FontFamily),
         typeof(string),
         typeof(NullableDateTimePicker),
-        defaultValue: "Arial",
+        defaultValue: "OpenSansRegular",
         defaultBindingMode: BindingMode.OneWay,
         propertyChanged: (bindable, oldValue, newValue) =>
         {
@@ -815,7 +814,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             VerticalTextAlignment = this.VerticalTextAlignment,
             PlaceholderColor = this.PlaceholderColor
         };
-        
+
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
 
@@ -882,38 +881,25 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
 
     #region public methods
-    public static async Task<object> OpenCalendarAsync(INullableDateTimePickerOptions options)
+    public static async Task<Maui.NullableDateTimePicker.PopupResult> OpenCalendarAsync(INullableDateTimePickerOptions options)
     {
-        PopupResultTask<PopupResult> popupResultTask = null;
         try
         {
-            popupResultTask = new PopupResultTask<PopupResult>();
-
             using (var popupControl = new NullableDateTimePickerPopup(options))
             {
-#if WINDOWS
-                await Mopups.Services.MopupService.Instance.PushAsync(popupControl);
-                var result = await popupControl.WaitForResultAsync();
-                _ = Mopups.Services.MopupService.Instance.RemovePageAsync(popupControl);
-#else
-                var result = await CommunityToolkit.Maui.Views.PopupExtensions.ShowPopupAsync(Page, popupControl);                
-#endif
-                if (result is PopupResult popupResult)
-                {
-                    popupResultTask.SetResult(popupResult);
-                }
-                else
-                {
-                    popupResultTask.SetResult(null);
-                }
-            };
+                return await popupControl.OpenPopupAsync();
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
         }
+        finally
+        {
 
-        return await (popupResultTask?.Result ?? Task.FromResult<PopupResult>(null));
+        }
+
+        return null;
     }
     #endregion //public metlods
 
@@ -1004,10 +990,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 };
                 try
                 {
-                    var assembly = typeof(NullableDateTimePicker).GetTypeInfo().Assembly;
-                    var assemblyName = assembly.GetName().Name;
-                    var imagePath = $"{assemblyName}.Images.{imageName}";
-                    _dateTimePickerIcon.Source = ImageSource.FromResource($"{imagePath}");
+                    _dateTimePickerIcon.Source = Utilities.GetImageSource(imageName);
                 }
                 catch { }
             }

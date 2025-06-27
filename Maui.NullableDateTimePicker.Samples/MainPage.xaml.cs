@@ -13,7 +13,7 @@ public partial class MainPage : ContentPage
         // Create Datetimepicker Programmatically
         CreateDateTimePickerProgrammatically();
     }
-   
+
 
     DateTime? myDateTime = DateTime.Now;
     public DateTime? MyDateTime
@@ -65,12 +65,9 @@ public partial class MainPage : ContentPage
             Mode = PickerModes.DateTime,
             ShowWeekNumbers = true,
             CloseOnOutsideClick = true,
+            PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
+            PopupBorderColor = Color.FromArgb("#505050"),
             PopupBorderCornerRadius = 10,
-            PopupBorderThemeColor = new CommunityToolkit.Maui.AppThemeColor
-            {
-                Light = Colors.Black,
-                Dark = Colors.White,
-            },
             PopupBorderWidth = 1,
             PopupPadding = 5,
         };

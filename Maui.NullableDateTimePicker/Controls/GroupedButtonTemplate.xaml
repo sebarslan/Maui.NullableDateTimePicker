@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.NullableDateTimePicker.Controls.GroupedButtonTemplate" Margin="0">
+
+
+    <Border
+                BackgroundColor="LightGray"
+                StrokeThickness="1"
+                Margin="0"
+                Padding="0"
+                WidthRequest="60"
+                HeightRequest="40"
+                Stroke="DarkGray"
+                StrokeShape="{Binding StrokeShape}">
+
+        <Button x:Name="InnerButton"
+                        Text="{Binding Text}"
+                        BackgroundColor="LightGray"
+                        TextColor="Black"
+                        FontSize="14"
+                        WidthRequest="60"
+                        HeightRequest="40"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Fill"
+                        BorderColor="DarkGray"
+                        BorderWidth="0"
+                        CornerRadius="0"
+                        Margin="0"
+                        Padding="0"
+                        Command="{Binding ButtonCommand}">
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                <Setter Property="TextColor" Value="Black" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Blue" />
+                                <Setter Property="TextColor" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+
+        </Button>
+    </Border>
+</ContentView>
