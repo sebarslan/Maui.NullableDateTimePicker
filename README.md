@@ -94,46 +94,51 @@ More examples, please see the samples project
 ## DateTimePicker Calendar options
 | Option | Description | Default Value |
 |--------|-------------|---------|
-| NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
-| Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
-| MinDate | Minimum selectable date of the control. | DateTime.MinValue |
-| MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
-| OkButtonText | The text for the OK button. | OK |
+| AutomationId | You can give your own automation id. With this you can access Calendar elements. Example: {Your-AutomationId}_CalendarYearsPicker, {Your-AutomationId}_CalendarOkButton | empty |
+| BodyBackgroundColor | Background color of the calendar.	| White |
 | CancelButtonText | The text for the Cancel button. | Cancel |
 | ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
-| ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
-| HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
-| HeaderBackgroundColor | Background color of the calendar's header.	| #2b0b98 |
-| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
-| BodyBackgroundColor | Background color of the calendar.	| White |
-| ToolButtonsStyle | Style of the control's tool buttons. | null |
-| DayStyle | Style of the days in the calendar. | null |
-| SelectedDayStyle | Style of the selected day in the calendar. | null |
 | DayNamesStyle | Style of the day names in the calendar. | null |
-| OtherMonthDayStyle | Style of the other month days in the calendar. | null |
+| DayStyle | Style of the days in the calendar. | null |
 | DisabledDayStyle | Style of the disabled days in the calendar. | null |
-| WeekNumberStyle | Style of the week numbers in the calendar. | null |
+| ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
+| HeaderBackgroundColor | Background color of the calendar's header.	| #2b0b98 |
+| HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
+| Is12HourFormat | Determines whether to display the am/pm picker for the 12-hour format.	| false |
+| MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
+| MinDate | Minimum selectable date of the control. | DateTime.MinValue |
+| Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
+| NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
+| OkButtonText | The text for the OK button. | OK |
+| OtherMonthDayStyle | Style of the other month days in the calendar. | null |
+| PopupBorderColor           | Color of the popup border. Set to transparent or null to hide the border.   | Light gray |
+| PopupBorderCornerRadius  | Corner radius of the popup's border for rounded edge appearance.   | 5 |
+| PopupBorderWidth         | Thickness of the border around the popup.                          | 0 |
+| PopupPadding             | Internal spacing between the popup's content and its border.       | 0 |
+| PopupPageOverlayColor    | Background overlay color behind the popup. Useful for dimming the content. | Black, %30 opacity [Colors.Black.WithAlpha(0.3f)] |
+| SelectedDayStyle | Style of the selected day in the calendar. | null |
+| ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
-| Is12HourFormat | Determines whether to display the am/pm picker for the 12-hour format.	| false |
-| AutomationId | You can give your own automation id. With this you can access Calendar elements. Example: {Your-AutomationId}_CalendarYearsPicker, {Your-AutomationId}_CalendarOkButton | empty |
+| ToolButtonsStyle | Style of the control's tool buttons. | null |
+| WeekNumberStyle | Style of the week numbers in the calendar. | null |
 
 
 ## Datetimepicker Input Options (If NullableDateTimePicker is used as ContentView)
 | Option | Description | Default Value |
 |--------|-------------|---------|
-| Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
 | BackgroundColor | Background color of the datetimepicker control.	| White |
-| Icon | Imagesource for the icon. | null |
-| TextColor | Text color of the entry. | Black |
-| FontFamily | Font family of the entry. | OpenSansRegular |
-| FontSize | Font size of the entry. | 14 |
 | BorderColor | Border color of the datetimepicker control | none |
 | BorderWidth | Border width of the control | 0 |
 | CornerRadius | Corner radius of the control | 0 |
+| FontFamily | Font family of the entry. | OpenSansRegular |
+| FontSize | Font size of the entry. | 14 |
+| Format | Specifies the display format for the date or time. | for date: d, for datetime: g, for time: t |
+| HideIcon | Determines whether to show or hide the calendar icon. | false |
+| Icon | Imagesource for the icon. | null |
 | PlaceHolder | Placeholder of the entry | empty |
 | PlaceHolderColor | Placeholder color of the entry | Gray |
-| HideIcon | Determines whether to show or hide the calendar icon. | false |
+| TextColor | Text color of the entry. | Black |
 
 
 ## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
