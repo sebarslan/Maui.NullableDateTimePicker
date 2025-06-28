@@ -77,7 +77,7 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
             PageOverlayColor = _options.PopupPageOverlayColor,
             Shape = new RoundRectangle
             {
-                CornerRadius = _options.PopupBorderCornerRadius,
+                CornerRadius = _options.PopupCornerRadius,
                 Stroke = _options.PopupBorderColor,
                 StrokeThickness = _options.PopupBorderWidth
             }

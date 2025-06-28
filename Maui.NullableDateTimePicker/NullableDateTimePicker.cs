@@ -930,7 +930,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 ClearButtonText = this.ClearButtonText,
                 PopupBorderColor = this.PopupBorderColor,
                 PopupBorderWidth = this.PopupBorderWidth,
-                PopupBorderCornerRadius = this.PopupCornerRadius,
+                PopupCornerRadius = this.PopupCornerRadius,
                 PopupPadding = this.PopupPadding,
                 ForeColor = this.ForeColor,
                 BodyBackgroundColor = this.BodyBackgroundColor,

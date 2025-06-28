@@ -112,14 +112,14 @@ More examples, please see the samples project
 | OkButtonText | The text for the OK button. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
 | PopupBorderColor           | Color of the popup border. Set to transparent or null to hide the border.   | Light gray |
-| PopupBorderCornerRadius  | Corner radius of the popup's border for rounded edge appearance.   | 5 |
+| PopupCornerRadius  | Corner radius of the popup's border for rounded edge appearance.   | 5 |
 | PopupBorderWidth         | Thickness of the border around the popup.                          | 0 |
 | PopupPadding             | Internal spacing between the popup's content and its border.       | 0 |
 | PopupPageOverlayColor    | Background overlay color behind the popup. Useful for dimming the content. | Black, %30 opacity [Colors.Black.WithAlpha(0.3f)] |
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
-| ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
+| ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ToolButtonsStyle | Style of the control's tool buttons. | null |
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
 

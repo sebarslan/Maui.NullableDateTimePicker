@@ -20,7 +20,7 @@ public partial class NewPage : ContentPage
             Mode = PickerModes.Date,
             CloseOnOutsideClick = true,
             ShowClearButton = true,          
-            PopupBorderCornerRadius = 10,
+            PopupCornerRadius = 10,
             PopupBorderColor = Colors.Black,
             PopupBorderWidth = 1,
             PopupPadding = 5,

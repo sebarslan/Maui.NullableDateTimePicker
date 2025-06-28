@@ -14,7 +14,7 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public string ClearButtonText { get; set; } = "Clear";
     public Color? PopupBorderColor { get; set; } = Colors.LightGray;
     public double PopupBorderWidth { get; set; } = 0;
-    public CornerRadius PopupBorderCornerRadius { get; set; } = new CornerRadius(5);
+    public CornerRadius PopupCornerRadius { get; set; } = new CornerRadius(5);
     public Thickness PopupPadding { get; set; } = new Thickness(0);
 
     public Color PopupPageOverlayColor { get; set; } = Colors.Black.WithAlpha(0.3f);

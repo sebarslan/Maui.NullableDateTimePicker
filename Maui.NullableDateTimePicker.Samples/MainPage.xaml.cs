@@ -67,7 +67,7 @@ public partial class MainPage : ContentPage
             CloseOnOutsideClick = true,
             PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
             PopupBorderColor = Color.FromArgb("#505050"),
-            PopupBorderCornerRadius = 10,
+            PopupCornerRadius = 10,
             PopupBorderWidth = 1,
             PopupPadding = 5,
         };

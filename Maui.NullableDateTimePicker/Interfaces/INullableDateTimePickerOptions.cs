@@ -14,7 +14,7 @@ public interface INullableDateTimePickerOptions
     string ClearButtonText { get; set; }
     Color? PopupBorderColor { get; set; }
     double PopupBorderWidth { get; set; }
-    CornerRadius PopupBorderCornerRadius { get; set; }
+    CornerRadius PopupCornerRadius { get; set; }
     Color PopupPageOverlayColor { get; set; }
     Thickness PopupPadding { get; set; }
     Color? BodyBackgroundColor { get; set; }
