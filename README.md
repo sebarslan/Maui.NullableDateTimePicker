@@ -178,8 +178,9 @@ Contributions are welcome!
 
 # Screenshot
 on ios, android, windows
-
+<div style="width: 60%; height: 60%">
 ![Screenshot 1](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot.png)
+</div>
 ![Screenshot 2](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot2.png)
 ![Screenshot 3](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot3.png)
 ![Screenshot 4](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot4.png)
