@@ -655,13 +655,15 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 Source = Utilities.GetImageSource("toggle_calendar_clock.png"),
                 Margin = new Thickness(10, 0, 0, 0),
+                Padding = 0,
                 Aspect = Aspect.AspectFit,
-                BorderWidth = 0,
                 BackgroundColor = Colors.Transparent,
                 WidthRequest = 14,
                 HeightRequest = 14,
                 MaximumHeightRequest = 14,
-                MaximumWidthRequest = 14
+                MaximumWidthRequest = 14,
+                MinimumHeightRequest = 14,
+                MinimumWidthRequest = 14
             };
             toggleCalendarClockImageButton.Clicked += (s, e) =>
             {
@@ -939,24 +941,6 @@ internal class NullableDateTimePickerContent : ContentView
             _currentDate = _maxDate;
         else
             _currentDate = currentDate;
-    }
-
-
-    private async Task BuildClock()
-    {
-        try
-        {
-            if (_nullableDateTimePickerClockView == null)
-                await InitClockBlock();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-        finally
-        {
-
-        }
     }
 
     private async Task BuildCalendar()
@@ -1474,7 +1458,7 @@ internal class NullableDateTimePickerContent : ContentView
             HideMonthListView();
             isClockDisplaying = !isClockDisplaying;
             if (_nullableDateTimePickerClockView == null)
-                await BuildClock();
+                await InitClockBlock();
 
             if (isClockDisplaying)
             {
