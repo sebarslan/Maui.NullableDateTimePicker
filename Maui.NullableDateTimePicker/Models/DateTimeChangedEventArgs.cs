@@ -2,7 +2,7 @@
 
 public class DateTimeChangedEventArgs : EventArgs
 {
-    public DateTimeChangedEventArgs(DateTime? oldDateTime, DateTime? newDateTime)
+    internal DateTimeChangedEventArgs(DateTime? oldDateTime, DateTime? newDateTime)
     {
         NewDateTime = newDateTime;
         OldDateTime = oldDateTime;

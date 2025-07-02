@@ -2,7 +2,7 @@
 
 namespace Maui.NullableDateTimePicker.Helpers
 {
-    internal class Utilities
+    internal static class Utilities
     {
         public static ImageSource GetImageSource(string imageName)
         {
@@ -10,6 +10,17 @@ namespace Maui.NullableDateTimePicker.Helpers
             var assemblyName = assembly.GetName().Name;
             var imagePath = $"{assemblyName}.Images.{imageName}";
             return ImageSource.FromResource($"{imagePath}");
+        }
+
+
+        internal static Page? FindParentPage(this VisualElement element)
+        {
+            var parent = element.Parent;
+            while (parent != null && parent is not Page)
+            {
+                parent = parent.Parent;
+            }
+            return parent as Page;
         }
     }
 }

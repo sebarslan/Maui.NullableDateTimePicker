@@ -64,7 +64,7 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
  </code>
 </pre>  
 
-2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenCalendarAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
+2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
 <pre>
 <code>
 private async void DateTimePicker_Clicked(object sender, EventArgs e)
@@ -77,7 +77,7 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
         // .. other calendar options
     };
 
-    var result = await NullableDateTimePicker.OpenCalendarAsync(nullableDateTimePickerOptions);
+    var result = await NullableDateTimePicker.OpenAsync(nullableDateTimePickerOptions);
     if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
     {
         MyDateTime = popupResult.NullableDateTime;
@@ -104,18 +104,18 @@ More examples, please see the samples project
 | ForeColor | It is used for the color of texts that cannot be styled in the calendar. | Dark:White, Light:Black |
 | HeaderBackgroundColor | Background color of the calendar's header.	| #2b0b98 |
 | HeaderForeColor | Gets or sets the foreground color of the control's header. | White |
-| Is12HourFormat | Determines whether to display the am/pm picker for the 12-hour format.	| false |
+| Is12HourFormat | Determines whether to display the am/pm picker for the 12-hour format.| false |
 | MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
 | MinDate | Minimum selectable date of the control. | DateTime.MinValue |
 | Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
 | NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
 | OkButtonText | The text for the OK button. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
-| PopupBorderColor           | Color of the popup border. Set to transparent or null to hide the border.   | Light gray |
-| PopupCornerRadius  | Corner radius of the popup's border for rounded edge appearance.   | 5 |
-| PopupBorderWidth         | Thickness of the border around the popup.                          | 0 |
-| PopupPadding             | Internal spacing between the popup's content and its border.       | 0 |
-| PopupPageOverlayColor    | Background overlay color behind the popup. Useful for dimming the content. | Black, %30 opacity [Colors.Black.WithAlpha(0.3f)] |
+| PopupBorderColor | Color of the popup border. Set to transparent or null to hide the border. | Transparent |
+| PopupCornerRadius | Corner radius of the popup's border for rounded edge appearance. | 0 |
+| PopupBorderWidth | Thickness of the border around the popup. | 0 |
+| PopupPadding | Internal spacing between the popup's content and its border. | 0 |
+| PopupPageOverlayColor | Background overlay color behind the popup. Useful for dimming the content. | Black, %50 opacity [Colors.Black.WithAlpha(0.5f)] |
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
@@ -179,17 +179,24 @@ Contributions are welcome!
 # Screenshot
 on ios, android, windows
 
-![DateTimePicker](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
+![screenshot2](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot2.png)
+![screenshot3](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot3.png)
+![screenshot4](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot4.png)
+
 
 # Changelog
 
-### 3.0.0-Preview
+### 3.0.0
 - OpenSansRegular was used instead of arial font for FontFamilyProperty (Thanks @VitaliBalyk)
 - Added new version of .NET MAUI Communitytoolkit (12.0.0)
 - Added a graphical clock so hours and minutes can be selected.
+- In Time mode, the graphic clock is displayed instead of the calendar. In DateTime mode, you can switch between the calendar and the graphic clock.
 - net8.0 support removed
 - Automation-Ids have been renamed
 - Added popup corner rounding and shadow and border properties. (Thanks @sferhah)
+- Static method OpenCalendarAsync changed to Maui.NullableDateTimePicker.OpenAsync.
+- In the 24-hour format, hours start with '00'.
 
 ### 2.4.1 (skipped)
 - Since CommunityToolkit Popup does not work on modal pages in windows, Mopup-Library is used temporarily in windows. (Thanks @sferhah)

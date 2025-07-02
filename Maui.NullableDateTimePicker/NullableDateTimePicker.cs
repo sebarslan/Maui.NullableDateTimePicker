@@ -12,6 +12,7 @@ public class NullableDateTimePicker : ContentView
     private Image _dateTimePickerIcon;
     private Border _dateTimePickerBorder;
     const double defaultHeightRequest = 40;
+    public Page? ParentPage { get; set; }
 
     #region bindable properties
 
@@ -386,6 +387,18 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     {
         get { return (Thickness)GetValue(PopupPaddingProperty); }
         set { SetValue(PopupPaddingProperty, value); }
+    }
+
+    public static readonly BindableProperty PopupPageOverlayColorProperty = BindableProperty.Create(
+    nameof(PopupPageOverlayColor),
+    typeof(Color),
+    typeof(NullableDateTimePicker),
+    defaultValue: Colors.Black.WithAlpha(0.5f),
+    defaultBindingMode: BindingMode.OneWay);
+    public Color PopupPageOverlayColor
+    {
+        get { return (Color)GetValue(PopupPageOverlayColorProperty); }
+        set { SetValue(PopupPageOverlayColorProperty, value); }
     }
 
     public static readonly BindableProperty ForeColorProperty = BindableProperty.Create(
@@ -881,36 +894,25 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
 
     #region public methods
-    public static async Task<Maui.NullableDateTimePicker.PopupResult> OpenCalendarAsync(INullableDateTimePickerOptions options)
+    public static async Task<Maui.NullableDateTimePicker.PopupResult> OpenAsync(INullableDateTimePickerOptions options, Page page = null)
     {
-        try
+        using (var popupControl = new NullableDateTimePickerPopup(options, new CancellationTokenSource()))
         {
-            using (var popupControl = new NullableDateTimePickerPopup(options))
-            {
-                return await popupControl.OpenPopupAsync();
-            }
+            return await popupControl.OpenPopupAsync(page);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.ToString());
-        }
-        finally
-        {
-
-        }
-
-        return null;
     }
+
+
     #endregion //public metlods
 
     #region private methods
     private async void OnDatePickerClicked(object sender, EventArgs e)
     {
-        await OpenCalendarPopupAsync();
+        await OpenNullableDateTimePickerPopupAsync();
     }
 
     bool isPopupOpen = false;
-    private async Task OpenCalendarPopupAsync()
+    private async Task OpenNullableDateTimePickerPopupAsync()
     {
         if (!base.IsEnabled || isPopupOpen)
             return;
@@ -932,6 +934,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 PopupBorderWidth = this.PopupBorderWidth,
                 PopupCornerRadius = this.PopupCornerRadius,
                 PopupPadding = this.PopupPadding,
+                PopupPageOverlayColor = this.PopupPageOverlayColor,
                 ForeColor = this.ForeColor,
                 BodyBackgroundColor = this.BodyBackgroundColor,
                 HeaderForeColor = this.HeaderForeColor,
@@ -952,7 +955,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 AutomationId = base.AutomationId
             };
 
-            var result = await NullableDateTimePicker.OpenCalendarAsync(options);
+            var result = await NullableDateTimePicker.OpenAsync(options);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
                 NullableDateTime = popupResult.NullableDateTime;

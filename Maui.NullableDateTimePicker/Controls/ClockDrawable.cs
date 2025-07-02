@@ -1,7 +1,4 @@
-﻿using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Platform;
-
-namespace Maui.NullableDateTimePicker.Controls
+﻿namespace Maui.NullableDateTimePicker.Controls
 {
     internal class ClockDrawable : IDrawable
     {

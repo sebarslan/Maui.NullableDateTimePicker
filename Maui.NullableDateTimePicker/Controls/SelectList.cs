@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Maui.NullableDateTimePicker;
 
-internal class NullableDateTimePickerSelectList : ContentView
+internal class SelectList : ContentView
 {
     public event EventHandler SelectedIndexChanged;
     public event EventHandler Closed;
@@ -12,7 +12,7 @@ internal class NullableDateTimePickerSelectList : ContentView
     #region BindableProperties
     // ItemsSource BindableProperty
     public static readonly BindableProperty ItemsSourceProperty =
-        BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(NullableDateTimePickerSelectList), null, propertyChanged: OnItemsSourceChanged);
+        BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectList), null, propertyChanged: OnItemsSourceChanged);
 
     public IList ItemsSource
     {
@@ -22,7 +22,7 @@ internal class NullableDateTimePickerSelectList : ContentView
 
     // SelectedIndex BindableProperty
     public static readonly BindableProperty SelectedIndexProperty =
-        BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(NullableDateTimePickerSelectList), -1, BindingMode.TwoWay, propertyChanged: OnSelectedIndexChanged);
+        BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectList), -1, BindingMode.TwoWay, propertyChanged: OnSelectedIndexChanged);
 
     public int SelectedIndex
     {
@@ -32,7 +32,7 @@ internal class NullableDateTimePickerSelectList : ContentView
 
     // SelectedItem BindableProperty
     public static readonly BindableProperty SelectedItemProperty =
-        BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(NullableDateTimePickerSelectList), null, BindingMode.TwoWay, propertyChanged: OnSelectedItemChanged);
+        BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectList), null, BindingMode.TwoWay, propertyChanged: OnSelectedItemChanged);
 
     public object SelectedItem
     {
@@ -42,7 +42,7 @@ internal class NullableDateTimePickerSelectList : ContentView
 
     // ItemDisplayBinding BindableProperty
     public static readonly BindableProperty ItemDisplayBindingProperty =
-        BindableProperty.Create(nameof(ItemDisplayBinding), typeof(string), typeof(NullableDateTimePickerSelectList), null);
+        BindableProperty.Create(nameof(ItemDisplayBinding), typeof(string), typeof(SelectList), null);
 
     public string ItemDisplayBinding
     {
@@ -55,7 +55,7 @@ internal class NullableDateTimePickerSelectList : ContentView
         BindableProperty.Create(
             nameof(ItemTextColor), // Property name
             typeof(Color),      // Property type
-            typeof(NullableDateTimePickerSelectList), // Declaring type
+            typeof(SelectList), // Declaring type
             Colors.Black,       // Default value
             BindingMode.OneWay // Binding mode
         );
@@ -71,7 +71,7 @@ internal class NullableDateTimePickerSelectList : ContentView
         BindableProperty.Create(
             nameof(ItemBackgroundColor), // Property name
             typeof(Color),      // Property type
-            typeof(NullableDateTimePickerSelectList), // Declaring type
+            typeof(SelectList), // Declaring type
             Colors.White,       // Default value
             BindingMode.OneWay // Binding mode
         );
@@ -87,7 +87,7 @@ internal class NullableDateTimePickerSelectList : ContentView
         BindableProperty.Create(
             nameof(SelectedItemTextColor), // Property name
             typeof(Color),      // Property type
-            typeof(NullableDateTimePickerSelectList), // Declaring type
+            typeof(SelectList), // Declaring type
             Colors.Black,       // Default value
             BindingMode.OneWay // Binding mode
         );
@@ -102,7 +102,7 @@ internal class NullableDateTimePickerSelectList : ContentView
         BindableProperty.Create(
             nameof(SelectedItemBackgroundColor), // Property name
             typeof(Color),      // Property type
-            typeof(NullableDateTimePickerSelectList), // Declaring type
+            typeof(SelectList), // Declaring type
             Colors.LightBlue,       // Default value
             BindingMode.OneWay // Binding mode
         );
@@ -116,7 +116,7 @@ internal class NullableDateTimePickerSelectList : ContentView
 
     private readonly CollectionView _collectionView;
 
-    public NullableDateTimePickerSelectList()
+    public SelectList()
     {
         VerticalOptions = LayoutOptions.Fill;
         HorizontalOptions = LayoutOptions.Fill;
@@ -268,7 +268,7 @@ internal class NullableDateTimePickerSelectList : ContentView
     // Update the CollectionView's ItemsSource when ItemsSource changes
     private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var control = (NullableDateTimePickerSelectList)bindable;
+        var control = (SelectList)bindable;
 
         control._collectionView.ItemsSource = (IList)newValue;
     }
@@ -276,7 +276,7 @@ internal class NullableDateTimePickerSelectList : ContentView
     // Update the CollectionView's selected item when SelectedItem changes
     private static void OnSelectedItemChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var control = (NullableDateTimePickerSelectList)bindable;
+        var control = (SelectList)bindable;
 
         control._collectionView.SelectedItem = newValue;
     }
@@ -284,7 +284,7 @@ internal class NullableDateTimePickerSelectList : ContentView
     // Update the selected item in CollectionView when SelectedIndex changes
     private static void OnSelectedIndexChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var control = (NullableDateTimePickerSelectList)bindable;
+        var control = (SelectList)bindable;
 
         int selectedIndex = (int)newValue;
 

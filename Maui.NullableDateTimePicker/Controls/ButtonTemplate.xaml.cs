@@ -3,13 +3,13 @@ using System.Windows.Input;
 
 namespace Maui.NullableDateTimePicker.Controls;
 
-public partial class GroupedButtonTemplate : ContentView
+ internal partial class ButtonTemplate : ContentView
 {
     public event EventHandler Clicked;
 
     private Button _innerButton;
 
-    public GroupedButtonTemplate()
+    public ButtonTemplate()
     {
         InitializeComponent();
         ButtonCommand = new Command(OnButtonCommandExecuted);
@@ -27,7 +27,7 @@ public partial class GroupedButtonTemplate : ContentView
     }
 
     public static readonly BindableProperty TextProperty =
-        BindableProperty.Create(nameof(Text), typeof(string), typeof(GroupedButtonTemplate), default(string));
+        BindableProperty.Create(nameof(Text), typeof(string), typeof(ButtonTemplate), default(string));
 
     public string Text
     {
@@ -36,7 +36,7 @@ public partial class GroupedButtonTemplate : ContentView
     }
 
     public static readonly BindableProperty StrokeShapeProperty =
-        BindableProperty.Create(nameof(StrokeShape), typeof(Shape), typeof(GroupedButtonTemplate), default(Shape));
+        BindableProperty.Create(nameof(StrokeShape), typeof(Shape), typeof(ButtonTemplate), default(Shape));
 
     public Shape StrokeShape
     {
@@ -55,7 +55,7 @@ public partial class GroupedButtonTemplate : ContentView
         BindableProperty.Create(
             nameof(VisualState),
             typeof(string),
-            typeof(GroupedButtonTemplate),
+            typeof(ButtonTemplate),
             "Normal",
             propertyChanged: OnVisualStateChanged);
 
@@ -68,7 +68,7 @@ public partial class GroupedButtonTemplate : ContentView
     private static void OnVisualStateChanged(BindableObject bindable, object oldValue, object newValue)
     {
         
-        var control = (GroupedButtonTemplate)bindable;
+        var control = (ButtonTemplate)bindable;
         var newState = newValue as string;
 
         if (control.InnerButton != null && !string.IsNullOrEmpty(newState))

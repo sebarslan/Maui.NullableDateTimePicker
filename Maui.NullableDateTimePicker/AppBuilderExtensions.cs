@@ -16,6 +16,7 @@ namespace Maui.NullableDateTimePicker
                      options.SetShouldSuppressExceptionsInAnimations(true);
                  });
 #endif
+           
             builder.ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

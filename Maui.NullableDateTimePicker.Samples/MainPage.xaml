@@ -15,7 +15,6 @@
             Padding="30,0"
             VerticalOptions="Fill">
 
-
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
             <HorizontalStackLayout VerticalOptions="Center">
@@ -57,6 +56,7 @@
                                         PopupBorderWidth="1"
                                         PopupCornerRadius="10"
                                         PopupPadding="5"
+                                         
                                             />
 
             <Label Text="Timepicker" TextColor="Black" />

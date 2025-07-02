@@ -1,14 +1,12 @@
-﻿using Microsoft.Maui.Graphics;
+﻿namespace Maui.NullableDateTimePicker.Controls;
 
-namespace Maui.NullableDateTimePicker.Controls;
-
-public partial class NullableDateTimePickerClockView : ContentView
+internal partial class ClockView : ContentView
 {
     public event EventHandler<TimeChangedEventArgs> TimeChanged;
     private readonly ClockDrawable _drawable;
 
     INullableDateTimePickerOptions _options;
-    public NullableDateTimePickerClockView(INullableDateTimePickerOptions options)
+    public ClockView(INullableDateTimePickerOptions options)
     {
         _options = options;
         InitializeComponent();
@@ -17,14 +15,14 @@ public partial class NullableDateTimePickerClockView : ContentView
 
         graphicsView.AutomationId = options.AutomationId + "_ClockGraphicsView";
         AmPmToggleButton.AutomationId = options.AutomationId + "_ClockAmPmToggleButton";
-        HourMinuteToggleButton.AutomationId = options.AutomationId + "_ClockModeToggleButton";
+        HourMinuteToggleButton.AutomationId = options.AutomationId + "_ClockHourMinuteToggleButton";
 
         SetButtonSelected(_drawable.IsAmMode, _drawable.IsHourMode);
     }
 
 
     public static readonly BindableProperty SelectedTimeProperty =
-        BindableProperty.Create(nameof(SelectedTime), typeof(TimeOnly), typeof(NullableDateTimePickerClockView), TimeOnly.FromDateTime(DateTime.Now), propertyChanged: OnSelectedTimeChanged);
+        BindableProperty.Create(nameof(SelectedTime), typeof(TimeOnly), typeof(ClockView), TimeOnly.FromDateTime(DateTime.Now), propertyChanged: OnSelectedTimeChanged);
 
     public TimeOnly SelectedTime
     {
@@ -34,7 +32,7 @@ public partial class NullableDateTimePickerClockView : ContentView
 
     private static void OnSelectedTimeChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is NullableDateTimePickerClockView clockView && newValue is TimeOnly newTime)
+        if (bindable is ClockView clockView && newValue is TimeOnly newTime)
         {
             if (oldValue != newValue)
             {

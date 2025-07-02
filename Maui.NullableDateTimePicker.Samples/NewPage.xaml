@@ -6,9 +6,6 @@
              x:Class="Maui.NullableDateTimePicker.Samples.NewPage"
              x:DataType="local:NewPage"
              Title="NewPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Close" Command="{Binding CloseModalCommand}"/>
-    </ContentPage.ToolbarItems>
     <VerticalStackLayout
         Padding="30,0"
         Spacing="25">
@@ -17,6 +14,7 @@
         VerticalOptions="Center" 
         HorizontalOptions="Center" />
         <ndp:NullableDateTimePicker
+            x:Name="DateTimePickerInModal"
         Margin="10"
         Mode="DateTime"
         WidthRequest="300" 
@@ -28,5 +26,7 @@
           Text="Select a date from calendar popup" 
           Clicked="Button_Clicked"
           HorizontalOptions="Center" />
+
+        <Button Text="Close"  Command="{Binding CloseModalCommand}" HeightRequest="50" WidthRequest="100" HorizontalOptions="Center"></Button>
     </VerticalStackLayout>
 </ContentPage>

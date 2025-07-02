@@ -24,8 +24,8 @@ internal class NullableDateTimePickerContent : ContentView
     private List<Button> _dayButtons;
     private Grid _daysGrid;
     Grid _preNextButtonsGrid;
-    private NullableDateTimePickerSelectList _yearsSelectList;
-    private NullableDateTimePickerSelectList _monthsSelectList;
+    private SelectList _yearsSelectList;
+    private SelectList _monthsSelectList;
     private Label _selectedDateLabel;
     private Label _selectedYearLabel;
     private Label _monthYearLabel;
@@ -43,12 +43,11 @@ internal class NullableDateTimePickerContent : ContentView
     private Picker _amPmPicker;
     private StackLayout _timeStackLayout;
     private ScrollView _scrollView;
-    private Border _border;
     private List<YearModel> _years = null;
     private List<PickerItem> _hours = null;
     private List<PickerItem> _minutes = null;
     private List<string> _amPmList = null;
-    private NullableDateTimePickerClockView _nullableDateTimePickerClockView;
+    private ClockView _nullableDateTimePickerClockView;
     private bool isClockDisplaying;
 
     internal NullableDateTimePickerContent(INullableDateTimePickerOptions options)
@@ -506,7 +505,7 @@ internal class NullableDateTimePickerContent : ContentView
                 _activityIndicator.IsVisible = true;
                 _activityIndicator.IsRunning = true;
 
-                _nullableDateTimePickerClockView = new NullableDateTimePickerClockView(_options);
+                _nullableDateTimePickerClockView = new ClockView(_options);
                 _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
                 _nullableDateTimePickerClockView.TimeChanged += (s, e) =>
                 {
@@ -655,9 +654,9 @@ internal class NullableDateTimePickerContent : ContentView
             var toggleCalendarClockImageButton = new ImageButton
             {
                 Source = Utilities.GetImageSource("toggle_calendar_clock.png"),
-                Margin = new Thickness(5, 0, 0, 0),
+                Margin = new Thickness(10, 0, 0, 0),
                 Aspect = Aspect.AspectFit,
-                BorderWidth = 0,                
+                BorderWidth = 0,
                 BackgroundColor = Colors.Transparent,
                 WidthRequest = 14,
                 HeightRequest = 14,
@@ -678,12 +677,13 @@ internal class NullableDateTimePickerContent : ContentView
 
         _hours = new();
 
-        int maxHour = _options.Is12HourFormat ? 12 : 24;
-        for (int h = 1; h <= maxHour; h++)
+        int startHour = _options.Is12HourFormat ? 1 : 0;
+        int maxHour = _options.Is12HourFormat ? 12 : 23;
+        for (int h = startHour; h <= maxHour; h++)
         {
             string hourText = h.ToString("00");
 
-            _hours.Add(new PickerItem { Text = hourText, Value = h == 24 ? 0 : h });
+            _hours.Add(new PickerItem { Text = hourText, Value = h });
         }
 
         _minutes = new();
@@ -1275,7 +1275,7 @@ internal class NullableDateTimePickerContent : ContentView
     {
         HideYearsSelectList();
 
-        var yearSelectList = (NullableDateTimePickerSelectList)sender;
+        var yearSelectList = (SelectList)sender;
         if (yearSelectList.SelectedItem is not YearModel selectedYear)
             return;
 
@@ -1314,7 +1314,8 @@ internal class NullableDateTimePickerContent : ContentView
         if (hour < 0 || hour > 23 || _currentDate.Hour == hour)
             return;
         var currentDate = new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, hour, _currentDate.Minute, _currentDate.Second);
-        _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(currentDate);
+        if (_nullableDateTimePickerClockView != null)
+            _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(currentDate);
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, hour, _currentDate.Minute, _currentDate.Second));
     }
 
@@ -1332,7 +1333,8 @@ internal class NullableDateTimePickerContent : ContentView
         if (minute < 0 || minute > 59 || _currentDate.Minute == minute)
             return;
         var currentDate = new DateTime(_currentDate.Year, _currentDate.Month, _currentDate.Day, _currentDate.Hour, minute, _currentDate.Second);
-        _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(currentDate);
+        if (_nullableDateTimePickerClockView != null)
+            _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(currentDate);
         UpdateCurrentDateAndControls(currentDate);
     }
 
@@ -1400,7 +1402,7 @@ internal class NullableDateTimePickerContent : ContentView
         {
             selectedItemBackgroundColor = (Color)itemBackgroundColorSetter.Value; // Colors.Transparent döner
         }
-        _yearsSelectList = new NullableDateTimePickerSelectList
+        _yearsSelectList = new SelectList
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
             Margin = new Thickness(5, 0),
@@ -1423,7 +1425,7 @@ internal class NullableDateTimePickerContent : ContentView
         }
         else if (_options.BodyBackgroundThemeColor != null)
         {
-            _yearsSelectList.SetBinding(NullableDateTimePickerSelectList.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
+            _yearsSelectList.SetBinding(SelectList.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
         }
 
         _yearsSelectList.SelectedIndexChanged += OnYearsPickerIndexChanged;
@@ -1440,7 +1442,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         string[] months = DateTimeFormatInfo.CurrentInfo.AbbreviatedMonthNames;
 
-        _monthsSelectList = new NullableDateTimePickerSelectList
+        _monthsSelectList = new SelectList
         {
             AutomationId = _options.AutomationId + "_CalendarMonthsSelectList",
             ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
@@ -1461,7 +1463,7 @@ internal class NullableDateTimePickerContent : ContentView
         }
         else if (_options.BodyBackgroundThemeColor != null)
         {
-            _monthsSelectList.SetBinding(NullableDateTimePickerSelectList.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
+            _monthsSelectList.SetBinding(SelectList.BackgroundColorProperty, _options.BodyBackgroundThemeColor.GetBinding());
         }
 
         _monthsSelectList.SelectedIndexChanged += OnMonthsPickerIndexChanged;
@@ -1580,7 +1582,7 @@ internal class NullableDateTimePickerContent : ContentView
     {
         HideMonthListView();
 
-        var monthsSelectList = (NullableDateTimePickerSelectList)sender;
+        var monthsSelectList = (SelectList)sender;
         if (monthsSelectList.SelectedItem is not MonthModel selectedMonth)
             return;
 

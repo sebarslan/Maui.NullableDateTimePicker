@@ -2,7 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:drawables="clr-namespace:Maui.NullableDateTimePicker.Controls"
-             x:Class="Maui.NullableDateTimePicker.Controls.NullableDateTimePickerClockView">
+             x:Class="Maui.NullableDateTimePicker.Controls.ClockView"
+             x:ClassModifier="NotPublic">
     <ContentView.Resources>
         <ResourceDictionary>
             <drawables:ClockDrawable x:Key="clockDrawable" />
@@ -16,14 +17,14 @@
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10" Spacing="10">
             <!-- AM/PM Button -->
-            <drawables:GroupedButtonTemplate x:Name="AmPmToggleButton"                           
+            <drawables:ButtonTemplate x:Name="AmPmToggleButton"                           
                     Text="AM"
                     Clicked="OnAmPmToggleButtonClicked" 
                     StrokeShape="{StaticResource RoundedShape}"
                     VisualState="Normal" />
 
             <!-- Hour/Minute Button -->
-            <drawables:GroupedButtonTemplate x:Name="HourMinuteToggleButton"
+            <drawables:ButtonTemplate x:Name="HourMinuteToggleButton"
                 Text="H"
                 Clicked="OnHourMinuteToggleButtonClicked" 
                 StrokeShape="{StaticResource RoundedShape}"

@@ -18,11 +18,13 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
     private bool _disposed = false;
     INullableDateTimePickerOptions _options;
     CancellationTokenSource _cancellationTokenSource;
-    internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options)
+    internal NullableDateTimePickerPopup(INullableDateTimePickerOptions options, CancellationTokenSource cancellationTokenSource = default)
     {
-        _cancellationTokenSource = new CancellationTokenSource();
+
+        _cancellationTokenSource = cancellationTokenSource;
         _options = options;
         _content = new NullableDateTimePickerContent(options);
+
 
         if (options.AutomationId == null)
             options.AutomationId = "";
@@ -40,38 +42,39 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
 
         base.Opened += _content.NullableDateTimePickerPopupOpened;
 
-        okButtonClickedHandler = (s, e) =>
+        okButtonClickedHandler = async (s, e) =>
         {
-            ClosePopupAsync(PopupButtons.Ok);
+            await ClosePopupAsync(PopupButtons.Ok);
         };
         _content.OkButtonClicked += okButtonClickedHandler;
 
-        clearButtonClickedHandler = (s, e) =>
+        clearButtonClickedHandler = async (s, e) =>
         {
-            ClosePopupAsync(PopupButtons.Clear);
+            await ClosePopupAsync(PopupButtons.Clear);
         };
         _content.ClearButtonClicked += clearButtonClickedHandler;
 
-        cancelButtonClickedHandler = (s, e) =>
+        cancelButtonClickedHandler = async (s, e) =>
         {
-            ClosePopupAsync(PopupButtons.Cancel);
+            await ClosePopupAsync(PopupButtons.Cancel);
         };
         _content.CancelButtonClicked += cancelButtonClickedHandler;
 
         Content = _content;
     }
 
-    static Page MainPage => Shell.Current;
-    internal async Task<Maui.NullableDateTimePicker.PopupResult> OpenPopupAsync()
+    Page _hostPage;
+    internal async Task<PopupResult> OpenPopupAsync(Page page = null)
     {
-        //var mainPage = Application.Current?.Windows.FirstOrDefault()?.Page;
-        //if (mainPage == null)
-        //    return null;
+        _hostPage = page;
+        if (_hostPage == null)
+            _hostPage = FindHostPage();
 
-        if (MainPage == null)
-            return null;
+        if (_hostPage == null)
+            throw new InvalidOperationException("Could not find a valid Page to show popup.");
 
-        var result = await MainPage.ShowPopupAsync<PopupResult>(this, new PopupOptions
+
+        var result = await _hostPage.ShowPopupAsync<PopupResult>(this, new PopupOptions
         {
             CanBeDismissedByTappingOutsideOfPopup = _options.CloseOnOutsideClick,
             PageOverlayColor = _options.PopupPageOverlayColor,
@@ -87,34 +90,58 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
         {
             return popupResult.Result;
         }
-        return null;
+
+        return new PopupResult(null, PopupButtons.Cancel);
     }
 
-
-    internal async void ClosePopupAsync(PopupButtons buttonResult)
+    internal async Task ClosePopupAsync(PopupButtons buttonResult)
     {
         try
         {
-            await base.CloseAsync(new PopupResult(_content.SelectedDate, buttonResult));
+            var popupResult = new PopupResult(_content.SelectedDate, buttonResult);
+            await _hostPage.ClosePopupAsync(popupResult);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            Console.WriteLine("ClosePopupAsync Error: " + ex);
         }
     }
 
+    public static Page? FindHostPage()
+    {
+        var rootPage = Application.Current?.Windows.FirstOrDefault()?.Page;
+
+        //if (rootPage?.Navigation?.ModalStack?.Count > 0)
+        //{
+        //    var topModal = rootPage.Navigation.ModalStack.Last();
+
+        //    if (topModal is NavigationPage nav)
+        //        return nav.CurrentPage;
+
+        //    return topModal;
+        //}
+
+        //if (rootPage is Shell shell)
+        //{
+        //    rootPage = (shell.CurrentItem?.CurrentItem as IShellSectionController)?
+        //        .PresentedPage;
+        //}
+
+        //if (rootPage is NavigationPage mainNav)
+        //    return mainNav.CurrentPage;
+
+        return rootPage;
+    }
     public void Dispose()
     {
         Dispose(true);
 
         GC.SuppressFinalize(this);
     }
-
     ~NullableDateTimePickerPopup()
     {
         Dispose(false);
     }
-
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposed)

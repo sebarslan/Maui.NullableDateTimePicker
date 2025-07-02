@@ -29,7 +29,7 @@ public partial class MainPage : ContentPage
     public bool Is12HourFormat => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("tt");
 
     private ICommand _OpenModalCommand;
-    public ICommand OpenModalCommand => _OpenModalCommand ??= new Command(async () => await Navigation.PushModalAsync(new NavigationPage(new NewPage())));
+    public ICommand OpenModalCommand => _OpenModalCommand ??= new Command(async () => await Shell.Current.Navigation.PushModalAsync(new NewPage()));
 
     // Datepicker programmatically
     private void CreateDateTimePickerProgrammatically()
@@ -72,11 +72,18 @@ public partial class MainPage : ContentPage
             PopupPadding = 5,
         };
 
-        var result = await NullableDateTimePicker.OpenCalendarAsync(nullableDateTimePickerOptions);
-        if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
+        try
         {
-            MyDateTime = popupResult.NullableDateTime;
-            //DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
+            var result = await NullableDateTimePicker.OpenAsync(nullableDateTimePickerOptions);
+            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
+            {
+                MyDateTime = popupResult.NullableDateTime;
+                //DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
+            }
+        }
+        catch (Exception ex)
+        {
+
         }
     }
 
