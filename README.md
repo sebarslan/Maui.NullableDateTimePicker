@@ -179,10 +179,10 @@ Contributions are welcome!
 # Screenshot
 on ios, android, windows
 
-![screenshot](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
-![screenshot2](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot2.png)
-![screenshot3](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot3.png)
-![screenshot4](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot4.png)
+![Screenshot 1](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot.png)
+![Screenshot 2](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot2.png)
+![Screenshot 3](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot3.png)
+![Screenshot 4](https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/screenshot4.png)
 
 
 # Changelog
