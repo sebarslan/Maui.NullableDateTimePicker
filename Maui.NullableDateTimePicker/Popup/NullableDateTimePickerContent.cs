@@ -261,7 +261,7 @@ internal class NullableDateTimePickerContent : ContentView
         #region Calendar row
         if (_options.Mode == PickerModes.Time)
         {
-            InitClockBlock();
+            await InitClockBlock();
         }
         else
         {
@@ -496,7 +496,7 @@ internal class NullableDateTimePickerContent : ContentView
         #endregion // days
     }
 
-    private async void InitClockBlock()
+    private async Task InitClockBlock()
     {
         await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
         {
@@ -944,26 +944,19 @@ internal class NullableDateTimePickerContent : ContentView
 
     private async Task BuildClock()
     {
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
+        try
         {
-            try
-            {
-                _activityIndicator.IsVisible = true;
-                _activityIndicator.IsRunning = true;
+            if (_nullableDateTimePickerClockView == null)
+                await InitClockBlock();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+        finally
+        {
 
-                if (_nullableDateTimePickerClockView == null)
-                    InitClockBlock();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                _activityIndicator.IsVisible = false;
-                _activityIndicator.IsRunning = false;
-            }
-        });
+        }
     }
 
     private async Task BuildCalendar()
