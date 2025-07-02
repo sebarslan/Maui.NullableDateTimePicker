@@ -19,6 +19,7 @@
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<AssemblyVersion>3.0.0.0</AssemblyVersion>
 		<Version>3.0.0</Version>
+		<MauiVersion>9.0.81</MauiVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,19 +33,11 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="..\Screenshots\**\*" Pack="True" PackagePath="Screenshots\" />
-	</ItemGroup>
-
-
-	<PropertyGroup Condition="$(TargetFramework.StartsWith('net9.0'))">
-		<MauiVersion>9.0.81</MauiVersion>
-	</PropertyGroup>
-
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net9.0'))">
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.0.0" PrivateAssets="All" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="Controls\ButtonTemplate.xaml">
