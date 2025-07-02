@@ -30,7 +30,10 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="..\Screenshots\**\*" Pack="True" PackagePath="\" />
+		<None Include="..\Screenshots\**\*">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.StartsWith('net9.0'))">
