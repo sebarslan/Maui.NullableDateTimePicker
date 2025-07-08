@@ -90,6 +90,52 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 
 More examples, please see the samples project
 
+# Features
+
+- **Date and Time Selection**  
+  Select both date and time values seamlessly.
+
+- **Calendar Navigation**  
+  Navigate through months and years with previous/next buttons.
+
+- **Week Numbers**  
+  Option to display week numbers in the calendar view.
+
+- **Day Overflow**  
+  Shows days from the previous and next months to fill the calendar grid.
+
+- **Month Picker**  
+  Tap on the month name to open a month selector.  
+  Supports year switching while selecting a month.
+
+- **Switch Between Date and Time Modes**  
+  Easily toggle between date and time pickers within the same interface.
+
+- **Flexible Usage**  
+  Can be used:
+  - **Embedded Mode:**  
+  Used as an inline input field (as a `ContentView`).  
+  The date or time picker opens in a modal popup when the icon or input field is tapped.
+
+  - **Popup Mode:**  
+  The calendar or time picker can be opened directly as a modal,  
+  without using an input field (for standalone picker usage).
+
+- **Time Picker Options**  
+  - Select time using a graphical clock or dropdown lists.
+  - Supports both **12-hour** and **24-hour** time formats.
+
+- **Action Buttons**  
+  - **OK:** Confirm the selection.
+  - **Cancel:** Dismiss without saving.
+  - **Clear:** Reset the selection (sets value to `null`).
+
+- **Localization Ready**  
+  Compatible with various date, time, and number formats based on the user's locale.
+
+- **Customizable Styles**  
+  Fully customizable appearance (colors, fonts, icons) to match your app’s design.
+
 # Options
 ## DateTimePicker Calendar options
 | Option | Description | Default Value |
