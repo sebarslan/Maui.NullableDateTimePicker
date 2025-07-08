@@ -127,14 +127,14 @@ More examples, please see the samples project
 
 - **Action Buttons**  
   - **OK:** Confirm the selection.
-  - **Cancel:** Dismiss without saving.
+  - **Cancel:** Close without applying any changes.
   - **Clear:** Reset the selection (sets value to `null`).
 
 - **Localization Ready**  
   Compatible with various date, time, and number formats based on the user's locale.
 
 - **Customizable Styles**  
-  Fully customizable appearance (colors, fonts, icons) to match your app’s design.
+  Fully customizable appearance (colors, fonts, icons) to match your appâ€™s design.
 
 # Options
 ## DateTimePicker Calendar options
