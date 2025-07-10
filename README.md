@@ -158,8 +158,8 @@ More examples, please see the samples project
 | OkButtonText | The text for the OK button. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
 | PopupBorderColor | Color of the popup border. Set to transparent or null to hide the border. | Transparent |
-| PopupCornerRadius | Corner radius of the popup's border for rounded edge appearance. | 0 |
 | PopupBorderWidth | Thickness of the border around the popup. | 0 |
+| PopupCornerRadius | Corner radius of the popup's border for rounded edge appearance. | 0 |
 | PopupPadding | Internal spacing between the popup's content and its border. | 0 |
 | PopupPageOverlayColor | Background overlay color behind the popup. Useful for dimming the content. | Black, %50 opacity [Colors.Black.WithAlpha(0.5f)] |
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
