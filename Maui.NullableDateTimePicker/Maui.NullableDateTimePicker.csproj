@@ -12,7 +12,7 @@
 		<PublishAot Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">true</PublishAot>
 		<Title>Maui.NullableDateTimePicker</Title>
 		<Authors>Sebarslan</Authors>
-		<Description>Nullable and clerable datetime picker component for Maui</Description>
+		<Description>Nullable and clearable datetime picker component for Maui</Description>
 		<RepositoryUrl>https://github.com/sebarslan/Maui.NullableDateTimePicker</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/sebarslan/Maui.NullableDateTimePicker</PackageProjectUrl>
 		<PackageTags>nullable clerable datepicker,maui,cross-platform,.net,ios,android,windows,mac catalyst</PackageTags>
