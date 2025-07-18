@@ -305,3 +305,6 @@ on ios, android, windows
 
 ### 1.0.1
 - The problem of not setting the margin has been fixed.
+
+### 1.0.0
+- Initial Release.
