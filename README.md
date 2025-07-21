@@ -223,7 +223,7 @@ The Nullable DateTimePicker control is licensed under the MIT License. See <a hr
 Contributions are welcome!
 
 # Screenshot
-on ios, android, windows
+on ios, android, windows, maccatalyst
 <div>
 <img src="https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot.png" height="300" />
 <img src="https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot2.png" height="300" />
