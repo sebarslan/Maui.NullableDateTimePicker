@@ -23,8 +23,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<AssemblyVersion>3.0.1.0</AssemblyVersion>
-		<Version>3.0.1</Version>
+		<AssemblyVersion>3.1.0.0</AssemblyVersion>
+		<Version>3.1.0</Version>
 		<MauiVersion>9.0.81</MauiVersion>
 	</PropertyGroup>
 
