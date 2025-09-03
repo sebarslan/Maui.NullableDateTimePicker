@@ -2,12 +2,12 @@
 
 public class PopupResult
 {
-    internal PopupResult(DateTime? nullableDateTime, PopupButtons buttonResult)
+    internal PopupResult(DateTime? selectedDateTime, PopupButtons buttonResult)
     {
-        NullableDateTime = nullableDateTime;
+        SelectedDateTime = selectedDateTime;
         ButtonResult = buttonResult;
     }
 
     public PopupButtons ButtonResult { get; }
-    public DateTime? NullableDateTime { get; }
+    public DateTime? SelectedDateTime { get; }
 }

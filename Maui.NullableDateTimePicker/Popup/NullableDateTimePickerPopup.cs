@@ -98,7 +98,7 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
     {
         try
         {
-            var popupResult = new PopupResult(_content.SelectedDate, buttonResult);
+            var popupResult = new PopupResult(_content.SelectedDateTime, buttonResult);
             await _hostPage.ClosePopupAsync(popupResult);
         }
         catch (Exception ex)

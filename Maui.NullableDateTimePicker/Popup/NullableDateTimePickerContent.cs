@@ -10,7 +10,7 @@ internal class NullableDateTimePickerContent : ContentView
     internal event EventHandler<EventArgs> OkButtonClicked;
     internal event EventHandler<EventArgs> ClearButtonClicked;
     internal event EventHandler<EventArgs> CancelButtonClicked;
-    private DateTime? _selectedDate;
+    private DateTime? _selectedDateTime;
     private DateTime _currentDate;
     readonly DateTime _minDate;
     readonly DateTime _maxDate;
@@ -57,8 +57,8 @@ internal class NullableDateTimePickerContent : ContentView
         options ??= new NullableDateTimePickerOptions();
 
         _options = options;
-        _selectedDate = options.NullableDateTime;
-        _currentDate = options.NullableDateTime ?? DateTime.Now;
+        _selectedDateTime = options.SelectedDateTime;
+        _currentDate = options.SelectedDateTime ?? DateTime.Now;
         _minDate = options.MinDate ?? new DateTime(1900, 1, 1);
         _maxDate = options.MaxDate ?? new DateTime(DateTime.Now.Year + 100, 12, 31);
 
@@ -121,13 +121,13 @@ internal class NullableDateTimePickerContent : ContentView
     }
 
 
-    internal DateTime? SelectedDate
+    internal DateTime? SelectedDateTime
     {
-        get { return _selectedDate; }
+        get { return _selectedDateTime; }
         private set
         {
             var date = value;
-            _selectedDate = date;
+            _selectedDateTime = date;
         }
     }
 
@@ -197,9 +197,12 @@ internal class NullableDateTimePickerContent : ContentView
         _selectedYearLabel = new Label
         {
             AutomationId = _options.AutomationId + "_CalendarSelectedYearLabel",
-            HeightRequest = 30,
+            HeightRequest = 35,
+            Padding = 0,
             FontSize = 25,
             BackgroundColor = Colors.Transparent,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalTextAlignment = TextAlignment.Start,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
             VerticalOptions = LayoutOptions.Center,
@@ -225,12 +228,15 @@ internal class NullableDateTimePickerContent : ContentView
         _selectedDateLabel = new Label
         {
             AutomationId = _options.AutomationId + "_CalendarSelectedDateLabel",
-            HeightRequest = 30,
-            FontSize = 25,
+            HeightRequest = 35,
+            Padding = 0,
+            FontSize = 20,
             BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Start,
             FontAttributes = FontAttributes.Bold,
             VerticalOptions = LayoutOptions.Center,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalTextAlignment = TextAlignment.Start,
             LineBreakMode = LineBreakMode.TailTruncation
         };
 
@@ -509,7 +515,7 @@ internal class NullableDateTimePickerContent : ContentView
                 _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
                 _nullableDateTimePickerClockView.TimeChanged += (s, e) =>
                 {
-                    UpdateCurrentDateAndControls(SelectedDate?.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
+                    UpdateCurrentDateAndControls(SelectedDateTime?.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
                 };
 
                 _mainContentArea.Add(_nullableDateTimePickerClockView, 0, 1);
@@ -1233,7 +1239,7 @@ internal class NullableDateTimePickerContent : ContentView
 
     internal void OnClearButtonClicked(object sender, EventArgs e)
     {
-        SelectedDate = null;
+        SelectedDateTime = null;
         ClearButtonClicked?.Invoke(this, EventArgs.Empty);
     }
 
@@ -1244,7 +1250,7 @@ internal class NullableDateTimePickerContent : ContentView
 
     internal void OnOkButtonClicked(object sender, EventArgs e)
     {
-        SelectedDate = _currentDate;
+        SelectedDateTime = _currentDate;
         OkButtonClicked?.Invoke(this, EventArgs.Empty);
     }
 

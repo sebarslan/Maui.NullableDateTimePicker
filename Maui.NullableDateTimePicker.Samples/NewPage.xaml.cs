@@ -31,7 +31,7 @@ public partial class NewPage : ContentPage
         {
             if (sender is Button button)
             {
-                button.Text = popupResult.NullableDateTime.HasValue ? popupResult.NullableDateTime.Value.ToString("D") : "NULL";
+                button.Text = popupResult.SelectedDateTime.HasValue ? popupResult.SelectedDateTime.Value.ToString("D") : "NULL";
             }
         }
     }

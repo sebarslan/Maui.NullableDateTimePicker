@@ -30,7 +30,7 @@
 
             <Label Text="DateTimepicker" TextColor="Black" />
 
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             WidthRequest="300" 
                             HeightRequest="30"
@@ -42,7 +42,7 @@
 
             <Label Text="Datepicker control with border + popup with border" TextColor="Black" />
 
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"  
                                         Mode="Date"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
@@ -60,7 +60,7 @@
                                             />
 
             <Label Text="Timepicker" TextColor="Black" />
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" 
                                         Mode="Time"
                                         WidthRequest="150"
                                         HeightRequest="40"
@@ -71,7 +71,7 @@
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}"
                                         />
             <Label Text="Timepicker 12 hour format" TextColor="Black" />
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"
+            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"
      Mode="DateTime"
      WidthRequest="300" 
      ShowWeekNumbers="True"
@@ -122,7 +122,7 @@
 
             <Label Text="MinDate MaxDate and FontImageSource for Icon" TextColor="Black" />
 
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}"  
+            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"  
                             Mode="Date"
                             MinDate="{Binding MyMinDate}"
                             MaxDate="{Binding MyMaxDate}"
@@ -141,7 +141,7 @@
             </ndtp:NullableDateTimePicker>
 
             <Label Text="Disabled" TextColor="Black" />
-            <ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             HorizontalOptions="Start"
                             IsEnabled="False"

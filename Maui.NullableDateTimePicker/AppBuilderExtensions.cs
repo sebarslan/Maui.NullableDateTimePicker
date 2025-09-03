@@ -16,7 +16,14 @@ namespace Maui.NullableDateTimePicker
                      options.SetShouldSuppressExceptionsInAnimations(true);
                  });
 #endif
-           
+
+//#if IOS || MACCATALYST
+//builder.ConfigureMauiHandlers(handlers =>
+//{
+//    handlers.AddHandler<Microsoft.Maui.Controls.CollectionView, Microsoft.Maui.Controls.Handlers.Items2.CollectionViewHandler2>();
+//});
+//#endif
+
             builder.ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

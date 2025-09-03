@@ -6,7 +6,7 @@ namespace Maui.NullableDateTimePicker;
 // All the code in this file is included in all platforms.
 public class NullableDateTimePicker : ContentView
 {
-    public event EventHandler<DateTimeChangedEventArgs> NullableDateTimeChanged;
+    public event EventHandler<DateTimeChangedEventArgs> SelectedDateTimeChanged;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
     private Image _dateTimePickerIcon;
@@ -16,8 +16,8 @@ public class NullableDateTimePicker : ContentView
 
     #region bindable properties
 
-    public static readonly BindableProperty NullableDateTimeProperty =
-    BindableProperty.Create(nameof(NullableDateTime),
+    public static readonly BindableProperty SelectedDateTimeProperty =
+    BindableProperty.Create(nameof(SelectedDateTime),
         typeof(DateTime?),
         typeof(NullableDateTimePicker),
         null,
@@ -26,39 +26,39 @@ public class NullableDateTimePicker : ContentView
         (bindable, oldValue, newValue) =>
         {
             var self = (NullableDateTimePicker)bindable;
-            var oldNullableDateTime = (DateTime?)oldValue;
-            var newNullableDateTime = (DateTime?)newValue;
+            var oldSelectedDateTime = (DateTime?)oldValue;
+            var newSelectedDateTime = (DateTime?)newValue;
 
             // Reset the text, so that the text color will be updated
             // https://github.com/dotnet/maui/issues/17843
             self._dateTimePickerEntry.Text = "";
-            self._dateTimePickerEntry.Text = newNullableDateTime?.ToString(self.Format);
+            self._dateTimePickerEntry.Text = newSelectedDateTime?.ToString(self.Format);
 
             //Date changed event
             bool isDateTimeChanged = false;
-            if (self.Mode == PickerModes.Date && oldNullableDateTime?.Date != newNullableDateTime?.Date)
+            if (self.Mode == PickerModes.Date && oldSelectedDateTime?.Date != newSelectedDateTime?.Date)
             {
                 isDateTimeChanged = true;
             }
-            else if (self.Mode == PickerModes.DateTime && (oldNullableDateTime?.Date != newNullableDateTime?.Date || oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay))
+            else if (self.Mode == PickerModes.DateTime && (oldSelectedDateTime?.Date != newSelectedDateTime?.Date || oldSelectedDateTime?.TimeOfDay != newSelectedDateTime?.TimeOfDay))
             {
                 isDateTimeChanged = true;
             }
-            else if (self.Mode == PickerModes.Time && oldNullableDateTime?.TimeOfDay != newNullableDateTime?.TimeOfDay)
+            else if (self.Mode == PickerModes.Time && oldSelectedDateTime?.TimeOfDay != newSelectedDateTime?.TimeOfDay)
             {
                 isDateTimeChanged = true;
             }
 
             if (isDateTimeChanged)
-                self.NullableDateTimeChanged?.Invoke(self, new DateTimeChangedEventArgs(oldNullableDateTime, newNullableDateTime));
+                self.SelectedDateTimeChanged?.Invoke(self, new DateTimeChangedEventArgs(oldSelectedDateTime, newSelectedDateTime));
         });
 
-    public DateTime? NullableDateTime
+    public DateTime? SelectedDateTime
     {
-        get { return (DateTime?)GetValue(NullableDateTimeProperty); }
+        get { return (DateTime?)GetValue(SelectedDateTimeProperty); }
         set
         {
-            SetValue(NullableDateTimeProperty, value);
+            SetValue(SelectedDateTimeProperty, value);
         }
     }
 
@@ -465,7 +465,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             var newValue = (string)n;
             if (oldValue != newValue)
             {
-                self._dateTimePickerEntry.Text = self.NullableDateTime?.ToString(self.Format);
+                self._dateTimePickerEntry.Text = self.SelectedDateTime?.ToString(self.Format);
             }
         });
 
@@ -923,7 +923,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         {
             INullableDateTimePickerOptions options = new NullableDateTimePickerOptions
             {
-                NullableDateTime = this.NullableDateTime,
+                SelectedDateTime = this.SelectedDateTime,
                 Mode = this.Mode,
                 MinDate = this.MinDate,
                 MaxDate = this.MaxDate,
@@ -958,7 +958,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             var result = await NullableDateTimePicker.OpenAsync(options);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
-                NullableDateTime = popupResult.NullableDateTime;
+                SelectedDateTime = popupResult.SelectedDateTime;
             }
         }
         catch (Exception ex)

@@ -5,7 +5,7 @@ namespace Maui.NullableDateTimePicker;
 
 public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
 {
-    public DateTime? NullableDateTime { get; set; }
+    public DateTime? SelectedDateTime { get; set; }
     public PickerModes Mode { get; set; } = PickerModes.Date;
     public DateTime? MinDate { get; set; }
     public DateTime? MaxDate { get; set; }

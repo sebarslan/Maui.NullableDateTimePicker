@@ -50,7 +50,7 @@ public partial class MainPage : ContentPage
 
         // binding
         datePicker.BindingContext = this;
-        datePicker.SetBinding(NullableDateTimePicker.NullableDateTimeProperty, nameof(MyDateTime), BindingMode.TwoWay);
+        datePicker.SetBinding(NullableDateTimePicker.SelectedDateTimeProperty, nameof(MyDateTime), BindingMode.TwoWay);
 
         DateTimePlaceStackLayout.Add(datePicker);
     }
@@ -61,7 +61,7 @@ public partial class MainPage : ContentPage
     {
         INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
         {
-            NullableDateTime = MyDateTime,
+            SelectedDateTime = MyDateTime,
             Mode = PickerModes.DateTime,
             ShowWeekNumbers = true,
             CloseOnOutsideClick = true,
@@ -77,8 +77,8 @@ public partial class MainPage : ContentPage
             var result = await NullableDateTimePicker.OpenAsync(nullableDateTimePickerOptions);
             if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
             {
-                MyDateTime = popupResult.NullableDateTime;
-                //DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
+                MyDateTime = popupResult.SelectedDateTime;
+                //DateTimeEntry.Text = popupResult.SelectedDateTime?.ToString("g"); //If you are not using ViewModel
             }
         }
         catch (Exception ex)

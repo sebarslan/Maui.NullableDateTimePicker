@@ -71,17 +71,17 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
 {
     INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
     {
-        NullableDateTime = MyDateTime,
+        SelectedDateTime = MyDateTime,
         Mode = PickerModes.DateTime,
         ShowWeekNumbers = true
-        // .. other calendar options
+        // .. other picker options
     };
 
     var result = await NullableDateTimePicker.OpenAsync(nullableDateTimePickerOptions);
     if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
     {
-        MyDateTime = popupResult.NullableDateTime;
-        // DateTimeEntry.Text = popupResult.NullableDateTime?.ToString("g"); //If you are not using ViewModel
+        MyDateTime = popupResult.SelectedDateTime;
+        // DateTimeEntry.Text = popupResult.SelectedDateTime?.ToString("g"); //If you are not using ViewModel
     }
 }
 </code>
@@ -154,7 +154,7 @@ More examples, please see the samples project
 | MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
 | MinDate | Minimum selectable date of the control. | DateTime.MinValue |
 | Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
-| NullableDateTime | Gets or sets the nullable date and time value of the control. | null |
+| SelectedDateTime | Gets or sets the nullable date and time value of the control. | null |
 | OkButtonText | The text for the OK button. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
 | PopupBorderColor | Color of the popup border. Set to transparent or null to hide the border. | Transparent |
@@ -187,19 +187,19 @@ More examples, please see the samples project
 | TextColor | Text color of the entry. | Black |
 
 
-## NullableDateTimeChanged Event (If NullableDateTimePicker is used as ContentView)
-The NullableDateTimeChanged event is used to indicate when a NullableDateTime value has been changed. 
-This event is commonly used in programming or software environments and is triggered when the NullableDateTime value is modified.
+## SelectedDateTimeTimeChanged Event (If NullableDateTimePicker is used as ContentView)
+The SelectedDateTimeChanged event is used to indicate when a SelectedDateTime value has been changed. 
+This event is commonly used in programming or software environments and is triggered when the SelectedDateTime value is modified.
 
 The event utilizes the DateTimeChangedEventArgs class as its argument. The DateTimeChangedEventArgs class contains additional information that is carried at the moment the event is triggered. It may include details about the date and time change, such as the old DateTime value and the new DateTime value.
 
-Below is an example code snippet illustrating the usage of the "NullableDateTimeChanged" event and the "DateTimeChangedEventArgs" argument class:
+Below is an example code snippet illustrating the usage of the "SelectedDateTimeChanged" event and the "DateTimeChangedEventArgs" argument class:
 <pre>
 <code>
 NullableDateTimePicker dateTimePicker = new NullableDateTimePicker();
-dateTimePicker.NullableDateTimeChanged += OnNullableDateTimeChanged;
+dateTimePicker.SelectedDateTimeChanged += OnSelectedDateTimeChanged;
 
-private static void OnNullableDateTimeChanged(object sender, DateTimeChangedEventArgs e)
+private static void OnSelectedDateTimeChanged(object sender, DateTimeChangedEventArgs e)
 {
     Console.WriteLine("DateTime changed!");
     Console.WriteLine("Old DateTime: " + e.OldDateTime);
@@ -233,6 +233,10 @@ on ios, android, windows
 
 
 # Changelog
+
+### 3.1.0 Preview
+- The property 'NullableDateTime' renamed to 'SelectedDateTime'
+- Fixed truncation issues in month names on the selected date label.
 
 ### 3.0.0
 - OpenSansRegular was used instead of arial font for FontFamilyProperty (Thanks @VitaliBalyk)
