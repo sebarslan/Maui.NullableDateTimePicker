@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Controls.Shapes;
 using System.Collections;
 using System.Runtime.CompilerServices;
 
@@ -223,6 +223,20 @@ internal class SelectList : ContentView
                     }
                 }
             });
+            
+            if (DeviceInfo.Platform == DevicePlatform.iOS)
+            {
+                // Tap to select (works reliably on iOS)
+                var tap = new TapGestureRecognizer
+                {
+                    NumberOfTapsRequired = 1,
+                    Command = new Command(() =>
+                    {
+                        _collectionView.SelectedItem = border.BindingContext;
+                    })
+                };
+                border.GestureRecognizers.Add(tap);
+            }
 
             return border;
         });
