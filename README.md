@@ -235,6 +235,7 @@ on ios, android, windows, maccatalyst
 # Changelog
 
 ### 3.1.0 Preview
+- Fixed issue where Month or Year selection required long touch on iOS. (Thanks @mshenoy83)
 - The property 'NullableDateTime' renamed to 'SelectedDateTime'
 - The property 'NullableDateTimeChanged' renamed to 'SelectedDateTimeChanged'
 - Fixed truncation issues in month names on the selected date label.
