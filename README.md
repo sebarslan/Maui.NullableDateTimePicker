@@ -154,7 +154,6 @@ More examples, please see the samples project
 | MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
 | MinDate | Minimum selectable date of the control. | DateTime.MinValue |
 | Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
-| SelectedDateTime | Gets or sets the nullable date and time value of the control. | null |
 | OkButtonText | The text for the OK button. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
 | PopupBorderColor | Color of the popup border. Set to transparent or null to hide the border. | Transparent |
@@ -162,6 +161,7 @@ More examples, please see the samples project
 | PopupCornerRadius | Corner radius of the popup's border for rounded edge appearance. | 0 |
 | PopupPadding | Internal spacing between the popup's content and its border. | 0 |
 | PopupPageOverlayColor | Background overlay color behind the popup. Useful for dimming the content. | Black, %50 opacity [Colors.Black.WithAlpha(0.5f)] |
+| SelectedDateTime | Gets or sets the nullable date and time value of the control. | null |
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
 | ShowClearButton | Clear button can be hidden/shown. If true, the button is displayed.	| true |
 | ShowOtherMonthDays | Determines whether to display other month days in the calendar.	| true |
@@ -236,6 +236,7 @@ on ios, android, windows, maccatalyst
 
 ### 3.1.0 Preview
 - The property 'NullableDateTime' renamed to 'SelectedDateTime'
+- The property 'NullableDateTimeChanged' renamed to 'SelectedDateTimeChanged'
 - Fixed truncation issues in month names on the selected date label.
 
 ### 3.0.0
