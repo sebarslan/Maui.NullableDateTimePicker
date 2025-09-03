@@ -127,14 +127,14 @@ More examples, please see the samples project
 
 - **Action Buttons**  
   - **OK:** Confirm the selection.
-  - **Cancel:** Dismiss without saving.
+  - **Cancel:** Close without applying any changes.
   - **Clear:** Reset the selection (sets value to `null`).
 
 - **Localization Ready**  
   Compatible with various date, time, and number formats based on the user's locale.
 
 - **Customizable Styles**  
-  Fully customizable appearance (colors, fonts, icons) to match your app’s design.
+  Fully customizable appearance (colors, fonts, icons) to match your appâ€™s design.
 
 # Options
 ## DateTimePicker Calendar options
@@ -158,8 +158,8 @@ More examples, please see the samples project
 | OkButtonText | The text for the OK button. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
 | PopupBorderColor | Color of the popup border. Set to transparent or null to hide the border. | Transparent |
-| PopupCornerRadius | Corner radius of the popup's border for rounded edge appearance. | 0 |
 | PopupBorderWidth | Thickness of the border around the popup. | 0 |
+| PopupCornerRadius | Corner radius of the popup's border for rounded edge appearance. | 0 |
 | PopupPadding | Internal spacing between the popup's content and its border. | 0 |
 | PopupPageOverlayColor | Background overlay color behind the popup. Useful for dimming the content. | Black, %50 opacity [Colors.Black.WithAlpha(0.5f)] |
 | SelectedDayStyle | Style of the selected day in the calendar. | null |
@@ -223,7 +223,7 @@ The Nullable DateTimePicker control is licensed under the MIT License. See <a hr
 Contributions are welcome!
 
 # Screenshot
-on ios, android, windows
+on ios, android, windows, maccatalyst
 <div>
 <img src="https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot.png" height="300" />
 <img src="https://raw.githubusercontent.com/sebarslan/Maui.NullableDateTimePicker/main/Screenshots/screenshot2.png" height="300" />
@@ -309,3 +309,6 @@ on ios, android, windows
 
 ### 1.0.1
 - The problem of not setting the margin has been fixed.
+
+### 1.0.0
+- Initial Release.
