@@ -37,10 +37,10 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 </code>
 </pre>
 
-2- And add the following code to the place where you want to use DateTimePicker and then connect the NullableDateTime property with the Datetime Property in your ViewModel.
+2- And add the following code to the place where you want to use DateTimePicker and then connect the SelectedDateTime property with the Datetime Property in your ViewModel.
 <pre>
 <code>
-&lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
+&lt;ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
 </code>
 </pre>
 
