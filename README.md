@@ -5,7 +5,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 This control uses the 
 <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v3.0.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.1.0-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -37,10 +37,10 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 </code>
 </pre>
 
-2- And add the following code to the place where you want to use DateTimePicker and then connect the NullableDateTime property with the Datetime Property in your ViewModel.
+2- And add the following code to the place where you want to use DateTimePicker and then connect the SelectedDateTime property with the Datetime Property in your ViewModel.
 <pre>
 <code>
-&lt;ndtp:NullableDateTimePicker NullableDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
+&lt;ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" Mode="Date" /&gt;
 </code>
 </pre>
 
