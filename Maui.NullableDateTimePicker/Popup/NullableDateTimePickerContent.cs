@@ -1365,26 +1365,7 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _years.Add(new YearModel(y));
         }
-        var itemTextColor = Colors.Black;
-        var dayTextColorSetter = _dayStyle.Setters.FirstOrDefault(s => s.Property == Button.TextColorProperty);
 
-        if (dayTextColorSetter != null)
-        {
-            itemTextColor = (Color)dayTextColorSetter.Value;
-        }
-        var itemBackgroundColor = Colors.White;
-        var itemBackgroundColorSetter = _dayStyle.Setters.FirstOrDefault(s => s.Property == Button.BackgroundColorProperty);
-
-        if (itemBackgroundColorSetter != null)
-        {
-            itemBackgroundColor = (Color)itemBackgroundColorSetter.Value; // Colors.Transparent döner
-        }
-        var selectedItemBackgroundColor = Colors.White;
-        var selectedItemBackgroundColorSetter = _selectedDayStyle.Setters.FirstOrDefault(s => s.Property == Button.BackgroundColorProperty);
-        if (selectedItemBackgroundColorSetter != null)
-        {
-            selectedItemBackgroundColor = (Color)itemBackgroundColorSetter.Value; // Colors.Transparent döner
-        }
         _yearsSelectList = new SelectList
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
@@ -1640,8 +1621,13 @@ internal class NullableDateTimePickerContent : ContentView
     private static Color GetColorFromStyle(Style style, BindableProperty bindableProperty, Color defaultColor)
     {
         try
-        {
-            var colorSetter = style.Setters.FirstOrDefault(s => s.Property == bindableProperty);
+        { 
+            var setters = style.Setters;
+            
+            if (setters.Count == 0 && style.BasedOn != null)
+                setters = style.BasedOn.Setters;
+            
+            var colorSetter = setters.FirstOrDefault(s => s.Property == bindableProperty);
 
             if (colorSetter != null)
             {

@@ -141,6 +141,7 @@ internal class SelectList : ContentView
             var label = new Label
             {
                 FontSize = 12,
+                TextColor = ItemTextColor ?? Colors.Black,
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
                 FontAttributes = FontAttributes.Bold,
@@ -185,6 +186,7 @@ internal class SelectList : ContentView
                 {
                     CornerRadius = new CornerRadius(5, 5, 5, 5)
                 },
+                BackgroundColor = ItemBackgroundColor ?? Colors.White,
                 Margin = 0,
                 Padding = 0,
                 HorizontalOptions = LayoutOptions.Fill,
@@ -223,7 +225,7 @@ internal class SelectList : ContentView
                     }
                 }
             });
-            
+
             if (DeviceInfo.Platform == DevicePlatform.iOS)
             {
                 // Tap to select (works reliably on iOS)
