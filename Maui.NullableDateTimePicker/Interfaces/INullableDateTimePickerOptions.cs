@@ -40,5 +40,5 @@ public interface INullableDateTimePickerOptions
     bool CloseOnOutsideClick { get; set; }
     bool Is12HourFormat { get; set; }
     string AutomationId { get; set; }
-    string HourMinuteToggleButtonText { get; set; }
+    string MinuteHourToggleButtonText { get; set; }
 };

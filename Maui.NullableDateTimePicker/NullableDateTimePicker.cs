@@ -786,17 +786,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(HideIconProperty, value); }
     }
 
-    public static readonly BindableProperty HourMinuteToggleButtonTextProperty = BindableProperty.Create(
-       nameof(HourMinuteToggleButtonText),
+    public static readonly BindableProperty MinuteHourToggleButtonTextProperty = BindableProperty.Create(
+       nameof(MinuteHourToggleButtonText),
        typeof(string),
        typeof(NullableDateTimePicker),
        defaultValue: "Hour-Minute",
        defaultBindingMode: BindingMode.OneWay);
 
-    public string HourMinuteToggleButtonText
+    public string MinuteHourToggleButtonText
     {
-        get { return (string)GetValue(HourMinuteToggleButtonTextProperty); }
-        set { SetValue(HourMinuteToggleButtonTextProperty, value); }
+        get { return (string)GetValue(MinuteHourToggleButtonTextProperty); }
+        set { SetValue(MinuteHourToggleButtonTextProperty, value); }
     }
     #endregion //bindable properties
 
@@ -964,7 +964,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
                 Is12HourFormat = this.Is12HourFormat,
                 AutomationId = base.AutomationId,
-                HourMinuteToggleButtonText = this.HourMinuteToggleButtonText
+                MinuteHourToggleButtonText = this.MinuteHourToggleButtonText
             };
 
             var result = await NullableDateTimePicker.OpenAsync(options);

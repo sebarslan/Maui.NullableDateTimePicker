@@ -128,7 +128,7 @@ internal partial class ClockView : ContentView
     private void SetButtonSelected(bool isAmMode, bool isHourMode)
     {
         AmPmToggleButton.Text = _options.Is12HourFormat ? "AM-PM" : "12-24";
-        HourMinuteToggleButton.Text = !string.IsNullOrEmpty(_options.HourMinuteToggleButtonText) ? _options.HourMinuteToggleButtonText : "Hour-Minute";
+        HourMinuteToggleButton.Text = !string.IsNullOrEmpty(_options.MinuteHourToggleButtonText) ? _options.MinuteHourToggleButtonText : "Hour-Minute";
     }
 
     private void RefreshGraphicsView()
