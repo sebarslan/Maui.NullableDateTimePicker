@@ -515,7 +515,7 @@ internal class NullableDateTimePickerContent : ContentView
                 _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
                 _nullableDateTimePickerClockView.TimeChanged += (s, e) =>
                 {
-                    UpdateCurrentDateAndControls(SelectedDateTime?.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
+                    UpdateCurrentDateAndControls(_currentDate.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
                 };
 
                 _mainContentArea.Add(_nullableDateTimePickerClockView, 0, 1);
@@ -704,8 +704,8 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _amPmList = new()
                 {
-                    "AM",
-                    "PM"
+                    Constants.AM,
+                    Constants.PM
                 };
         }
 
@@ -1324,6 +1324,7 @@ internal class NullableDateTimePickerContent : ContentView
     private void OnAmPmPickerIndexChanged(object sender, EventArgs e)
     {
         var selectedAmPmItem = ((Picker)sender).SelectedItem as string;
+        Console.WriteLine(((Picker)sender).SelectedIndex);
         if (string.IsNullOrEmpty(selectedAmPmItem))
             return;
 
@@ -1589,7 +1590,7 @@ internal class NullableDateTimePickerContent : ContentView
     {
         // Update the _hour12 value based on the AM/PM option
 
-        if (amPmOption.ToUpper() == "AM")
+        if (amPmOption.ToUpper() == Constants.AM)
         {
             if (currentHour > 12)
             {
@@ -1601,7 +1602,7 @@ internal class NullableDateTimePickerContent : ContentView
             }
         }
 
-        if (amPmOption.ToUpper() == "PM")
+        if (amPmOption.ToUpper() == Constants.PM)
         {
 
             if (currentHour <= 12)

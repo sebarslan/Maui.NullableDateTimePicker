@@ -11,7 +11,6 @@
                 StrokeThickness="1"
                 Margin="0"
                 Padding="0"
-                WidthRequest="60"
                 HeightRequest="40"
                 Stroke="DarkGray"
                 StrokeShape="{Binding StrokeShape}">
@@ -21,7 +20,6 @@
                         BackgroundColor="LightGray"
                         TextColor="Black"
                         FontSize="14"
-                        WidthRequest="60"
                         HeightRequest="40"
                         VerticalOptions="Center"
                         HorizontalOptions="Fill"
@@ -29,7 +27,7 @@
                         BorderWidth="0"
                         CornerRadius="0"
                         Margin="0"
-                        Padding="0"
+                        Padding="5,0,5,0"
                         Command="{Binding ButtonCommand}">
 
             <VisualStateManager.VisualStateGroups>

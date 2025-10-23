@@ -21,14 +21,16 @@
                     Text="AM"
                     Clicked="OnAmPmToggleButtonClicked" 
                     StrokeShape="{StaticResource RoundedShape}"
-                    VisualState="Normal" />
+                    VisualState="Normal"
+                    HorizontalOptions="Fill" />
 
             <!-- Hour/Minute Button -->
             <drawables:ButtonTemplate x:Name="HourMinuteToggleButton"
-                Text="H"
+                Text="Hour ↔ Minute"
                 Clicked="OnHourMinuteToggleButtonClicked" 
                 StrokeShape="{StaticResource RoundedShape}"
-                VisualState="Normal" />
+                VisualState="Normal"
+                HorizontalOptions="Fill" />
 
         </StackLayout>
         <GraphicsView x:Name="graphicsView"

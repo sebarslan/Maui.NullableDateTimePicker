@@ -114,7 +114,7 @@ internal partial class ClockView : ContentView
         _drawable.IsHourMode = true;
         _drawable.IsAmMode = !_drawable.IsAmMode;
         SetTimeValueFromClock();
-        Task.Run(async () => { await Task.Delay(300); AmPmToggleButton.VisualState = "Normal"; });
+        Task.Run(async () => { await Task.Delay(500); AmPmToggleButton.VisualState = "Normal"; });
     }
 
     private void OnHourMinuteToggleButtonClicked(object sender, EventArgs e)
@@ -122,13 +122,13 @@ internal partial class ClockView : ContentView
         HourMinuteToggleButton.VisualState = "Selected";
         _drawable.IsHourMode = !_drawable.IsHourMode;
         SetTimeValueFromClock();
-        Task.Run(async () => { await Task.Delay(300); HourMinuteToggleButton.VisualState = "Normal"; });
+        Task.Run(async () => { await Task.Delay(500); HourMinuteToggleButton.VisualState = "Normal"; });
     }
 
     private void SetButtonSelected(bool isAmMode, bool isHourMode)
     {
-        AmPmToggleButton.Text = _options.Is12HourFormat ? _drawable.IsAmMode ? "PM" : "AM" : _drawable.Is24Mode ? "00-11" : "12-23";
-        HourMinuteToggleButton.Text = _drawable.IsHourMode ? "Minute" : "Hour";
+        AmPmToggleButton.Text = _options.Is12HourFormat ? "AM-PM" : "12-24";
+        HourMinuteToggleButton.Text = !string.IsNullOrEmpty(_options.HourMinuteToggleButtonText) ? _options.HourMinuteToggleButtonText : "Hour-Minute";
     }
 
     private void RefreshGraphicsView()

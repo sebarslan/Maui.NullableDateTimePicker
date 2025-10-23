@@ -43,4 +43,6 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public bool Is12HourFormat { get; set; }
     public string AutomationId { get; set; }
 
+    public string HourMinuteToggleButtonText { get; set; }
+
 }
