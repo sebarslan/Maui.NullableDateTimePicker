@@ -234,6 +234,10 @@ on ios, android, windows, maccatalyst
 
 # Changelog
 
+### 3.1.2 Preview
+- Fixed ClockView freeze when SelectedDate is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)
+- Added custom text support for Hour/Minute toggle button.
+
 ### 3.1.1
 - Fixed issue where item colors in SelectList were not applied correctly.
 
