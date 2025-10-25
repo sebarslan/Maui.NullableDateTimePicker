@@ -7,14 +7,13 @@
              BackgroundColor="{AppThemeBinding Light=AliceBlue, Dark=DarkGray}"
              x:DataType="local:MainPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Modal" Command="{Binding OpenModalCommand}"/>        
+        <ToolbarItem Text="Modal" Command="{Binding OpenModalCommand}"/>
     </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Fill">
-
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
 
             <HorizontalStackLayout VerticalOptions="Center">
@@ -38,7 +37,12 @@
                             HorizontalOptions="Start"
                             CornerRadius="5"
                             Padding="5,0,5,0"
-                            SelectedDayStyle="{StaticResource SelectedDayStyle}" />
+                            SelectedDayStyle="{StaticResource SelectedDayStyle}">
+                <ndtp:NullableDateTimePicker.Translates>
+                    <ndtp:TranslateItem Key="Hour" Value="Saat"/>
+                    <ndtp:TranslateItem Key="Minute" Value="Dakika"/>
+                </ndtp:NullableDateTimePicker.Translates>
+            </ndtp:NullableDateTimePicker>
 
             <Label Text="Datepicker control with border + popup with border" TextColor="Black" />
 
@@ -150,7 +154,7 @@
                             />
 
             <Label Text="{Binding MyDateTime, StringFormat='The date is: {0:g}'}" TextColor="Black" />
-            <!-- Nullable datetime picker -->           
+            <!-- Nullable datetime picker -->
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -1,4 +1,6 @@
-﻿namespace Maui.NullableDateTimePicker.Controls;
+﻿using Microsoft.Maui.Graphics;
+
+namespace Maui.NullableDateTimePicker.Controls;
 
 internal partial class ClockView : ContentView
 {
@@ -14,8 +16,15 @@ internal partial class ClockView : ContentView
         _drawable.Is12HourFormat = options.Is12HourFormat;
 
         graphicsView.AutomationId = options.AutomationId + "_ClockGraphicsView";
-        AmPmToggleButton.AutomationId = options.AutomationId + "_ClockAmPmToggleButton";
-        HourMinuteToggleButton.AutomationId = options.AutomationId + "_ClockHourMinuteToggleButton";
+        ClockAmButton.AutomationId = options.AutomationId + "_ClockAmButton";
+        ClockPmButton.AutomationId = options.AutomationId + "_ClockPmButton";
+        ClockAmButton.Text = GetTranslateText("AM", _options.Is12HourFormat ? "AM" : "00-11");
+        ClockPmButton.Text = GetTranslateText("PM", _options.Is12HourFormat ? "PM" : "12-23");
+
+        ClockHourButton.AutomationId = options.AutomationId + "_ClockHourButton";
+        ClockMinuteButton.AutomationId = options.AutomationId + "_ClockMinuteButton";
+        ClockHourButton.Text = GetTranslateText("Hour", "Hour");
+        ClockMinuteButton.Text = GetTranslateText("Minute", "Minute");
 
         SetButtonSelected(_drawable.IsAmMode, _drawable.IsHourMode);
     }
@@ -108,32 +117,80 @@ internal partial class ClockView : ContentView
 
         SelectedTime = selectedTime;
     }
-    private void OnAmPmToggleButtonClicked(object sender, EventArgs e)
+    private void OnAmButtonClicked(object sender, EventArgs e)
     {
-        AmPmToggleButton.VisualState = "Selected";
+        if (_drawable.IsAmMode)
+            return;
         _drawable.IsHourMode = true;
-        _drawable.IsAmMode = !_drawable.IsAmMode;
+        _drawable.IsAmMode = true;
         SetTimeValueFromClock();
-        Task.Run(async () => { await Task.Delay(500); AmPmToggleButton.VisualState = "Normal"; });
     }
 
-    private void OnHourMinuteToggleButtonClicked(object sender, EventArgs e)
+    private void OnPmButtonClicked(object sender, EventArgs e)
     {
-        HourMinuteToggleButton.VisualState = "Selected";
-        _drawable.IsHourMode = !_drawable.IsHourMode;
+        if (!_drawable.IsAmMode)
+            return;
+        _drawable.IsHourMode = true;
+        _drawable.IsAmMode = false;
         SetTimeValueFromClock();
-        Task.Run(async () => { await Task.Delay(500); HourMinuteToggleButton.VisualState = "Normal"; });
+    }
+
+    private void OnHourButtonClicked(object sender, EventArgs e)
+    {
+        if (_drawable.IsHourMode)
+            return;
+
+        _drawable.IsHourMode = true;
+        SetTimeValueFromClock();
+    }
+    private void OnMinuteButtonClicked(object sender, EventArgs e)
+    {
+        if (!_drawable.IsHourMode)
+            return;
+        _drawable.IsHourMode = false;
+        SetTimeValueFromClock();
     }
 
     private void SetButtonSelected(bool isAmMode, bool isHourMode)
     {
-        AmPmToggleButton.Text = _options.Is12HourFormat ? "AM-PM" : "12-24";
-        HourMinuteToggleButton.Text = !string.IsNullOrEmpty(_options.MinuteHourToggleButtonText) ? _options.MinuteHourToggleButtonText : "Hour-Minute";
+        ClockHourButton.Selected = false;
+        ClockMinuteButton.Selected = false;
+        if (isHourMode)
+        {
+            ClockHourButton.Selected = true;
+        }
+        else
+        {
+            ClockMinuteButton.Selected = true;
+
+        }
+        ClockAmButton.Selected = false;
+        ClockPmButton.Selected = false;
+
+        if (isAmMode)
+        {
+            ClockAmButton.Selected = true;
+        }
+        else
+        {
+            ClockPmButton.Selected = true;
+        }
+
+
     }
 
     private void RefreshGraphicsView()
     {
         SetButtonSelected(_drawable.IsAmMode, _drawable.IsHourMode);
-        graphicsView.Invalidate();
+        graphicsView.Dispatcher.Dispatch(() =>
+        {
+            graphicsView.Invalidate();
+        });
+    }
+
+    private string GetTranslateText(string key, string defaultText)
+    {
+        var item = _options.Translates?.FirstOrDefault(x => x.Key == key);
+        return item != null ? item.Value : defaultText;
     }
 }

@@ -28,6 +28,9 @@
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
+            // Save the initial canvas state (important for Windows)
+            canvas.SaveState();
+
             //clickablePoints.Clear(); // Reset and recalculate the points
 
             float centerX = dirtyRect.Center.X;
@@ -71,8 +74,8 @@
                     string hourText = Is12HourFormat
                                     ? i.ToString()
                                     : Is24Mode
-                                        ? (i % 12 + 12).ToString("00") // öğle: 13–23, 12 → 12
-                                        : (i % 12 == 0 ? "00" : (i % 12).ToString("00")); // gece: 1–11, 12 → 00
+                                        ? (i % 12 + 12).ToString("00") // noon: 13–23, 12 → 12
+                                        : (i % 12 == 0 ? "00" : (i % 12).ToString("00")); // night: 1–11, 12 → 00
 
                     // Create a Rect for aligning the numbers
                     RectF textRect = new RectF(textX - 10, textY - 10, 20, 20); // Text rectangle (dimensions can be adjusted)
@@ -111,6 +114,7 @@
                 }
             }
 
+           
 
             // Draw the _hour12 hand
             canvas.StrokeColor = Colors.Black;
@@ -125,12 +129,13 @@
             canvas.SaveState();
             canvas.Rotate(6 * _minute + _second / 10f);
             canvas.DrawLine(0, 0, 0, -70);
-            canvas.RestoreState();
-
+            canvas.RestoreState(); 
+            
             // Small circle at the center
             canvas.FillColor = Colors.Black;
             canvas.FillCircle(0, 0, 4);
 
+            canvas.RestoreState();
         }
 
         //public void HandleMinuteTap(float touchX, float touchY, float centerX, float centerY, float scale)

@@ -236,7 +236,9 @@ on ios, android, windows, maccatalyst
 
 ### 3.1.2 Preview
 - Fixed ClockView freeze when SelectedDate is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)
-- Added custom text support for Minute/Hour toggle button.
+- Fixed the clock display issue on Windows.
+- Group buttons have been added instead of toggle buttons that changed AM/PM and hour/minute.
+- A Translates list has been added. With this, the Hour and Minute texts on the group buttons can be customized. (See examples for usage.)
 
 ### 3.1.1
 - Fixed issue where item colors in SelectList were not applied correctly.

@@ -42,7 +42,5 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public bool CloseOnOutsideClick { get; set; }
     public bool Is12HourFormat { get; set; }
     public string AutomationId { get; set; }
-
-    public string MinuteHourToggleButtonText { get; set; }
-
+    public List<TranslateItem> Translates { get; set; }
 }

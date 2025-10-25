@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Maui.NullableDateTimePicker.Controls;
 
- internal partial class ButtonTemplate : ContentView
+internal partial class ButtonTemplate : ContentView
 {
     public event EventHandler Clicked;
 
@@ -12,18 +12,11 @@ namespace Maui.NullableDateTimePicker.Controls;
     public ButtonTemplate()
     {
         InitializeComponent();
-        ButtonCommand = new Command(OnButtonCommandExecuted);
-        this.Loaded += OnLoaded;
+        BackgroundColor = Colors.Transparent;
+        TapCommand = new Command(OnTapped);
         BindingContext = this;
-    }
-
-    private void OnLoaded(object sender, EventArgs e)
-    {
-        _innerButton = this.FindByName<Button>("InnerButton");
-        if (!string.IsNullOrEmpty(VisualState) && _innerButton != null)
-        {
-            VisualStateManager.GoToState(_innerButton, VisualState);
-        }
+        UpdateVisualState();
+        
     }
 
     public static readonly BindableProperty TextProperty =
@@ -44,34 +37,37 @@ namespace Maui.NullableDateTimePicker.Controls;
         set => SetValue(StrokeShapeProperty, value);
     }
 
-    public ICommand ButtonCommand { get; }
+    public static readonly BindableProperty SelectedProperty =
+        BindableProperty.Create(nameof(Selected), typeof(bool), typeof(ButtonTemplate), false,
+            propertyChanged: (bindable, oldValue, newValue) =>
+            {
+                ((ButtonTemplate)bindable).UpdateVisualState();
+            });
 
-    private void OnButtonCommandExecuted()
+    public bool Selected
+    {
+        get => (bool)GetValue(SelectedProperty);
+        set => SetValue(SelectedProperty, value);
+    }
+
+    public ICommand TapCommand { get; }
+
+    private void OnTapped()
     {
         Clicked?.Invoke(this, EventArgs.Empty);
     }
 
-    public static readonly BindableProperty VisualStateProperty =
-        BindableProperty.Create(
-            nameof(VisualState),
-            typeof(string),
-            typeof(ButtonTemplate),
-            "Normal",
-            propertyChanged: OnVisualStateChanged);
-
-    public string VisualState
+    private void UpdateVisualState()
     {
-        get => (string)GetValue(VisualStateProperty);
-        set => SetValue(VisualStateProperty, value);
-    }
-
-    private static void OnVisualStateChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        
-        var control = (ButtonTemplate)bindable;
-        var newState = newValue as string;
-
-        if (control.InnerButton != null && !string.IsNullOrEmpty(newState))
-            VisualStateManager.GoToState(control.InnerButton, newState);
+        if (Selected)
+        {
+            OuterBorder.BackgroundColor = Colors.Blue;
+            InnerLabel.TextColor = Colors.White;
+        }
+        else
+        {
+            OuterBorder.BackgroundColor = Colors.LightGray;
+            InnerLabel.TextColor = Colors.Black;
+        }
     }
 }

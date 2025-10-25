@@ -3,52 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.NullableDateTimePicker.Controls.ButtonTemplate" 
              Margin="0"
+             HeightRequest="40"
+             BackgroundColor="Transparent"
              x:ClassModifier="NotPublic">
 
 
-    <Border
-                BackgroundColor="LightGray"
-                StrokeThickness="1"
+    <Border x:Name="OuterBorder"
                 Margin="0"
                 Padding="0"
                 HeightRequest="40"
-                Stroke="DarkGray"
-                StrokeShape="{Binding StrokeShape}">
+                Stroke="{Binding StrokeColor}"
+                StrokeThickness="1"
+                StrokeShape="{Binding StrokeShape}"
+                BackgroundColor="{Binding BackgroundColor}">
 
-        <Button x:Name="InnerButton"
-                        Text="{Binding Text}"
-                        BackgroundColor="LightGray"
-                        TextColor="Black"
-                        FontSize="14"
-                        HeightRequest="40"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Fill"
-                        BorderColor="DarkGray"
-                        BorderWidth="0"
-                        CornerRadius="0"
-                        Margin="0"
-                        Padding="5,0,5,0"
-                        Command="{Binding ButtonCommand}">
-
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroupList>
-                    <VisualStateGroup Name="CommonStates">
-                        <VisualState Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="LightGray" />
-                                <Setter Property="TextColor" Value="Black" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState Name="Selected">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor" Value="Blue" />
-                                <Setter Property="TextColor" Value="White" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </VisualStateManager.VisualStateGroups>
-
-        </Button>
+        <Label x:Name="InnerLabel" 
+                BackgroundColor="Transparent"
+                FontSize="14"
+                Text="{Binding Text}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                Margin="0"
+                LineBreakMode="TailTruncation"
+                Padding="10,0,10,0" />
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand}" />
+        </Border.GestureRecognizers>
     </Border>
 </ContentView>

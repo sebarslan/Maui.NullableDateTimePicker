@@ -36,12 +36,12 @@ public partial class MainPage : ContentPage
     {
         NullableDateTimePicker datePicker = new()
         {
-            Mode = PickerModes.Date,
+            Mode = PickerModes.DateTime,
             Format = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern,
             ShowWeekNumbers = true,
             ShowOtherMonthDays = true,
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Center
+            VerticalOptions = LayoutOptions.Center            
         };
 
         datePicker.SetAppThemeColor(NullableDateTimePicker.ForeColorProperty, Colors.Black, Colors.White);

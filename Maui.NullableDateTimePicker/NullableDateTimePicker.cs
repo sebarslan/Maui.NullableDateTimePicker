@@ -1,5 +1,6 @@
 ﻿using Maui.NullableDateTimePicker.Helpers;
 using Microsoft.Maui.Controls.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -786,18 +787,29 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(HideIconProperty, value); }
     }
 
-    public static readonly BindableProperty MinuteHourToggleButtonTextProperty = BindableProperty.Create(
-       nameof(MinuteHourToggleButtonText),
-       typeof(string),
-       typeof(NullableDateTimePicker),
-       defaultValue: "Hour-Minute",
-       defaultBindingMode: BindingMode.OneWay);
+    public List<TranslateItem> Translates { get; set; } = new List<TranslateItem>();
+    //public static readonly BindableProperty TranslatesProperty =
+    //    BindableProperty.Create(
+    //        nameof(Translates),
+    //        typeof(Dictionary<string, string>),
+    //        typeof(NullableDateTimePicker),
+    //        new Dictionary<string, string> { { "Hour", "Hour" }, { "Minute", "Minute" } },
+    //        propertyChanged: OnTranslatesChanged);
 
-    public string MinuteHourToggleButtonText
-    {
-        get { return (string)GetValue(MinuteHourToggleButtonTextProperty); }
-        set { SetValue(MinuteHourToggleButtonTextProperty, value); }
-    }
+    //public Dictionary<string, string> Translates
+    //{
+    //    get => (Dictionary<string, string>)GetValue(TranslatesProperty);
+    //    set => SetValue(TranslatesProperty, value);
+    //}
+
+    //private static void OnTranslatesChanged(BindableObject bindable, object oldValue, object newValue)
+    //{
+        //var view = (TimeLabelsView)bindable;
+        //var dict = newValue as Dictionary<string, string>;
+
+        //view.HourLabel.Text = dict.ContainsKey("Hour") ? dict["Hour"] : "Hour";
+        //view.MinuteLabel.Text = dict.ContainsKey("Minute") ? dict["Minute"] : "Minute";
+    //}
     #endregion //bindable properties
 
     #region constructor
@@ -964,7 +976,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
                 Is12HourFormat = this.Is12HourFormat,
                 AutomationId = base.AutomationId,
-                MinuteHourToggleButtonText = this.MinuteHourToggleButtonText
+                Translates = this.Translates?.ToList()
             };
 
             var result = await NullableDateTimePicker.OpenAsync(options);

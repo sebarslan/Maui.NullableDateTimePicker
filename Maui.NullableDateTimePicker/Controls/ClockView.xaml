@@ -16,21 +16,35 @@
     <StackLayout Orientation="Vertical">
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="10" Spacing="10">
-            <!-- AM/PM Button -->
-            <drawables:ButtonTemplate x:Name="AmPmToggleButton"                           
-                    Text="AM"
-                    Clicked="OnAmPmToggleButtonClicked" 
-                    StrokeShape="{StaticResource RoundedShape}"
-                    VisualState="Normal"
-                    HorizontalOptions="Fill" />
 
-            <!-- Hour/Minute Button -->
-            <drawables:ButtonTemplate x:Name="HourMinuteToggleButton"
-                Text="Hour ↔ Minute"
-                Clicked="OnHourMinuteToggleButtonClicked" 
-                StrokeShape="{StaticResource RoundedShape}"
-                VisualState="Normal"
-                HorizontalOptions="Fill" />
+            <HorizontalStackLayout Spacing="0">
+                <!-- AM Button -->
+                <drawables:ButtonTemplate x:Name="ClockAmButton"                           
+                    Text="AM"
+                    Clicked="OnAmButtonClicked" 
+                    StrokeShape="{StaticResource LeftRoundedShape}"
+                    HorizontalOptions="Fill" />
+                <!-- PM Button -->
+                <drawables:ButtonTemplate x:Name="ClockPmButton"                           
+                     Text="PM"
+                     Clicked="OnPmButtonClicked" 
+                     StrokeShape="{StaticResource RightRoundedShape}"        
+                     HorizontalOptions="Fill" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="0">
+                <!-- Hour Button -->
+                <drawables:ButtonTemplate x:Name="ClockHourButton"
+                    Text="Hour"
+                    Clicked="OnHourButtonClicked" 
+                    StrokeShape="{StaticResource LeftRoundedShape}"
+                    HorizontalOptions="Fill" />
+                <!-- Minute Button -->
+                <drawables:ButtonTemplate x:Name="ClockMinuteButton"
+                    Text="Minute"
+                    Clicked="OnMinuteButtonClicked" 
+                    StrokeShape="{StaticResource RightRoundedShape}"
+                    HorizontalOptions="Fill" />
+            </HorizontalStackLayout>
 
         </StackLayout>
         <GraphicsView x:Name="graphicsView"
