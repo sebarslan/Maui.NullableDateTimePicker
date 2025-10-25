@@ -36,12 +36,12 @@ public partial class MainPage : ContentPage
     {
         NullableDateTimePicker datePicker = new()
         {
-            Mode = PickerModes.DateTime,
+            Mode = PickerModes.Date,
             Format = Thread.CurrentThread.CurrentUICulture.DateTimeFormat.ShortDatePattern,
             ShowWeekNumbers = true,
             ShowOtherMonthDays = true,
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Center            
+            VerticalOptions = LayoutOptions.Center
         };
 
         datePicker.SetAppThemeColor(NullableDateTimePicker.ForeColorProperty, Colors.Black, Colors.White);
@@ -70,6 +70,11 @@ public partial class MainPage : ContentPage
             PopupCornerRadius = 10,
             PopupBorderWidth = 1,
             PopupPadding = 5,
+            Translates = new List<TranslateItem>
+            {
+                new TranslateItem{Key = "Hour", Value="Saat"},
+                new TranslateItem{Key = "Minute", Value="Dakika"},
+            }
         };
 
         try
