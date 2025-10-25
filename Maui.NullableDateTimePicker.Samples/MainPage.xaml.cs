@@ -69,11 +69,15 @@ public partial class MainPage : ContentPage
             PopupBorderColor = Color.FromArgb("#505050"),
             PopupCornerRadius = 10,
             PopupBorderWidth = 1,
+            Is12HourFormat = false,
             PopupPadding = 5,
             Translates = new List<TranslateItem>
             {
                 new TranslateItem{Key = "Hour", Value="Saat"},
                 new TranslateItem{Key = "Minute", Value="Dakika"},
+                new TranslateItem{Key = "AM", Value="00-11"},
+                new TranslateItem{Key = "PM", Value="12-23"}
+
             }
         };
 
