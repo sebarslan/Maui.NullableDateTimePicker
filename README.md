@@ -168,7 +168,7 @@ More examples, please see the samples project
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ToolButtonsStyle | Style of the control's tool buttons. | null |
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
-| Translations | This property is used to customize certain texts. Currently, it allows changing the text of the AM/PM and Hour/Minute group buttons in the clock view. | In 12-hour format: AM/PM<br>in 24-hour format: 00–11<br>12–23<br>Hour/Minute |
+| Translations | This property is used to customize certain texts. Currently, it allows changing the text of the AM/PM and Hour/Minute group buttons in the clock view. | In 12-hour format: AM/PM<br>in 24-hour format: 00–11/12–23<br>Hour/Minute |
 
 
 ## Datetimepicker Input Options (If NullableDateTimePicker is used as ContentView)
