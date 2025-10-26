@@ -788,17 +788,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(HideIconProperty, value); }
     }
 
-    public static readonly BindableProperty TranslatesProperty =
+    public static readonly BindableProperty TranslationsProperty =
         BindableProperty.Create(
-            nameof(Translates),
-            typeof(IList<TranslateItem>),
+            nameof(Translations),
+            typeof(IList<TranslationItem>),
             typeof(ClockView),
-            new List<TranslateItem>());
+            new List<TranslationItem>());
 
-    public IList<TranslateItem> Translates
+    public IList<TranslationItem> Translations
     {
-        get => (IList<TranslateItem>)GetValue(TranslatesProperty);
-        set => SetValue(TranslatesProperty, value);
+        get => (IList<TranslationItem>)GetValue(TranslationsProperty);
+        set => SetValue(TranslationsProperty, value);
     }
 
 
@@ -968,7 +968,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
                 Is12HourFormat = this.Is12HourFormat,
                 AutomationId = base.AutomationId,
-                Translates = this.Translates?.ToList()
+                Translations = this.Translations?.ToList()
             };
 
             var result = await NullableDateTimePicker.OpenAsync(options);

@@ -1,24 +1,26 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Maui.NullableDateTimePicker.Samples;
 
 public partial class MainPage : ContentPage
 {
-    public IList<TranslateItem> MyTranslates;
+    public ObservableCollection<TranslationItem> MyTranslations { get; }
     public MainPage()
     {
+        MyTranslations = new ObservableCollection<TranslationItem>
+        {
+                new TranslationItem{Key = "Hour", Value="Saat"},
+                new TranslationItem{Key = "Minute", Value="Dakika"},
+                new TranslationItem{Key = "AM", Value= Is12HourFormat ? "AM":"00-11"},
+                new TranslationItem{Key = "PM", Value=Is12HourFormat ? "PM": "12-23"}
+        };
+
         BindingContext = this;
         InitializeComponent();
         themeSwitch.IsToggled = Application.Current.RequestedTheme == AppTheme.Dark;
 
-        MyTranslates = new List<TranslateItem>
-            {
-                new TranslateItem{Key = "Hour", Value="Saat"},
-                new TranslateItem{Key = "Minute", Value="Dakika"},
-                new TranslateItem{Key = "AM", Value= Is12HourFormat ? "AM":"00-11"},
-                new TranslateItem{Key = "PM", Value=Is12HourFormat ? "PM": "12-23"}
 
-            };
 
         // Create Datetimepicker Programmatically
         CreateDateTimePickerProgrammatically();
@@ -81,7 +83,7 @@ public partial class MainPage : ContentPage
             PopupBorderWidth = 1,
             Is12HourFormat = false,
             PopupPadding = 5,
-            Translates = MyTranslates
+            Translations = MyTranslations
         };
 
         try

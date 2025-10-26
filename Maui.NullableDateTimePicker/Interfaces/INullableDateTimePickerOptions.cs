@@ -40,5 +40,5 @@ public interface INullableDateTimePickerOptions
     bool CloseOnOutsideClick { get; set; }
     bool Is12HourFormat { get; set; }
     string AutomationId { get; set; }
-    IList<TranslateItem> Translates { get; set; }
+    IList<TranslationItem> Translations { get; set; }
 };

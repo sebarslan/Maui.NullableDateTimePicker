@@ -23,9 +23,9 @@ namespace Maui.NullableDateTimePicker.Helpers
             return parent as Page;
         }
 
-        internal static string GetTranslateText(IList<TranslateItem> translates, string key, string defaultText)
+        internal static string GetTranslateText(IList<TranslationItem> translations, string key, string defaultText)
         {
-            var item = translates?.FirstOrDefault(t => t.Key == key);
+            var item = translations?.FirstOrDefault(t => t.Key == key);
             return string.IsNullOrEmpty(item?.Key) || string.IsNullOrEmpty(item?.Value) ? defaultText : item.Value;
         }
     }

@@ -19,13 +19,13 @@ internal partial class ClockView : ContentView
         graphicsView.AutomationId = options.AutomationId + "_ClockGraphicsView";
         ClockAmButton.AutomationId = options.AutomationId + "_ClockAmButton";
         ClockPmButton.AutomationId = options.AutomationId + "_ClockPmButton";
-        ClockAmButton.Text = Utilities.GetTranslateText(_options.Translates, "AM", _options.Is12HourFormat ? "AM" : "00-11");
-        ClockPmButton.Text = Utilities.GetTranslateText(_options.Translates, "PM", _options.Is12HourFormat ? "PM" : "12-23");
+        ClockAmButton.Text = Utilities.GetTranslateText(_options.Translations, "AM", _options.Is12HourFormat ? "AM" : "00-11");
+        ClockPmButton.Text = Utilities.GetTranslateText(_options.Translations, "PM", _options.Is12HourFormat ? "PM" : "12-23");
 
         ClockHourButton.AutomationId = options.AutomationId + "_ClockHourButton";
         ClockMinuteButton.AutomationId = options.AutomationId + "_ClockMinuteButton";
-        ClockHourButton.Text = Utilities.GetTranslateText(_options.Translates, "Hour", "Hour");
-        ClockMinuteButton.Text = Utilities.GetTranslateText(_options.Translates, "Minute", "Minute");
+        ClockHourButton.Text = Utilities.GetTranslateText(_options.Translations, "Hour", "Hour");
+        ClockMinuteButton.Text = Utilities.GetTranslateText(_options.Translations, "Minute", "Minute");
 
         SetButtonSelected(_drawable.IsAmMode, _drawable.IsHourMode);
     }

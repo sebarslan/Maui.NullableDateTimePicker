@@ -5,7 +5,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 This control uses the 
 <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v3.1.1-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.1.2-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -168,7 +168,7 @@ More examples, please see the samples project
 | ShowWeekNumbers | Determines whether to display week numbers in the calendar.	| false |
 | ToolButtonsStyle | Style of the control's tool buttons. | null |
 | WeekNumberStyle | Style of the week numbers in the calendar. | null |
-| Translates | This property is used to customize certain texts. Currently, it allows changing the text of the AM/PM buttons and the Hour/Minute group buttons in the clock view. | In 12-hour format: AM/PM, and in 24-hour format: 00–11 / 12–23, Hour/Minute |
+| Translations | This property is used to customize certain texts. Currently, it allows changing the text of the AM/PM and Hour/Minute group buttons in the clock view. | In 12-hour format: AM/PM\nin 24-hour format: 00–11\n12–23\nHour/Minute |
 
 
 ## Datetimepicker Input Options (If NullableDateTimePicker is used as ContentView)
@@ -239,7 +239,7 @@ on ios, android, windows, maccatalyst
 - Fixed ClockView freeze when SelectedDate is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)
 - Fixed the clock display issue on Windows.
 - Group buttons have been added instead of toggle buttons that changed AM/PM and hour/minute.
-- A Translates property has been added. With this, the hour,minute,AM,PM texts on the group buttons can be customized. (See examples for usage.)
+- A Translations property has been added. With this, the hour,minute,AM,PM texts on the group buttons can be customized. (See examples for usage.)
 
 ### 3.1.1
 - Fixed issue where item colors in SelectList were not applied correctly.

@@ -9,9 +9,9 @@
              x:DataType="local:MainPage">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <collections:ObservableCollection x:Key="ClockTranslates" x:TypeArguments="ndtp:TranslateItem">
-                <ndtp:TranslateItem Key="Hour" Value="Saat" />
-                <ndtp:TranslateItem Key="Minute" Value="Dakika" />
+            <collections:ObservableCollection x:Key="ClockTranslations" x:TypeArguments="ndtp:TranslationItem">
+                <ndtp:TranslationItem Key="Hour" Value="Saat" />
+                <ndtp:TranslationItem Key="Minute" Value="Dakika" />
             </collections:ObservableCollection>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -24,8 +24,6 @@
             Padding="30,0"
             VerticalOptions="Fill">
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
-
-
 
             <HorizontalStackLayout VerticalOptions="Center">
                 <Label Text="Toggle Dark Mode"
@@ -49,9 +47,9 @@
                             CornerRadius="5"
                             Padding="5,0,5,0"
                             SelectedDayStyle="{StaticResource SelectedDayStyle}"
-                            Translates="{StaticResource ClockTranslates}" />
+                            Translations="{StaticResource ClockTranslations}" />
 
-            <Label Text="Date time picker control with border + popup with border and translates binding" TextColor="Black" />
+            <Label Text="Date time picker control with border + popup with border and translations binding" TextColor="Black" />
 
             <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"  
                                         Mode="DateTime"
@@ -67,7 +65,7 @@
                                         PopupBorderWidth="1"
                                         PopupCornerRadius="10"
                                         PopupPadding="5"
-                                        Translates="{Binding MyTranslates}"/>
+                                        Translations="{Binding MyTranslations}"/>
 
             <Label Text="Timepicker" TextColor="Black" />
             <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" 
