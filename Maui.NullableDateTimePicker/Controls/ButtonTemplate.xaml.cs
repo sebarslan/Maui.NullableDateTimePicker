@@ -28,15 +28,6 @@ internal partial class ButtonTemplate : ContentView
         set => SetValue(TextProperty, value);
     }
 
-    public static readonly BindableProperty StrokeShapeProperty =
-        BindableProperty.Create(nameof(StrokeShape), typeof(Shape), typeof(ButtonTemplate), default(Shape));
-
-    public Shape StrokeShape
-    {
-        get => (Shape)GetValue(StrokeShapeProperty);
-        set => SetValue(StrokeShapeProperty, value);
-    }
-
     public static readonly BindableProperty SelectedProperty =
         BindableProperty.Create(nameof(Selected), typeof(bool), typeof(ButtonTemplate), false,
             propertyChanged: (bindable, oldValue, newValue) =>
@@ -50,6 +41,16 @@ internal partial class ButtonTemplate : ContentView
         set => SetValue(SelectedProperty, value);
     }
 
+    public static readonly BindableProperty StrokeShapeProperty =
+       BindableProperty.Create(nameof(StrokeShape), typeof(Shape), typeof(ButtonTemplate), default(Shape));
+
+    public Shape StrokeShape
+    {
+        get => (Shape)GetValue(StrokeShapeProperty);
+        set => SetValue(StrokeShapeProperty, value);
+    }
+
+
     public ICommand TapCommand { get; }
 
     private void OnTapped()
@@ -61,13 +62,29 @@ internal partial class ButtonTemplate : ContentView
     {
         if (Selected)
         {
-            OuterBorder.BackgroundColor = Colors.Blue;
-            InnerLabel.TextColor = Colors.White;
+            if (Application.Current.RequestedTheme == AppTheme.Dark)
+            {
+                OuterBorder.BackgroundColor = Colors.DimGray; 
+                InnerLabel.TextColor = Colors.White;
+            }
+            else
+            {
+                OuterBorder.BackgroundColor = Colors.Blue;
+                InnerLabel.TextColor = Colors.White;
+            }
         }
         else
         {
-            OuterBorder.BackgroundColor = Colors.LightGray;
-            InnerLabel.TextColor = Colors.Black;
+            if (Application.Current.RequestedTheme == AppTheme.Dark)
+            {
+                OuterBorder.BackgroundColor = Colors.DarkGray;
+                InnerLabel.TextColor = Colors.White;
+            }
+            else
+            {
+                OuterBorder.BackgroundColor = Colors.LightGray;
+                InnerLabel.TextColor = Colors.Black;
+            }
         }
     }
 }

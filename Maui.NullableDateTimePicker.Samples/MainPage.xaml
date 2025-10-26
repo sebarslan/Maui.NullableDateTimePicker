@@ -44,10 +44,10 @@
                 </ndtp:NullableDateTimePicker.Translates>
             </ndtp:NullableDateTimePicker>
 
-            <Label Text="Datepicker control with border + popup with border" TextColor="Black" />
+            <Label Text="Date time picker control with border + popup with border and translates binding" TextColor="Black" />
 
             <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"  
-                                        Mode="Date"
+                                        Mode="DateTime"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"
                                         WidthRequest="200" 
@@ -60,8 +60,7 @@
                                         PopupBorderWidth="1"
                                         PopupCornerRadius="10"
                                         PopupPadding="5"
-                                         
-                                            />
+                                        Translates="{Binding MyTranslates}"/>
 
             <Label Text="Timepicker" TextColor="Black" />
             <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" 
@@ -74,18 +73,18 @@
                                          Is12HourFormat="True"
                                         ActivityIndicatorColor="{StaticResource Yellow200Accent}"
                                         />
-            <Label Text="Timepicker 12 hour format" TextColor="Black" />
+            <Label Text="Date time pucker with 12 hour format binding" TextColor="Black" />
             <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"
-     Mode="DateTime"
-     WidthRequest="300" 
-     ShowWeekNumbers="True"
-     HorizontalOptions="Start"
-     CornerRadius="5"
-     Padding="5,0,5,0"
-     Placeholder="Enter date"
-     PlaceholderColor="Blue"
-     Is12HourFormat="{Binding Is12HourFormat}"
-     />
+             Mode="DateTime"
+             WidthRequest="300" 
+             ShowWeekNumbers="True"
+             HorizontalOptions="Start"
+             CornerRadius="5"
+             Padding="5,0,5,0"
+             Placeholder="Enter date"
+             PlaceholderColor="Blue"
+             Is12HourFormat="{Binding Is12HourFormat}"
+             />
 
 
             <Label Text="Calling nullabledatetimepicker calendar popup directly with own entry and button" TextColor="Black" />

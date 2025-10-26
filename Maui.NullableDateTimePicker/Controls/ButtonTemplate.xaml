@@ -3,17 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.NullableDateTimePicker.Controls.ButtonTemplate" 
              Margin="0"
-             HeightRequest="40"
              BackgroundColor="Transparent"
              x:ClassModifier="NotPublic">
-
+    
 
     <Border x:Name="OuterBorder"
                 Margin="0"
                 Padding="0"
-                HeightRequest="40"
-                Stroke="{Binding StrokeColor}"
-                StrokeThickness="1"
+                HeightRequest="{Binding HeightRequest}"
+                StrokeThickness="0"
                 StrokeShape="{Binding StrokeShape}"
                 BackgroundColor="{Binding BackgroundColor}">
 

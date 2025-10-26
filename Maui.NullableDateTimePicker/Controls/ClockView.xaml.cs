@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Graphics;
+﻿using Maui.NullableDateTimePicker.Helpers;
+using Microsoft.Maui.Graphics;
 
 namespace Maui.NullableDateTimePicker.Controls;
 
@@ -18,13 +19,13 @@ internal partial class ClockView : ContentView
         graphicsView.AutomationId = options.AutomationId + "_ClockGraphicsView";
         ClockAmButton.AutomationId = options.AutomationId + "_ClockAmButton";
         ClockPmButton.AutomationId = options.AutomationId + "_ClockPmButton";
-        ClockAmButton.Text = GetTranslateText("AM", _options.Is12HourFormat ? "AM" : "00-11");
-        ClockPmButton.Text = GetTranslateText("PM", _options.Is12HourFormat ? "PM" : "12-23");
+        ClockAmButton.Text = Utilities.GetTranslateText(_options.Translates, "AM", _options.Is12HourFormat ? "AM" : "00-11");
+        ClockPmButton.Text = Utilities.GetTranslateText(_options.Translates, "PM", _options.Is12HourFormat ? "PM" : "12-23");
 
         ClockHourButton.AutomationId = options.AutomationId + "_ClockHourButton";
         ClockMinuteButton.AutomationId = options.AutomationId + "_ClockMinuteButton";
-        ClockHourButton.Text = GetTranslateText("Hour", "Hour");
-        ClockMinuteButton.Text = GetTranslateText("Minute", "Minute");
+        ClockHourButton.Text = Utilities.GetTranslateText(_options.Translates, "Hour", "Hour");
+        ClockMinuteButton.Text = Utilities.GetTranslateText(_options.Translates, "Minute", "Minute");
 
         SetButtonSelected(_drawable.IsAmMode, _drawable.IsHourMode);
     }
@@ -175,8 +176,6 @@ internal partial class ClockView : ContentView
         {
             ClockPmButton.Selected = true;
         }
-
-
     }
 
     private void RefreshGraphicsView()
@@ -186,11 +185,5 @@ internal partial class ClockView : ContentView
         {
             graphicsView.Invalidate();
         });
-    }
-
-    private string GetTranslateText(string key, string defaultText)
-    {
-        var item = _options.Translates?.FirstOrDefault(x => x.Key == key);
-        return item != null ? item.Value : defaultText;
     }
 }

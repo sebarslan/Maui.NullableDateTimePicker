@@ -1,4 +1,5 @@
-﻿using Maui.NullableDateTimePicker.Helpers;
+﻿using Maui.NullableDateTimePicker.Controls;
+using Maui.NullableDateTimePicker.Helpers;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
 
@@ -787,29 +788,20 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set { SetValue(HideIconProperty, value); }
     }
 
-    public List<TranslateItem> Translates { get; set; } = new List<TranslateItem>();
-    //public static readonly BindableProperty TranslatesProperty =
-    //    BindableProperty.Create(
-    //        nameof(Translates),
-    //        typeof(Dictionary<string, string>),
-    //        typeof(NullableDateTimePicker),
-    //        new Dictionary<string, string> { { "Hour", "Hour" }, { "Minute", "Minute" } },
-    //        propertyChanged: OnTranslatesChanged);
+    public static readonly BindableProperty TranslatesProperty =
+        BindableProperty.Create(
+            nameof(Translates),
+            typeof(IList<TranslateItem>),
+            typeof(ClockView),
+            new List<TranslateItem>());
 
-    //public Dictionary<string, string> Translates
-    //{
-    //    get => (Dictionary<string, string>)GetValue(TranslatesProperty);
-    //    set => SetValue(TranslatesProperty, value);
-    //}
+    public IList<TranslateItem> Translates
+    {
+        get => (IList<TranslateItem>)GetValue(TranslatesProperty);
+        set => SetValue(TranslatesProperty, value);
+    }
 
-    //private static void OnTranslatesChanged(BindableObject bindable, object oldValue, object newValue)
-    //{
-        //var view = (TimeLabelsView)bindable;
-        //var dict = newValue as Dictionary<string, string>;
 
-        //view.HourLabel.Text = dict.ContainsKey("Hour") ? dict["Hour"] : "Hour";
-        //view.MinuteLabel.Text = dict.ContainsKey("Minute") ? dict["Minute"] : "Minute";
-    //}
     #endregion //bindable properties
 
     #region constructor

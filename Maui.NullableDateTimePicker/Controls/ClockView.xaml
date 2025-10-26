@@ -23,13 +23,15 @@
                     Text="AM"
                     Clicked="OnAmButtonClicked" 
                     StrokeShape="{StaticResource LeftRoundedShape}"
-                    HorizontalOptions="Fill" />
+                    HorizontalOptions="Fill"
+                    HeightRequest="{OnPlatform WinUI=35, Default=40}" />
                 <!-- PM Button -->
                 <drawables:ButtonTemplate x:Name="ClockPmButton"                           
                      Text="PM"
                      Clicked="OnPmButtonClicked" 
                      StrokeShape="{StaticResource RightRoundedShape}"        
-                     HorizontalOptions="Fill" />
+                     HorizontalOptions="Fill" 
+                     HeightRequest="{OnPlatform WinUI=35, Default=40}" />
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="0">
                 <!-- Hour Button -->
@@ -37,13 +39,15 @@
                     Text="Hour"
                     Clicked="OnHourButtonClicked" 
                     StrokeShape="{StaticResource LeftRoundedShape}"
-                    HorizontalOptions="Fill" />
+                    HorizontalOptions="Fill"
+                    HeightRequest="{OnPlatform WinUI=35, Default=40}"/>
                 <!-- Minute Button -->
                 <drawables:ButtonTemplate x:Name="ClockMinuteButton"
                     Text="Minute"
                     Clicked="OnMinuteButtonClicked" 
                     StrokeShape="{StaticResource RightRoundedShape}"
-                    HorizontalOptions="Fill" />
+                    HorizontalOptions="Fill"
+                    HeightRequest="{OnPlatform WinUI=35, Default=40}" />
             </HorizontalStackLayout>
 
         </StackLayout>
