@@ -10,7 +10,6 @@ namespace Maui.NullableDateTimePicker.Samples
 
             // Register a handler for unhandled XAML exceptions
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR");
         }
 
         protected override Window CreateWindow(IActivationState activationState)
