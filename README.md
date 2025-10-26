@@ -194,9 +194,9 @@ More examples, please see the samples project
 | Minute | Minute button text in the clock view. | Minute |
 | AM | AM button text in the clock view or in the am/pm picker. | For AM button text:<br /> in 12-hour format: AM <br />in 24-hour format: 00–11 |
 | PM | PM button text in the clock view or in the am/pm picker. | For AM button text:<br /> in  12-hour format: PM<br />in 24-hour format: 12–23 |
-| OK | OK button text in the picker tool. If property 'OkButtonText' is not set. | OK |
-| Cancel | Cancel button text in the picker tool. If property 'CancelButtonText' is not set. | Cancel |
-| Clear | Clear button text in the picker tool. If property 'ClearButtonText' is not set. | Clear |
+| OK | OK button text in the dialog action buttons. If property 'OkButtonText' is not set. | OK |
+| Cancel | Cancel button text in the dialog action buttons. If property 'CancelButtonText' is not set. | Cancel |
+| Clear | Clear button text in the dialog action buttons. If property 'ClearButtonText' is not set. | Clear |
 
 
 

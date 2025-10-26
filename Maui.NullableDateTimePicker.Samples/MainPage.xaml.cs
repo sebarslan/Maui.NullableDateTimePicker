@@ -10,17 +10,16 @@ public partial class MainPage : ContentPage
     {
         MyTranslations = new ObservableCollection<TranslationItem>
         {
-                new TranslationItem{Key = "Hour", Value="Saat"},
-                new TranslationItem{Key = "Minute", Value="Dakika"},
-                new TranslationItem{Key = "AM", Value= Is12HourFormat ? "AM":"00-11"},
-                new TranslationItem{Key = "PM", Value=Is12HourFormat ? "PM": "12-23"}
+            new TranslationItem{Key = "Hour", Value="Saat"},
+            new TranslationItem{Key = "Minute", Value="Dakika"},
+            new TranslationItem{Key = "AM", Value= Is12HourFormat ? "AM":"00-11"},
+            new TranslationItem{Key = "PM", Value=Is12HourFormat ? "PM": "12-23"},
+            new TranslationItem{Key = "OK", Value="Done"},
         };
 
         BindingContext = this;
         InitializeComponent();
         themeSwitch.IsToggled = Application.Current.RequestedTheme == AppTheme.Dark;
-
-
 
         // Create Datetimepicker Programmatically
         CreateDateTimePickerProgrammatically();
