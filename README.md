@@ -193,7 +193,7 @@ More examples, please see the samples project
 | Hour | Hour button text in the clock view. | Hour |
 | Minute | Minute button text in the clock view. | Minute |
 | AM | AM button text in the clock view or in the am/pm picker. | For AM button text:<br /> in 12-hour format: AM <br />in 24-hour format: 00–11 |
-| PM | PM button text in the clock view or in the am/pm picker. | For AM button text:<br /> in  12-hour format: PM<br />in 24-hour format: 12–23 |
+| PM | PM button text in the clock view or in the am/pm picker. | For PM button text:<br /> in  12-hour format: PM<br />in 24-hour format: 12–23 |
 | OK | OK button text in the dialog action buttons. If property 'OkButtonText' is not set. | OK |
 | Cancel | Cancel button text in the dialog action buttons. If property 'CancelButtonText' is not set. | Cancel |
 | Clear | Clear button text in the dialog action buttons. If property 'ClearButtonText' is not set. | Clear |
@@ -251,7 +251,7 @@ on ios, android, windows, maccatalyst
 - Fixed ClockView freeze when SelectedDate is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)
 - Fixed the clock display issue on Windows.
 - Group buttons have been added instead of toggle buttons that changed AM/PM and hour/minute.
-- A Translations property has been added. With this, the hour,minute,AM,PM texts on the group buttons can be customized. (See examples for usage.)
+- A Translations property has been added. With this, some text elements can be customized. (See examples for usage.)
 
 ### 3.1.1
 - Fixed issue where item colors in SelectList were not applied correctly.
