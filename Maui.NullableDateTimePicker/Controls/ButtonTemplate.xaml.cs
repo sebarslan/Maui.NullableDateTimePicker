@@ -16,7 +16,7 @@ internal partial class ButtonTemplate : ContentView
         TapCommand = new Command(OnTapped);
         BindingContext = this;
         UpdateVisualState();
-        
+
     }
 
     public static readonly BindableProperty TextProperty =
@@ -62,29 +62,13 @@ internal partial class ButtonTemplate : ContentView
     {
         if (Selected)
         {
-            if (Application.Current.RequestedTheme == AppTheme.Dark)
-            {
-                OuterBorder.BackgroundColor = Colors.DimGray; 
-                InnerLabel.TextColor = Colors.White;
-            }
-            else
-            {
-                OuterBorder.BackgroundColor = Colors.Blue;
-                InnerLabel.TextColor = Colors.White;
-            }
+            OuterBorder.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.DimGray : Colors.Blue;
+            InnerLabel.TextColor = Colors.White;
         }
         else
         {
-            if (Application.Current.RequestedTheme == AppTheme.Dark)
-            {
-                OuterBorder.BackgroundColor = Colors.DarkGray;
-                InnerLabel.TextColor = Colors.White;
-            }
-            else
-            {
-                OuterBorder.BackgroundColor = Colors.LightGray;
-                InnerLabel.TextColor = Colors.Black;
-            }
+            OuterBorder.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.DarkGray : Colors.LightGray;
+            InnerLabel.TextColor = Colors.Black;
         }
     }
 }

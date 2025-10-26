@@ -4,8 +4,17 @@
              xmlns:local="clr-namespace:Maui.NullableDateTimePicker.Samples"
              xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDateTimePicker"
              x:Class="Maui.NullableDateTimePicker.Samples.MainPage"
+             xmlns:collections="clr-namespace:System.Collections.ObjectModel;assembly=netstandard"
              BackgroundColor="{AppThemeBinding Light=AliceBlue, Dark=DarkGray}"
              x:DataType="local:MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <collections:ObservableCollection x:Key="ClockTranslates" x:TypeArguments="ndtp:TranslateItem">
+                <ndtp:TranslateItem Key="Hour" Value="Saat" />
+                <ndtp:TranslateItem Key="Minute" Value="Dakika" />
+            </collections:ObservableCollection>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Modal" Command="{Binding OpenModalCommand}"/>
     </ContentPage.ToolbarItems>
@@ -15,6 +24,8 @@
             Padding="30,0"
             VerticalOptions="Fill">
             <Label Text="Maui Nullable and Clearable DateTimePicker Examples" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Black" />
+
+
 
             <HorizontalStackLayout VerticalOptions="Center">
                 <Label Text="Toggle Dark Mode"
@@ -37,12 +48,8 @@
                             HorizontalOptions="Start"
                             CornerRadius="5"
                             Padding="5,0,5,0"
-                            SelectedDayStyle="{StaticResource SelectedDayStyle}">
-                <ndtp:NullableDateTimePicker.Translates>
-                    <ndtp:TranslateItem Key="Hour" Value="Saat"/>
-                    <ndtp:TranslateItem Key="Minute" Value="Dakika"/>
-                </ndtp:NullableDateTimePicker.Translates>
-            </ndtp:NullableDateTimePicker>
+                            SelectedDayStyle="{StaticResource SelectedDayStyle}"
+                            Translates="{StaticResource ClockTranslates}" />
 
             <Label Text="Date time picker control with border + popup with border and translates binding" TextColor="Black" />
 

@@ -62,12 +62,13 @@
                     //clickablePoints.Add((x, y, "Hour", i));
 
                     // Draw the large dot
+                    canvas.FontSize = 11;
                     canvas.FillColor = Color.FromArgb("#4f20b0");
                     canvas.FillCircle(x, y, 3);
 
                     // Place the _hour12 number on the inner side of the circle
                     canvas.FontColor = Colors.Black;
-                    canvas.FontSize = 10; // More visible font size
+
                     float textX = (float)((ClockRadius - 10) * Math.Cos(angle));
                     float textY = (float)((ClockRadius - 10) * Math.Sin(angle));
 
@@ -97,6 +98,7 @@
                     //clickablePoints.Add((x, y, "Minute", i));
 
                     // Set color and size (large in 5 minutes)
+                    canvas.FontSize = 11;
                     canvas.FillColor = Color.FromArgb("#4f20b0");
                     float radius = i % 5 == 0 ? 3 : 1;
                     canvas.FillCircle(x, y, radius);
