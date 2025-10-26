@@ -704,8 +704,8 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _amPmList = new()
                 {
-                    Constants.AM,
-                    Constants.PM
+                    Utilities.GetTranslateText(_options.Translations, "AM", "AM"),
+                   Utilities.GetTranslateText(_options.Translations, "PM", "PM")
                 };
         }
 
@@ -769,7 +769,7 @@ internal class NullableDateTimePickerContent : ContentView
             _clearButton = new Button
             {
                 AutomationId = _options.AutomationId + "_ClearButton",
-                Text = !string.IsNullOrEmpty(_options.ClearButtonText) ? _options.ClearButtonText : "Clear",
+                Text = !string.IsNullOrEmpty(_options.ClearButtonText) ? _options.ClearButtonText : Utilities.GetTranslateText(_options.Translations, "Clear", "Clear"),
                 Style = _toolButtonsStyle,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -782,7 +782,7 @@ internal class NullableDateTimePickerContent : ContentView
         _cancelButton = new Button
         {
             AutomationId = _options.AutomationId + "_CancelButton",
-            Text = !string.IsNullOrEmpty(_options.CancelButtonText) ? _options.CancelButtonText : "Cancel",
+            Text = !string.IsNullOrEmpty(_options.CancelButtonText) ? _options.CancelButtonText : Utilities.GetTranslateText(_options.Translations, "Cancel", "Cancel"),
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -794,7 +794,7 @@ internal class NullableDateTimePickerContent : ContentView
         _okButton = new Button
         {
             AutomationId = _options.AutomationId + "_OkButton",
-            Text = !string.IsNullOrEmpty(_options.OkButtonText) ? _options.OkButtonText : "Ok",
+            Text = !string.IsNullOrEmpty(_options.OkButtonText) ?  _options.OkButtonText : Utilities.GetTranslateText(_options.Translations, "OK", "OK"),
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -1324,11 +1324,12 @@ internal class NullableDateTimePickerContent : ContentView
     private void OnAmPmPickerIndexChanged(object sender, EventArgs e)
     {
         var selectedAmPmItem = ((Picker)sender).SelectedItem as string;
-        Console.WriteLine(((Picker)sender).SelectedIndex);
+        var selectedIndex = ((Picker)sender).SelectedIndex;
+        Console.WriteLine(selectedIndex);
         if (string.IsNullOrEmpty(selectedAmPmItem))
             return;
 
-        SetHour(UpdateHourByAmPmOption(_currentDate.Hour, selectedAmPmItem));
+        SetHour(UpdateHourByAmPmOption(_currentDate.Hour, selectedIndex));
     }
 
     private void OnYearLabelClicked(object sender, EventArgs e)
@@ -1586,11 +1587,11 @@ internal class NullableDateTimePickerContent : ContentView
         return dateTime.Hour;
     }
 
-    private static int UpdateHourByAmPmOption(int currentHour, string amPmOption)
+    private static int UpdateHourByAmPmOption(int currentHour,  int selectedIndex)
     {
         // Update the _hour12 value based on the AM/PM option
 
-        if (amPmOption.ToUpper() == Constants.AM)
+        if (selectedIndex == 0)
         {
             if (currentHour > 12)
             {
@@ -1600,9 +1601,7 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 currentHour = 0; // 12 AM is represented as 0 in 24-_hour12 format
             }
-        }
-
-        if (amPmOption.ToUpper() == Constants.PM)
+        } else if (selectedIndex == 1)
         {
 
             if (currentHour <= 12)
