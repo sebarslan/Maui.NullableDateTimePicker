@@ -545,7 +545,7 @@ internal class NullableDateTimePickerContent : ContentView
             BackgroundColor = Colors.Transparent,
             FontSize = 14,
             HeightRequest = 40,
-            ItemDisplayBinding = new Binding("Text"),
+            ItemDisplayBinding = Binding.Create(static (PickerItem pickerItem) => pickerItem.Text),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             FontAttributes = FontAttributes.Bold,
@@ -561,6 +561,11 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _hoursPicker.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
             _hoursPicker.SetBinding(Picker.TitleColorProperty, _options.ForeColorThemeColor.GetBinding());
+        }
+        else
+        {
+            _hoursPicker.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
+            _hoursPicker.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
         }
 
         _hoursPicker.SelectedIndexChanged += OnHoursPickerIndexChanged;
@@ -583,6 +588,12 @@ internal class NullableDateTimePickerContent : ContentView
         {
             hoursMinutesSeparatorLabel.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
         }
+        else
+        {
+            hoursMinutesSeparatorLabel.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
+            hoursMinutesSeparatorLabel.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
+        }
+
 
         _minutesPicker = new Picker
         {
@@ -590,7 +601,7 @@ internal class NullableDateTimePickerContent : ContentView
             BackgroundColor = Colors.Transparent,
             FontSize = 14,
             HeightRequest = 40,
-            ItemDisplayBinding = new Binding("Text"),
+            ItemDisplayBinding = Binding.Create(static (PickerItem pickerItem) => pickerItem.Text),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
             FontAttributes = FontAttributes.Bold,
@@ -606,6 +617,11 @@ internal class NullableDateTimePickerContent : ContentView
         {
             _minutesPicker.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
             _minutesPicker.SetBinding(Picker.TitleColorProperty, _options.ForeColorThemeColor.GetBinding());
+        }
+        else
+        {
+            _minutesPicker.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
+            _minutesPicker.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
         }
 
         _minutesPicker.SelectedIndexChanged += OnMinutesPickerIndexChanged;
@@ -649,6 +665,11 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 _amPmPicker.SetBinding(Picker.TextColorProperty, _options.ForeColorThemeColor.GetBinding());
                 _amPmPicker.SetBinding(Picker.TitleColorProperty, _options.ForeColorThemeColor.GetBinding());
+            }
+            else
+            {
+                _amPmPicker.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
+                _amPmPicker.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
             }
 
             _amPmPicker.SelectedIndexChanged += OnAmPmPickerIndexChanged;
@@ -703,13 +724,13 @@ internal class NullableDateTimePickerContent : ContentView
         if (_options.Is12HourFormat)
         {
             _amPmList = new()
-                {
-                    Utilities.GetTranslateText(_options.Translations, "AM", "AM"),
-                   Utilities.GetTranslateText(_options.Translations, "PM", "PM")
-                };
+            {
+                Utilities.GetTranslateText(_options.Translations, "AM", "AM"),
+                Utilities.GetTranslateText(_options.Translations, "PM", "PM")
+            };
         }
 
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
         {
             // _hours
             if (_hoursPicker != null)
@@ -794,7 +815,7 @@ internal class NullableDateTimePickerContent : ContentView
         _okButton = new Button
         {
             AutomationId = _options.AutomationId + "_OkButton",
-            Text = !string.IsNullOrEmpty(_options.OkButtonText) ?  _options.OkButtonText : Utilities.GetTranslateText(_options.Translations, "OK", "OK"),
+            Text = !string.IsNullOrEmpty(_options.OkButtonText) ? _options.OkButtonText : Utilities.GetTranslateText(_options.Translations, "OK", "OK"),
             Style = _toolButtonsStyle,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -1587,7 +1608,7 @@ internal class NullableDateTimePickerContent : ContentView
         return dateTime.Hour;
     }
 
-    private static int UpdateHourByAmPmOption(int currentHour,  int selectedIndex)
+    private static int UpdateHourByAmPmOption(int currentHour, int selectedIndex)
     {
         // Update the _hour12 value based on the AM/PM option
 
@@ -1601,7 +1622,8 @@ internal class NullableDateTimePickerContent : ContentView
             {
                 currentHour = 0; // 12 AM is represented as 0 in 24-_hour12 format
             }
-        } else if (selectedIndex == 1)
+        }
+        else if (selectedIndex == 1)
         {
 
             if (currentHour <= 12)
@@ -1621,12 +1643,12 @@ internal class NullableDateTimePickerContent : ContentView
     private static Color GetColorFromStyle(Style style, BindableProperty bindableProperty, Color defaultColor)
     {
         try
-        { 
+        {
             var setters = style.Setters;
-            
+
             if (setters.Count == 0 && style.BasedOn != null)
                 setters = style.BasedOn.Setters;
-            
+
             var colorSetter = setters.FirstOrDefault(s => s.Property == bindableProperty);
 
             if (colorSetter != null)

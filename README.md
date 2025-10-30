@@ -249,7 +249,7 @@ on ios, android, windows, maccatalyst
 # Changelog
 
 ### 3.1.2
-- Fixed ClockView freeze when SelectedDate is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)
+- Fixed ClockView freeze when SelectedDateTime is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)
 - Fixed the clock display issue on Windows.
 - Group buttons have been added instead of toggle buttons that changed AM/PM and hour/minute.
 - A Translations property has been added. With this, some text elements can be customized. (See examples for usage.)
