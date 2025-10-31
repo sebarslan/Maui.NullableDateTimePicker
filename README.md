@@ -5,7 +5,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 This control uses the 
 <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v3.1.2-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.1.3-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -247,6 +247,9 @@ on ios, android, windows, maccatalyst
 
 
 # Changelog
+
+### 3.1.3 
+- Fixed an issue where hour and minute picker items were not visible in some cases in release mode.
 
 ### 3.1.2
 - Fixed ClockView freeze when SelectedDateTime is null and changing hour, minute, or AM/PM. (Thanks @universaldata-eu)

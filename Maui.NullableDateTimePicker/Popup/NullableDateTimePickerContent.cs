@@ -591,7 +591,6 @@ internal class NullableDateTimePickerContent : ContentView
         else
         {
             hoursMinutesSeparatorLabel.SetAppThemeColor(Picker.TextColorProperty, Colors.Black, Colors.White);
-            hoursMinutesSeparatorLabel.SetAppThemeColor(Picker.TitleColorProperty, Colors.Black, Colors.White);
         }
 
 
@@ -1114,7 +1113,7 @@ internal class NullableDateTimePickerContent : ContentView
 
                     for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromLastMonth; i++)
                     {
-                        int dayInNextMonth = i + 1;
+                        int dayInNextMonth = i + 1; 
                         Button nextMonthDayButton = new()
                         {
                             AutomationId = $"{_options.AutomationId}_CalendarNextMonthDayButton_{nextMonthDate.Year}_{nextMonthDate.Month}_{dayInNextMonth}",
