@@ -142,8 +142,8 @@ More examples, please see the samples project
 |--------|-------------|---------|
 | AutomationId | You can give your own automation id. With this you can access Calendar elements. Example: {Your-AutomationId}_CalendarYearsPicker, {Your-AutomationId}_CalendarOkButton | empty |
 | BodyBackgroundColor | Background color of the calendar.	| White |
-| CancelButtonText | The text for the Cancel button. | Cancel |
-| ClearButtonText | Gets or sets the text for the Clear button.	| Clear |
+| CancelButtonText | The text for the Cancel button, optionally supplied via Translations. | Cancel |
+| ClearButtonText | Gets or sets the text for the Clear button, optionally supplied via Translations.	| Clear |
 | DayNamesStyle | Style of the day names in the calendar. | null |
 | DayStyle | Style of the days in the calendar. | null |
 | DisabledDayStyle | Style of the disabled days in the calendar. | null |
@@ -154,7 +154,7 @@ More examples, please see the samples project
 | MaxDate |	Maximum selectable date of the control. | DateTime.MaxValue |
 | MinDate | Minimum selectable date of the control. | DateTime.MinValue |
 | Mode | Specifies the picker mode of the control. Valid values are Date, DateTime, and Time. | Date |
-| OkButtonText | The text for the OK button. | OK |
+| OkButtonText | The text for the OK button, optionally supplied via Translations. | OK |
 | OtherMonthDayStyle | Style of the other month days in the calendar. | null |
 | PopupBorderColor | Color of the popup border. Set to transparent or null to hide the border. | Transparent |
 | PopupBorderWidth | Thickness of the border around the popup. | 0 |
