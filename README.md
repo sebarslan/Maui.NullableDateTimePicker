@@ -247,6 +247,8 @@ on ios, android, windows, maccatalyst
 
 
 # Changelog
+### 3.1.4
+- .net10.0 support
 
 ### 3.1.3 
 - Fixed an issue where hour and minute picker items were not visible in some cases in release mode.
