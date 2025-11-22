@@ -248,7 +248,8 @@ on ios, android, windows, maccatalyst
 
 # Changelog
 ### 3.1.4
-- .net10.0 support
+- Added .NET 10.0 support
+- Updated CommunityToolkit.Maui to 13.0.0 for net10.0 compatibility
 
 ### 3.1.3 
 - Fixed an issue where hour and minute picker items were not visible in some cases in release mode.

@@ -96,7 +96,7 @@ public partial class MainPage : ContentPage
         }
         catch (Exception ex)
         {
-
+            Console.WriteLine(ex.ToString());
         }
     }
 
