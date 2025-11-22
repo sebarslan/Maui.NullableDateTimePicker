@@ -699,19 +699,14 @@ internal class NullableDateTimePickerContent : ContentView
             _timeStackLayout.Add(toggleCalendarClockImageButton);
         }
 
-
-
         // Hours and Minutes Picker
-
         _hours = new();
 
         int startHour = _options.Is12HourFormat ? 1 : 0;
         int maxHour = _options.Is12HourFormat ? 12 : 23;
         for (int h = startHour; h <= maxHour; h++)
         {
-            string hourText = h.ToString("00");
-
-            _hours.Add(new PickerItem { Text = hourText, Value = h });
+             _hours.Add(new PickerItem { Text = h.ToString("00"), Value = h });
         }
 
         _minutes = new();
