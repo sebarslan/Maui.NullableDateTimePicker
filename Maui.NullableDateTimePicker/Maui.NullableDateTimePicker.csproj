@@ -60,8 +60,8 @@
 
 		<!-- net10.0 -->
 		<PackageReference Include="CommunityToolkit.Maui"
-						  Version="13.0.0"
-						  Condition="'$(TargetFramework)' == 'net10.0'">
+						  Version="12.3.0"
+					      Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'net9.0'">
 			<PrivateAssets>all</PrivateAssets>
 			<ExcludeAssets>runtime</ExcludeAssets>
 		</PackageReference>
