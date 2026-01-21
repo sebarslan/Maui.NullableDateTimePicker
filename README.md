@@ -5,7 +5,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 This control uses the 
 <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v3.1.3-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.1.4-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -222,10 +222,11 @@ private static void OnSelectedDateTimeChanged(object sender, DateTimeChangedEven
 </pre>
 
 
+
 > .NET MAUI handler was used in the test project to remove the underline in the original entry.
 > Please refer to the MauiProgram.cs file in the sample project.
 > For more detailed information about handlers, please check:
-> https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-8.0
+> https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-9.0
 
 
 
