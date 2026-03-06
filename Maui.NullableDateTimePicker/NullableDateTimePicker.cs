@@ -1,4 +1,5 @@
-﻿using Maui.NullableDateTimePicker.Controls;
+﻿
+using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Helpers;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
@@ -6,6 +7,14 @@ using System.Collections.ObjectModel;
 namespace Maui.NullableDateTimePicker;
 
 // All the code in this file is included in all platforms.
+
+/// <summary>
+/// Represents a customizable date and time picker control that supports nullable selection and a wide range of appearance and behavior options.
+/// <br/><br/>The NullableDateTimePicker control enables users to select a date, time, or both, with the ability to clear the selection and specify minimum and maximum selectable values.
+/// <br/>It provides extensive styling options for its visual elements, including headers, days, and popup dialogs.
+/// <br/>The control raises an event when the selected date and time changes, allowing for responsive UI updates.
+/// <br/>It is suitable for scenarios where a date and / or time input is required, and null values are meaningful (e.g., optional fields).
+/// </summary>
 public class NullableDateTimePicker : ContentView
 {
     public event EventHandler<DateTimeChangedEventArgs> SelectedDateTimeChanged;
@@ -52,7 +61,10 @@ public class NullableDateTimePicker : ContentView
             }
 
             if (isDateTimeChanged)
+            {
                 self.SelectedDateTimeChanged?.Invoke(self, new DateTimeChangedEventArgs(oldSelectedDateTime, newSelectedDateTime));
+                self.OnSelectedDateTimeChanged(oldSelectedDateTime, newSelectedDateTime);
+            }
         });
 
     public DateTime? SelectedDateTime
@@ -876,11 +888,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         clickableView.GestureRecognizers.Add(tapGestureRecognizer);
 
 
-        _dateTimePickerIcon.SetBinding(Image.WidthRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerIcon.SetBinding(Image.MaximumWidthRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerIcon.SetBinding(Image.HeightRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerIcon.SetBinding(Image.MaximumHeightRequestProperty, new Binding("Height", source: clickableView));
-        _dateTimePickerEntry.SetBinding(Entry.HeightRequestProperty, new Binding("Height", source: clickableView));
+        _dateTimePickerIcon.SetBinding(WidthRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        _dateTimePickerIcon.SetBinding(MaximumWidthRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        _dateTimePickerIcon.SetBinding(HeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        _dateTimePickerIcon.SetBinding(MaximumHeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        _dateTimePickerEntry.SetBinding(HeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
 
         _dateTimePickerBorder = new Border
         {
@@ -909,14 +921,48 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
 
     #region public methods
-    public static async Task<Maui.NullableDateTimePicker.PopupResult> OpenAsync(INullableDateTimePickerOptions options, Page page = null)
+
+    public static async Task<PopupResult> OpenAsync(INullableDateTimePickerOptions options, Page? page = null)
     {
-        using (var popupControl = new NullableDateTimePickerPopup(options, new CancellationTokenSource()))
-        {
-            return await popupControl.OpenPopupAsync(page);
-        }
+        using var popupControl = new NullableDateTimePickerPopup(options, new CancellationTokenSource());
+        return await popupControl.OpenPopupAsync(page);
     }
 
+    /// <summary>
+    /// Shows an arbitrary text into the date time picker entry.
+    /// <br/>Note that this does not change the current <see cref="SelectedDateTime"/>.
+    /// </summary>
+    /// <param name="text"></param>
+    public void ShowText(string text)
+    {
+        _dateTimePickerEntry.Text = text;
+    }
+
+    /// <summary>
+    /// Invoked when the selected date and time value changes.
+    /// <br/>Override this method in a derived class to respond to changes in the selected date and time. 
+    /// </summary>
+    /// <param name="oldSelectedDateTime">The previously selected date and time, or null if no value was previously selected.</param>
+    /// <param name="newSelectedDateTime">The newly selected date and time, or null if the selection was cleared.</param>
+    protected virtual void OnSelectedDateTimeChanged(DateTime? oldSelectedDateTime, DateTime? newSelectedDateTime)
+    {
+    }
+
+    /// <summary>
+    /// Invoked when the popup is about to open, allowing derived classes to execute custom logic before the popup is displayed.
+    /// <br/>Override this method in a derived class to perform actions or modify state immediately prior to the popup opening.
+    /// </summary>
+    protected virtual void OnPopupOpening()
+    {
+    }
+
+    /// <summary>
+    /// Invoked when the popup is closing to allow for custom logic or cleanup before the popup is dismissed.
+    /// <br/>Override this method in a derived class to implement additional behavior that should occur when the popup is about to close.
+    /// </summary>
+    protected virtual void OnPopupClosing()
+    {
+    }
 
     #endregion //public metlods
 
@@ -932,6 +978,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         if (!base.IsEnabled || isPopupOpen)
             return;
 
+        OnPopupOpening();
         isPopupOpen = true;
 
         try
@@ -984,6 +1031,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         finally
         {
             isPopupOpen = false;
+            OnPopupClosing();
         }
     }
 
