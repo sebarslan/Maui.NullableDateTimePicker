@@ -4,6 +4,76 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.add_PopupClosing(System.EventHandler)</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.add_PopupOpening(System.EventHandler)</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.FormatDate(System.Nullable{System.DateTime})</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.get_CustomFormatter</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.OnPopupClosing</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.OnPopupOpening</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.OnSelectedDateTimeChanged(System.Nullable{System.DateTime},System.Nullable{System.DateTime})</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.remove_PopupClosing(System.EventHandler)</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.remove_PopupOpening(System.EventHandler)</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.set_CustomFormatter(System.Func{System.Nullable{System.DateTime},System.String})</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Maui.NullableDateTimePicker.NullableDateTimePicker.add_PopupClosing(System.EventHandler)</Target>
     <Left>lib/net9.0/Maui.NullableDateTimePicker.dll</Left>
     <Right>lib/net9.0/Maui.NullableDateTimePicker.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -73,7 +143,14 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0003</DiagnosticId>
-    <Target>Maui.NullableDateTimePicker, Version=3.1.3.0, Culture=neutral, PublicKeyToken=null</Target>
+    <Target>Maui.NullableDateTimePicker, Version=3.1.4.0, Culture=neutral, PublicKeyToken=null</Target>
+    <Left>lib/net10.0/Maui.NullableDateTimePicker.dll</Left>
+    <Right>lib/net10.0/Maui.NullableDateTimePicker.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0003</DiagnosticId>
+    <Target>Maui.NullableDateTimePicker, Version=3.1.4.0, Culture=neutral, PublicKeyToken=null</Target>
     <Left>lib/net9.0/Maui.NullableDateTimePicker.dll</Left>
     <Right>lib/net9.0/Maui.NullableDateTimePicker.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

@@ -284,7 +284,7 @@ If `CustomFormatter` is set, it will be used to generate the text displayed in t
 
 <pre>
 <code>
-picker.CustomFormatter = date =>
+nullableDateTimePicker.CustomFormatter = date =>
 {
     if (date == null)
         return "No date";

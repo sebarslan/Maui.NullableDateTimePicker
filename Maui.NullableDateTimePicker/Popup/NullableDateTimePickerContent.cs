@@ -44,10 +44,10 @@ internal class NullableDateTimePickerContent : ContentView
     private Picker _amPmPicker;
     private StackLayout _timeStackLayout;
     private ScrollView _scrollView;
-    private List<YearModel> _years = null;
-    private List<PickerItem> _hours = null;
-    private List<PickerItem> _minutes = null;
-    private List<string> _amPmList = null;
+    private List<YearModel> _years = [];
+    private List<PickerItem> _hours = [];
+    private List<PickerItem> _minutes = [];
+    private List<string> _amPmList = [];
     private ClockView _nullableDateTimePickerClockView;
     private bool isClockDisplaying;
 
@@ -725,7 +725,7 @@ internal class NullableDateTimePickerContent : ContentView
             };
         }
 
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync(async () =>
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync( () =>
         {
             // _hours
             if (_hoursPicker != null)
@@ -1651,7 +1651,7 @@ internal class NullableDateTimePickerContent : ContentView
                 return (Color)colorSetter.Value;
             }
         }
-        catch (Exception ex) { }
+        catch (Exception ex) { Console.WriteLine(ex); }
 
         return defaultColor;
     }

@@ -1018,7 +1018,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
                 Is12HourFormat = this.Is12HourFormat,
                 AutomationId = base.AutomationId,
-                Translations = this.Translations?.ToList()
+                Translations = this.Translations?.ToList() ?? []
             };
 
             var result = await NullableDateTimePicker.OpenAsync(options);

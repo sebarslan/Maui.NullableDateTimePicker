@@ -9,9 +9,9 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public PickerModes Mode { get; set; } = PickerModes.Date;
     public DateTime? MinDate { get; set; }
     public DateTime? MaxDate { get; set; }
-    public string OkButtonText { get; set; }
-    public string CancelButtonText { get; set; }
-    public string ClearButtonText { get; set; }
+    public string OkButtonText { get; set; } = "OK";
+    public string CancelButtonText { get; set; } = "Cancel";
+    public string ClearButtonText { get; set; } = "Clear";
     public Color? PopupBorderColor { get; set; } = Colors.Transparent;
     public double PopupBorderWidth { get; set; } = 0.0d;
     public CornerRadius PopupCornerRadius { get; set; } = new CornerRadius(0);
@@ -41,6 +41,6 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public AppThemeColor? ActivityIndicatorThemeColor { get; set; }
     public bool CloseOnOutsideClick { get; set; }
     public bool Is12HourFormat { get; set; }
-    public string AutomationId { get; set; }
-    public IList<TranslationItem> Translations { get; set; }
+    public string AutomationId { get; set; } = string.Empty;
+    public IList<TranslationItem> Translations { get; set; } = [];
 }

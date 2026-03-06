@@ -38,7 +38,7 @@
 
             <Label Text="DateTimepicker" TextColor="Black" />
 
-            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}" 
+            <ndtp:NullableDateTimePicker   SelectedDateTime="{Binding MyDateTime}" 
                             Mode="DateTime"
                             WidthRequest="300" 
                             HeightRequest="30"
@@ -49,9 +49,9 @@
                             SelectedDayStyle="{StaticResource SelectedDayStyle}"
                             Translations="{StaticResource ClockTranslations}" />
 
-            <Label Text="Date time picker control with border + popup with border and translations binding" TextColor="Black" />
+            <Label Text="Date time picker control with border + popup with border and translations binding and with custom formatter" TextColor="Black" />
 
-            <ndtp:NullableDateTimePicker SelectedDateTime="{Binding MyDateTime}"  
+            <ndtp:NullableDateTimePicker x:Name="myNullableDateTimePicker" SelectedDateTime="{Binding MyDateTime}"  
                                         Mode="DateTime"
                                         OkButtonText="Done" 
                                         HorizontalOptions="Start"

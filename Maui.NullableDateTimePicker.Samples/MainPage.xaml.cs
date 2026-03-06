@@ -21,6 +21,17 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         themeSwitch.IsToggled = Application.Current.RequestedTheme == AppTheme.Dark;
 
+        myNullableDateTimePicker.CustomFormatter = date =>
+        {
+            if (date == null)
+                return "No date";
+
+            if (date.Value.Date == DateTime.Today)
+                return "Today";
+
+            return date.Value.ToString("dddd dd MMM");
+        };
+
         // Create Datetimepicker Programmatically
         CreateDateTimePickerProgrammatically();
     }
