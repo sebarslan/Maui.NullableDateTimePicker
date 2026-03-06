@@ -1,4 +1,5 @@
-﻿using Maui.NullableDateTimePicker.Controls;
+﻿using CommunityToolkit.Maui;
+using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Helpers;
 using Maui.NullableDateTimePicker.Models;
 using System.Globalization;
@@ -679,17 +680,17 @@ internal class NullableDateTimePickerContent : ContentView
         {
             var toggleCalendarClockImageButton = new ImageButton
             {
-                Source = Utilities.GetImageSource("toggle_calendar_clock.png"),
+                Source = Utilities.GetImageSource(Application.Current.RequestedTheme == AppTheme.Dark ? "toggle_white.png" : "toggle_black.png"),
                 Margin = new Thickness(10, 0, 0, 0),
                 Padding = 0,
                 Aspect = Aspect.AspectFit,
                 BackgroundColor = Colors.Transparent,
-                WidthRequest = 14,
-                HeightRequest = 14,
-                MaximumHeightRequest = 14,
-                MaximumWidthRequest = 14,
-                MinimumHeightRequest = 14,
-                MinimumWidthRequest = 14
+                WidthRequest = 20,
+                HeightRequest = 20,
+                MaximumHeightRequest = 20,
+                MaximumWidthRequest = 20,
+                MinimumHeightRequest = 20,
+                MinimumWidthRequest = 20
             };
             toggleCalendarClockImageButton.Clicked += (s, e) =>
             {
@@ -706,7 +707,7 @@ internal class NullableDateTimePickerContent : ContentView
         int maxHour = _options.Is12HourFormat ? 12 : 23;
         for (int h = startHour; h <= maxHour; h++)
         {
-             _hours.Add(new PickerItem { Text = h.ToString("00"), Value = h });
+            _hours.Add(new PickerItem { Text = h.ToString("00"), Value = h });
         }
 
         _minutes = new();
@@ -1108,7 +1109,7 @@ internal class NullableDateTimePickerContent : ContentView
 
                     for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromLastMonth; i++)
                     {
-                        int dayInNextMonth = i + 1; 
+                        int dayInNextMonth = i + 1;
                         Button nextMonthDayButton = new()
                         {
                             AutomationId = $"{_options.AutomationId}_CalendarNextMonthDayButton_{nextMonthDate.Year}_{nextMonthDate.Month}_{dayInNextMonth}",

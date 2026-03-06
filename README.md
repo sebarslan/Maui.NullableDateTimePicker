@@ -328,6 +328,7 @@ on ios, android, windows, maccatalyst
 - Added OnPopupOpening and OnPopupClosing virtual methods for derived controls (Thanks @fraluderin)
 - Added OnSelectedDateTimeChanged virtual method to allow custom handling (Thanks @fraluderin)
   of SelectedDateTime changes
+- Light and dark versions of the toggle button have been added.
 
 ### 3.1.4
 - Added .NET 10.0 support
