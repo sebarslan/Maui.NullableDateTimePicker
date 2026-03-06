@@ -221,13 +221,87 @@ private static void OnSelectedDateTimeChanged(object sender, DateTimeChangedEven
 </code>
 </pre>
 
+### Overriding the change behavior
+Derived controls can override the `OnSelectedDateTimeChanged` method to customize the behavior when the selected date/time changes.
+This method raises the `SelectedDateTimeChanged` event and can be overridden
+by derived controls to extend the behavior when the selected date/time changes.
+
+<pre>
+<code>
+protected override void OnSelectedDateTimeChanged(DateTime? oldSelectedDateTime, DateTime? newSelectedDateTime)
+{
+    base.OnSelectedDateTimeChanged(oldSelectedDateTime, newSelectedDateTime);
+
+    // Custom logic here
+}
+</code>
+</pre>
+
+## Popup Lifecycle
+
+The `PopupOpening` and `PopupClosing` events allow observing the lifecycle of the date/time picker popup.
+
+- **PopupOpening** is raised just before the popup is opened.
+- **PopupClosing** is raised when the popup is about to close.
+
+These events can be used to execute custom logic before the popup becomes visible or when the popup interaction finishes.
+
+The control also provides the `OnPopupOpening` and `OnPopupClosing` virtual methods.  
+These methods raise the corresponding events and can be overridden by derived controls to customize the popup lifecycle behavior.
+
+<pre>
+<code>
+picker.PopupOpening += (s, e) =>
+{
+    // Execute logic before the popup opens
+};
+
+picker.PopupClosing += (s, e) =>
+{
+    // Execute logic when the popup is closing
+};
+protected override void OnPopupOpening()
+{
+    base.OnPopupOpening();
+
+    // Custom logic before popup opens
+}
+
+protected override void OnPopupClosing()
+{
+    base.OnPopupClosing();
+
+    // Custom logic when popup closes
+}
+</code>
+</pre>
+
+## CustomFormatter
+
+The `CustomFormatter` property allows providing a custom function to format the selected date/time when the built-in `Format` string is not sufficient.
+
+If `CustomFormatter` is set, it will be used to generate the text displayed in the picker. Otherwise, the control falls back to the `Format` property.
+
+<pre>
+<code>
+picker.CustomFormatter = date =>
+{
+    if (date == null)
+        return "No date";
+
+    if (date.Value.Date == DateTime.Today)
+        return "Today";
+
+    return date.Value.ToString("dddd dd MMM");
+};
+</code>
+</pre>
 
 
 > .NET MAUI handler was used in the test project to remove the underline in the original entry.
 > Please refer to the MauiProgram.cs file in the sample project.
 > For more detailed information about handlers, please check:
 > https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-9.0
-
 
 
 # License
@@ -250,6 +324,10 @@ on ios, android, windows, maccatalyst
 # Changelog
 ### 3.1.5 (Preview)
 - Add CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
+- Added PopupOpening and PopupClosing events to observe popup lifecycle
+- Added OnPopupOpening and OnPopupClosing virtual methods for derived controls (Thanks @fraluderin)
+- Added OnSelectedDateTimeChanged virtual method to allow custom handling (Thanks @fraluderin)
+  of SelectedDateTime changes
 
 ### 3.1.4
 - Added .NET 10.0 support

@@ -18,6 +18,8 @@ namespace Maui.NullableDateTimePicker;
 public class NullableDateTimePicker : ContentView
 {
     public event EventHandler<DateTimeChangedEventArgs> SelectedDateTimeChanged;
+    public event EventHandler? PopupOpening;
+    public event EventHandler? PopupClosing;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
     private Image _dateTimePickerIcon;
@@ -59,7 +61,6 @@ public class NullableDateTimePicker : ContentView
 
             if (isDateTimeChanged)
             {
-                self.SelectedDateTimeChanged?.Invoke(self, new DateTimeChangedEventArgs(oldSelectedDateTime, newSelectedDateTime));
                 self.OnSelectedDateTimeChanged(oldSelectedDateTime, newSelectedDateTime);
             }
         });
@@ -938,16 +939,6 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     }
 
     /// <summary>
-    /// Shows an arbitrary text into the date time picker entry.
-    /// <br/>Note that this does not change the current <see cref="SelectedDateTime"/>.
-    /// </summary>
-    /// <param name="text"></param>
-    public void ShowText(string text)
-    {
-        _dateTimePickerEntry.Text = text;
-    }
-
-    /// <summary>
     /// Invoked when the selected date and time value changes.
     /// <br/>Override this method in a derived class to respond to changes in the selected date and time. 
     /// </summary>
@@ -955,6 +946,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     /// <param name="newSelectedDateTime">The newly selected date and time, or null if the selection was cleared.</param>
     protected virtual void OnSelectedDateTimeChanged(DateTime? oldSelectedDateTime, DateTime? newSelectedDateTime)
     {
+        SelectedDateTimeChanged?.Invoke(this, new DateTimeChangedEventArgs(oldSelectedDateTime, newSelectedDateTime));
     }
 
     /// <summary>
@@ -963,6 +955,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     /// </summary>
     protected virtual void OnPopupOpening()
     {
+        PopupOpening?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -971,6 +964,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     /// </summary>
     protected virtual void OnPopupClosing()
     {
+        PopupClosing?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion //public metlods
