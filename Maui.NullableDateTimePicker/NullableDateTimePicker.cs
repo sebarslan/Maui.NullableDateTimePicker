@@ -1,7 +1,7 @@
 ﻿using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Helpers;
 using Microsoft.Maui.Controls.Shapes;
-using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -31,10 +31,7 @@ public class NullableDateTimePicker : ContentView
             var oldSelectedDateTime = (DateTime?)oldValue;
             var newSelectedDateTime = (DateTime?)newValue;
 
-            // Reset the text, so that the text color will be updated
-            // https://github.com/dotnet/maui/issues/17843
-            self._dateTimePickerEntry.Text = "";
-            self._dateTimePickerEntry.Text = newSelectedDateTime?.ToString(self.Format);
+            self.UpdateEntryText();
 
             //Date changed event
             bool isDateTimeChanged = false;
@@ -467,9 +464,21 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             var newValue = (string)n;
             if (oldValue != newValue)
             {
-                self._dateTimePickerEntry.Text = self.SelectedDateTime?.ToString(self.Format);
+                self.UpdateEntryText();
             }
         });
+
+    private Func<DateTime?, string>? _customFormatter;
+
+    public Func<DateTime?, string>? CustomFormatter
+    {
+        get => _customFormatter;
+        set
+        {
+            _customFormatter = value;
+            UpdateEntryText();
+        }
+    }
 
     public string Format
     {
@@ -985,6 +994,22 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         {
             isPopupOpen = false;
         }
+    }
+
+    private void UpdateEntryText()
+    {
+        // Reset the text, so that the text color will be updated
+        // https://github.com/dotnet/maui/issues/17843
+        _dateTimePickerEntry.Text = "";
+        _dateTimePickerEntry.Text = FormatDate(SelectedDateTime);
+    }
+
+    protected virtual string FormatDate(DateTime? date)
+    {
+        if (CustomFormatter != null)
+            return CustomFormatter(date);
+
+        return date?.ToString(Format, CultureInfo.CurrentCulture) ?? string.Empty;
     }
 
     private void SetCalendarIcon()

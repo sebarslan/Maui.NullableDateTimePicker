@@ -8,6 +8,7 @@ namespace Maui.NullableDateTimePicker.Samples
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+            builder.UseMauiApp<App>();
 #if DEBUG
             builder.UseMauiCommunityToolkit();
 #else

@@ -248,6 +248,9 @@ on ios, android, windows, maccatalyst
 
 
 # Changelog
+### 3.1.5 (Preview)
+- Add CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
+
 ### 3.1.4
 - Added .NET 10.0 support
 - Updated CommunityToolkit.Maui to 12.3.0 for net10.0 compatibility
