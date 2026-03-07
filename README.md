@@ -257,15 +257,28 @@ picker.PopupOpening += (s, e) =>
     // Execute logic before the popup opens
 };
 
+picker.PopupOpening += (s, e) =>
+{
+    // Execute logic after the popup has opened and its content is ready.
+};
+
 picker.PopupClosing += (s, e) =>
 {
     // Execute logic when the popup is closing
 };
+
 protected override void OnPopupOpening()
 {
     base.OnPopupOpening();
 
     // Custom logic before popup opens
+}
+
+protected override void OnPopupOpened()
+{
+    base.OnPopupOpened();
+
+    // Custom logic after the popup opens
 }
 
 protected override void OnPopupClosing()
@@ -325,10 +338,9 @@ on ios, android, windows, maccatalyst
 # Changelog
 ### 3.1.5 (Preview)
 - Add CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
-- Added PopupOpening and PopupClosing events to observe popup lifecycle
-- Added OnPopupOpening and OnPopupClosing virtual methods for derived controls (Thanks @fraluderin)
-- Added OnSelectedDateTimeChanged virtual method to allow custom handling (Thanks @fraluderin)
-  of SelectedDateTime changes
+- Added PopupOpening, PopupOpened, and PopupClosing events to observe the popup lifecycle
+- Added OnPopupOpening, OnPopupOpened, and OnPopupClosing virtual methods for derived controls (Thanks @fraluderin)
+- Added OnSelectedDateTimeChanged virtual method to allow custom handling of SelectedDateTime changes (Thanks @fraluderin)
 - Light and dark versions of the toggle button have been added.
 
 ### 3.1.4
