@@ -872,6 +872,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
 
+       
+
 
         _dateTimePickerIcon = new Image
         {
@@ -881,8 +883,32 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             HorizontalOptions = LayoutOptions.End,
             VerticalOptions = LayoutOptions.Fill
         };
-        _dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
-        _dateTimePickerGrid.Add(_dateTimePickerIcon);
+
+        var iconContainer = new Grid
+        {
+            HorizontalOptions = LayoutOptions.End,
+            VerticalOptions = LayoutOptions.Fill
+        };
+
+        iconContainer.Add(_dateTimePickerIcon);
+
+        _dateTimePickerGrid.SetColumn(iconContainer, 1);
+        _dateTimePickerGrid.Add(iconContainer);
+
+        iconContainer.SizeChanged += (s, e) =>
+        {
+            var size = iconContainer.Height;
+
+            if (size <= 0)
+                return;
+
+            _dateTimePickerIcon.WidthRequest = size;
+            _dateTimePickerIcon.HeightRequest = size;
+        };
+
+
+        //_dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
+        //_dateTimePickerGrid.Add(_dateTimePickerIcon);
 
         var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill };
         _dateTimePickerGrid.SetColumn(clickableView, 0);
@@ -894,19 +920,39 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         {
             NumberOfTapsRequired = 1
         };
-        tapGestureRecognizer.Tapped += (s, e) =>
-        {
-            OnDatePickerClicked(s, e);
-        };
+        tapGestureRecognizer.Tapped += OnDatePickerClicked;
 
         clickableView.GestureRecognizers.Add(tapGestureRecognizer);
 
+        clickableView.Loaded += (s, e) =>
+        {
+            UpdateIconSize();
+        };
 
-        _dateTimePickerIcon.SetBinding(WidthRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
-        _dateTimePickerIcon.SetBinding(MaximumWidthRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
-        _dateTimePickerIcon.SetBinding(HeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
-        _dateTimePickerIcon.SetBinding(MaximumHeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
-        _dateTimePickerEntry.SetBinding(HeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        clickableView.SizeChanged += (s, e) =>
+        {
+            UpdateIconSize();
+        };
+
+        void UpdateIconSize()
+        {
+            var size = clickableView.Height;
+
+            if (size <= 0)
+                return;
+
+            if (_dateTimePickerIcon.HeightRequest == size)
+                return;
+
+            _dateTimePickerIcon.WidthRequest = size;
+            _dateTimePickerIcon.HeightRequest = size;
+        }
+
+        //_dateTimePickerIcon.SetBinding(WidthRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        //_dateTimePickerIcon.SetBinding(MaximumWidthRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        //_dateTimePickerIcon.SetBinding(HeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        //_dateTimePickerIcon.SetBinding(MaximumHeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
+        //_dateTimePickerEntry.SetBinding(HeightRequestProperty, static (VisualElement v) => v.Height, source: clickableView);
 
         _dateTimePickerBorder = new Border
         {
@@ -924,12 +970,14 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             VerticalOptions = LayoutOptions.Fill
         };
 
-        this.Loaded += (s, e) =>
-        {
-            SetCalendarIcon();
-        };
+        Loaded += OnLoaded;
 
         Content = _dateTimePickerBorder;
+    }
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        Loaded -= OnLoaded;
+        SetCalendarIcon();
     }
     #endregion //consturctor
 
@@ -985,7 +1033,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     #endregion //public metlods
 
     #region private methods
-    private async void OnDatePickerClicked(object sender, EventArgs e)
+    private async void OnDatePickerClicked(object? sender, EventArgs e)
     {
         await OpenNullableDateTimePickerPopupAsync();
     }
@@ -1096,9 +1144,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         if (HideIcon)
             return;
 
-        MainThreadHelper.SafeBeginInvokeOnMainThread(async () =>
+        MainThreadHelper.SafeBeginInvokeOnMainThread(() =>
         {
-            await Task.Delay(100);
             if (Icon != null)
             {
                 _dateTimePickerIcon.Source = Icon;
@@ -1111,6 +1158,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                     PickerModes.Time => "time_icon.png",
                     _ => "date_icon.png"
                 };
+
                 try
                 {
                     _dateTimePickerIcon.Source = Utilities.GetImageSource(imageName);
