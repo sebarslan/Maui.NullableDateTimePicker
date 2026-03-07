@@ -868,12 +868,10 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             VerticalTextAlignment = this.VerticalTextAlignment,
             PlaceholderColor = this.PlaceholderColor
         };
+        _dateTimePickerEntry.InputTransparent = true;
 
         _dateTimePickerGrid.SetColumn(_dateTimePickerEntry, 0);
         _dateTimePickerGrid.Add(_dateTimePickerEntry);
-
-       
-
 
         _dateTimePickerIcon = new Image
         {
@@ -883,6 +881,8 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
             HorizontalOptions = LayoutOptions.End,
             VerticalOptions = LayoutOptions.Fill
         };
+        _dateTimePickerIcon.InputTransparent = true;
+
 
         var iconContainer = new Grid
         {
@@ -910,11 +910,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         //_dateTimePickerGrid.SetColumn(_dateTimePickerIcon, 1);
         //_dateTimePickerGrid.Add(_dateTimePickerIcon);
 
-        var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill };
-        _dateTimePickerGrid.SetColumn(clickableView, 0);
+        //var clickableView = new BoxView { Color = Colors.Transparent, Background = Colors.Transparent, BackgroundColor = Colors.Transparent, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill };
+        //_dateTimePickerGrid.SetColumn(clickableView, 0);
 
-        _dateTimePickerGrid.SetColumnSpan(clickableView, 2);
-        _dateTimePickerGrid.Add(clickableView);
+        //_dateTimePickerGrid.SetColumnSpan(clickableView, 1);
+        //_dateTimePickerGrid.Add(clickableView);
 
         TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer
         {
@@ -922,21 +922,21 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         };
         tapGestureRecognizer.Tapped += OnDatePickerClicked;
 
-        clickableView.GestureRecognizers.Add(tapGestureRecognizer);
+        _dateTimePickerGrid.GestureRecognizers.Add(tapGestureRecognizer);
 
-        clickableView.Loaded += (s, e) =>
+        _dateTimePickerGrid.Loaded += (s, e) =>
         {
             UpdateIconSize();
         };
 
-        clickableView.SizeChanged += (s, e) =>
+        _dateTimePickerGrid.SizeChanged += (s, e) =>
         {
             UpdateIconSize();
         };
 
         void UpdateIconSize()
         {
-            var size = clickableView.Height;
+            var size = _dateTimePickerGrid.Height;
 
             if (size <= 0)
                 return;
