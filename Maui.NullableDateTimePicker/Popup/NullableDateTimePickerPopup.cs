@@ -11,10 +11,12 @@ namespace Maui.NullableDateTimePicker;
 
 internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<PopupResult>, IDisposable
 {
-    private readonly EventHandler<EventArgs> okButtonClickedHandler = null;
-    private readonly EventHandler<EventArgs> clearButtonClickedHandler = null;
-    private readonly EventHandler<EventArgs> cancelButtonClickedHandler = null;
-    private NullableDateTimePickerContent _content = null;
+    private readonly EventHandler<EventArgs> okButtonClickedHandler;
+    private readonly EventHandler<EventArgs> clearButtonClickedHandler;
+    private readonly EventHandler<EventArgs> cancelButtonClickedHandler;
+    private readonly NullableDateTimePickerContent _content;
+    internal event EventHandler? PopupOpened;
+    internal event EventHandler? PopupClosed;
     private bool _disposed = false;
     INullableDateTimePickerOptions _options;
     CancellationTokenSource _cancellationTokenSource;
@@ -40,7 +42,8 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
         Margin = 0;
         Padding = 0;
 
-        base.Opened += _content.NullableDateTimePickerPopupOpened;
+        Opened += OnPopupOpenedInternal;
+        Closed += OnPopupClosedInternal;
 
         okButtonClickedHandler = async (s, e) =>
         {
@@ -63,8 +66,8 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
         Content = _content;
     }
 
-    Page _hostPage;
-    internal async Task<PopupResult> OpenPopupAsync(Page page = null)
+    Page? _hostPage;
+    internal async Task<PopupResult?> OpenPopupAsync(Page? page = null)
     {
         _hostPage = page;
         if (_hostPage == null)
@@ -99,7 +102,8 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
         try
         {
             var popupResult = new PopupResult(_content.SelectedDateTime, buttonResult);
-            await _hostPage.ClosePopupAsync(popupResult);
+            if (_hostPage != null)
+                await _hostPage.ClosePopupAsync(popupResult);
         }
         catch (Exception ex)
         {
@@ -132,6 +136,26 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
 
         return rootPage;
     }
+
+    private async void OnPopupOpenedInternal(object? sender, EventArgs e)
+    {
+        try
+        {
+            await _content.NullableDateTimePickerPopupOpened();
+            PopupOpened?.Invoke(this, EventArgs.Empty);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    private void OnPopupClosedInternal(object? sender, EventArgs e)
+    {
+        PopupClosed?.Invoke(this, EventArgs.Empty);
+    }
+
+
     public void Dispose()
     {
         Dispose(true);
@@ -144,17 +168,21 @@ internal class NullableDateTimePickerPopup : CommunityToolkit.Maui.Views.Popup<P
     }
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposed)
+        if (_disposed)
+            return;
+
+        if (disposing)
         {
-            if (disposing)
-            {
-                _content.OkButtonClicked -= okButtonClickedHandler;
-                _content.ClearButtonClicked -= clearButtonClickedHandler;
-                _content.CancelButtonClicked -= cancelButtonClickedHandler;
-                this.Content = null;
-                _content = null;
-            }
-            _disposed = true;
+            Opened -= OnPopupOpenedInternal;
+            Closed -= OnPopupClosedInternal;
+
+            _content.OkButtonClicked -= okButtonClickedHandler;
+            _content.ClearButtonClicked -= clearButtonClickedHandler;
+            _content.CancelButtonClicked -= cancelButtonClickedHandler;
+
+            Content = null;
         }
+
+        _disposed = true;
     }
 }

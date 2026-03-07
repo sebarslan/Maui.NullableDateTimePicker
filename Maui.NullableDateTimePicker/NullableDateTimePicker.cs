@@ -1,6 +1,8 @@
 ﻿
+using CommunityToolkit.Maui.Views;
 using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Helpers;
+using Microsoft.Extensions.Options;
 using Microsoft.Maui.Controls.Shapes;
 using System.Globalization;
 
@@ -19,6 +21,7 @@ public class NullableDateTimePicker : ContentView
 {
     public event EventHandler<DateTimeChangedEventArgs> SelectedDateTimeChanged;
     public event EventHandler? PopupOpening;
+    public event EventHandler? PopupOpened;
     public event EventHandler? PopupClosing;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
@@ -26,6 +29,7 @@ public class NullableDateTimePicker : ContentView
     private Border _dateTimePickerBorder;
     const double defaultHeightRequest = 40;
     public Page? ParentPage { get; set; }
+    private readonly SemaphoreSlim _popupSemaphore = new(1, 1);
 
     #region bindable properties
 
@@ -932,11 +936,13 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
 
     #region public methods
 
-    public static async Task<PopupResult> OpenAsync(INullableDateTimePickerOptions options, Page? page = null)
+    public static async Task<PopupResult?> OpenAsync(INullableDateTimePickerOptions options, Page? page = null)
     {
-        using var popupControl = new NullableDateTimePickerPopup(options, new CancellationTokenSource());
-        return await popupControl.OpenPopupAsync(page);
+        var popup = new NullableDateTimePickerPopup(options, new CancellationTokenSource());
+        return await popup.OpenPopupAsync(page);
     }
+
+
 
     /// <summary>
     /// Invoked when the selected date and time value changes.
@@ -959,6 +965,15 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     }
 
     /// <summary>
+    /// Invoked when the popup has been opened and its content has finished initializing.
+    /// <br/>Override this method in a derived class to execute custom logic once the popup is fully ready and visible to the user.
+    /// </summary>
+    protected virtual void OnPopupOpened()
+    {
+        PopupOpened?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
     /// Invoked when the popup is closing to allow for custom logic or cleanup before the popup is dismissed.
     /// <br/>Override this method in a derived class to implement additional behavior that should occur when the popup is about to close.
     /// </summary>
@@ -975,14 +990,17 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         await OpenNullableDateTimePickerPopupAsync();
     }
 
-    bool isPopupOpen = false;
+    EventHandler openedHandler = null!;
+    EventHandler closedHandler = null!;
     private async Task OpenNullableDateTimePickerPopupAsync()
     {
-        if (!base.IsEnabled || isPopupOpen)
+        if (!IsEnabled)
+            return;
+
+        if (!await _popupSemaphore.WaitAsync(0))
             return;
 
         OnPopupOpening();
-        isPopupOpen = true;
 
         try
         {
@@ -1021,20 +1039,39 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 Translations = this.Translations?.ToList() ?? []
             };
 
-            var result = await NullableDateTimePicker.OpenAsync(options);
-            if (result is PopupResult popupResult && popupResult.ButtonResult != PopupButtons.Cancel)
+            var popup = new NullableDateTimePickerPopup(options, new CancellationTokenSource());
+
+            openedHandler = (s, e) =>
+            {
+                OnPopupOpened();
+                popup.PopupOpened -= openedHandler;
+            };
+
+            closedHandler = (s, e) =>
+            {
+                OnPopupClosing();
+                popup.Closed -= closedHandler;
+            };
+
+            popup.PopupOpened += openedHandler;
+            popup.Closed += closedHandler;
+
+            var result = await popup.OpenPopupAsync();
+
+
+            if (result is PopupResult popupResult &&
+                popupResult.ButtonResult != PopupButtons.Cancel)
             {
                 SelectedDateTime = popupResult.SelectedDateTime;
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            Console.WriteLine(ex);
         }
         finally
         {
-            isPopupOpen = false;
-            OnPopupClosing();
+            _popupSemaphore.Release();
         }
     }
 

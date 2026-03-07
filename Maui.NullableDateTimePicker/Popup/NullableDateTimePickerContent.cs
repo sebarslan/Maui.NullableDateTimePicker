@@ -109,7 +109,7 @@ internal class NullableDateTimePickerContent : ContentView
     }
 
 
-    internal async void NullableDateTimePickerPopupOpened(object sender, EventArgs e)
+    internal async Task NullableDateTimePickerPopupOpened()
     {
         try
         {

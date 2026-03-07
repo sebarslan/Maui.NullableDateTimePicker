@@ -239,14 +239,15 @@ protected override void OnSelectedDateTimeChanged(DateTime? oldSelectedDateTime,
 
 ## Popup Lifecycle
 
-The `PopupOpening` and `PopupClosing` events allow observing the lifecycle of the date/time picker popup.
+The `PopupOpening`, `PopupOpened` and `PopupClosing` events allow observing the lifecycle of the date/time picker popup.
 
 - **PopupOpening** is raised just before the popup is opened.
+- **PopupOpened** is raised after the popup content has been fully initialized and is ready for user interaction.
 - **PopupClosing** is raised when the popup is about to close.
 
 These events can be used to execute custom logic before the popup becomes visible or when the popup interaction finishes.
 
-The control also provides the `OnPopupOpening` and `OnPopupClosing` virtual methods.  
+The control also provides the `OnPopupOpening`, `PopupOpened` and `OnPopupClosing` virtual methods.  
 These methods raise the corresponding events and can be overridden by derived controls to customize the popup lifecycle behavior.
 
 <pre>
