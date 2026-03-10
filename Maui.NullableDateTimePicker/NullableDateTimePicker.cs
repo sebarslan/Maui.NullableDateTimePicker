@@ -23,6 +23,7 @@ public class NullableDateTimePicker : ContentView
     public event EventHandler? PopupOpening;
     public event EventHandler? PopupOpened;
     public event EventHandler? PopupClosing;
+    public event EventHandler? PopupClosed;
     private Grid _dateTimePickerGrid;
     private Entry _dateTimePickerEntry;
     private Image _dateTimePickerIcon;
@@ -1030,6 +1031,15 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         PopupClosing?.Invoke(this, EventArgs.Empty);
     }
 
+
+    /// <summary>
+    /// Invoked after the popup has been closed and the selected date has been applied.
+    /// </summary>
+    protected virtual void OnPopupClosed()
+    {
+        PopupClosed?.Invoke(this, EventArgs.Empty);
+    }
+
     #endregion //public metlods
 
     #region private methods
@@ -1039,7 +1049,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     }
 
     EventHandler openedHandler = null!;
-    EventHandler closedHandler = null!;
+    EventHandler closingHandler = null!;
     private async Task OpenNullableDateTimePickerPopupAsync()
     {
         if (!IsEnabled)
@@ -1095,14 +1105,14 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 popup.PopupOpened -= openedHandler;
             };
 
-            closedHandler = (s, e) =>
+            closingHandler = (s, e) =>
             {
                 OnPopupClosing();
-                popup.Closed -= closedHandler;
+                popup.Closed -= closingHandler;
             };
 
             popup.PopupOpened += openedHandler;
-            popup.Closed += closedHandler;
+            popup.Closed += closingHandler;
 
             var result = await popup.OpenPopupAsync();
 
@@ -1119,6 +1129,7 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         }
         finally
         {
+            OnPopupClosed();
             _popupSemaphore.Release();
         }
     }
