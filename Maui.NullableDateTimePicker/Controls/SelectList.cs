@@ -1,5 +1,8 @@
+﻿using CommunityToolkit.Maui;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Maui.NullableDateTimePicker;
@@ -8,6 +11,8 @@ internal class SelectList : ContentView
 {
     public event EventHandler SelectedIndexChanged;
     public event EventHandler Closed;
+
+    ObservableCollection<SelectListItem> _items = new();
 
     #region BindableProperties
     // ItemsSource BindableProperty
@@ -107,7 +112,7 @@ internal class SelectList : ContentView
             BindingMode.OneWay // Binding mode
         );
 
-    public Color SelectedItemBackgroundColor
+    public Color? SelectedItemBackgroundColor
     {
         get => (Color)GetValue(SelectedItemBackgroundColorProperty);
         set => SetValue(SelectedItemBackgroundColorProperty, value);
@@ -125,10 +130,10 @@ internal class SelectList : ContentView
         {
             ItemsLayout = new GridItemsLayout(3, ItemsLayoutOrientation.Vertical)
             {
-                HorizontalItemSpacing = DeviceInfo.Platform == DevicePlatform.WinUI ? 2 : 4,
-                VerticalItemSpacing = DeviceInfo.Platform == DevicePlatform.WinUI ? 2 : 4
+                HorizontalItemSpacing = DeviceInfo.Platform == DevicePlatform.WinUI ? 2 : 3,
+                VerticalItemSpacing = DeviceInfo.Platform == DevicePlatform.WinUI ? 2 : 3
             },
-            SelectionMode = SelectionMode.Single,
+            SelectionMode = SelectionMode.None,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill
         };
@@ -141,104 +146,115 @@ internal class SelectList : ContentView
             var label = new Label
             {
                 FontSize = 12,
-                TextColor = ItemTextColor ?? Colors.Black,
-                VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.Fill,
+                BackgroundColor = Colors.Transparent,
                 FontAttributes = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
-                Padding = 0,
-                Margin = 0
+                TextColor = ItemTextColor
             };
 
 
-            label.SetBinding(Label.TextProperty, new Binding(ItemDisplayBinding ?? "."));
-
-            VisualStateManager.SetVisualStateGroups(label, new VisualStateGroupList
+            if (string.IsNullOrEmpty(ItemDisplayBinding))
             {
-                new VisualStateGroup
-                {
-                    Name = "CommonStates",
-                    States =
-                    {
-                        new VisualState
-                        {
-                            Name = "Normal",
+                label.SetBinding(Label.TextProperty, "Item");
+            }
+            else
+            {
+                label.SetBinding(Label.TextProperty, $"Item.{ItemDisplayBinding}");
+            }
+            label.SetAppThemeColor(
+    Label.TextColorProperty,
+    ItemTextColor,
+    ItemTextColor == Colors.Black ? Colors.White : ItemTextColor
+);
 
-                            Setters = { new Setter { Property = Label.TextColorProperty, Value = ItemTextColor ?? Colors.Black }
-                            }
-                        },
-                        new VisualState
-                        {
-                            Name = "Selected",
-                            Setters = {
-                                new Setter { Property = Label.TextColorProperty, Value = SelectedItemTextColor ?? Colors.Black }
-                             }
-                        }
-                    }
-                }
-
+            label.Triggers.Add(new DataTrigger(typeof(Label))
+            {
+                Binding = new Binding(nameof(SelectListItem.IsSelected)),
+                Value = true,
+                Setters =
+    {
+        new Setter
+        {
+            Property = Label.TextColorProperty,
+            Value = SelectedItemTextColor
+        }
+    }
             });
+
+
 
             var border = new Border
             {
                 StrokeShape = new RoundRectangle
                 {
-                    CornerRadius = new CornerRadius(5, 5, 5, 5)
+                    CornerRadius = new CornerRadius(5)
                 },
-                BackgroundColor = ItemBackgroundColor ?? Colors.White,
-                Margin = 0,
-                Padding = 0,
-                HorizontalOptions = LayoutOptions.Fill,
+                Stroke = Color.FromArgb("#D0D0D0"),
+                StrokeThickness = 1,
                 HeightRequest = 35,
+                HorizontalOptions = LayoutOptions.Fill,
                 Content = label
             };
 
-            // Define visual states for the border
-            VisualStateManager.SetVisualStateGroups(border, new VisualStateGroupList
+
+            border.SetAppThemeColor(
+    Border.BackgroundColorProperty,
+    ItemBackgroundColor == Colors.Transparent ? Color.FromArgb("#F2F2F2") : ItemBackgroundColor,
+    ItemBackgroundColor == Colors.Transparent ? Color.FromArgb("#2B2B2B") : ItemBackgroundColor
+);
+
+            border.Triggers.Add(new DataTrigger(typeof(Border))
             {
-                new VisualStateGroup
-                {
-                    Name = "CommonStates",
-                    States =
-                    {
-                        new VisualState
-                        {
-                            Name = "Normal",
-                            Setters =
-                            {
-                                new Setter { Property = Border.BackgroundColorProperty, Value = ItemBackgroundColor ?? Colors.White },
-                                new Setter { Property = Border.StrokeProperty, Value = Colors.Gray },
-                                new Setter { Property = Border.StrokeThicknessProperty, Value = 1 }
-                            }
-                        },
-                        new VisualState
-                        {
-                            Name = "Selected",
-                            Setters =
-                            {
-                                new Setter { Property = Border.BackgroundColorProperty, Value = SelectedItemBackgroundColor ??  Colors.LightBlue },
-                                new Setter { Property = Border.StrokeProperty, Value = Colors.Blue },
-                                new Setter { Property = Border.StrokeThicknessProperty, Value = 2 }
-                            }
-                        }
-                    }
-                }
+                Binding = new Binding(nameof(SelectListItem.IsSelected)),
+                Value = true,
+                Setters =
+    {
+        new Setter
+        {
+            Property = Border.BackgroundColorProperty,
+            Value = SelectedItemBackgroundColor
+        },
+        new Setter
+        {
+            Property = Border.StrokeThicknessProperty,
+            Value = 0
+        }
+    }
             });
 
-            if (DeviceInfo.Platform == DevicePlatform.iOS)
+
+
+
+
+
+            //if (DeviceInfo.Platform == DevicePlatform.iOS)
+            //{
+            //    // Tap to select (works reliably on iOS)
+            //    var tap = new TapGestureRecognizer
+            //    {
+            //        NumberOfTapsRequired = 1,
+            //        Command = new Command(() =>
+            //        {
+            //            _collectionView.SelectedItem = border.BindingContext;
+            //        })
+            //    };
+            //    border.GestureRecognizers.Add(tap);
+            //}
+
+            var tap = new TapGestureRecognizer
             {
-                // Tap to select (works reliably on iOS)
-                var tap = new TapGestureRecognizer
+                NumberOfTapsRequired = 1,
+                Command = new Command(() =>
                 {
-                    NumberOfTapsRequired = 1,
-                    Command = new Command(() =>
-                    {
-                        _collectionView.SelectedItem = border.BindingContext;
-                    })
-                };
-                border.GestureRecognizers.Add(tap);
-            }
+                    var item = (SelectListItem)border.BindingContext;
+
+                    _collectionView.SelectedItem = item.Item;
+                })
+            };
+            border.GestureRecognizers.Add(tap);
+
+
 
             return border;
         });
@@ -286,7 +302,20 @@ internal class SelectList : ContentView
     {
         var control = (SelectList)bindable;
 
-        control._collectionView.ItemsSource = (IList)newValue;
+        control._items.Clear();
+
+        if (newValue is IList list)
+        {
+            foreach (var item in list)
+            {
+                control._items.Add(new SelectListItem
+                {
+                    Item = item
+                });
+            }
+        }
+
+        control._collectionView.ItemsSource = control._items;
     }
 
     // Update the CollectionView's selected item when SelectedItem changes
@@ -316,7 +345,7 @@ internal class SelectList : ContentView
     }
 
     // Update SelectedIndex and SelectedItem when selection changes
-    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection != null && e.CurrentSelection.Count > 0)
         {
@@ -326,7 +355,27 @@ internal class SelectList : ContentView
             SelectedItem = selectedItem;
             SelectedIndex = selectedIndex;
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+            SyncSelection();
             ScrollToSelectedItem();
+        }
+    }
+
+    private void SyncSelection()
+    {
+        if (_items == null || _items.Count == 0)
+            return;
+
+        foreach (var item in _items)
+            item.IsSelected = false;
+
+        if (SelectedItem != null)
+        {
+            var selected = _items.FirstOrDefault(x => ReferenceEquals(x.Item, SelectedItem) || Equals(x.Item, SelectedItem));
+            if (selected != null)
+            {
+                selected.IsSelected = true;
+                return;
+            }
         }
     }
 
@@ -353,4 +402,26 @@ internal class SelectList : ContentView
             this.IsEnabled = true;
         }
     }
+}
+
+internal class SelectListItem : INotifyPropertyChanged
+{
+    public object? Item { get; set; }
+
+    bool _isSelected;
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
+        {
+            if (_isSelected == value)
+                return;
+
+            _isSelected = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 }

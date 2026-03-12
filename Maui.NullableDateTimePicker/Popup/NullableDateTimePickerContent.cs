@@ -268,7 +268,7 @@ internal class NullableDateTimePickerContent : ContentView
         #region Calendar row
         if (_options.Mode == PickerModes.Time)
         {
-            await InitClockBlock();
+            _nullableDateTimePickerClockView ??= await InitClockBlock();
         }
         else
         {
@@ -289,79 +289,38 @@ internal class NullableDateTimePickerContent : ContentView
     {
         #region Styles
         // DayStyle
-        _dayStyle = new Style(targetType: typeof(Button));
+        _dayStyle = StyleHelper.Merge(
+    DefaultStyles.DayStyle,
+    _options.DayStyle);
 
-        if (_options.DayStyle != null)
-        {
-            _options.DayStyle.BasedOn = DefaultStyles.DayStyle;
-            _dayStyle.BasedOn = _options.DayStyle;
-        }
-        else
-        {
-            _dayStyle.BasedOn = DefaultStyles.DayStyle;
-        }
 
-        _disabledDayStyle = new Style(targetType: typeof(Button));
-
-        if (_options.DisabledDayStyle != null)
-        {
-            _options.DisabledDayStyle.BasedOn = DefaultStyles.DisabledDayStyle;
-            _disabledDayStyle.BasedOn = _options.DisabledDayStyle;
-        }
-        else
-        {
-            _disabledDayStyle.BasedOn = DefaultStyles.DisabledDayStyle;
-        }
+        _disabledDayStyle = StyleHelper.Merge(
+    DefaultStyles.DisabledDayStyle,
+    _options.DisabledDayStyle);
 
 
         // OtherMonthDayStyle
-        _otherMonthDayStyle = new Style(targetType: typeof(Button));
-        if (_options.OtherMonthDayStyle != null)
-        {
-            _options.OtherMonthDayStyle.BasedOn = DefaultStyles.OtherMonthDayStyle;
-            _otherMonthDayStyle.BasedOn = _options.OtherMonthDayStyle;
-        }
-        else
-        {
-            _otherMonthDayStyle.BasedOn = DefaultStyles.OtherMonthDayStyle;
-        }
+        _otherMonthDayStyle = StyleHelper.Merge(
+    DefaultStyles.OtherMonthDayStyle,
+    _options.OtherMonthDayStyle);
+
 
         // SelectedDayStyle
-        _selectedDayStyle = new Style(targetType: typeof(Button));
-        if (_options.SelectedDayStyle != null)
-        {
-            _options.SelectedDayStyle.BasedOn = DefaultStyles.SelectedDayStyle;
-            _selectedDayStyle.BasedOn = _options.SelectedDayStyle;
-        }
-        else
-        {
-            _selectedDayStyle.BasedOn = DefaultStyles.SelectedDayStyle;
-        }
+        _selectedDayStyle = StyleHelper.Merge(
+    DefaultStyles.SelectedDayStyle,
+    _options.SelectedDayStyle);
 
         // WeekNumberStyle
-        _weekNumberStyle = new Style(targetType: typeof(Label));
+        _weekNumberStyle = StyleHelper.Merge(
+    DefaultStyles.WeekNumberStyle,
+    _options.WeekNumberStyle);
 
-        if (_options.WeekNumberStyle != null)
-        {
-            _options.WeekNumberStyle.BasedOn = DefaultStyles.WeekNumberStyle;
-            _weekNumberStyle.BasedOn = _options.WeekNumberStyle;
-        }
-        else
-        {
-            _weekNumberStyle.BasedOn = DefaultStyles.WeekNumberStyle;
-        }
 
         // DayNamesStyle
-        _dayNamesStyle = new Style(targetType: typeof(Label));
-        if (_options.DayNamesStyle != null)
-        {
-            _options.DayNamesStyle.BasedOn = DefaultStyles.DayNamesStyle;
-            _dayNamesStyle.BasedOn = _options.DayNamesStyle;
-        }
-        else
-        {
-            _dayNamesStyle.BasedOn = DefaultStyles.DayNamesStyle;
-        }
+        _dayNamesStyle = StyleHelper.Merge(
+    DefaultStyles.DayNamesStyle,
+    _options.DayNamesStyle);
+
         #endregion // Styles end
 
         if (_dayButtons == null)
@@ -503,39 +462,42 @@ internal class NullableDateTimePickerContent : ContentView
         #endregion // days
     }
 
-    private async Task InitClockBlock()
+    private async Task<ClockView> InitClockBlock()
     {
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
+        ClockView nullableDateTimePickerClockView = null!;
+        try
         {
-            try
+            await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
+           {
+
+               _activityIndicator.IsVisible = true;
+               _activityIndicator.IsRunning = true;
+
+               nullableDateTimePickerClockView = new ClockView(_options);
+               nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
+               nullableDateTimePickerClockView.TimeChanged += (s, e) =>
             {
-                _activityIndicator.IsVisible = true;
-                _activityIndicator.IsRunning = true;
+                UpdateCurrentDateAndControls(_currentDate.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
+            };
 
-                _nullableDateTimePickerClockView = new ClockView(_options);
-                _nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
-                _nullableDateTimePickerClockView.TimeChanged += (s, e) =>
-                {
-                    UpdateCurrentDateAndControls(_currentDate.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
-                };
+               _mainContentArea.Add(nullableDateTimePickerClockView, 0, 1);
+               _mainContentArea.SetRowSpan(nullableDateTimePickerClockView, 2);
 
-                _mainContentArea.Add(_nullableDateTimePickerClockView, 0, 1);
-                _mainContentArea.SetRowSpan(_nullableDateTimePickerClockView, 2);
-
-                UpdateCurrentDateAndControls(_currentDate);
+               UpdateCurrentDateAndControls(_currentDate);
+           });
 
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            finally
-            {
-                _activityIndicator.IsVisible = false;
-                _activityIndicator.IsRunning = false;
-            }
-        });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            _activityIndicator.IsVisible = false;
+            _activityIndicator.IsRunning = false;
+        }
+        return nullableDateTimePickerClockView;
     }
 
     private async Task InitTimePickerBlock()
@@ -725,7 +687,7 @@ internal class NullableDateTimePickerContent : ContentView
             };
         }
 
-        await MainThreadHelper.SafeInvokeOnMainThreadAsync( () =>
+        await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
         {
             // _hours
             if (_hoursPicker != null)
@@ -868,13 +830,13 @@ internal class NullableDateTimePickerContent : ContentView
         await SetCurrentDateAndRebuildCalendar(currentYear, nextMonth, _currentDate.Day);
     }
 
-    private void OnDayButtonTapped(object sender, EventArgs e)
+    private void OnDayButtonTapped(object? sender, EventArgs e)
     {
         if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
             return;
 
         Button dayButton = sender as Button;
-        var day = Convert.ToInt32(dayButton.Text);
+        var day = Convert.ToInt32(dayButton?.Text);
 
         if (DayDisabled(_currentDate.Year, _currentDate.Month, day))
             return;
@@ -1388,10 +1350,10 @@ internal class NullableDateTimePickerContent : ContentView
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
             Margin = new Thickness(5, 0),
-            ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
-            SelectedItemTextColor = GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black),
-            ItemBackgroundColor = GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, Colors.White),
-            SelectedItemBackgroundColor = GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
+            ItemTextColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.TextColorProperty, _options.ForeColor) ?? Colors.Black,
+            SelectedItemTextColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black) ?? Colors.Black,
+            ItemBackgroundColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, _options.BodyBackgroundColor) ?? Colors.Transparent,
+            SelectedItemBackgroundColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue) ?? Colors.Transparent,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             ItemsSource = _years,
@@ -1427,10 +1389,10 @@ internal class NullableDateTimePickerContent : ContentView
         _monthsSelectList = new SelectList
         {
             AutomationId = _options.AutomationId + "_CalendarMonthsSelectList",
-            ItemTextColor = GetColorFromStyle(_dayStyle, Button.TextColorProperty, Colors.Black),
-            SelectedItemTextColor = GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black),
-            ItemBackgroundColor = GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, Colors.White),
-            SelectedItemBackgroundColor = GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
+            ItemTextColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.TextColorProperty, _options.ForeColor) ?? Colors.Black,
+            SelectedItemTextColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black) ?? Colors.Black,
+            ItemBackgroundColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, _options.BodyBackgroundColor),
+            SelectedItemBackgroundColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
             Margin = 5,
             Padding = 0,
             IsVisible = false,
@@ -1462,22 +1424,24 @@ internal class NullableDateTimePickerContent : ContentView
             HideYearsSelectList();
             HideMonthListView();
             isClockDisplaying = !isClockDisplaying;
-            if (_nullableDateTimePickerClockView == null)
-                await InitClockBlock();
+            _nullableDateTimePickerClockView ??= await InitClockBlock();
 
-            if (isClockDisplaying)
-            {
-                _preNextButtonsGrid.IsVisible = false;
-                _daysGrid.IsVisible = false;
-                _nullableDateTimePickerClockView.IsVisible = true;
-            }
-            else
-            {
-                _nullableDateTimePickerClockView.IsVisible = false;
-                _preNextButtonsGrid.IsVisible = true;
-                _daysGrid.IsVisible = true;
-            }
+            ShowView(isClockDisplaying);
         });
+    }
+
+    void ShowView(bool isClockDisplaying)
+    {
+        SetViewState(_nullableDateTimePickerClockView, isClockDisplaying);
+        SetViewState(_preNextButtonsGrid, !isClockDisplaying);
+        SetViewState(_daysGrid, !isClockDisplaying);
+    }
+
+    void SetViewState(View view, bool visible)
+    {
+        view.Opacity = visible ? 1 : 0;
+        view.InputTransparent = !visible;
+        view.ZIndex = visible ? 1 : 0;
     }
 
     private void ShowYearsSelectList()
@@ -1633,26 +1597,5 @@ internal class NullableDateTimePickerContent : ContentView
         }
 
         return currentHour;
-    }
-
-    private static Color GetColorFromStyle(Style style, BindableProperty bindableProperty, Color defaultColor)
-    {
-        try
-        {
-            var setters = style.Setters;
-
-            if (setters.Count == 0 && style.BasedOn != null)
-                setters = style.BasedOn.Setters;
-
-            var colorSetter = setters.FirstOrDefault(s => s.Property == bindableProperty);
-
-            if (colorSetter != null)
-            {
-                return (Color)colorSetter.Value;
-            }
-        }
-        catch (Exception ex) { Console.WriteLine(ex); }
-
-        return defaultColor;
     }
 }

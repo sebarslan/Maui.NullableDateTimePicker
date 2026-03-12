@@ -5,7 +5,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 This control uses the 
 <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v3.1.4-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.1.5-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -348,12 +348,15 @@ on ios, android, windows, maccatalyst
 
 
 # Changelog
-### 3.1.5 (Preview)
+### 3.1.5
 - Add CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
-- Added PopupOpening, PopupOpened, and PopupClosing events to observe the popup lifecycle
+- Added PopupOpening, PopupOpened, PopupClosing and PopupClosed events to observe the popup lifecycle
 - Added OnPopupOpening, OnPopupOpened, OnPopupClosing and OnPopupClosed virtual methods for derived controls (Thanks @fraluderin)
 - Added OnSelectedDateTimeChanged virtual method to allow custom handling of SelectedDateTime changes (Thanks @fraluderin)
 - Light and dark versions of the toggle button have been added.
+- Fixed an issue where calendar and clock could appear simultaneously when switching between them.
+- Refactored SelectList component and fixed style application issues.
+- Improved style merging logic and internal UI handling.
 
 ### 3.1.4
 - Added .NET 10.0 support
