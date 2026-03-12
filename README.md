@@ -349,7 +349,7 @@ on ios, android, windows, maccatalyst
 
 # Changelog
 ### 3.1.5
-- Add CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
+- Added CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
 - Added PopupOpening, PopupOpened, PopupClosing and PopupClosed events to observe the popup lifecycle
 - Added OnPopupOpening, OnPopupOpened, OnPopupClosing and OnPopupClosed virtual methods for derived controls (Thanks @fraluderin)
 - Added OnSelectedDateTimeChanged virtual method to allow custom handling of SelectedDateTime changes (Thanks @fraluderin)
