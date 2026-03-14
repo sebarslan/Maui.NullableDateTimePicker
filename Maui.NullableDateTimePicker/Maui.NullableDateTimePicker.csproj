@@ -25,14 +25,14 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<AssemblyVersion>3.1.5.0</AssemblyVersion>
-		<Version>3.1.5</Version>
+		<AssemblyVersion>3.1.6.0</AssemblyVersion>
+		<Version>3.1.6</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<EnablePackageValidation>true</EnablePackageValidation>
 		<EnableStrictModeForBaselineValidation>true</EnableStrictModeForBaselineValidation>
-		<PackageValidationBaselineVersion>3.1.4</PackageValidationBaselineVersion>
+		<PackageValidationBaselineVersion>3.1.5</PackageValidationBaselineVersion>
 		<GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
 		<CompatibilitySuppressionFilePath>ApiCompatSuppressions.xml</CompatibilitySuppressionFilePath>
 	</PropertyGroup>

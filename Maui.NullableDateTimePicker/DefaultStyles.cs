@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Maui.NullableDateTimePicker.Helpers;
 
 namespace Maui.NullableDateTimePicker
 {
@@ -161,4 +162,28 @@ namespace Maui.NullableDateTimePicker
             }
         }
     }
+
+    internal static class SelectListColors
+    {
+        // Normal item
+        public static Color ItemTextColor =>
+            StyleHelper.GetColor("#1C1C1C", "#FFFFFF");
+
+        public static Color ItemBackgroundColor =>
+            StyleHelper.GetColor("#F2F2F2", "#2B2B2B");
+
+        public static Color ItemBorderColor => 
+            StyleHelper.GetColor("#E0E0E0", "#D0D0D0");
+
+        // Selected item
+        public static Color SelectedTextColor =>
+            StyleHelper.GetColor("#000000", "#FFFFFF");
+
+        public static Color SelectedBackgroundColor =>
+            StyleHelper.GetColor("#E6F2FF", "#3F3F3F");
+
+        public static Color SelectedBorderColor =>
+            StyleHelper.GetColor("#0078D7", "#4CC2FF");
+    }
+
 }

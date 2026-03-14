@@ -1,9 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Maui.NullableDateTimePicker.Helpers
 {
@@ -27,10 +22,24 @@ namespace Maui.NullableDateTimePicker.Helpers
             return merged;
         }
 
+        internal static Color? GetColorFromStyleOrDefault(
+    Style style,
+    BindableProperty property,
+    string lightHex,
+    string darkHex)
+        {
+            var color = GetColorFromStyle(style, property);
+
+            if (IsTransparent(color))
+                return GetColor(lightHex, darkHex);
+
+            return color;
+        }
+
         internal static Color? GetColorFromStyle(
-        Style style,
-        BindableProperty property,
-        Color? defaultColor = null)
+    Style style,
+    BindableProperty property,
+    Color? defaultColor = null)
         {
             while (style != null)
             {
@@ -40,19 +49,40 @@ namespace Maui.NullableDateTimePicker.Helpers
 
                 if (setter != null)
                 {
-                    if (setter.Value is Color color)
+                    var value = setter.Value;
+
+                    // Direct Color
+                    if (value is Color color)
                         return color;
 
-                    if (setter.Value is AppThemeColor themeColor)
-                        return Application.Current?.RequestedTheme == AppTheme.Dark
+                    // Brush
+                    if (value is SolidColorBrush brush)
+                        return brush.Color;
+
+                    // AppThemeColor
+                    if (value is AppThemeColor themeColor)
+                    {
+                        var theme = Application.Current?.RequestedTheme ?? AppTheme.Light;
+                        return theme == AppTheme.Dark
                             ? themeColor.Dark
                             : themeColor.Light;
+                    }
+
+                    // fallback: try reflection (covers AppThemeBinding)
+                    var colorProp = value?.GetType().GetProperty("Color");
+                    if (colorProp?.GetValue(value) is Color reflectedColor)
+                        return reflectedColor;
                 }
 
                 style = style.BasedOn;
             }
 
             return defaultColor;
+        }
+
+        internal static bool IsTransparent(Color? c)
+        {
+            return c == null || c.Alpha == 0;
         }
 
         private static void AddSettersRecursive(Style target, Style style)
@@ -77,6 +107,13 @@ namespace Maui.NullableDateTimePicker.Helpers
             }
         }
 
-    }
+        internal static Color GetColor(string lightHex, string darkHex)
+        {
+            var theme = Application.Current?.RequestedTheme ?? AppTheme.Light;
 
+            return theme == AppTheme.Dark
+                ? Color.FromArgb(darkHex)
+                : Color.FromArgb(lightHex);
+        }
+    }
 }

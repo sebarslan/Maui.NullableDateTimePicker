@@ -199,7 +199,7 @@ More examples, please see the samples project
 | Clear | Clear button text in the dialog action buttons. If property 'ClearButtonText' is not set. | Clear |
 
 
-
+# Events
 ## SelectedDateTimeTimeChanged Event (If NullableDateTimePicker is used as ContentView)
 The SelectedDateTimeChanged event is used to indicate when a SelectedDateTime value has been changed. 
 This event is commonly used in programming or software environments and is triggered when the SelectedDateTime value is modified.
@@ -221,7 +221,7 @@ private static void OnSelectedDateTimeChanged(object sender, DateTimeChangedEven
 </code>
 </pre>
 
-### Overriding the change behavior
+## Overriding the change behavior
 Derived controls can override the `OnSelectedDateTimeChanged` method to customize the behavior when the selected date/time changes.
 This method raises the `SelectedDateTimeChanged` event and can be overridden
 by derived controls to extend the behavior when the selected date/time changes.
@@ -239,66 +239,41 @@ protected override void OnSelectedDateTimeChanged(DateTime? oldSelectedDateTime,
 
 ## Popup Lifecycle
 
-The `PopupOpening`, `PopupOpened` and `PopupClosing` events allow observing the lifecycle of the date/time picker popup.
+The `PopupOpening`, `PopupOpened`, `PopupClosing` and `PopupClosed` events allow observing the lifecycle of the date/time picker popup.
 
 - **PopupOpening** is raised just before the popup is opened.
 - **PopupOpened** is raised after the popup content has been fully initialized and is ready for user interaction.
 - **PopupClosing** is raised when the popup is about to close.
+- **PopupClosed** is raised after the popup has been closed and the selected date has been applied.
 
 These events can be used to execute custom logic before the popup becomes visible or when the popup interaction finishes.
 
-The control also provides the `OnPopupOpening`, `PopupOpened` and `OnPopupClosing` virtual methods.  
+The control also provides the `OnPopupOpening`, `PopupOpened`, `OnPopupClosing` and `OnPopupClosed` virtual methods.  
 These methods raise the corresponding events and can be overridden by derived controls to customize the popup lifecycle behavior.
 
 <pre>
 <code>
-picker.PopupOpening += (s, e) =>
+// Popup lifecycle events
+// Subscribe to popup lifecycle events
+picker.PopupOpening += Handler;
+picker.PopupOpened  += Handler;
+picker.PopupClosing += Handler;
+picker.PopupClosed  += Handler;
+
+// Example handler for all popup lifecycle events
+picker.[PopupOpening, PopupOpened, PopupClosing, PopupClosed] += (s, e) =>
 {
-    // Execute logic before the popup opens
+    Debug.WriteLine("Popup lifecycle event triggered");
 };
+These events allow you to execute custom logic during the popup lifecycle
+(opening → opened → closing → closed).
 
-picker.PopupOpening += (s, e) =>
+// Popup lifecycle override methods
+picker.[OnPopupOpening, OnPopupOpened, OnPopupClosing, OnPopupClosed]()
 {
-    // Execute logic after the popup has opened and its content is ready.
-};
-
-picker.PopupClosing += (s, e) =>
-{
-    // Execute logic when the popup is closing
-};
-
-picker.PopupClosed += (s, e) =>
-{
-    // Invoked after the popup has been closed and the selected date has been applied.
+    Debug.WriteLine("Popup lifecycle method called");
 }
-
-protected override void OnPopupOpening()
-{
-    base.OnPopupOpening();
-
-    // Custom logic before popup opens
-}
-
-protected override void OnPopupOpened()
-{
-    base.OnPopupOpened();
-
-    // Custom logic after the popup opens
-}
-
-protected override void OnPopupClosing()
-{
-    base.OnPopupClosing();
-
-    // Custom logic when popup closes
-}
-
-protected override void OnPopupClosed()
-{
-    base.OnPopupClosed();
-
-    // Custom logic when popup closed
-}
+These methods allow you to customize the popup behavior by overriding the popup lifecycle methods.
 </code>
 </pre>
 
@@ -324,10 +299,6 @@ nullableDateTimePicker.CustomFormatter = date =>
 </pre>
 
 
-> .NET MAUI handler was used in the test project to remove the underline in the original entry.
-> Please refer to the MauiProgram.cs file in the sample project.
-> For more detailed information about handlers, please check:
-> https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-9.0
 
 
 # License
@@ -454,3 +425,10 @@ on ios, android, windows, maccatalyst
 
 ### 1.0.0
 - Initial Release.
+- 
+
+# .NET MAUI handler
+> .NET MAUI handler was used in the test project to remove the underline in the original entry.
+> Please refer to the MauiProgram.cs file in the sample project.
+> For more detailed information about handlers, please check:
+> https://learn.microsoft.com/en-us/dotnet/maui/user-interface/handlers/customize?view=net-maui-9.0

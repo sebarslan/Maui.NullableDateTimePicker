@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using Maui.NullableDateTimePicker.Models;
 using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Graphics.Text;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -71,6 +73,22 @@ internal class SelectList : ContentView
         set => SetValue(ItemTextColorProperty, value);
     }
 
+    // ItemBorderColorProperty BindableProperty
+    public static readonly BindableProperty ItemBorderColorProperty =
+        BindableProperty.Create(
+            nameof(ItemBorderColor), // Property name
+            typeof(Color),      // Property type
+            typeof(SelectList), // Declaring type
+            Colors.Black,       // Default value
+            BindingMode.OneWay // Binding mode
+        );
+
+    public Color ItemBorderColor
+    {
+        get => (Color)GetValue(ItemBorderColorProperty);
+        set => SetValue(ItemBorderColorProperty, value);
+    }
+
     // ItemBackgroundColor BindableProperty
     public static readonly BindableProperty ItemBackgroundColorProperty =
         BindableProperty.Create(
@@ -112,10 +130,26 @@ internal class SelectList : ContentView
             BindingMode.OneWay // Binding mode
         );
 
-    public Color? SelectedItemBackgroundColor
+    public Color SelectedItemBackgroundColor
     {
         get => (Color)GetValue(SelectedItemBackgroundColorProperty);
         set => SetValue(SelectedItemBackgroundColorProperty, value);
+    }
+
+    // SelectedItemBorderColor BindableProperty
+    public static readonly BindableProperty SelectedItemBorderColorProperty =
+        BindableProperty.Create(
+            nameof(SelectedItemBorderColor), // Property name
+            typeof(Color),      // Property type
+            typeof(SelectList), // Declaring type
+            Colors.LightBlue,       // Default value
+            BindingMode.OneWay // Binding mode
+        );
+
+    public Color? SelectedItemBorderColor
+    {
+        get => (Color)GetValue(SelectedItemBorderColorProperty);
+        set => SetValue(SelectedItemBorderColorProperty, value);
     }
     #endregion //BindableProperties
 
@@ -148,9 +182,13 @@ internal class SelectList : ContentView
                 FontSize = 12,
                 BackgroundColor = Colors.Transparent,
                 FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
-                TextColor = ItemTextColor
+                TextColor = ItemTextColor,
+                Padding = 0,
+                Margin = 0
             };
 
 
@@ -162,15 +200,11 @@ internal class SelectList : ContentView
             {
                 label.SetBinding(Label.TextProperty, $"Item.{ItemDisplayBinding}");
             }
-            label.SetAppThemeColor(
-    Label.TextColorProperty,
-    ItemTextColor,
-    ItemTextColor == Colors.Black ? Colors.White : ItemTextColor
-);
+
 
             label.Triggers.Add(new DataTrigger(typeof(Label))
             {
-                Binding = new Binding(nameof(SelectListItem.IsSelected)),
+                Binding = Binding.Create(static (SelectListItem x) => x.IsSelected),
                 Value = true,
                 Setters =
     {
@@ -190,37 +224,38 @@ internal class SelectList : ContentView
                 {
                     CornerRadius = new CornerRadius(5)
                 },
-                Stroke = Color.FromArgb("#D0D0D0"),
+                Stroke = new SolidColorBrush(ItemBorderColor),
+                BackgroundColor = ItemBackgroundColor,
                 StrokeThickness = 1,
                 HeightRequest = 35,
                 HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Padding = 0,
                 Content = label
             };
 
-
-            border.SetAppThemeColor(
-    Border.BackgroundColorProperty,
-    ItemBackgroundColor == Colors.Transparent ? Color.FromArgb("#F2F2F2") : ItemBackgroundColor,
-    ItemBackgroundColor == Colors.Transparent ? Color.FromArgb("#2B2B2B") : ItemBackgroundColor
-);
-
             border.Triggers.Add(new DataTrigger(typeof(Border))
             {
-                Binding = new Binding(nameof(SelectListItem.IsSelected)),
+                Binding = Binding.Create(static (SelectListItem x) => x.IsSelected),
                 Value = true,
                 Setters =
-    {
-        new Setter
-        {
-            Property = Border.BackgroundColorProperty,
-            Value = SelectedItemBackgroundColor
-        },
-        new Setter
-        {
-            Property = Border.StrokeThicknessProperty,
-            Value = 0
-        }
-    }
+                {
+                    new Setter
+                    {
+                        Property = Border.BackgroundColorProperty,
+                        Value = SelectedItemBackgroundColor
+                    },
+                    new Setter
+                    {
+                        Property = Border.StrokeThicknessProperty,
+                        Value = 1.5
+                    },
+                    new Setter
+                    {
+                        Property = Border.StrokeProperty,
+                        Value = SelectedItemBorderColor,
+                    }
+                }
             });
 
 
@@ -296,6 +331,8 @@ internal class SelectList : ContentView
 
         Content = grid;
     }
+
+
 
     // Update the CollectionView's ItemsSource when ItemsSource changes
     private static void OnItemsSourceChanged(BindableObject bindable, object oldValue, object newValue)
@@ -425,3 +462,4 @@ internal class SelectListItem : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 }
+

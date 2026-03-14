@@ -1346,14 +1346,18 @@ internal class NullableDateTimePickerContent : ContentView
             _years.Add(new YearModel(y));
         }
 
+
+
         _yearsSelectList = new SelectList
         {
             AutomationId = _options.AutomationId + "_CalendarYearsSelectList",
             Margin = new Thickness(5, 0),
-            ItemTextColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.TextColorProperty, _options.ForeColor) ?? Colors.Black,
-            SelectedItemTextColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black) ?? Colors.Black,
-            ItemBackgroundColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, _options.BodyBackgroundColor) ?? Colors.Transparent,
-            SelectedItemBackgroundColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue) ?? Colors.Transparent,
+            ItemTextColor = SelectListColors.ItemTextColor,
+            ItemBackgroundColor = SelectListColors.ItemBackgroundColor,
+            ItemBorderColor = SelectListColors.ItemBorderColor,
+            SelectedItemTextColor = SelectListColors.SelectedTextColor,
+            SelectedItemBackgroundColor = SelectListColors.SelectedBackgroundColor,
+            SelectedItemBorderColor = SelectListColors.SelectedBorderColor,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             ItemsSource = _years,
@@ -1389,10 +1393,12 @@ internal class NullableDateTimePickerContent : ContentView
         _monthsSelectList = new SelectList
         {
             AutomationId = _options.AutomationId + "_CalendarMonthsSelectList",
-            ItemTextColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.TextColorProperty, _options.ForeColor) ?? Colors.Black,
-            SelectedItemTextColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.TextColorProperty, Colors.Black) ?? Colors.Black,
-            ItemBackgroundColor = StyleHelper.GetColorFromStyle(_dayStyle, Button.BackgroundColorProperty, _options.BodyBackgroundColor),
-            SelectedItemBackgroundColor = StyleHelper.GetColorFromStyle(_selectedDayStyle, Button.BackgroundColorProperty, Colors.LightBlue),
+            ItemTextColor = SelectListColors.ItemTextColor,
+            ItemBackgroundColor = SelectListColors.ItemBackgroundColor,
+            ItemBorderColor = SelectListColors.ItemBorderColor,
+            SelectedItemTextColor = SelectListColors.SelectedTextColor,
+            SelectedItemBackgroundColor = SelectListColors.SelectedBackgroundColor,
+            SelectedItemBorderColor = SelectListColors.SelectedBorderColor,
             Margin = 5,
             Padding = 0,
             IsVisible = false,
@@ -1416,6 +1422,8 @@ internal class NullableDateTimePickerContent : ContentView
             HideMonthListView();
         };
     }
+
+
 
     private void ToggleCalendarClock()
     {
