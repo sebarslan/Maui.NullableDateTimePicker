@@ -407,6 +407,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         _preNextButtonsGrid.Add(_monthYearLabel, 1, 0);
 
+
         _nextMonthButton = new Button
         {
             AutomationId = _options.AutomationId + "_CalendarNextMonthButton",

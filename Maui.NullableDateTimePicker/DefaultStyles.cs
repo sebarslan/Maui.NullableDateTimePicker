@@ -180,7 +180,7 @@ namespace Maui.NullableDateTimePicker
             StyleHelper.GetColor("#000000", "#FFFFFF");
 
         public static Color SelectedBackgroundColor =>
-            StyleHelper.GetColor("#E6F2FF", "#3F3F3F");
+            StyleHelper.GetColor("#E6F2FF", Colors.DimGray /*"#3F3F3F"*/);
 
         public static Color SelectedBorderColor =>
             StyleHelper.GetColor("#0078D7", "#4CC2FF");

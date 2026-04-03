@@ -107,13 +107,28 @@ namespace Maui.NullableDateTimePicker.Helpers
             }
         }
 
-        internal static Color GetColor(string lightHex, string darkHex)
+        internal static Color GetColor(object light, object dark)
         {
             var theme = Application.Current?.RequestedTheme ?? AppTheme.Light;
 
             return theme == AppTheme.Dark
-                ? Color.FromArgb(darkHex)
-                : Color.FromArgb(lightHex);
+                ? ToColor(dark)
+                : ToColor(light);
+        }
+
+        private static Color ToColor(object value)
+        {
+            if (value is Color color)
+                return color;
+
+            if (value is string hex)
+            {
+                if (!hex.StartsWith("#"))
+                    hex = "#" + hex;
+                return Color.FromArgb(hex);
+            }
+
+            throw new ArgumentException("Value must be either Color or hex string.");
         }
     }
 }

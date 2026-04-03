@@ -71,4 +71,52 @@ internal partial class ButtonTemplate : ContentView
             InnerLabel.TextColor = Colors.Black;
         }
     }
+
+    public static Border CreateIconButton(
+    string icon,
+     EventHandler<TappedEventArgs>? tapped,
+    string? automationId = null,
+    bool isEnabled = true)
+    {
+        var border = new Border
+        {
+            StrokeThickness = 1,
+            Stroke = Colors.Gray,
+            BackgroundColor = Colors.Transparent,
+            StrokeShape = new RoundRectangle
+            {
+                CornerRadius = 4
+            },
+            WidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 30 : 35,
+            HeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 30 : 35,
+            HorizontalOptions = LayoutOptions.Center,
+            Margin = new Thickness(5)
+        };
+
+        var label = new Label
+        {
+            Text = icon,
+            FontSize = 15,
+            Padding = 5,
+            FontAttributes = FontAttributes.Bold,
+            HorizontalTextAlignment = TextAlignment.Center,
+            VerticalTextAlignment = TextAlignment.Center,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            AutomationId = automationId
+        };
+
+        border.Content = label;
+
+        if (tapped != null && isEnabled)
+        {
+            var tap = new TapGestureRecognizer();
+            tap.Tapped += tapped;
+            border.GestureRecognizers.Add(tap);
+        }
+
+        border.Opacity = isEnabled ? 1 : 0.4;
+
+        return border;
+    }
 }

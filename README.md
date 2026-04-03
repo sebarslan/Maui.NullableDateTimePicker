@@ -255,13 +255,13 @@ These methods raise the corresponding events and can be overridden by derived co
 <code>
 // Popup lifecycle events
 // Subscribe to popup lifecycle events
-picker.PopupOpening += Handler;
-picker.PopupOpened  += Handler;
-picker.PopupClosing += Handler;
-picker.PopupClosed  += Handler;
+dateTimePicker.PopupOpening += Handler;
+dateTimePicker.PopupOpened  += Handler;
+dateTimePicker.PopupClosing += Handler;
+dateTimePicker.PopupClosed  += Handler;
 
 // Example handler for all popup lifecycle events
-picker.[PopupOpening, PopupOpened, PopupClosing, PopupClosed] += (s, e) =>
+dateTimePicker.[PopupOpening, PopupOpened, PopupClosing, PopupClosed] += (s, e) =>
 {
     Debug.WriteLine("Popup lifecycle event triggered");
 };
@@ -269,7 +269,7 @@ These events allow you to execute custom logic during the popup lifecycle
 (opening → opened → closing → closed).
 
 // Popup lifecycle override methods
-picker.[OnPopupOpening, OnPopupOpened, OnPopupClosing, OnPopupClosed]()
+dateTimePicker.[OnPopupOpening, OnPopupOpened, OnPopupClosing, OnPopupClosed]()
 {
     Debug.WriteLine("Popup lifecycle method called");
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Models;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Graphics.Text;
@@ -6,6 +7,8 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -307,25 +310,62 @@ internal class SelectList : ContentView
             }
         };
 
-        var closeButton = new Button
+
+
+
+        var closeButton = new Border
         {
-            Text = "X",
-            FontAttributes = FontAttributes.Bold,
+            StrokeThickness = 1,
+            Stroke = Colors.Gray,
+            BackgroundColor = Colors.Transparent,
+            StrokeShape = new RoundRectangle
+            {
+                CornerRadius = 4
+            },
+            WidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 30 : 35,
+            HeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 30 : 35,
             HorizontalOptions = LayoutOptions.End,
-            FontSize = 16,
-            MaximumWidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 40 : 50,
-            MaximumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
-            MinimumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
-            BorderWidth = 1,
-            WidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 40 : 50,
-            HeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
-            Padding = 0,
-            Margin = new Thickness(5)
+            Margin = new Thickness(5),
+            Content = new Label
+            {
+                Text = "✕",
+                FontSize = 15,
+                Padding = 5,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.Center
+            }
         };
-        closeButton.Clicked += (s, e) =>
+
+        var tap = new TapGestureRecognizer() { NumberOfTapsRequired = 1 };
+        tap.Tapped += (s, e) =>
         {
             Closed?.Invoke(this, EventArgs.Empty);
         };
+
+        closeButton.GestureRecognizers.Add(tap);
+
+        //var closeButton = new Button
+        //{
+        //    Text = "X",
+        //    FontAttributes = FontAttributes.Bold,
+        //    HorizontalOptions = LayoutOptions.End,
+        //    FontSize = 16,
+        //    MaximumWidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 40 : 50,
+        //    MaximumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
+        //    MinimumHeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
+        //    BorderWidth = 1,
+        //    WidthRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 40 : 50,
+        //    HeightRequest = DeviceInfo.Platform == DevicePlatform.WinUI ? 20 : 25,
+        //    Padding = 0,
+        //    Margin = new Thickness(5)
+        //};
+        //closeButton.Clicked += (s, e) =>
+        //{
+        //    Closed?.Invoke(this, EventArgs.Empty);
+        //};
         grid.Add(closeButton, 0, 0);
         grid.Add(_collectionView, 0, 1);
 
