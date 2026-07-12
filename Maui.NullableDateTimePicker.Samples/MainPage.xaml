@@ -125,6 +125,17 @@
                 </Border>
             </StackLayout>
 
+            <Label Text="Calling nullabledatetimepicker calendar popup directly with own popup" TextColor="Black" />
+            <StackLayout Padding="0" BackgroundColor="Transparent">
+                <Button Grid.Column="1"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Clicked="DateTimePickerOwnPopup_Clicked"
+                         Margin="5"
+                        Text="Open calendar with my own popup"
+                         HeightRequest="30" />
+            </StackLayout>
+
             <Label Text="Datepicker programmatically" TextColor="Black" />
             <StackLayout x:Name="DateTimePlaceStackLayout" HorizontalOptions="Start"></StackLayout>
 

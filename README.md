@@ -319,6 +319,10 @@ on ios, android, windows, maccatalyst
 
 
 # Changelog
+
+### 3.1.6
+- New `CreateContent(options)` static method that allows consumers to embed the date/time picker content directly into their own custom popup or container.
+- 
 ### 3.1.5
 - Added CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
 - Added PopupOpening, PopupOpened, PopupClosing and PopupClosed events to observe the popup lifecycle

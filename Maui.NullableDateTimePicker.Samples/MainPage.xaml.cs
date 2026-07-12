@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
+using Microsoft.Maui.Controls.Shapes;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Maui.NullableDateTimePicker.Samples;
@@ -110,6 +114,67 @@ public partial class MainPage : ContentPage
             Console.WriteLine(ex.ToString());
         }
     }
+
+    private async void DateTimePickerOwnPopup_Clicked(object sender, EventArgs e)
+    {
+        INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
+        {
+            SelectedDateTime = MyDateTime,
+            Mode = PickerModes.DateTime,
+            ShowWeekNumbers = true,
+            CloseOnOutsideClick = true,
+            PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
+            PopupBorderColor = Color.FromArgb("#505050"),
+            PopupCornerRadius = 10,
+            PopupBorderWidth = 1,
+            Is12HourFormat = false,
+            PopupPadding = 5,
+            Translations = MyTranslations
+        };
+
+        try
+        {
+            var contentHandle = NullableDateTimePicker.CreateContent(nullableDateTimePickerOptions);
+
+            var popup = new MyPopup();
+            popup.Content = contentHandle.View;
+
+            _ = contentHandle.ResultTask.ContinueWith(async task =>
+            {
+                await popup.CloseAsync(task.Result);
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            var popupResult = await this.ShowPopupAsync<PopupResult>(popup, new PopupOptions
+            {
+                CanBeDismissedByTappingOutsideOfPopup = nullableDateTimePickerOptions.CloseOnOutsideClick,
+                PageOverlayColor = nullableDateTimePickerOptions.PopupPageOverlayColor,
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = nullableDateTimePickerOptions.PopupCornerRadius,
+                    Stroke = nullableDateTimePickerOptions.PopupBorderColor,
+                    StrokeThickness = nullableDateTimePickerOptions.PopupBorderWidth
+                }
+            }, CancellationToken.None);
+
+            if (popupResult == null ||  popupResult.WasDismissedByTappingOutsideOfPopup)
+            {
+                return;
+            }
+
+            var result = popupResult.Result; 
+
+            if (result is not null && result.ButtonResult != PopupButtons.Cancel)
+            {
+                MyDateTime = result.SelectedDateTime;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    }
+
+
 
     public DateTime? MyMinDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 10);
     public DateTime? MyMaxDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);

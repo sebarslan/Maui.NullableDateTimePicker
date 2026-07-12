@@ -1,10 +1,12 @@
 ﻿
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.Maui.Controls.Shapes;
 using System.Globalization;
+using System.Reflection.Metadata;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -989,6 +991,49 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
     {
         var popup = new NullableDateTimePickerPopup(options, new CancellationTokenSource());
         return await popup.OpenPopupAsync(page);
+    }
+
+    public static PickerContentHandle CreateContent(INullableDateTimePickerOptions options)
+    {
+        var content = new NullableDateTimePickerContent(options);
+
+        _ = content.NullableDateTimePickerPopupOpened();
+        var tcs = new TaskCompletionSource<PopupResult>();
+
+        EventHandler<EventArgs> okButtonClickedHandler = null;
+        EventHandler<EventArgs> clearButtonClickedHandler = null;
+        EventHandler<EventArgs> cancelButtonClickedHandler = null;
+
+        void Cleanup()
+        {
+            content.OkButtonClicked -= okButtonClickedHandler;
+            content.ClearButtonClicked -= clearButtonClickedHandler;
+            content.CancelButtonClicked -= cancelButtonClickedHandler;
+        }
+
+        okButtonClickedHandler = (s, e) =>
+        {
+            Cleanup();
+            tcs.TrySetResult(new PopupResult(content.SelectedDateTime, PopupButtons.Ok));
+        };
+
+        clearButtonClickedHandler = (s, e) =>
+        {
+            Cleanup();
+            tcs.TrySetResult(new PopupResult(content.SelectedDateTime, PopupButtons.Clear));
+        };
+
+        cancelButtonClickedHandler = (s, e) =>
+        {
+            Cleanup();
+            tcs.TrySetResult(new PopupResult(content.SelectedDateTime, PopupButtons.Cancel));
+        };
+
+        content.OkButtonClicked += okButtonClickedHandler;
+        content.ClearButtonClicked += clearButtonClickedHandler;
+        content.CancelButtonClicked += cancelButtonClickedHandler;
+
+        return new PickerContentHandle(content, tcs.Task);
     }
 
 
