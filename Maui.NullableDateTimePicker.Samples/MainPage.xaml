@@ -49,7 +49,11 @@
                             SelectedDayStyle="{StaticResource SelectedDayStyle}"
                             Translations="{StaticResource ClockTranslations}" 
                             HourDotColor="Chocolate"
-                            MinuteDotColor="Fuchsia"/>
+                            MinuteDotColor="Fuchsia"
+                            ClockModeButtonBackgroundColor="Gray"
+                            ClockModeButtonSelectedBackgroundColor="LightBlue"
+                            ClockModeButtonTextColor="White"
+                            ClockModeButtonSelectedTextColor="Black"/>
 
             <Label Text="Date time picker control with border + popup with border and translations binding and with custom formatter" TextColor="Black" />
 

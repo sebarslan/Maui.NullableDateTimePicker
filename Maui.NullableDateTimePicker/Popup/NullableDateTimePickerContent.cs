@@ -498,6 +498,42 @@ internal class NullableDateTimePickerContent : ContentView
                     nullableDateTimePickerClockView.SetBinding(ClockView.MinuteDotColorProperty, _options.MinuteDotThemeColor.GetBinding());
                 }
 
+                if (_options.ClockModeButtonBackgroundColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonBackgroundColor = _options.ClockModeButtonBackgroundColor;
+                }
+                else if (_options.ClockModeButtonBackgroundThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonBackgroundColorProperty, _options.ClockModeButtonBackgroundThemeColor.GetBinding());
+                }
+
+                if (_options.ClockModeButtonSelectedBackgroundColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonSelectedBackgroundColor = _options.ClockModeButtonSelectedBackgroundColor;
+                }
+                else if (_options.ClockModeButtonSelectedBackgroundThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonSelectedBackgroundColorProperty, _options.ClockModeButtonSelectedBackgroundThemeColor.GetBinding());
+                }
+
+                if (_options.ClockModeButtonTextColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonTextColor = _options.ClockModeButtonTextColor;
+                }
+                else if (_options.ClockModeButtonTextThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonTextColorProperty, _options.ClockModeButtonTextThemeColor.GetBinding());
+                }
+
+                if (_options.ClockModeButtonSelectedTextColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonSelectedTextColor = _options.ClockModeButtonSelectedTextColor;
+                }
+                else if (_options.ClockModeButtonSelectedTextThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonSelectedTextColorProperty, _options.ClockModeButtonSelectedTextThemeColor.GetBinding());
+                }
+
                 _mainContentArea.Add(nullableDateTimePickerClockView, 0, 1);
                 _mainContentArea.SetRowSpan(nullableDateTimePickerClockView, 2);
 

@@ -30,7 +30,6 @@ internal partial class ClockView : ContentView
         SetButtonSelected(_drawable.IsAmMode, _drawable.IsHourMode);
     }
 
-
     public static readonly BindableProperty SelectedTimeProperty =
         BindableProperty.Create(nameof(SelectedTime), typeof(TimeOnly), typeof(ClockView), TimeOnly.FromDateTime(DateTime.Now), propertyChanged: OnSelectedTimeChanged);
 
@@ -94,6 +93,89 @@ internal partial class ClockView : ContentView
                 clockView.RefreshGraphicsView();
             }
         }
+    }
+    public static readonly BindableProperty ClockModeButtonBackgroundColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonBackgroundColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is ClockView clockView && newValue is Color newColor)
+            {
+                if (oldValue != newValue)
+                {
+                    clockView.ClockAmButton.OuterBorderBackgroundColor = newColor;
+                    clockView.ClockPmButton.OuterBorderBackgroundColor = newColor;
+                    clockView.ClockHourButton.OuterBorderBackgroundColor = newColor;
+                    clockView.ClockMinuteButton.OuterBorderBackgroundColor = newColor;
+                }
+            }
+        });
+
+    public Color ClockModeButtonBackgroundColor
+    {
+        get => (Color)GetValue(ClockModeButtonBackgroundColorProperty);
+        set => SetValue(ClockModeButtonBackgroundColorProperty, value);
+    }
+
+    public static readonly BindableProperty ClockModeButtonSelectedBackgroundColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonSelectedBackgroundColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is ClockView clockView && newValue is Color newColor)
+            {
+                if (oldValue != newValue)
+                {
+                    clockView.ClockAmButton.SelectedOuterBorderBackgroundColor = newColor;
+                    clockView.ClockPmButton.SelectedOuterBorderBackgroundColor = newColor;
+                    clockView.ClockHourButton.SelectedOuterBorderBackgroundColor = newColor;
+                    clockView.ClockMinuteButton.SelectedOuterBorderBackgroundColor = newColor;
+                }
+            }
+        });
+
+    public Color ClockModeButtonSelectedBackgroundColor
+    {
+        get => (Color)GetValue(ClockModeButtonSelectedBackgroundColorProperty);
+        set => SetValue(ClockModeButtonSelectedBackgroundColorProperty, value);
+    }
+
+    public static readonly BindableProperty ClockModeButtonTextColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonTextColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is ClockView clockView && newValue is Color newColor)
+            {
+                if (oldValue != newValue)
+                {
+                    clockView.ClockAmButton.InnerLabelTextColor = newColor;
+                    clockView.ClockPmButton.InnerLabelTextColor = newColor;
+                    clockView.ClockHourButton.InnerLabelTextColor = newColor;
+                    clockView.ClockMinuteButton.InnerLabelTextColor = newColor;
+                }
+            }
+        });
+
+    public Color ClockModeButtonTextColor
+    {
+        get => (Color)GetValue(ClockModeButtonTextColorProperty);
+        set => SetValue(ClockModeButtonTextColorProperty, value);
+    }
+
+    public static readonly BindableProperty ClockModeButtonSelectedTextColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonSelectedTextColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is ClockView clockView && newValue is Color newColor)
+            {
+                if (oldValue != newValue)
+                {
+                    clockView.ClockAmButton.SelectedInnerLabelTextColor = newColor;
+                    clockView.ClockPmButton.SelectedInnerLabelTextColor = newColor;
+                    clockView.ClockHourButton.SelectedInnerLabelTextColor = newColor;
+                    clockView.ClockMinuteButton.SelectedInnerLabelTextColor = newColor;
+                }
+            }
+        });
+
+    public Color ClockModeButtonSelectedTextColor
+    {
+        get => (Color)GetValue(ClockModeButtonSelectedTextColorProperty);
+        set => SetValue(ClockModeButtonSelectedTextColorProperty, value);
     }
 
     private void OnGraphicsTapped(object sender, TappedEventArgs e)
