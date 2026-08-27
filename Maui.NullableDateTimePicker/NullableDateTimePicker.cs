@@ -830,6 +830,35 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set => SetValue(TranslationsProperty, value);
     }
 
+    public static readonly BindableProperty HourDotColorProperty =
+       BindableProperty.Create(nameof(HourDotColor), typeof(Color), typeof(ClockView), null, defaultBindingMode: BindingMode.OneWay, propertyChanged: (bindable, oldValue, newValue) =>
+       {
+           if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color HourDotColorColor)
+           {
+               nullableDateTimePickerBindable.HourDotColor = HourDotColorColor;
+           }
+       });
+
+    public Color HourDotColor
+    {
+        get => (Color)GetValue(HourDotColorProperty);
+        set => SetValue(HourDotColorProperty, value);
+    }
+
+    public static readonly BindableProperty MinuteDotColorProperty =
+       BindableProperty.Create(nameof(MinuteDotColor), typeof(Color), typeof(ClockView), null, defaultBindingMode: BindingMode.OneWay, propertyChanged: (bindable, oldValue, newValue) =>
+       {
+           if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color MinuteDotColorColor)
+           {
+               nullableDateTimePickerBindable.MinuteDotColor = MinuteDotColorColor;
+           }
+       });
+
+    public Color MinuteDotColor
+    {
+        get => (Color)GetValue(MinuteDotColorProperty);
+        set => SetValue(MinuteDotColorProperty, value);
+    }
 
     #endregion //bindable properties
 
@@ -1139,7 +1168,9 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 CloseOnOutsideClick = this.CloseOnOutsideClick,
                 Is12HourFormat = this.Is12HourFormat,
                 AutomationId = base.AutomationId,
-                Translations = this.Translations?.ToList() ?? []
+                Translations = this.Translations?.ToList() ?? [],
+                HourDotColor = this.HourDotColor,
+                MinuteDotColor = this.MinuteDotColor
             };
 
             var popup = new NullableDateTimePickerPopup(options, new CancellationTokenSource());

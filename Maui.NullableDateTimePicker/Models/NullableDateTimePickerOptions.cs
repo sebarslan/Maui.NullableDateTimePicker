@@ -43,4 +43,8 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public bool Is12HourFormat { get; set; }
     public string AutomationId { get; set; } = string.Empty;
     public IList<TranslationItem> Translations { get; set; } = [];
+    public Color? HourDotColor { get; set; }
+    public AppThemeColor? HourDotThemeColor { get; set; }
+    public Color? MinuteDotColor { get; set; }
+    public AppThemeColor? MinuteDotThemeColor { get; set; }
 }

@@ -47,7 +47,9 @@
                             CornerRadius="5"
                             Padding="5,0,5,0"
                             SelectedDayStyle="{StaticResource SelectedDayStyle}"
-                            Translations="{StaticResource ClockTranslations}" />
+                            Translations="{StaticResource ClockTranslations}" 
+                            HourDotColor="Chocolate"
+                            MinuteDotColor="Fuchsia"/>
 
             <Label Text="Date time picker control with border + popup with border and translations binding and with custom formatter" TextColor="Black" />
 
