@@ -54,6 +54,48 @@ internal partial class ClockView : ContentView
         }
     }
 
+    public static readonly BindableProperty HourDotColorProperty =
+       BindableProperty.Create(nameof(HourDotColor), typeof(Color), typeof(ClockView), Color.FromArgb("#4f20b0"), propertyChanged: OnHourDotColorChanged);
+
+    public Color HourDotColor
+    {
+        get => (Color)GetValue(HourDotColorProperty);
+        set => SetValue(HourDotColorProperty, value);
+    }
+
+    private static void OnHourDotColorChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ClockView clockView && newValue is Color newColor)
+        {
+            if (oldValue != newValue)
+            {
+                clockView._drawable.HourDotColor = newColor;
+                clockView.RefreshGraphicsView();
+            }
+        }
+    }
+
+    public static readonly BindableProperty MinuteDotColorProperty =
+       BindableProperty.Create(nameof(MinuteDotColor), typeof(Color), typeof(ClockView), Color.FromArgb("#4f20b0"), propertyChanged: OnMinuteDotColorChanged);
+
+    public Color MinuteDotColor
+    {
+        get => (Color)GetValue(MinuteDotColorProperty);
+        set => SetValue(MinuteDotColorProperty, value);
+    }
+
+    private static void OnMinuteDotColorChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ClockView clockView && newValue is Color newColor)
+        {
+            if (oldValue != newValue)
+            {
+                clockView._drawable.MinuteDotColor = newColor;
+                clockView.RefreshGraphicsView();
+            }
+        }
+    }
+
     private void OnGraphicsTapped(object sender, TappedEventArgs e)
     {
         if (e.GetPosition(graphicsView) is not Point touchPoint) return;

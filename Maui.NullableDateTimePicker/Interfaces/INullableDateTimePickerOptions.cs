@@ -41,4 +41,8 @@ public interface INullableDateTimePickerOptions
     bool Is12HourFormat { get; set; }
     string AutomationId { get; set; }
     IList<TranslationItem> Translations { get; set; }
+    Color? HourDotColor { get; set; }
+    AppThemeColor? HourDotThemeColor { get; set; }
+    Color? MinuteDotColor { get; set; }
+    AppThemeColor? MinuteDotThemeColor { get; set; }
 };

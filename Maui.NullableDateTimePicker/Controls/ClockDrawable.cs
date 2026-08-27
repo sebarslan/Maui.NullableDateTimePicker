@@ -18,6 +18,9 @@
 
         public bool IsHourMode { get; set; } = true;
 
+        public Color HourDotColor { get; set; } = Color.FromArgb("#4f20b0");
+        public Color MinuteDotColor { get; set; } = Color.FromArgb("#4f20b0");
+
         //public TappedGroup LastTappedGroup { get; private set; } = TappedGroup.None;
         //public int LastTappedValue { get; private set; }
 
@@ -63,7 +66,7 @@
 
                     // Draw the large dot
                     canvas.FontSize = 11;
-                    canvas.FillColor = Color.FromArgb("#4f20b0");
+                    canvas.FillColor = HourDotColor;
                     canvas.FillCircle(x, y, 3);
 
                     // Place the _hour12 number on the inner side of the circle
@@ -99,7 +102,7 @@
 
                     // Set color and size (large in 5 minutes)
                     canvas.FontSize = 11;
-                    canvas.FillColor = Color.FromArgb("#4f20b0");
+                    canvas.FillColor = MinuteDotColor;
                     float radius = i % 5 == 0 ? 3 : 1;
                     canvas.FillCircle(x, y, radius);
 
