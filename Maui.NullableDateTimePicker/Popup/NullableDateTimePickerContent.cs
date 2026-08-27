@@ -643,7 +643,6 @@ internal class NullableDateTimePickerContent : ContentView
         {
             var toggleCalendarClockImageButton = new ImageButton
             {
-                Source = Utilities.GetImageSource(Application.Current.RequestedTheme == AppTheme.Dark ? "toggle_white.png" : "toggle_black.png"),
                 Margin = new Thickness(10, 0, 0, 0),
                 Padding = 0,
                 Aspect = Aspect.AspectFit,
@@ -655,6 +654,7 @@ internal class NullableDateTimePickerContent : ContentView
                 MinimumHeightRequest = 20,
                 MinimumWidthRequest = 20
             };
+            toggleCalendarClockImageButton.SetAppTheme(ImageButton.SourceProperty, Utilities.GetImageSource("toggle_black.png"), Utilities.GetImageSource("toggle_white.png"));
             toggleCalendarClockImageButton.Clicked += (s, e) =>
             {
                 ToggleCalendarClock();
