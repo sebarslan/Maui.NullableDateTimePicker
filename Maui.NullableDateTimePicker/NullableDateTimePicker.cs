@@ -860,6 +860,66 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
         set => SetValue(MinuteDotColorProperty, value);
     }
 
+    public static readonly BindableProperty ClockModeButtonBackgroundColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonBackgroundColor), typeof(Color), typeof(NullableDateTimePicker), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color newColor)
+            {
+                nullableDateTimePickerBindable.ClockModeButtonBackgroundColor = newColor;
+            }
+        });
+
+    public Color ClockModeButtonBackgroundColor
+    {
+        get => (Color)GetValue(ClockModeButtonBackgroundColorProperty);
+        set => SetValue(ClockModeButtonBackgroundColorProperty, value);
+    }
+
+    public static readonly BindableProperty ClockModeButtonSelectedBackgroundColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonSelectedBackgroundColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color newColor)
+            {
+                nullableDateTimePickerBindable.ClockModeButtonSelectedBackgroundColor = newColor;
+            }
+        });
+
+    public Color ClockModeButtonSelectedBackgroundColor
+    {
+        get => (Color)GetValue(ClockModeButtonSelectedBackgroundColorProperty);
+        set => SetValue(ClockModeButtonSelectedBackgroundColorProperty, value);
+    }
+
+    public static readonly BindableProperty ClockModeButtonTextColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonTextColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color newColor)
+            {
+                nullableDateTimePickerBindable.ClockModeButtonTextColor = newColor;
+            }
+        });
+
+    public Color ClockModeButtonTextColor
+    {
+        get => (Color)GetValue(ClockModeButtonTextColorProperty);
+        set => SetValue(ClockModeButtonTextColorProperty, value);
+    }
+
+    public static readonly BindableProperty ClockModeButtonSelectedTextColorProperty =
+        BindableProperty.Create(nameof(ClockModeButtonSelectedTextColor), typeof(Color), typeof(ClockView), null, propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            if (bindable is NullableDateTimePicker nullableDateTimePickerBindable && newValue is Color newColor)
+            {
+                nullableDateTimePickerBindable.ClockModeButtonSelectedTextColor = newColor;
+            }
+        });
+
+    public Color ClockModeButtonSelectedTextColor
+    {
+        get => (Color)GetValue(ClockModeButtonSelectedTextColorProperty);
+        set => SetValue(ClockModeButtonSelectedTextColorProperty, value);
+    }
+
     #endregion //bindable properties
 
     #region constructor
@@ -1170,7 +1230,11 @@ BindableProperty.Create(nameof(ToolButtonsStyle), typeof(Style), typeof(Nullable
                 AutomationId = base.AutomationId,
                 Translations = this.Translations?.ToList() ?? [],
                 HourDotColor = this.HourDotColor,
-                MinuteDotColor = this.MinuteDotColor
+                MinuteDotColor = this.MinuteDotColor,
+                ClockModeButtonBackgroundColor = this.ClockModeButtonBackgroundColor,
+                ClockModeButtonSelectedBackgroundColor = this.ClockModeButtonSelectedBackgroundColor,
+                ClockModeButtonTextColor = this.ClockModeButtonTextColor,
+                ClockModeButtonSelectedTextColor = this.ClockModeButtonSelectedTextColor
             };
 
             var popup = new NullableDateTimePickerPopup(options, new CancellationTokenSource());

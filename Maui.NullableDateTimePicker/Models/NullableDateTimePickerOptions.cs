@@ -47,4 +47,12 @@ public class NullableDateTimePickerOptions : INullableDateTimePickerOptions
     public AppThemeColor? HourDotThemeColor { get; set; }
     public Color? MinuteDotColor { get; set; }
     public AppThemeColor? MinuteDotThemeColor { get; set; }
+    public Color? ClockModeButtonBackgroundColor { get; set; }
+    public AppThemeColor? ClockModeButtonBackgroundThemeColor { get; set; }
+    public Color? ClockModeButtonSelectedBackgroundColor { get; set; }
+    public AppThemeColor? ClockModeButtonSelectedBackgroundThemeColor { get; set; }
+    public Color? ClockModeButtonTextColor { get; set; }
+    public AppThemeColor? ClockModeButtonTextThemeColor { get; set; }
+    public Color? ClockModeButtonSelectedTextColor { get; set; }
+    public AppThemeColor? ClockModeButtonSelectedTextThemeColor { get; set; }
 }

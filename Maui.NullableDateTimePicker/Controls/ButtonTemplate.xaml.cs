@@ -1,4 +1,4 @@
-using Microsoft.Maui.Controls.Shapes;
+﻿using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
 
 namespace Maui.NullableDateTimePicker.Controls;
@@ -50,6 +50,45 @@ internal partial class ButtonTemplate : ContentView
         set => SetValue(StrokeShapeProperty, value);
     }
 
+    public static readonly BindableProperty OuterBorderBackgroundColorProperty =
+        BindableProperty.Create(nameof(OuterBorderBackgroundColor), typeof(Color), typeof(ButtonTemplate), null,
+            propertyChanged: (bindable, oldValue, newValue) => ((ButtonTemplate)bindable).UpdateVisualState());
+
+    public Color OuterBorderBackgroundColor
+    {
+        get => (Color)GetValue(OuterBorderBackgroundColorProperty);
+        set => SetValue(OuterBorderBackgroundColorProperty, value);
+    }
+
+    public static readonly BindableProperty SelectedOuterBorderBackgroundColorProperty =
+        BindableProperty.Create(nameof(SelectedOuterBorderBackgroundColor), typeof(Color), typeof(ButtonTemplate), null,
+            propertyChanged: (bindable, oldValue, newValue) => ((ButtonTemplate)bindable).UpdateVisualState());
+
+    public Color SelectedOuterBorderBackgroundColor
+    {
+        get => (Color)GetValue(SelectedOuterBorderBackgroundColorProperty);
+        set => SetValue(SelectedOuterBorderBackgroundColorProperty, value);
+    }
+
+    public static readonly BindableProperty InnerLabelTextColorProperty =
+        BindableProperty.Create(nameof(InnerLabelTextColor), typeof(Color), typeof(ButtonTemplate), null,
+            propertyChanged: (bindable, oldValue, newValue) => ((ButtonTemplate)bindable).UpdateVisualState());
+
+    public Color InnerLabelTextColor
+    {
+        get => (Color)GetValue(InnerLabelTextColorProperty);
+        set => SetValue(InnerLabelTextColorProperty, value);
+    }
+
+    public static readonly BindableProperty SelectedInnerLabelTextColorProperty =
+        BindableProperty.Create(nameof(SelectedInnerLabelTextColor), typeof(Color), typeof(ButtonTemplate), null,
+            propertyChanged: (bindable, oldValue, newValue) => ((ButtonTemplate)bindable).UpdateVisualState());
+
+    public Color SelectedInnerLabelTextColor
+    {
+        get => (Color)GetValue(SelectedInnerLabelTextColorProperty);
+        set => SetValue(SelectedInnerLabelTextColorProperty, value);
+    }
 
     public ICommand TapCommand { get; }
 
@@ -62,13 +101,42 @@ internal partial class ButtonTemplate : ContentView
     {
         if (Selected)
         {
-            OuterBorder.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.DimGray : Colors.Blue;
-            InnerLabel.TextColor = Colors.White;
+            if (SelectedOuterBorderBackgroundColor != null)
+            {
+                OuterBorder.BackgroundColor = SelectedOuterBorderBackgroundColor;
+            } else
+            { 
+                OuterBorder.SetAppTheme(Border.BackgroundColorProperty, Colors.Blue, Colors.DimGray);
+            }
+
+            if (SelectedInnerLabelTextColor != null)
+            {
+                InnerLabel.TextColor = SelectedInnerLabelTextColor;
+            }
+            else
+            {
+                InnerLabel.TextColor = Colors.Wheat;
+            }
         }
         else
         {
-            OuterBorder.BackgroundColor = Application.Current.RequestedTheme == AppTheme.Dark ? Colors.DarkGray : Colors.LightGray;
-            InnerLabel.TextColor = Colors.Black;
+            if (OuterBorderBackgroundColor != null)
+            {
+                OuterBorder.BackgroundColor = OuterBorderBackgroundColor;
+            }
+            else
+            {
+                OuterBorder.SetAppTheme(Border.BackgroundColorProperty, Colors.LightGray, Colors.DarkGray);
+            }
+
+            if (InnerLabelTextColor != null)
+            {
+                InnerLabel.TextColor = InnerLabelTextColor;
+            }
+            else
+            {
+                InnerLabel.TextColor = Colors.Black;
+            }
         }
     }
 

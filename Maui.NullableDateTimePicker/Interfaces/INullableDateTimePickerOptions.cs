@@ -45,4 +45,12 @@ public interface INullableDateTimePickerOptions
     AppThemeColor? HourDotThemeColor { get; set; }
     Color? MinuteDotColor { get; set; }
     AppThemeColor? MinuteDotThemeColor { get; set; }
+    Color? ClockModeButtonBackgroundColor { get; set; }
+    AppThemeColor? ClockModeButtonBackgroundThemeColor { get; set; }
+    Color? ClockModeButtonSelectedBackgroundColor { get; set; }
+    AppThemeColor? ClockModeButtonSelectedBackgroundThemeColor { get; set; }
+    public Color? ClockModeButtonTextColor { get; set; }
+    public AppThemeColor? ClockModeButtonTextThemeColor { get; set; }
+    public Color? ClockModeButtonSelectedTextColor { get; set; }
+    public AppThemeColor? ClockModeButtonSelectedTextThemeColor { get; set; }
 };
