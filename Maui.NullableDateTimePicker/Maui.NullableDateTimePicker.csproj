@@ -59,7 +59,7 @@
 		</PackageReference>
 
 		<!-- net10.0 -->
-		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'net9.0'">
+		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.0" Condition="'$(TargetFramework)' != '' AND '$(TargetFramework)' != 'net9.0'">
 			<PrivateAssets>all</PrivateAssets>
 			<ExcludeAssets>runtime</ExcludeAssets>
 		</PackageReference>
@@ -70,7 +70,7 @@
 			<ExcludeAssets>runtime</ExcludeAssets>
 		</PackageReference>
 	</ItemGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0' AND ('$(MauiVersion)' == '' OR $([System.Version]::Parse('$(MauiVersion)')) &lt; $([System.Version]::Parse('10.0.30')) )">
-		<MauiVersion>10.0.30</MauiVersion>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0' AND ('$(MauiVersion)' == '' OR $([System.Version]::Parse('$(MauiVersion)')) &lt; $([System.Version]::Parse('10.0.90')) )">
+		<MauiVersion>10.0.90</MauiVersion>
 	</PropertyGroup>
 </Project>
