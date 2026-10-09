@@ -469,25 +469,76 @@ internal class NullableDateTimePickerContent : ContentView
         try
         {
             await MainThreadHelper.SafeInvokeOnMainThreadAsync(() =>
-           {
-
-               _activityIndicator.IsVisible = true;
-               _activityIndicator.IsRunning = true;
-
-               nullableDateTimePickerClockView = new ClockView(_options);
-               nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
-               nullableDateTimePickerClockView.TimeChanged += (s, e) =>
             {
-                UpdateCurrentDateAndControls(_currentDate.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
-            };
+                _activityIndicator.IsVisible = true;
+                _activityIndicator.IsRunning = true;
 
-               _mainContentArea.Add(nullableDateTimePickerClockView, 0, 1);
-               _mainContentArea.SetRowSpan(nullableDateTimePickerClockView, 2);
+                nullableDateTimePickerClockView = new ClockView(_options);
+                nullableDateTimePickerClockView.SelectedTime = TimeOnly.FromDateTime(_currentDate);
+                nullableDateTimePickerClockView.TimeChanged += (s, e) =>
+                {
+                    UpdateCurrentDateAndControls(_currentDate.Date.AddHours(e.NewTime.Hour).AddMinutes(e.NewTime.Minute).AddSeconds(e.NewTime.Second));
+                };
 
-               UpdateCurrentDateAndControls(_currentDate);
-           });
+                if (_options.HourDotColor != null)
+                {
+                    nullableDateTimePickerClockView.HourDotColor = _options.HourDotColor;
+                }
+                else if (_options.HourDotThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.HourDotColorProperty, _options.HourDotThemeColor.GetBinding());
+                }
 
+                if (_options.MinuteDotColor != null)
+                {
+                    nullableDateTimePickerClockView.MinuteDotColor = _options.MinuteDotColor;
+                }
+                else if (_options.MinuteDotThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.MinuteDotColorProperty, _options.MinuteDotThemeColor.GetBinding());
+                }
 
+                if (_options.ClockModeButtonBackgroundColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonBackgroundColor = _options.ClockModeButtonBackgroundColor;
+                }
+                else if (_options.ClockModeButtonBackgroundThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonBackgroundColorProperty, _options.ClockModeButtonBackgroundThemeColor.GetBinding());
+                }
+
+                if (_options.ClockModeButtonSelectedBackgroundColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonSelectedBackgroundColor = _options.ClockModeButtonSelectedBackgroundColor;
+                }
+                else if (_options.ClockModeButtonSelectedBackgroundThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonSelectedBackgroundColorProperty, _options.ClockModeButtonSelectedBackgroundThemeColor.GetBinding());
+                }
+
+                if (_options.ClockModeButtonTextColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonTextColor = _options.ClockModeButtonTextColor;
+                }
+                else if (_options.ClockModeButtonTextThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonTextColorProperty, _options.ClockModeButtonTextThemeColor.GetBinding());
+                }
+
+                if (_options.ClockModeButtonSelectedTextColor != null)
+                {
+                    nullableDateTimePickerClockView.ClockModeButtonSelectedTextColor = _options.ClockModeButtonSelectedTextColor;
+                }
+                else if (_options.ClockModeButtonSelectedTextThemeColor != null)
+                {
+                    nullableDateTimePickerClockView.SetBinding(ClockView.ClockModeButtonSelectedTextColorProperty, _options.ClockModeButtonSelectedTextThemeColor.GetBinding());
+                }
+
+                _mainContentArea.Add(nullableDateTimePickerClockView, 0, 1);
+                _mainContentArea.SetRowSpan(nullableDateTimePickerClockView, 2);
+
+                UpdateCurrentDateAndControls(_currentDate);
+            });
         }
         catch (Exception ex)
         {
@@ -643,7 +694,6 @@ internal class NullableDateTimePickerContent : ContentView
         {
             var toggleCalendarClockImageButton = new ImageButton
             {
-                Source = Utilities.GetImageSource(Application.Current.RequestedTheme == AppTheme.Dark ? "toggle_white.png" : "toggle_black.png"),
                 Margin = new Thickness(10, 0, 0, 0),
                 Padding = 0,
                 Aspect = Aspect.AspectFit,
@@ -655,6 +705,7 @@ internal class NullableDateTimePickerContent : ContentView
                 MinimumHeightRequest = 20,
                 MinimumWidthRequest = 20
             };
+            toggleCalendarClockImageButton.SetAppTheme(ImageButton.SourceProperty, Utilities.GetImageSource("toggle_black.png"), Utilities.GetImageSource("toggle_white.png"));
             toggleCalendarClockImageButton.Clicked += (s, e) =>
             {
                 ToggleCalendarClock();

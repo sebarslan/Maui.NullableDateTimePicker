@@ -41,4 +41,16 @@ public interface INullableDateTimePickerOptions
     bool Is12HourFormat { get; set; }
     string AutomationId { get; set; }
     IList<TranslationItem> Translations { get; set; }
+    Color? HourDotColor { get; set; }
+    AppThemeColor? HourDotThemeColor { get; set; }
+    Color? MinuteDotColor { get; set; }
+    AppThemeColor? MinuteDotThemeColor { get; set; }
+    Color? ClockModeButtonBackgroundColor { get; set; }
+    AppThemeColor? ClockModeButtonBackgroundThemeColor { get; set; }
+    Color? ClockModeButtonSelectedBackgroundColor { get; set; }
+    AppThemeColor? ClockModeButtonSelectedBackgroundThemeColor { get; set; }
+    public Color? ClockModeButtonTextColor { get; set; }
+    public AppThemeColor? ClockModeButtonTextThemeColor { get; set; }
+    public Color? ClockModeButtonSelectedTextColor { get; set; }
+    public AppThemeColor? ClockModeButtonSelectedTextThemeColor { get; set; }
 };
