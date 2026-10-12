@@ -85,8 +85,103 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
     }
 }
 </code>
-</pre>    
+</pre>  
 
+### Usage 3: Display the calendar in your own popup or inline
+Use NullableDateTimePicker.CreateContent(options) to create the calendar content. You can display the returned View inside your own popup or embed it directly in your page layout for inline use. Use ResultTask to receive the result when the user completes or cancels the selection.
+
+The following example shows how to display the calendar inside your own popup.
+1- Add a button to your XAML page (e.g. MainPage.xaml):
+```xml
+<Button Grid.Column="1"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Clicked="DateTimePickerOwnPopup_Clicked"
+        Margin="5"
+        Text="Open calendar with my own popup"
+        HeightRequest="30" />
+```
+2- Then add the following event handler to your code-behind file (e.g. MainPage.xaml.cs). This example uses a custom popup class named MyPopup and displays it with the .NET MAUI Community Toolkit's ShowPopupAsync method.
+
+```csharp
+private async void DateTimePickerOwnPopup_Clicked(object sender, EventArgs e)
+{
+    INullableDateTimePickerOptions nullableDateTimePickerOptions =
+        new NullableDateTimePickerOptions
+        {
+            SelectedDateTime = MyDateTime,
+            Mode = PickerModes.DateTime,
+            ShowWeekNumbers = true,
+            CloseOnOutsideClick = true,
+            PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
+            PopupBorderColor = Color.FromArgb("#505050"),
+            PopupCornerRadius = 10,
+            PopupBorderWidth = 1,
+            Is12HourFormat = false,
+            PopupPadding = 5,
+            Translations = MyTranslations
+        };
+
+    try
+    {
+        // Create the calendar content and assign it to your custom popup.
+        var contentHandle =
+            NullableDateTimePicker.CreateContent(nullableDateTimePickerOptions);
+
+        var popup = new MyPopup
+        {
+            Content = contentHandle.View
+        };
+
+        // Close the popup when the calendar returns a result.
+        _ = contentHandle.ResultTask.ContinueWith(async task =>
+        {
+            await popup.CloseAsync(task.Result);
+        }, TaskScheduler.FromCurrentSynchronizationContext());
+
+        // Apply the popup appearance and dismissal options.
+        var popupResult = await this.ShowPopupAsync<PopupResult>(
+            popup,
+            new PopupOptions
+            {
+                CanBeDismissedByTappingOutsideOfPopup =
+                    nullableDateTimePickerOptions.CloseOnOutsideClick,
+                PageOverlayColor =
+                    nullableDateTimePickerOptions.PopupPageOverlayColor,
+                Shape = new RoundRectangle
+                {
+                    CornerRadius =
+                        nullableDateTimePickerOptions.PopupCornerRadius,
+                    Stroke =
+                        nullableDateTimePickerOptions.PopupBorderColor,
+                    StrokeThickness =
+                        nullableDateTimePickerOptions.PopupBorderWidth
+                }
+            },
+            CancellationToken.None);
+
+        if (popupResult == null ||
+            popupResult.WasDismissedByTappingOutsideOfPopup)
+        {
+            return;
+        }
+
+        var result = popupResult.Result;
+
+        if (result is not null && result.ButtonResult != PopupButtons.Cancel)
+        {
+            MyDateTime = result.SelectedDateTime;
+
+            // If you are not using a ViewModel:
+            // DateTimeEntry.Text = result.SelectedDateTime?.ToString("g");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+    }
+}
+```
 
 More examples, please see the samples project
 
