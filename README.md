@@ -322,6 +322,7 @@ on ios, android, windows, maccatalyst
 
 ### 3.1.6
 - New `CreateContent(options)` static method that allows consumers to embed the date/time picker content directly into their own custom popup or container.
+- ClockView button colors can now be customized. (Thanks @meyerdominik)
   
 ### 3.1.5
 - Added CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
