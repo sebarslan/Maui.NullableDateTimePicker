@@ -48,25 +48,22 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 ### Usage 2: Use direct calendar popup with your own entry and button
 
 1- Add your entry and button for datetime in your xaml page (eg. MainPage.xaml)
-<pre>
-<code>
-&lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
-    &lt;Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
+```xml
+<HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40">;
+    <Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
     HorizontalOptions="Fill"
     VerticalOptions="Fill"
-    IsReadOnly="True" /&gt;
-    &lt;ImageButton Source="{Binding CalendarIcon}" 
+    IsReadOnly="True" />;
+    <ImageButton Source="{Binding CalendarIcon}" 
     Clicked="DateTimePicker_Clicked"
     Margin="0"
     Padding="2"
-    WidthRequest="30" /&gt;
-&lt;/HorizontalStackLayout&gt;
- </code>
-</pre>  
+    WidthRequest="30" />;
+</HorizontalStackLayout>;
+ ```
 
 2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
-<pre>
-<code>
+```csharp
 private async void DateTimePicker_Clicked(object sender, EventArgs e)
 {
     INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
@@ -84,13 +81,13 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
         // DateTimeEntry.Text = popupResult.SelectedDateTime?.ToString("g"); //If you are not using ViewModel
     }
 }
-</code>
-</pre>  
+```
 
 ### Usage 3: Display the calendar in your own popup or inline
 Use NullableDateTimePicker.CreateContent(options) to create the calendar content. You can display the returned View inside your own popup or embed it directly in your page layout for inline use. Use ResultTask to receive the result when the user completes or cancels the selection.
 
 The following example shows how to display the calendar inside your own popup.
+
 1- Add a button to your XAML page (e.g. MainPage.xaml):
 ```xml
 <Button Grid.Column="1"
