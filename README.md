@@ -297,8 +297,7 @@ This event is commonly used in programming or software environments and is trigg
 The event utilizes the DateTimeChangedEventArgs class as its argument. The DateTimeChangedEventArgs class contains additional information that is carried at the moment the event is triggered. It may include details about the date and time change, such as the old DateTime value and the new DateTime value.
 
 Below is an example code snippet illustrating the usage of the "SelectedDateTimeChanged" event and the "DateTimeChangedEventArgs" argument class:
-<pre>
-<code>
+```csharp
 NullableDateTimePicker dateTimePicker = new NullableDateTimePicker();
 dateTimePicker.SelectedDateTimeChanged += OnSelectedDateTimeChanged;
 
@@ -308,24 +307,21 @@ private static void OnSelectedDateTimeChanged(object sender, DateTimeChangedEven
     Console.WriteLine("Old DateTime: " + e.OldDateTime);
     Console.WriteLine("New DateTime: " + e.NewDateTime);
 }
-</code>
-</pre>
+```
 
 ## Overriding the change behavior
 Derived controls can override the `OnSelectedDateTimeChanged` method to customize the behavior when the selected date/time changes.
 This method raises the `SelectedDateTimeChanged` event and can be overridden
 by derived controls to extend the behavior when the selected date/time changes.
 
-<pre>
-<code>
+```csharp
 protected override void OnSelectedDateTimeChanged(DateTime? oldSelectedDateTime, DateTime? newSelectedDateTime)
 {
     base.OnSelectedDateTimeChanged(oldSelectedDateTime, newSelectedDateTime);
 
     // Custom logic here
 }
-</code>
-</pre>
+```
 
 ## Popup Lifecycle
 
@@ -341,8 +337,7 @@ These events can be used to execute custom logic before the popup becomes visibl
 The control also provides the `OnPopupOpening`, `PopupOpened`, `OnPopupClosing` and `OnPopupClosed` virtual methods.  
 These methods raise the corresponding events and can be overridden by derived controls to customize the popup lifecycle behavior.
 
-<pre>
-<code>
+```csharp
 // Popup lifecycle events
 // Subscribe to popup lifecycle events
 dateTimePicker.PopupOpening += Handler;
@@ -364,8 +359,7 @@ dateTimePicker.[OnPopupOpening, OnPopupOpened, OnPopupClosing, OnPopupClosed]()
     Debug.WriteLine("Popup lifecycle method called");
 }
 These methods allow you to customize the popup behavior by overriding the popup lifecycle methods.
-</code>
-</pre>
+```
 
 ## CustomFormatter
 
