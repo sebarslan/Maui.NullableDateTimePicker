@@ -48,25 +48,22 @@ xmlns:ndtp="clr-namespace:Maui.NullableDateTimePicker;assembly=Maui.NullableDate
 ### Usage 2: Use direct calendar popup with your own entry and button
 
 1- Add your entry and button for datetime in your xaml page (eg. MainPage.xaml)
-<pre>
-<code>
-&lt;HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40"&gt;
-    &lt;Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
+```xml
+<HorizontalStackLayout HorizontalOptions="Fill"  HeightRequest="40">;
+    <Entry x:Name="DateTimeEntry" Text="{Binding MyDateTime, StringFormat='{0:g}'}" 
     HorizontalOptions="Fill"
     VerticalOptions="Fill"
-    IsReadOnly="True" /&gt;
-    &lt;ImageButton Source="{Binding CalendarIcon}" 
+    IsReadOnly="True" />;
+    <ImageButton Source="{Binding CalendarIcon}" 
     Clicked="DateTimePicker_Clicked"
     Margin="0"
     Padding="2"
-    WidthRequest="30" /&gt;
-&lt;/HorizontalStackLayout&gt;
- </code>
-</pre>  
+    WidthRequest="30" />;
+</HorizontalStackLayout>;
+ ```
 
 2- Then, when you click on the button or entry, define the options and call NullableDateTimePicker.OpenAsync(options) to open the calendar in your xaml.cs file. (eg. MainPage.xaml.cs)
-<pre>
-<code>
+```csharp
 private async void DateTimePicker_Clicked(object sender, EventArgs e)
 {
     INullableDateTimePickerOptions nullableDateTimePickerOptions = new NullableDateTimePickerOptions
@@ -84,9 +81,104 @@ private async void DateTimePicker_Clicked(object sender, EventArgs e)
         // DateTimeEntry.Text = popupResult.SelectedDateTime?.ToString("g"); //If you are not using ViewModel
     }
 }
-</code>
-</pre>    
+```
 
+### Usage 3: Display the calendar in your own popup or inline
+Use NullableDateTimePicker.CreateContent(options) to create the calendar content. You can display the returned View inside your own popup or embed it directly in your page layout for inline use. Use ResultTask to receive the result when the user completes or cancels the selection.
+
+The following example shows how to display the calendar inside your own popup.
+
+1- Add a button to your XAML page (e.g. MainPage.xaml):
+```xml
+<Button Grid.Column="1"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Clicked="DateTimePickerOwnPopup_Clicked"
+        Margin="5"
+        Text="Open calendar with my own popup"
+        HeightRequest="30" />
+```
+2- Then add the following event handler to your code-behind file (e.g. MainPage.xaml.cs). This example uses a custom popup class named MyPopup and displays it with the .NET MAUI Community Toolkit's ShowPopupAsync method.
+
+```csharp
+private async void DateTimePickerOwnPopup_Clicked(object sender, EventArgs e)
+{
+    INullableDateTimePickerOptions nullableDateTimePickerOptions =
+        new NullableDateTimePickerOptions
+        {
+            SelectedDateTime = MyDateTime,
+            Mode = PickerModes.DateTime,
+            ShowWeekNumbers = true,
+            CloseOnOutsideClick = true,
+            PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
+            PopupBorderColor = Color.FromArgb("#505050"),
+            PopupCornerRadius = 10,
+            PopupBorderWidth = 1,
+            Is12HourFormat = false,
+            PopupPadding = 5,
+            Translations = MyTranslations
+        };
+
+    try
+    {
+        // Create the calendar content and assign it to your custom popup.
+        var contentHandle =
+            NullableDateTimePicker.CreateContent(nullableDateTimePickerOptions);
+
+        var popup = new MyPopup
+        {
+            Content = contentHandle.View
+        };
+
+        // Close the popup when the calendar returns a result.
+        _ = contentHandle.ResultTask.ContinueWith(async task =>
+        {
+            await popup.CloseAsync(task.Result);
+        }, TaskScheduler.FromCurrentSynchronizationContext());
+
+        // Apply the popup appearance and dismissal options.
+        var popupResult = await this.ShowPopupAsync<PopupResult>(
+            popup,
+            new PopupOptions
+            {
+                CanBeDismissedByTappingOutsideOfPopup =
+                    nullableDateTimePickerOptions.CloseOnOutsideClick,
+                PageOverlayColor =
+                    nullableDateTimePickerOptions.PopupPageOverlayColor,
+                Shape = new RoundRectangle
+                {
+                    CornerRadius =
+                        nullableDateTimePickerOptions.PopupCornerRadius,
+                    Stroke =
+                        nullableDateTimePickerOptions.PopupBorderColor,
+                    StrokeThickness =
+                        nullableDateTimePickerOptions.PopupBorderWidth
+                }
+            },
+            CancellationToken.None);
+
+        if (popupResult == null ||
+            popupResult.WasDismissedByTappingOutsideOfPopup)
+        {
+            return;
+        }
+
+        var result = popupResult.Result;
+
+        if (result is not null && result.ButtonResult != PopupButtons.Cancel)
+        {
+            MyDateTime = result.SelectedDateTime;
+
+            // If you are not using a ViewModel:
+            // DateTimeEntry.Text = result.SelectedDateTime?.ToString("g");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+    }
+}
+```
 
 More examples, please see the samples project
 
@@ -283,8 +375,7 @@ The `CustomFormatter` property allows providing a custom function to format the 
 
 If `CustomFormatter` is set, it will be used to generate the text displayed in the picker. Otherwise, the control falls back to the `Format` property.
 
-<pre>
-<code>
+```csharp
 nullableDateTimePicker.CustomFormatter = date =>
 {
     if (date == null)
@@ -295,11 +386,17 @@ nullableDateTimePicker.CustomFormatter = date =>
 
     return date.Value.ToString("dddd dd MMM");
 };
-</code>
-</pre>
+```
 
-
-
+> [!TIP]
+> If you experience issues with the popup background, add the following to your main project's `.csproj` file: 
+> Thanks to @meyerdominik for sharing this tip!
+>
+> ```xml
+> <ItemGroup>
+>     <TrimmerRootAssembly Include="CommunityToolkit.Maui" />
+> </ItemGroup>
+> ```
 
 # License
 The Nullable DateTimePicker control is licensed under the MIT License. See <a href="LICENSE.txt">LICENSE file</a> for more information.
@@ -322,6 +419,7 @@ on ios, android, windows, maccatalyst
 
 ### 3.1.6
 - New `CreateContent(options)` static method that allows consumers to embed the date/time picker content directly into their own custom popup or container.
+- ClockView button colors can now be customized. (Thanks @meyerdominik)
   
 ### 3.1.5
 - Added CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
