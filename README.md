@@ -375,8 +375,7 @@ The `CustomFormatter` property allows providing a custom function to format the 
 
 If `CustomFormatter` is set, it will be used to generate the text displayed in the picker. Otherwise, the control falls back to the `Format` property.
 
-<pre>
-<code>
+```csharp
 nullableDateTimePicker.CustomFormatter = date =>
 {
     if (date == null)
@@ -387,11 +386,16 @@ nullableDateTimePicker.CustomFormatter = date =>
 
     return date.Value.ToString("dddd dd MMM");
 };
-</code>
-</pre>
+```
 
-
-
+> [!TIP]
+> If you experience issues with the popup background, add the following to your main project's `.csproj` file:
+>
+> ```xml
+> <ItemGroup>
+>     <TrimmerRootAssembly Include="CommunityToolkit.Maui" />
+> </ItemGroup>
+> ```
 
 # License
 The Nullable DateTimePicker control is licensed under the MIT License. See <a href="LICENSE.txt">LICENSE file</a> for more information.
