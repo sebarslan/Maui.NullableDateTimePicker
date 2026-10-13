@@ -389,7 +389,8 @@ nullableDateTimePicker.CustomFormatter = date =>
 ```
 
 > [!TIP]
-> If you experience issues with the popup background, add the following to your main project's `.csproj` file:
+> If you experience issues with the popup background, add the following to your main project's `.csproj` file: 
+> Thanks to @meyerdominik for sharing this tip!
 >
 > ```xml
 > <ItemGroup>
