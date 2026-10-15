@@ -207,9 +207,12 @@ More examples, please see the samples project
   Used as an inline input field (as a `ContentView`).  
   The date or time picker opens in a modal popup when the icon or input field is tapped.
 
-  - **Popup Mode:**  
+  - **Standalone Popup Mode:**  
   The calendar or time picker can be opened directly as a modal,  
   without using an input field (for standalone picker usage).
+
+  - **Inline or Custom Popup Mode:**
+    The calendar or time picker can be displayed directly inline, or opened using a custom popup defined by the developer.
 
 - **Time Picker Options**  
   - Select time using a graphical clock or dropdown lists.
