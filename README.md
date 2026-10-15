@@ -526,7 +526,6 @@ on ios, android, windows, maccatalyst
 
 ### 1.0.0
 - Initial Release.
-- 
 
 # .NET MAUI handler
 > .NET MAUI handler was used in the test project to remove the underline in the original entry.
