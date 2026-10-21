@@ -107,13 +107,7 @@ private async void DateTimePickerOwnPopup_Clicked(object sender, EventArgs e)
             SelectedDateTime = MyDateTime,
             Mode = PickerModes.DateTime,
             ShowWeekNumbers = true,
-            CloseOnOutsideClick = true,
-            PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
-            PopupBorderColor = Color.FromArgb("#505050"),
-            PopupCornerRadius = 10,
-            PopupBorderWidth = 1,
             Is12HourFormat = false,
-            PopupPadding = 5,
             Translations = MyTranslations
         };
 
