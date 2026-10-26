@@ -1014,7 +1014,11 @@ internal class NullableDateTimePickerContent : ContentView
 
                 // Get the DateTimeFormatInfo for the current culture
                 DateTimeFormatInfo dateTimeFormatInfo = DateTimeFormatInfo.CurrentInfo;
-                string[] dayNames = dateTimeFormatInfo.AbbreviatedDayNames;
+                //string[] dayNames = dateTimeFormatInfo.AbbreviatedDayNames;
+                string[] dayNames = Utilities.GetTranslateList(
+                _options?.Translations,
+                "DayShortNames",
+                dateTimeFormatInfo.AbbreviatedDayNames);
                 int firstDayOfWekkIndex = (int)dateTimeFormatInfo.FirstDayOfWeek;
 
                 // Calculate the week number for this day
@@ -1440,7 +1444,17 @@ internal class NullableDateTimePickerContent : ContentView
         if (_monthsSelectList != null)
             return;
 
-        string[] months = DateTimeFormatInfo.CurrentInfo.AbbreviatedMonthNames;
+        //string[] months = DateTimeFormatInfo.CurrentInfo.AbbreviatedMonthNames;
+
+        string[] defaultMonthNames = DateTimeFormatInfo.CurrentInfo.AbbreviatedMonthNames;
+
+        if (string.IsNullOrEmpty(defaultMonthNames[^1]))
+            defaultMonthNames = defaultMonthNames[..^1];
+
+        string[] months = Utilities.GetTranslateList(
+            _options?.Translations,
+            "MonthShortNames",
+            defaultMonthNames);
 
         _monthsSelectList = new SelectList
         {

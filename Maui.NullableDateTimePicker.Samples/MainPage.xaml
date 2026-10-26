@@ -12,6 +12,8 @@
             <collections:ObservableCollection x:Key="ClockTranslations" x:TypeArguments="ndtp:TranslationItem">
                 <ndtp:TranslationItem Key="Hour" Value="Saat" />
                 <ndtp:TranslationItem Key="Minute" Value="Dakika" />
+                <ndtp:TranslationItem Key="MonthShortNames" Value="Oca;Şub;Mar;Nis;May;Haz;Tem;Ağu;Eyl;Eki;Kas;Ara" />
+                <ndtp:TranslationItem Key="DayShortNames" Value="Paz;Pzt;Sal;Çar;Per;Cum;Cts" />
             </collections:ObservableCollection>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -46,8 +48,7 @@
                             HorizontalOptions="Start"
                             CornerRadius="5"
                             Padding="5,0,5,0"
-                            SelectedDayStyle="{StaticResource SelectedDayStyle}"
-                            Translations="{StaticResource ClockTranslations}" 
+                            SelectedDayStyle="{StaticResource SelectedDayStyle}" 
                             HourDotColor="Chocolate"
                             MinuteDotColor="Fuchsia"
                             ClockModeButtonBackgroundColor="Gray"

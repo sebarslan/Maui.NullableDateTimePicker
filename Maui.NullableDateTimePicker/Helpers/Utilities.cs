@@ -28,5 +28,22 @@ namespace Maui.NullableDateTimePicker.Helpers
             var item = translations?.FirstOrDefault(t => t.Key == key);
             return string.IsNullOrEmpty(item?.Key) || string.IsNullOrEmpty(item?.Value) ? defaultText : item.Value;
         }
+
+        internal static string[] GetTranslateList(
+    IList<TranslationItem>? translations,
+    string key,
+    string[] defaultValues)
+        {
+            var item = translations?.FirstOrDefault(t => t.Key == key);
+
+            if (string.IsNullOrEmpty(item?.Value))
+                return defaultValues;
+
+            var values = item.Value.Split(';');
+
+            return values.Length == defaultValues.Length
+                ? values
+                : defaultValues;
+        }
     }
 }

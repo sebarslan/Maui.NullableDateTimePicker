@@ -19,6 +19,8 @@ public partial class MainPage : ContentPage
             new TranslationItem{Key = "AM", Value= Is12HourFormat ? "AM":"00-11"},
             new TranslationItem{Key = "PM", Value=Is12HourFormat ? "PM": "12-23"},
             new TranslationItem{Key = "OK", Value="Done"},
+            new() { Key = "MonthShortNames", Value = "Oca;Şub;Mar;Nis;May;Haz;Tem;Ağu;Eyl;Eki;Kas;Ara" },
+            new() { Key = "DayShortNames", Value = "Paz;Pzt;Sal;Çar;Per;Cum;Cts" }
         };
 
         BindingContext = this;
