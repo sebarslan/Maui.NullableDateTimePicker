@@ -107,13 +107,12 @@ private async void DateTimePickerOwnPopup_Clicked(object sender, EventArgs e)
             SelectedDateTime = MyDateTime,
             Mode = PickerModes.DateTime,
             ShowWeekNumbers = true,
+            Is12HourFormat = false,
             CloseOnOutsideClick = true,
             PopupPageOverlayColor = Color.FromArgb("#505050").WithAlpha(0.5f),
             PopupBorderColor = Color.FromArgb("#505050"),
             PopupCornerRadius = 10,
             PopupBorderWidth = 1,
-            Is12HourFormat = false,
-            PopupPadding = 5,
             Translations = MyTranslations
         };
 
@@ -207,9 +206,12 @@ More examples, please see the samples project
   Used as an inline input field (as a `ContentView`).  
   The date or time picker opens in a modal popup when the icon or input field is tapped.
 
-  - **Popup Mode:**  
+  - **Standalone Popup Mode:**  
   The calendar or time picker can be opened directly as a modal,  
   without using an input field (for standalone picker usage).
+
+  - **Inline or Custom Popup Mode:**
+    The calendar or time picker can be displayed directly inline, or opened using a custom popup defined by the developer.
 
 - **Time Picker Options**  
   - Select time using a graphical clock or dropdown lists.
@@ -523,7 +525,6 @@ on ios, android, windows, maccatalyst
 
 ### 1.0.0
 - Initial Release.
-- 
 
 # .NET MAUI handler
 > .NET MAUI handler was used in the test project to remove the underline in the original entry.
