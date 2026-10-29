@@ -416,8 +416,7 @@ on ios, android, windows, maccatalyst
 - New `CreateContent(options)` static method that allows consumers to embed the date/time picker content directly into their own custom popup or container. (Thanks to @BlyZeDev for the suggestion!)
 - ClockView button colors can now be customized. (Thanks @meyerdominik)
 - Updated CommunityToolkit.Maui to version 15.0.1.
-- Updated .NET MAUI to version 10.0.110.
-- Added TrimmerRootAssembly for CommunityToolkit.Maui to the sample project to fix popup background rendering issues. (Thanks @meyerdominik)
+- Updated .NET MAUI to version 10.0.120.
   
 ### 3.1.5
 - Added CustomFormatter delegate to support advanced and overridable date formatting (Thanks @fraluderin)
