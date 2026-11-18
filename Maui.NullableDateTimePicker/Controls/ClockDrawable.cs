@@ -168,40 +168,27 @@
         //    Console.WriteLine($"Tapped Minute: {_minute}");
         //}
 
-        public void HandleTap(float touchX, float touchY, float centerX, float centerY, float scale)
+        public void UpdateSelection(float touchX, float touchY, float centerX, float centerY)
         {
-            // Scale touch point relative to center
-            float scaledX = (touchX - centerX) / scale;
-            float scaledY = (touchY - centerY) / scale;
+            float x = touchX - centerX;
+            float y = touchY - centerY;
 
-            // Calculate angle (Atan2 uses y, x)
-            double angle = Math.Atan2(scaledY, scaledX);
+            // The center has no direction. Keep the current selection.
+            if (x == 0 && y == 0)
+                return;
 
-            // Shift -90° (π/2) to align 0° to 3 o'clock
-            double normalizedAngle = (angle + 2 * Math.PI + Math.PI / 2) % (2 * Math.PI);
+            const double fullTurn = 2 * Math.PI;
+
+            // Measure clockwise from 12 o'clock.
+            double angle = (Math.Atan2(y, x) + Math.PI / 2 + fullTurn) % fullTurn;
+
+            int divisions = IsHourMode ? 12 : 60;
+            int value = (int)Math.Floor(angle / fullTurn * divisions + 0.5) % divisions;
 
             if (IsHourMode)
-            {
-                // **Hour Mode (In the 12th slice)**
-                int hour = (int)((normalizedAngle / (2 * Math.PI)) * 12 + 0.5); // Align to center by adding 0.5
-                hour = (hour + 12) % 12;
-                hour = hour == 0 ? 12 : hour; // Correct 0 to 12
-                _hour12 = hour;
-                //LastTappedGroup = TappedGroup.Hour;
-                //LastTappedValue = hour;
-                Console.WriteLine($"Tapped Hour: {hour}");
-            }
+                _hour12 = value == 0 ? 12 : value;
             else
-            {
-                // **Minute Mode (in 60s)**
-                int minute = (int)((normalizedAngle / (2 * Math.PI)) * 60 + 0.5); // Align to center by adding 0.5
-                minute = (minute + 60) % 60;
-                _minute = minute;
-                //LastTappedGroup = TappedGroup.Minute;
-                //LastTappedValue = minute;
-                Console.WriteLine($"Tapped Minute: {minute}");
-            }
-            IsHourMode = !IsHourMode;
+                _minute = value;
         }
 
         public void SetClockValueFromTime(TimeOnly timeOnly)

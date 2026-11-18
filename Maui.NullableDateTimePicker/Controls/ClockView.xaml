@@ -54,10 +54,10 @@
         <GraphicsView x:Name="graphicsView"
               Drawable="{StaticResource clockDrawable}"
               HeightRequest="200"
-              WidthRequest="200">
-            <GraphicsView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnGraphicsTapped" NumberOfTapsRequired="1" />
-            </GraphicsView.GestureRecognizers>
-        </GraphicsView>
+              WidthRequest="200"
+              StartInteraction="OnGraphicsInteractionStarted"
+              DragInteraction="OnGraphicsInteractionDragged"
+              EndInteraction="OnGraphicsInteractionEnded"
+              CancelInteraction="OnGraphicsInteractionCanceled" />
     </StackLayout>
 </ContentView>

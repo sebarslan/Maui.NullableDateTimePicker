@@ -178,33 +178,55 @@ internal partial class ClockView : ContentView
         set => SetValue(ClockModeButtonSelectedTextColorProperty, value);
     }
 
-    private void OnGraphicsTapped(object sender, TappedEventArgs e)
+    private bool _isClockInteractionActive;
+
+    private void OnGraphicsInteractionStarted(object? sender, TouchEventArgs e)
     {
-        if (e.GetPosition(graphicsView) is not Point touchPoint) return;
+        _isClockInteractionActive = e.Touches is { Length: > 0 };
 
-        var dirtyRect = graphicsView.Bounds;
+        if (_isClockInteractionActive)
+            UpdateClockFromTouch(e);
+    }
 
-        float centerX = (float)dirtyRect.Width / 2f;
-        float centerY = (float)dirtyRect.Height / 2f;
+    private void OnGraphicsInteractionDragged(object? sender, TouchEventArgs e)
+    {
+        if (_isClockInteractionActive)
+            UpdateClockFromTouch(e);
+    }
 
-        float scale = Math.Min((float)dirtyRect.Width / 200f, (float)dirtyRect.Height / 200f);
+    private void OnGraphicsInteractionEnded(object? sender, TouchEventArgs e)
+    {
+        if (!_isClockInteractionActive)
+            return;
 
-        _drawable.HandleTap((float)touchPoint.X, (float)touchPoint.Y, centerX, centerY, scale);
+        _isClockInteractionActive = false;
+
+        // Apply the release position while the original hand is still active.
+        UpdateClockFromTouch(e);
+
+        _drawable.IsHourMode = !_drawable.IsHourMode;
+        RefreshGraphicsView();
+    }
+
+    private void OnGraphicsInteractionCanceled(object? sender, EventArgs e)
+    {
+        _isClockInteractionActive = false;
+    }
+
+    private void UpdateClockFromTouch(TouchEventArgs e)
+    {
+        if (e.Touches is not { Length: > 0 } touches)
+            return;
+
+        PointF point = touches[0];
+
+        _drawable.UpdateSelection(
+            point.X,
+            point.Y,
+            (float)(graphicsView.Width / 2),
+            (float)(graphicsView.Height / 2));
 
         SetTimeValueFromClock();
-
-        //if (_drawable.LastTappedGroup == TappedGroup.Hour)
-        //{
-        //    Console.WriteLine($"Hour clicked: {_drawable.LastTappedValue}");
-        //    _drawable.IsHourMode = false;
-        //    SetTimeValueFromClock(_drawable.LastTappedValue, SelectedTime.Minute);
-        //}
-        //else if (_drawable.LastTappedGroup == TappedGroup.Minute)
-        //{
-        //    Console.WriteLine($"Minute clicked: {_drawable.LastTappedValue}");
-        //    _drawable.IsHourMode = true;
-        //    SetTimeValueFromClock(SelectedTime.Hour, _drawable.LastTappedValue);
-        //}
     }
 
 

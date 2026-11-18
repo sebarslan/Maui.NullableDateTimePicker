@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+		<TargetFrameworks>net9.0;net10.0;net11.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
@@ -25,14 +25,14 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<AssemblyVersion>3.1.6.0</AssemblyVersion>
-		<Version>3.1.6</Version>
+		<AssemblyVersion>3.1.7.0</AssemblyVersion>
+		<Version>3.1.7</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<EnablePackageValidation>true</EnablePackageValidation>
 		<EnableStrictModeForBaselineValidation>true</EnableStrictModeForBaselineValidation>
-		<PackageValidationBaselineVersion>3.1.5</PackageValidationBaselineVersion>
+		<PackageValidationBaselineVersion>3.1.6</PackageValidationBaselineVersion>
 		<GenerateCompatibilitySuppressionFile>true</GenerateCompatibilitySuppressionFile>
 		<CompatibilitySuppressionFilePath>ApiCompatSuppressions.xml</CompatibilitySuppressionFilePath>
 	</PropertyGroup>
@@ -50,10 +50,22 @@
 		</None>
 	</ItemGroup>
 
+	<!-- Minimum MAUI version for .NET 9 -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0'">
+		<MauiVersion Condition="'$(MauiVersion)' == ''">9.0.70</MauiVersion>
+		<MauiVersion Condition="'$(MauiVersion)' != '' And $([MSBuild]::VersionLessThan('$(MauiVersion)', '9.0.70'))">9.0.70</MauiVersion>
+	</PropertyGroup>
+
 	<!-- Minimum MAUI version for .NET 10 -->
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<MauiVersion Condition="'$(MauiVersion)' == ''">10.0.120</MauiVersion>
 		<MauiVersion Condition="'$(MauiVersion)' != '' And $([MSBuild]::VersionLessThan('$(MauiVersion)', '10.0.120'))">10.0.120</MauiVersion>
+	</PropertyGroup>
+
+	<!-- Minimum MAUI version for .NET 11 -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net11.0'">
+		<MauiVersion Condition="'$(MauiVersion)' == ''">11.0.0</MauiVersion>
+		<MauiVersion Condition="'$(MauiVersion)' != '' And $([MSBuild]::VersionLessThan('$(MauiVersion)', '11.0.0'))">11.0.0</MauiVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -66,13 +78,16 @@
 		<!-- .NET 9 -->
 		<PackageReference Include="CommunityToolkit.Maui"
 						  Version="12.0.0"
-						  Condition="'$(TargetFramework)' == 'net9.0'">
-		</PackageReference>
+						  Condition="'$(TargetFramework)' == 'net9.0'" />
 
 		<!-- .NET 10 -->
 		<PackageReference Include="CommunityToolkit.Maui"
 						  Version="15.0.1"
-						  Condition="'$(TargetFramework)' == 'net10.0'">
-		</PackageReference>
+						  Condition="'$(TargetFramework)' == 'net10.0'" />
+
+		<!-- .NET 11 -->
+		<PackageReference Include="CommunityToolkit.Maui"
+						  Version="17.0.0"
+						  Condition="'$(TargetFramework)' == 'net11.0'" />
 	</ItemGroup>
 </Project>

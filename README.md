@@ -412,6 +412,15 @@ on ios, android, windows, maccatalyst
 
 # Changelog
 
+### 3.1.7 (Preview)
+- Added .NET 11.0 support
+- Added drag-to-select support to the analog time picker. The selected hour or minute updates as you drag with a finger or mouse. Releasing keeps the final value and switches to the next selection mode.
+- Fix Material 3 time picker field clipping (#48)- #49 (thanks @meyerdominik)
+- Cache and reuse day buttons for adjacent months when navigating the calendar. 
+- {Year}_{Month}_ was removed from the automation IDs for previous and next month day buttons. Use these IDs to access them:
+  {Your-AutomationId}_CalendarLastMonthDayButton_{Day}
+  {Your-AutomationId}_CalendarNextMonthDayButton_{Day}
+
 ### 3.1.6
 - New `CreateContent(options)` static method that allows consumers to embed the date/time picker content directly into their own custom popup or container. (Thanks to @BlyZeDev for the suggestion!)
 - ClockView button colors can now be customized. (Thanks @meyerdominik)

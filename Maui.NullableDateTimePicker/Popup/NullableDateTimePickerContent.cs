@@ -3,6 +3,7 @@ using Maui.NullableDateTimePicker.Controls;
 using Maui.NullableDateTimePicker.Helpers;
 using Maui.NullableDateTimePicker.Models;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Maui.NullableDateTimePicker;
 
@@ -23,6 +24,8 @@ internal class NullableDateTimePickerContent : ContentView
     private Button _cancelButton;
     private Button _clearButton;
     private List<Button> _dayButtons;
+    private Dictionary<int, Button>? _lastMonthDayButtons;
+    private Dictionary<int, Button>? _nextMonthDayButtons;
     private Grid _daysGrid;
     Grid _preNextButtonsGrid;
     private SelectList _yearsSelectList;
@@ -896,49 +899,45 @@ internal class NullableDateTimePickerContent : ContentView
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second));
     }
 
-    private async void OnLastMonthDayButtonTapped(object sender, EventArgs e)
+    private async void OnLastMonthDayButtonTapped(object? sender, EventArgs e)
     {
-        if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
-            return;
-        int year = _currentDate.Year;
-        int month = _currentDate.Month;
-        if (month == 1)
+        if (_options.Mode == PickerModes.Time ||
+            sender is not Button dayButton ||
+            !int.TryParse(dayButton.Text, out int day))
         {
-            month = 12;
-            year--;
-        }
-        else
-            month--;
-
-        Button dayButton = sender as Button;
-        int day = Convert.ToInt32(dayButton.Text);
-        if (DayDisabled(year, month, day))
             return;
+        }
 
-        await SetCurrentDateAndRebuildCalendar(year, month, day);
+        var previousMonth = new DateTime(_currentDate.Year, _currentDate.Month, 1)
+            .AddMonths(-1);
+
+        if (DayDisabled(previousMonth.Year, previousMonth.Month, day))
+        {
+            return;
+        }
+
+        await SetCurrentDateAndRebuildCalendar(previousMonth.Year, previousMonth.Month, day);
     }
 
-    private async void OnNextMonthDayButtonTapped(object sender, EventArgs e)
+
+    private async void OnNextMonthDayButtonTapped(object? sender, EventArgs e)
     {
-        if (_options.Mode == PickerModes.Time) //Click skipping in time mode 
-            return;
-        int year = _currentDate.Year;
-        int month = _currentDate.Month;
-        if (month == 12)
+        if (_options.Mode == PickerModes.Time ||
+            sender is not Button dayButton ||
+            !int.TryParse(dayButton.Text, out int day))
         {
-            month = 1;
-            year++;
-        }
-        else
-            month++;
-
-        Button dayButton = sender as Button;
-        int day = Convert.ToInt32(dayButton.Text);
-
-        if (DayDisabled(year, month, day))
             return;
+        }
 
-        await SetCurrentDateAndRebuildCalendar(year, month, day);
+        var nextMonth = new DateTime(_currentDate.Year, _currentDate.Month, 1)
+            .AddMonths(1);
+
+        if (DayDisabled(nextMonth.Year, nextMonth.Month, day))
+        {
+            return;
+        }
+
+        await SetCurrentDateAndRebuildCalendar(nextMonth.Year, nextMonth.Month, day);
     }
 
 
@@ -1108,17 +1107,13 @@ internal class NullableDateTimePickerContent : ContentView
                     for (int i = daysNeededFromLastMonth - 1; i >= 0; i--)
                     {
                         int dayInLastMonth = daysInLastMonth - i;
-                        Button lastMonthDayButton = new()
-                        {
-                            AutomationId = $"{_options.AutomationId}_CalendarLastMonthDayButton_{lastMonthDate.Year}_{lastMonthDate.Month}_{dayInLastMonth}",
-                            Text = dayInLastMonth.ToString(),
-                            Style = _otherMonthDayStyle
-                        };
+
+                        var lastMonthDayButton = GetOrCreateOtherMonthDayButton(dayInLastMonth, false);
 
                         if (DayDisabled(lastMonthDate.Year, lastMonthDate.Month, dayInLastMonth))
                             lastMonthDayButton.Style = _disabledDayStyle;
-
-                        lastMonthDayButton.Clicked += OnLastMonthDayButtonTapped;
+                        else
+                            lastMonthDayButton.Style = _otherMonthDayStyle;
 
                         _daysGrid.Add(lastMonthDayButton, daysNeededFromLastMonth - i, 1); //the first column of the grid is for the week numbers
                     }
@@ -1128,17 +1123,12 @@ internal class NullableDateTimePickerContent : ContentView
                     for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromLastMonth; i++)
                     {
                         int dayInNextMonth = i + 1;
-                        Button nextMonthDayButton = new()
-                        {
-                            AutomationId = $"{_options.AutomationId}_CalendarNextMonthDayButton_{nextMonthDate.Year}_{nextMonthDate.Month}_{dayInNextMonth}",
-                            Text = dayInNextMonth.ToString(),
-                            Style = _otherMonthDayStyle
-                        };
+                        Button nextMonthDayButton = GetOrCreateOtherMonthDayButton(dayInNextMonth, true);
 
                         if (DayDisabled(nextMonthDate.Year, nextMonthDate.Month, dayInNextMonth))
                             nextMonthDayButton.Style = _disabledDayStyle;
-
-                        nextMonthDayButton.Clicked += OnNextMonthDayButtonTapped;
+                        else
+                            nextMonthDayButton.Style = _otherMonthDayStyle;
 
                         int nextDayRow = (daysNeededFromLastMonth + daysInMonth + i) / 7 + 1; //Add 1 because the first row is for day names
                         int nextDayCol = (daysNeededFromLastMonth + daysInMonth + i) % 7 + 1; //Add 1 because the first column is for week numbers
@@ -1178,6 +1168,35 @@ internal class NullableDateTimePickerContent : ContentView
             }
         });
     }
+
+    private Button GetOrCreateOtherMonthDayButton(int day, bool isNextMonth)
+    {
+        var buttons = isNextMonth
+            ? (_nextMonthDayButtons ??= new Dictionary<int, Button>())
+            : (_lastMonthDayButtons ??= new Dictionary<int, Button>());
+
+        if (buttons.TryGetValue(day, out var button))
+        {
+            return button;
+        }
+
+        var month = isNextMonth ? "NextMonth" : "LastMonth";
+
+        button = new Button
+        {
+            AutomationId = $"{_options.AutomationId}_Calendar{month}DayButton_{day}",
+            Text = day.ToString(),
+            Style = _otherMonthDayStyle
+        };
+
+        button.Clicked += isNextMonth
+            ? OnNextMonthDayButtonTapped
+            : OnLastMonthDayButtonTapped;
+
+        buttons.Add(day, button);
+        return button;
+    }
+
 
 
     /// <summary>
