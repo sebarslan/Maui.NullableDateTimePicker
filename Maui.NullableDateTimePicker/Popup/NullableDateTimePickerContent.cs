@@ -557,12 +557,14 @@ internal class NullableDateTimePickerContent : ContentView
 
     private async Task InitTimePickerBlock()
     {
+        // Material 3 pickers need room for their native outline and padding.
+        // Keep a minimum height while allowing each platform to measure the content.
         _hoursPicker = new Picker
         {
             AutomationId = _options.AutomationId + "_CalendarHoursPicker",
             BackgroundColor = Colors.Transparent,
             FontSize = 14,
-            HeightRequest = 40,
+            MinimumHeightRequest = 40,
             ItemDisplayBinding = Binding.Create(static (PickerItem pickerItem) => pickerItem.Text),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -617,7 +619,7 @@ internal class NullableDateTimePickerContent : ContentView
             AutomationId = _options.AutomationId + "_CalendarMinutesPicker",
             BackgroundColor = Colors.Transparent,
             FontSize = 14,
-            HeightRequest = 40,
+            MinimumHeightRequest = 40,
             ItemDisplayBinding = Binding.Create(static (PickerItem pickerItem) => pickerItem.Text),
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -666,7 +668,7 @@ internal class NullableDateTimePickerContent : ContentView
                 AutomationId = _options.AutomationId + "_CalendarAmPmPicker",
                 BackgroundColor = Colors.Transparent,
                 FontSize = 14,
-                HeightRequest = 40,
+                MinimumHeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 FontAttributes = FontAttributes.Bold,
