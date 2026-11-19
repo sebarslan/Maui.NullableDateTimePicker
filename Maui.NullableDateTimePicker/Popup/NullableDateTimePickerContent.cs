@@ -1182,7 +1182,7 @@ internal class NullableDateTimePickerContent : ContentView
             return button;
         }
 
-        var month = isNextMonth ? "NextMonth" : "LastMonth";
+        var month = isNextMonth ? "NextMonth" : "PreviousMonth";
 
         button = new Button
         {
