@@ -418,7 +418,7 @@ on ios, android, windows, maccatalyst
 - Fix Material 3 time picker field clipping (#48)- #49 (thanks @meyerdominik)
 - Cache and reuse day buttons for adjacent months when navigating the calendar. 
 - Removed `{Year}_{Month}_` from the `AutomationId` values for previous and next month day buttons. Use the following IDs to locate them in UI tests.
-  - **Previous month** — `{Your-AutomationId}_CalendarLastMonthDayButton_{Day}`
+  - **Previous month** — `{Your-AutomationId}_CalendarPreviousMonthDayButton_{Day}`
   - **Next month** — `{Your-AutomationId}_CalendarNextMonthDayButton_{Day}`
 
 ### 3.1.6
