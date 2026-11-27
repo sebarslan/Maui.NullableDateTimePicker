@@ -24,7 +24,7 @@ internal class NullableDateTimePickerContent : ContentView
     private Button _cancelButton;
     private Button _clearButton;
     private List<Button> _dayButtons;
-    private Dictionary<int, Button>? _lastMonthDayButtons;
+    private Dictionary<int, Button>? _previousMonthDayButtons;
     private Dictionary<int, Button>? _nextMonthDayButtons;
     private Grid _daysGrid;
     Grid _preNextButtonsGrid;
@@ -993,16 +993,16 @@ internal class NullableDateTimePickerContent : ContentView
                 _daysGrid.Clear();
                 _daysGrid.Children?.Clear();
 
-                DateTime lastMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(-1);
+                DateTime previousMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(-1);
                 DateTime nextMonthDate = new DateTime(_currentDate.Year, _currentDate.Month, 1).AddMonths(1);
-                int daysInLastMonth = DateTime.DaysInMonth(lastMonthDate.Year, lastMonthDate.Month);
+                int daysInPreviousMonth = DateTime.DaysInMonth(previousMonthDate.Year, previousMonthDate.Month);
                 //int daysInNextMonth = DateTime.DaysInMonth(firstDayOfNextMonth.Year, firstDayOfNextMonth.Month);
 
                 if (!_options.ShowWeekNumbers)
                     _daysGrid.ColumnDefinitions[0].Width = 0;
 
                 _previousMonthButton.IsVisible = true;
-                if (DayDisabled(lastMonthDate.Year, lastMonthDate.Month, daysInLastMonth))
+                if (DayDisabled(previousMonthDate.Year, previousMonthDate.Month, daysInPreviousMonth))
                     _previousMonthButton.IsVisible = false;
 
                 _nextMonthButton.IsVisible = true;
@@ -1104,25 +1104,25 @@ internal class NullableDateTimePickerContent : ContentView
                 // other month days
                 if (_options.ShowOtherMonthDays)
                 {
-                    // Fill in days for the last month
-                    int daysNeededFromLastMonth = ((int)firstDayOfMonth - firstDayOfWekkIndex + 7) % 7;
-                    for (int i = daysNeededFromLastMonth - 1; i >= 0; i--)
+                    // Fill in days for the previous month
+                    int daysNeededFromPreviousMonth = ((int)firstDayOfMonth - firstDayOfWekkIndex + 7) % 7;
+                    for (int i = daysNeededFromPreviousMonth - 1; i >= 0; i--)
                     {
-                        int dayInLastMonth = daysInLastMonth - i;
+                        int dayInPreviousMonth = daysInPreviousMonth - i;
 
-                        var lastMonthDayButton = GetOrCreateOtherMonthDayButton(dayInLastMonth, false);
+                        var previousMonthDayButton = GetOrCreateOtherMonthDayButton(dayInPreviousMonth, false);
 
-                        if (DayDisabled(lastMonthDate.Year, lastMonthDate.Month, dayInLastMonth))
-                            lastMonthDayButton.Style = _disabledDayStyle;
+                        if (DayDisabled(previousMonthDate.Year, previousMonthDate.Month, dayInPreviousMonth))
+                            previousMonthDayButton.Style = _disabledDayStyle;
                         else
-                            lastMonthDayButton.Style = _otherMonthDayStyle;
+                            previousMonthDayButton.Style = _otherMonthDayStyle;
 
-                        _daysGrid.Add(lastMonthDayButton, daysNeededFromLastMonth - i, 1); //the first column of the grid is for the week numbers
+                        _daysGrid.Add(previousMonthDayButton, daysNeededFromPreviousMonth - i, 1); //the first column of the grid is for the week numbers
                     }
 
                     int lastWeekLastDayIndex = ((int)nextMonthDate.DayOfWeek - 1 + 7) % 7;
 
-                    for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromLastMonth; i++)
+                    for (int i = 0; i < 6 * 7 - daysInMonth - daysNeededFromPreviousMonth; i++)
                     {
                         int dayInNextMonth = i + 1;
                         Button nextMonthDayButton = GetOrCreateOtherMonthDayButton(dayInNextMonth, true);
@@ -1132,8 +1132,8 @@ internal class NullableDateTimePickerContent : ContentView
                         else
                             nextMonthDayButton.Style = _otherMonthDayStyle;
 
-                        int nextDayRow = (daysNeededFromLastMonth + daysInMonth + i) / 7 + 1; //Add 1 because the first row is for day names
-                        int nextDayCol = (daysNeededFromLastMonth + daysInMonth + i) % 7 + 1; //Add 1 because the first column is for week numbers
+                        int nextDayRow = (daysNeededFromPreviousMonth + daysInMonth + i) / 7 + 1; //Add 1 because the first row is for day names
+                        int nextDayCol = (daysNeededFromPreviousMonth + daysInMonth + i) % 7 + 1; //Add 1 because the first column is for week numbers
 
                         _daysGrid.Add(nextMonthDayButton, nextDayCol, nextDayRow);
                     }
@@ -1175,7 +1175,7 @@ internal class NullableDateTimePickerContent : ContentView
     {
         var buttons = isNextMonth
             ? (_nextMonthDayButtons ??= new Dictionary<int, Button>())
-            : (_lastMonthDayButtons ??= new Dictionary<int, Button>());
+            : (_previousMonthDayButtons ??= new Dictionary<int, Button>());
 
         if (buttons.TryGetValue(day, out var button))
         {
