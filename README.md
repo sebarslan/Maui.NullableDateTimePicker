@@ -5,7 +5,7 @@ The Nullable DateTimePicker is a custom calendar control for selecting a nullabl
 This control uses the 
 <a href="https://github.com/CommunityToolkit/Maui" target="_blank">CommunityToolkit.Maui</a> Popup
 
-[![NuGet](https://img.shields.io/badge/nuget-v3.1.6-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
+[![NuGet](https://img.shields.io/badge/nuget-v3.1.7-blue.svg?style=plastic)](https://www.nuget.org/packages/Sebarslan.Maui.NullableDateTimePicker)
 
 
 # Usage
@@ -412,13 +412,13 @@ on ios, android, windows, maccatalyst
 
 # Changelog
 
-### 3.1.7 (Preview)
+### 3.1.7
 - Added .NET 11.0 support
 - Added drag-to-select support to the analog time picker. The selected hour or minute updates as you drag with a finger or mouse. Releasing keeps the final value and switches to the next selection mode.
 - Fix Material 3 time picker field clipping (#48)- #49 (thanks @meyerdominik)
 - Cache and reuse day buttons for adjacent months when navigating the calendar. 
-- {Year}_{Month}_ was removed from the automation IDs for previous and next month day buttons. Use these IDs to access them:
-  {Your-AutomationId}_CalendarLastMonthDayButton_{Day}
+- {Year}_{Month}_ was removed from the automation IDs for previous and next month day buttons. Use these IDs to access them:<br />
+  {Your-AutomationId}_CalendarLastMonthDayButton_{Day}<br />
   {Your-AutomationId}_CalendarNextMonthDayButton_{Day}
 
 ### 3.1.6
