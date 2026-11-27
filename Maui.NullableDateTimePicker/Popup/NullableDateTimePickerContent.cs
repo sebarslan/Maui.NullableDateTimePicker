@@ -901,7 +901,7 @@ internal class NullableDateTimePickerContent : ContentView
         UpdateCurrentDateAndControls(new DateTime(_currentDate.Year, _currentDate.Month, day, _currentDate.Hour, _currentDate.Minute, _currentDate.Second));
     }
 
-    private async void OnLastMonthDayButtonTapped(object? sender, EventArgs e)
+    private async void OnPreviousMonthDayButtonTapped(object? sender, EventArgs e)
     {
         if (_options.Mode == PickerModes.Time ||
             sender is not Button dayButton ||
@@ -1182,7 +1182,7 @@ internal class NullableDateTimePickerContent : ContentView
             return button;
         }
 
-        var month = isNextMonth ? "NextMonth" : "LastMonth";
+        var month = isNextMonth ? "NextMonth" : "PreviousMonth";
 
         button = new Button
         {
@@ -1193,7 +1193,7 @@ internal class NullableDateTimePickerContent : ContentView
 
         button.Clicked += isNextMonth
             ? OnNextMonthDayButtonTapped
-            : OnLastMonthDayButtonTapped;
+            : OnPreviousMonthDayButtonTapped;
 
         buttons.Add(day, button);
         return button;
